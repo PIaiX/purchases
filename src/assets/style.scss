@@ -1,0 +1,318 @@
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+
+:root {
+  --h-height: 85px;
+  --f-height: 80px;
+}
+
+$main-font: "Open Sans";
+$title-font: "Bebas";
+$pale-blue: #9DC4EF;
+$blue: #4A83DC;
+$light-blue: #66C6E4;
+$fark-blue: #0D59AB;
+$gradient-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
+$gradient-2: linear-gradient(120.98deg, rgba(72, 216, 104, 0.8) 48.77%, rgba(120, 216, 72, 0.8) 85.89%);
+$glass: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
+$glass-stroke: linear-gradient(111.82deg, rgba(255, 255, 255, 0.7) 0.48%, rgba(255, 255, 255, 0) 23.46%);
+$dark-green: #005A47;
+$green: #48D868;
+$aqua: rgba(67, 185, 198, 0.26);
+
+$white: #FFFFFF;
+$light-gray:#C1C1C1;
+$gray: #8F8F8F;
+$black: #1B1B1C;
+$transition: .3s ease;
+$radius: .67em;
+
+$bp-xs: 575px;
+$bp-sm: 767px;
+$bp-md: 991px;
+$bp-lg: 1199px;
+$bp-xl: 1399px;
+$bp-xxl: 1679px;
+$bp-3xl: 1849px;
+
+
+/* mixins */
+@mixin flex($dir, $x, $y, $wrap) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $x;
+  align-items: $y;
+  flex-wrap: $wrap;
+}
+@mixin no-appearance {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  outline: none;
+}
+@mixin safariFix {
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translate3d(0, 0, 0);
+  isolation: isolate;
+  transform: translateZ(0);
+}
+@mixin absBG {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+@mixin clamp($count, $line) {
+  display: -webkit-box;
+  -webkit-line-clamp: $count;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: $line;
+  max-height: $line * $count;
+}
+@mixin list {
+  list-style: none;
+  padding-left: 0px;
+}
+@mixin shadow {
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.15));
+}
+
+/* Typography */
+a, a:hover, a:focus, a:active {
+  color: inherit;
+  outline: none;
+  text-decoration: none;
+  cursor: pointer;
+}
+h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, select, input, textarea, button, div, blockquote, cite, figure, figcaption, table, ul, ol, dl, address {
+  line-height: 140%;
+  margin-bottom: 0px;
+}
+
+h1, .h1 {
+  font-family: $title-font;
+  font-size: 4em;
+  font-weight: normal;
+  text-align: left;
+  margin-bottom: .2em;
+}
+h2 {
+  font-family: $title-font;
+  font-size: 3em;
+  font-weight: normal;
+  text-align: left;
+  margin-bottom: .2em;
+}
+h3 {
+  font-size: 1.6em;
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: .2em;
+}
+h4 {
+  font-size: 1.3em;
+  font-weight: 600;
+  text-align: left;
+  margin-bottom: .2em;
+}
+.fs {
+  &-08 {font-size: 0.8em;}
+  &-09 {font-size: 0.9em;}
+  &-10 {font-size: 1em;}
+  &-11 {font-size: 1.1em;}
+  &-12 {font-size: 1.2em;}
+  &-13 {font-size: 1.3em;}
+  &-14 {font-size: 1.4em;}
+  &-15 {font-size: 1.5em;}
+  &-16 {font-size: 1.6em;}
+  &-17 {font-size: 1.7em;}
+  &-18 {font-size: 1.8em;}
+  &-19 {font-size: 1.9em;}
+  &-20 {font-size: 2em;}
+  &-25 {font-size: 2.5em;}
+  &-30 {font-size: 3em;}
+  &-35 {font-size: 3.5em;}
+  &-40 {font-size: 4em;}
+}
+.fw {
+  &-3 {font-weight: 300;}
+  &-4 {font-weight: 400;}
+  &-5 {font-weight: 500;}
+  &-6 {font-weight: 600;}
+  &-7 {font-weight: 700;}
+  &-8 {font-weight: 800;}
+  &-9 {font-weight: 900;}
+}
+
+/* Form elements */
+input, textarea {
+  background: $white;
+  border: 1px solid $pale-blue;
+  border-radius: $radius;
+  padding: 0.6em 1.65em;
+  width: 100%;
+  outline: none;
+  display: block;
+  transition: $transition;
+  &:-moz-placeholder, &::-moz-placeholder,
+  &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder {
+    color: $pale-blue;
+    font-weight: 400;
+  }
+  &::placeholder {
+    color: $pale-blue;
+    font-weight: 400;
+  }
+}
+button {
+  background: none;
+  border: none;
+  padding: unset;
+  display: block;
+  font-family: inherit;
+  outline: none;
+  color: inherit;
+}
+.btn {
+  @include flex(row, center, center, nowrap);
+  padding: .65em 1.65em;
+  text-align: center;
+  transition: $transition;
+  width: fit-content;
+  font-weight: 400;
+  border-radius: $radius;
+  &-1 {
+    @extend .btn;
+    color: $white;
+    background: $gradient-1;
+    &:hover, &:focus {
+      color: $white;
+      background: $gradient-1;
+    }
+    &:active, &.active {
+      color: $white !important;
+      background: $gradient-1;
+    }
+  }
+}
+
+.lang-switcher {
+  position: relative;
+  button {
+    width: 100%;
+    font-size: 1em;
+    padding: .1em .2em;
+    @include flex(row, space-between, center, nowrap);
+    color: $gray;
+  }
+  img {
+    width: 1.6em;
+    height: 1.6em;
+    object-fit: cover;
+    border-radius: 50%;
+    @include shadow();
+    margin-right: .5em;
+  }
+  ul {
+    @include list();
+    position: absolute;
+    z-index: 2;
+    top: 100%;
+    left: 0px;
+    width: 100%;
+    height: auto;
+    @include flex(column, flex-start, stretch, nowrap);
+    li {
+      width: 100%;
+      margin: 0px !important;
+    }
+  }
+  // &.opened {
+    
+  // }
+}
+
+.form-search {
+  position: relative;
+  input {
+    width: 340px;
+  }
+  button {
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    height: 100%;
+    color: $pale-blue;
+    font-size: 1.6em;
+    width: 1.6em;
+    @include flex(row, center, center, nowrap);
+  }
+}
+
+@media (min-width: 1600px) {
+  .container {
+    max-width: 1485px;
+  }
+}
+
+body {
+  margin: 0;
+  font-family: $main-font;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 15px;
+  font-weight: 400;
+  overflow-x: hidden;
+}
+
+
+main {
+  min-height: calc(100vh - var(--h-height) - var(--f-height));
+  padding: 2em 0;
+}
+
+header {
+  height: var(--h-height);
+}
+
+.main-slider {
+  .swiper-slide {
+    width: 60%;
+    h2 {
+      margin-left: 16%;
+    }
+  }
+  .svg-full {
+    width: 100%;
+  }
+}
+
+.sec-main {
+  background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal;
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  backdrop-filter: blur(5px);
+  border-radius: $radius;
+  padding: 2em;
+  color: $white;
+}
+
+footer {
+  height: var(--f-height);
+  background-color: $black;
+  color: $white;
+  .dev-link {
+    width: fit-content;
+    @include flex(row, center, center, nowrap);
+    font-size: 16px;
+    svg {
+      margin-left: 0.3em;
+      font-size: 1.2em;
+    }
+  }
+}
