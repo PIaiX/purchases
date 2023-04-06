@@ -1,13 +1,25 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import {Link} from 'react-router-dom';
 import MainSlider from '../components/MainSlider';
 import GameCard from '../components/GameCard';
+import BlogCard from '../components/BlogCard';
+import OfferCard from '../components/OfferCard';
+
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Scrollbar, Mousewheel } from 'swiper';
+import 'swiper/css';
+import 'swiper/css/scrollbar';
+
+import send from '../assets/imgs/send.svg';
 
 const Home = () => {
   return (
     <main>
       <Container>
-        <section className="mb-5">
+        <section className="mb-6">
           <MainSlider/>
           {/* <Swiper
             className='main-slider'
@@ -39,42 +51,137 @@ const Home = () => {
         </section>
       </Container>
 
-      <section className='sec-catalog mb-5'>
+      <section className='sec-catalog mb-6'>
         <Container>
           <h2>Выбери одну из 104 игр</h2>
           <div className='sec-catalog-part'>
             <div className="letter">A</div>
-            <ul className='list-unstyled row row-cols-4'>
+            <ul className='list-unstyled row row-cols-4 gx-4 gy-5'>
               <li>
                 <GameCard />
               </li>
-              <li></li>
-              <li></li>
-              <li></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
             </ul>
           </div>
-        
 
           <div className='sec-catalog-part'>
-            <div className="letter">B</div>
-          </div>
-          <div className='sec-catalog-part'>
-            <div className="letter">C</div>
-          </div>
-          <div className='sec-catalog-part'>
-            <div className="letter">D</div>
-          </div>
-          <div className='sec-catalog-part'>
-            <div className="letter">E</div>
-          </div>
-          <div className='sec-catalog-part'>
-            <div className="letter">F</div>
+            <div className="letter">A</div>
+            <ul className='list-unstyled row row-cols-4 gx-4 gy-5'>
+              <li>
+                <GameCard />
+              </li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+            </ul>
           </div>
 
-          <section className='sec-main mb-5'>
-            <h1>Играй в свое удовольствие</h1>
-            <h3>Более 1000 лотов уже ждут тебя</h3>
-          </section>
+          <div className='sec-promo mb-5'>
+            <div className='text'>
+              <h1>Играй в свое удовольствие</h1>
+              <h3>Более 1000 лотов уже ждут тебя</h3>
+            </div>
+            <img src="imgs/head.png" alt="head" />
+            <button type='button' className='btn-2'>Перейти в каталог</button>
+          </div>
+
+          <div className='sec-catalog-part'>
+            <div className="letter">A</div>
+            <ul className='list-unstyled row row-cols-4 gx-4 gy-5'>
+              <li>
+                <GameCard />
+              </li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+              <li><GameCard /></li>
+            </ul>
+          </div>
+        </Container>
+      </section>
+
+      <Container>
+        <section className='sec-blog mb-6'>
+          <div className="d-flex align-items-center justify-content-between mb-4">
+            <h2 className='h1 mb-0'>Новости биржи игровых ценностей</h2>
+            <Link to='/blog' className='cognition'><h3 className='fw-7 text-end mb-0'>Познать больше</h3></Link>
+          </div>
+          <ul className='blog-list row row-cols-5 gx-5'>
+            <li>
+              <BlogCard img={'imgs/img1.jpg'} title={'Как сэкономить ~6% при выводе денег'}/>
+            </li>
+            <li>
+              <BlogCard img={'imgs/img2.jpg'} title={'Как финал истории принца Артаса изменил MMORPG от Blizzard'}/>
+            </li>
+            <li>
+              <BlogCard img={'imgs/img3.jpg'} title={'Новые способы оплаты — крипто-будущее наступило? '}/>
+            </li>
+            <li>
+              <BlogCard img={'imgs/img4.jpg'} title={'Инструкция по выводу на электронный кошелёк'}/>
+            </li>
+            <li>
+              <BlogCard img={'imgs/img1.jpg'} title={'Как сэкономить ~6% при выводе денег'}/>
+            </li>
+          </ul>
+        </section>
+      </Container>
+
+      <section className='sec-bottom'>
+        <Container>
+          <Row className='mb-5'>
+            <Col md={8}>
+              <h2>Общий чат</h2>
+              <div className="chat">
+                <div className="chat-window"></div>
+                <form action="" className='chat-form'>
+                  <input type="text" placeholder='Продажа в чате запрещена'/>
+                  <button type='submit' className='btn-1'>
+                    <img src={send} alt="send" />
+                  </button>
+                </form>
+              </div>
+            </Col>
+            <Col md={4}>
+              <section className='sec-popular'>
+                <h2>Популярные объявления</h2>
+                <Swiper
+                  modules={[Scrollbar, Mousewheel]}
+                  className='offers-slider'
+                  spaceBetween={30}
+                  slidesPerView={'auto'}
+                  direction={'vertical'}
+                  scrollbar={{ draggable: true }}
+                  mousewheel={true}
+                >
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <OfferCard/>
+                  </SwiperSlide>
+                </Swiper>
+              </section>
+            </Col>
+          </Row>
         </Container>
       </section>
     </main>

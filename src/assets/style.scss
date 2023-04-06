@@ -23,7 +23,7 @@ $white: #FFFFFF;
 $light-gray:#C1C1C1;
 $gray: #8F8F8F;
 $black: #1B1B1C;
-$transition: 500ms ease;
+$transition: 300ms ease;
 $radius: .67em;
 
 $bp-xs: 575px;
@@ -64,13 +64,17 @@ $bp-3xl: 1849px;
   height: 100%;
   z-index: 1;
 }
-@mixin clamp($count, $line) {
+@mixin clamp($count, $line, $strict: false) {
   display: -webkit-box;
   -webkit-line-clamp: $count;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: $line;
-  max-height: $line * $count;
+  @if $strict {
+    height: $line * $count;
+  } @else {
+    max-height: $line * $count;
+  }
 }
 @mixin list {
   list-style: none;
@@ -78,6 +82,16 @@ $bp-3xl: 1849px;
 }
 @mixin shadow {
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.15));
+}
+@mixin blob {
+  box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2), inset 0px 1px 3px rgba(245, 201, 249, 0.47);
+}
+@mixin btnStyle {
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+}
+@mixin blurShadow {
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  backdrop-filter: blur(5px);
 }
 
 /* Typography */
@@ -104,7 +118,7 @@ h2 {
   font-size: 3em;
   font-weight: normal;
   text-align: left;
-  margin-bottom: .2em;
+  margin-bottom: .67em;
 }
 h3 {
   font-size: 1.6em;
@@ -117,6 +131,12 @@ h4 {
   font-weight: 600;
   text-align: left;
   margin-bottom: .2em;
+}
+h5 {
+  font-size: 1.2em;
+  font-weight: 400;
+  text-align: left;
+  margin-bottom: 0px;
 }
 .fs {
   &-08 {font-size: 0.8em;}
@@ -146,6 +166,7 @@ h4 {
   &-8 {font-weight: 800;}
   &-9 {font-weight: 900;}
 }
+.rouble {font-family: 'Verdana', 'Tahoma', 'Arial Black';} 
 
 /* Form elements */
 input, textarea {
@@ -197,6 +218,13 @@ button {
       background: $gradient-1;
     }
   }
+  &-2 {
+    @extend .btn;
+    background: #FFFFFF;
+    color: $black;
+    @include blurShadow();
+    border-radius: $radius;
+  }
 }
 
 .lang-switcher {
@@ -234,7 +262,21 @@ button {
     
   // }
 }
-
+.star-rating {
+  @include flex(row, flex-start, center, nowrap);
+  color: $blue;
+  font-size: 1.34em;
+  svg {
+    &:not(:first-child) {
+      margin-left: 3px;
+    }
+    &.filled {
+      path {
+        fill: $blue;
+      }
+    }
+  }
+}
 .form-search {
   position: relative;
   input {
@@ -257,10 +299,12 @@ button {
     max-width: 1509px;
   }
 }
+.flex-1 {flex: 1;}
+.mb-6 {margin-bottom: 6em;}
 
 body {
   margin: 0;
-  font-family: $main-font;
+  font-family: $main-font, 'Arial', 'Tahoma', 'Verdana';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 15px;
@@ -279,6 +323,7 @@ header {
   height: var(--h-height);
 }
 
+/* Slider */
 .main-slider {
   @include flex(row, space-between, flex-start, nowrap);
   &-item {
@@ -350,21 +395,22 @@ header {
   }
 }
 
+/* Catalog */
 .sec-catalog {
-  background: url(imgs/bg/gradient.png) no-repeat;
+  background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
   &-part {
     margin-bottom: 3.33em;
-    padding: 1em 2em;
-    background: $glass-stroke, $glass;
-    box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
-    backdrop-filter: blur(5px);
+    padding: 1em 2.3em;
+    background: $glass;
+    @include blurShadow();
     border-radius: 10px;
   }
   .letter {
     font-size: 3.33em;
     font-weight: 700;
     color: rgba(67, 185, 198, 0.26);
+    margin-bottom: 1rem;
   }
 }
 .game-card {
@@ -376,31 +422,197 @@ header {
     border-radius: 50%;
     margin-right: 1.3em;
   }
+  h4 {
+    padding: 0 0 .6em .65em;
+  }
   .servers {
+    position: relative;
     @include list();
     @include flex(row, flex-start, center, nowrap);
-    background-image: $glass-stroke, $gradient-2;
-    box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+    background: rgba($color: $green, $alpha: .8);
+    @include btnStyle();
     width: fit-content;
-    padding: .6em 1em;
     border-radius: $radius;
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 10;
+      top: 0px;
+      left: 50%;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      transform: translate(-50%, -50%);
+      background-color: $blue;
+      @include blob();
+    }
+    &::after {
+      content: "";
+      position: absolute;
+      z-index: 5;
+      top: 0px;
+      left: 50%;
+      width: 20px;
+      height: 7px;
+      transform: translate(-48%, 0%);
+      background: url(imgs/Subtract.svg) no-repeat center;
+      background-size: contain;
+    }
+    li {
+      position: relative;
+      color: $white;
+      width: fit-content;
+      text-transform: uppercase;
+      padding: .6em .5em;
+      transition: $transition;
+      cursor: pointer;
+      &:first-child {padding-left: 1em;}
+      &:last-child {padding-right: 1em;}
+      &.active {
+        color: $dark-green;
+        
+      }
+    }
   }
   .categories {
     @include list();
     @include flex(row, flex-start, center, wrap);
+    padding: 1em .85em .85em;
+    li { 
+      margin-bottom: .67em;
+      &:not(:last-child){margin-right: 1em;}
+    }
   }
 }
-
-.sec-main {
+.sec-promo {
   background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
   background-size: cover;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
-  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
-  backdrop-filter: blur(5px);
+  @include blurShadow();
   border-radius: $radius;
-  padding: 2em;
+  padding: 0 10% 0 4em;
   color: $white;
+  @include flex(row, space-between, center, nowrap);
+  margin-top: 10%;
+  img {
+    width: 25%;
+    margin-top: -11%;
+  }
+}
+
+/* Blog */
+.sec-blog {
+  .cognition {
+    flex: 1;
+    display: block;
+    background-color: $black;
+    background-image: linear-gradient(to right, transparent, $black), url(imgs/bg/cogito.jpg);
+    background-repeat: no-repeat;
+    background-size: 50% 100%, 75% auto;
+    background-position: 60% 50%, -10% 50%;
+    color: $white;
+    padding: .9em 2em;
+    text-align: right;
+    border-radius: $radius;
+    margin-left: 3.5em;
+  }
+  .blog-list {
+    @include list();
+    &-item {
+      position: relative;
+      img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+        border-radius: $radius;
+        margin-bottom: 1.3em;
+      }
+      h5 {
+        @include clamp(3, 1.3em);
+      }
+    }
+  }
+}
+
+/* bottom background */
+.sec-bottom {
+  background: url(imgs/bg/gradient.jpg) no-repeat center;
+  background-size: 100% 100%;
+}
+
+/* Chat */
+.chat {
+  background: rgba($color: $white, $alpha: .3);
+  @include blurShadow();
+  padding: 2em;
+  &-window {
+    height: 610px;
+  }
+  &-form {
+    @include flex(row, flex-start, center, nowrap);
+    button {
+      width: 3.4em;
+      height: 3.4em;
+      padding: 0px;
+      border-radius: 50%;
+      svg {    width: 1.75em;}
+    }
+  }
+}
+
+/* Popular products */
+.sec-popular {
+  .offers-slider {
+    height: 860px;
+    padding: 0 1.5em 0 1em;
+    margin-right: -.5em;
+    .swiper-scrollbar {
+      right: .5em;
+      background-color: #fff;
+      box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 1px 3px 20px rgba(100, 100, 100, 0.15);
+      backdrop-filter: blur(4px);
+      width: 5px;
+      &-drag {
+        background-color: $pale-blue;
+      }
+    }
+    .swiper-slide {height: fit-content;}
+    .offer-card {
+      background: $glass;
+      @include blurShadow();
+      border-radius: $radius;
+      padding: 1em;
+      &-top {
+        @include flex(row, space-between, center, nowrap);
+        h5 {
+          font-weight: 700;
+          color: $green;
+          h5 {
+            @include clamp(1, 1.4em, true);
+          }
+        }
+      }
+      &-main {
+        margin-top: 1em;
+        @include flex(row, space-between, center, nowrap);
+        h5 {
+          @include clamp(2, 1.4em, true);
+        }
+      }
+      &-text {
+        margin-top: 1em;
+        p {
+          font-weight: 300;
+          @include clamp(2, 1.4em);
+        }
+      }
+      &-bottom {
+        margin-top: 1em;
+        @include flex(row, space-between, center, nowrap);
+      }
+    }
+  }
 }
 
 footer {

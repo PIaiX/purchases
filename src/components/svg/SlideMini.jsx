@@ -3,7 +3,7 @@ import React from 'react';
 const SlideMini = (props) => {
   return (
   <svg className={props.className} width="260" height="430" viewBox="0 0 260 430" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-    <image id="imageMini" width="230" height="430" xlinkHref={props.img} clip-path="url(#figure-2)"/>
+    <image id="imageMini" width="230" height="430" xlinkHref={props.img} clipPath="url(#figure-2)"/>
     <rect x="200" y="341" width="60" height="60" rx="30" fill="currentColor"/>
     <defs>
       <clipPath id="figure-2">

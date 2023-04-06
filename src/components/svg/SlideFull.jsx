@@ -3,7 +3,7 @@ import React from 'react';
 const SlideFull = (props) => {
   return (
     <svg className={props.className} width="899" height="524" viewBox="0 0 899 524" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
-      <image id="imageFull" width="980" height="550" xlinkHref={props.img} clip-path="url(#figure-1)"/>
+      <image id="imageFull" width="980" height="550" xlinkHref={props.img} clipPath="url(#figure-1)"/>
       <rect x="40" width="90" height="90" rx="45" fill="currentColor"/>
       <defs>
         <clipPath id="figure-1">
