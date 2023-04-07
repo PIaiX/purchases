@@ -23,7 +23,7 @@ const MainSlider = () => {
       <MainSlide 
         isActive={(activeSlide === 2) ? true : false} 
         title={"Atomic Heart"} 
-        imgFull={"imgs/slider/nova-filepond-1snzk9-1060x596.png"}
+        imgFull={"imgs/slider/atomic.jpg"}
         imgMini={"imgs/slider/slide-cover-3.jpg"}
         onMouseEnter={() => setActiveSlide(2)}
       />

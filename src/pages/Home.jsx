@@ -7,13 +7,12 @@ import MainSlider from '../components/MainSlider';
 import GameCard from '../components/GameCard';
 import BlogCard from '../components/BlogCard';
 import OfferCard from '../components/OfferCard';
+import Chat from '../components/chat/Chat';
 
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Scrollbar, Mousewheel } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-
-import send from '../assets/imgs/send.svg';
 
 const Home = () => {
   return (
@@ -52,6 +51,37 @@ const Home = () => {
       </Container>
 
       <section className='sec-catalog mb-6'>
+        <nav className='nav-catalog'>
+          <ul>
+            <li className='active'>A</li>
+            <li>B</li>
+            <li>C</li>
+            <li>D</li>
+            <li>E</li>
+            <li>F</li>
+            <li>G</li>
+            <li>H</li>
+            <li>I</li>
+            <li>J</li>
+            <li>K</li>
+            <li>L</li>
+            {/* <li>M</li>
+            <li>N</li>
+            <li>O</li>
+            <li>P</li>
+            <li>Q</li>
+            <li>R</li>
+            <li>S</li>
+            <li>T</li>
+            <li>U</li>
+            <li>V</li>
+            <li>W</li>
+            <li>X</li>
+            <li>Y</li>
+            <li>Z</li>
+            <li>А-Я</li> */}
+          </ul>
+        </nav>
         <Container>
           <h2>Выбери одну из 104 игр</h2>
           <div className='sec-catalog-part'>
@@ -137,16 +167,10 @@ const Home = () => {
         <Container>
           <Row className='mb-5'>
             <Col md={8}>
-              <h2>Общий чат</h2>
-              <div className="chat">
-                <div className="chat-window"></div>
-                <form action="" className='chat-form'>
-                  <input type="text" placeholder='Продажа в чате запрещена'/>
-                  <button type='submit' className='btn-1'>
-                    <img src={send} alt="send" />
-                  </button>
-                </form>
-              </div>
+              <section className='sec-chat'>
+                <h2>Общий чат</h2>
+              </section>
+              <Chat/>
             </Col>
             <Col md={4}>
               <section className='sec-popular'>

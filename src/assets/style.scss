@@ -10,13 +10,14 @@ $title-font: "Bebas";
 $pale-blue: #9DC4EF;
 $blue: #4A83DC;
 $light-blue: #66C6E4;
-$fark-blue: #0D59AB;
+$dark-blue: #0D59AB;
 $gradient-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
 $gradient-2: linear-gradient(120.98deg, rgba(72, 216, 104, 0.8) 48.77%, rgba(120, 216, 72, 0.8) 85.89%);
 $glass: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
 $glass-stroke: linear-gradient(111.82deg, rgba(255, 255, 255, 0.7) 0.48%, rgba(255, 255, 255, 0) 23.46%);
 $dark-green: #005A47;
 $green: #48D868;
+$pale-green: #94E5A6;
 $aqua: rgba(67, 185, 198, 0.26);
 
 $white: #FFFFFF;
@@ -36,7 +37,7 @@ $bp-3xl: 1849px;
 
 
 /* mixins */
-@mixin flex($dir, $x, $y, $wrap) {
+@mixin flex($dir: row, $x: center, $y: center, $wrap: nowrap) {
   display: flex;
   flex-direction: $dir;
   justify-content: $x;
@@ -56,13 +57,13 @@ $bp-3xl: 1849px;
   isolation: isolate;
   transform: translateZ(0);
 }
-@mixin absBG {
+@mixin absBG($z: 1) {
   position: absolute;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100%;
-  z-index: 1;
+  z-index: $z;
 }
 @mixin clamp($count, $line, $strict: false) {
   display: -webkit-box;
@@ -81,7 +82,11 @@ $bp-3xl: 1849px;
   padding-left: 0px;
 }
 @mixin shadow {
-  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 0.15));
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 4px 15px rgba(100, 100, 100, 0.08);
+  backdrop-filter: blur(4px);
+}
+@mixin lightShadow {
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
 @mixin blob {
   box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2), inset 0px 1px 3px rgba(245, 201, 249, 0.47);
@@ -93,6 +98,53 @@ $bp-3xl: 1849px;
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   backdrop-filter: blur(5px);
 }
+@mixin placeholder($color, $fw: 400){
+  &:-moz-placeholder, &::-moz-placeholder,
+  &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder {
+    color: $color;
+    font-weight: $fw;
+  }
+  &::placeholder {
+    color: $color;
+    font-weight: $fw;
+  }
+}
+
+/*****************
+SCROLL STYLIZATION
+******************/
+html {
+  scrollbar-color: $pale-blue transparent;
+  scrollbar-width: thin;
+}
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+  background-color: $white;
+  @include shadow();
+  &:hover,
+  &:active {
+    background: rgba($color: $pale-blue, $alpha: .2);
+  }
+}
+::-webkit-scrollbar-thumb {
+  background-color: $pale-blue;
+  border-radius: 5px;
+  transition: 0.2s;
+  &:hover {
+    background-color: $light-blue;
+  }
+  &:active {
+    background-color: $blue;
+  }
+}
+::-webkit-scrollbar-button:vertical:start:decrement,
+::-webkit-scrollbar-button:vertical:end:increment,
+::-webkit-scrollbar-button:horizontal:start:decrement,
+::-webkit-scrollbar-button:horizontal:end:increment {
+  display: none;
+}
+
 
 /* Typography */
 a, a:hover, a:focus, a:active {
@@ -171,23 +223,20 @@ h5 {
 /* Form elements */
 input, textarea {
   background: $white;
-  border: 1px solid $pale-blue;
+  border: 1px solid $light-gray;
   border-radius: $radius;
   padding: 0.6em 1.65em;
   width: 100%;
   outline: none;
   display: block;
   transition: $transition;
-  &:-moz-placeholder, &::-moz-placeholder,
-  &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder {
-    color: $pale-blue;
-    font-weight: 400;
-  }
-  &::placeholder {
-    color: $pale-blue;
-    font-weight: 400;
+  @include placeholder($light-gray, 400);
+  &.p-blue {
+    border: 1px solid $pale-blue;
+    @include placeholder($pale-blue, 400);
   }
 }
+
 button {
   background: none;
   border: none;
@@ -395,10 +444,43 @@ header {
   }
 }
 
+
 /* Catalog */
 .sec-catalog {
   background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
+  position: relative;
+  .nav-catalog {
+    position: absolute;
+    z-index: 10;
+    top: 0%;
+    left: 3%;
+    width: fit-content;
+    height: 100%;
+    ul {
+      // clip-path: url(#fossa);
+      position: sticky;
+      top: 0;
+      left: 0;
+      width: 100%;
+      @include list();
+      background: $glass;
+      background-color: rgba(255, 255, 255, 0.3);
+      @include blurShadow();
+      padding: 1em;
+      border-radius: $radius;
+      // mask-image: radial-gradient(ellipse 8px 10px at 100% 5%, transparent 30px, black 0);
+      li {
+        font-size: 1.3em;
+        text-align: center;
+        &:not(:first-child){margin-top: 1em;}
+      }
+    }
+  }
+  .container {
+    position: relative;
+    z-index: 1;
+  }
   &-part {
     margin-bottom: 3.33em;
     padding: 1em 2.3em;
@@ -542,27 +624,160 @@ header {
 }
 
 /* Chat */
+.sec-chat {
+  h2 {
+    margin-left: 3.5em;
+    margin-bottom: 0.1em;
+  }
+}
 .chat {
   background: rgba($color: $white, $alpha: .3);
   @include blurShadow();
-  padding: 2em;
+  padding: 3em 1.5em;
+  border-radius: $radius;
+  position: relative;
+  &-count {
+    position: absolute;
+    top: -3em;
+    left: 3em;
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    background-color: $black;
+    color: $white;
+    @include flex(column);
+    text-align: center;
+    border: .5em solid $white;
+    box-sizing: content-box;
+  }
   &-window {
-    height: 610px;
+    height: 685px;
+    overflow: auto;
+    padding: 2em 3em;
+    &-message {
+      @include flex(row, flex-start, flex-start);
+      &:not(:first-child){margin-top: 2em;}
+      img {
+        width: 3.34em;
+        height: 3.34em;
+        border-radius: 50%;
+        margin-right: -2.5em;
+        position: relative;
+        z-index: 10;
+        border: 0.34em solid #fbfbfd;
+        box-sizing: content-box;
+      }
+      .text {
+        flex: 1;
+        @include flex(column, flex-start, flex-start, nowrap);
+        h5 {
+          padding-left: 3em;
+          margin-bottom: .34em;
+        }
+        .bubble {
+          position: relative;
+          width: fit-content;
+          min-width: 50%;
+          background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba($color: $pale-blue, $alpha: .2);
+          @include shadow();
+          border-radius: $radius;
+          padding: 1em 15% 1.2em 4em;
+          font-weight: 300;
+          text-align: left;
+          time {
+            position: absolute;
+            top: .3em;
+            right: 1em;
+            font-size: .85em;
+          }
+          .toAnswer {
+            position: absolute;
+            bottom: .3em;
+            right: .5em;
+            color: $dark-blue;
+            font-size: 1.35em;
+            @include flex();
+            transition: $transition;
+            transform: scale(1);
+            &:hover, &:focus, &:active {
+              color: $green;
+              transform: scale(1.2);
+            }
+          }
+        }
+      }
+      &-mine {
+        @extend .chat-window-message;
+        img {
+          margin-left: -2.5em;
+          margin-right: 0px;
+        }
+        .text {
+          align-items: flex-end;
+          h5 {
+            padding-right: 3em;
+            padding-left: 0;
+          }
+          .bubble {
+            background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba($color: $pale-green, $alpha: .4);
+            text-align: right;
+            time {
+              top: unset;
+              bottom: .3em;
+            }
+          }
+        }
+      }
+    }
   }
   &-form {
     @include flex(row, flex-start, center, nowrap);
+    .input {
+      flex: 1;
+      background: url(imgs/bg/inputChat.svg) no-repeat center;
+      background-size: 100% 100%;
+      height: 4em;
+      @include lightShadow();
+      input {
+        border: none;
+        background-color: transparent;
+        height: 100%;
+      }
+    }
     button {
-      width: 3.4em;
-      height: 3.4em;
+      margin-left: -.34em;
+      width: 3.34em;
+      height: 3.34em;
       padding: 0px;
       border-radius: 50%;
-      svg {    width: 1.75em;}
+      padding-top: 0.25em;
+      padding-right: 0.25em;
+      img {width: 1.75em;}
+    }
+  }
+  &-report {
+    position: absolute;
+    top: 0.75em;
+    right: 0.75em;
+    z-index: 10;
+    color: $dark-blue;
+    @include flex();
+    font-size: 1.6em;
+    transition: $transition;
+    transform: scale(1);
+    &:hover, &:focus, &:active {
+      color: #e9003a;
+      transform: scale(1.2);
     }
   }
 }
 
 /* Popular products */
 .sec-popular {
+  h2 {
+    margin-bottom: 0.1em;
+    padding: 0 0.35em;
+  }
   .offers-slider {
     height: 860px;
     padding: 0 1.5em 0 1em;
