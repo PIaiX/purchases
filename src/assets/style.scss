@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
+// "homepage": "https://ngf93.github.io/purchases",
+
 :root {
   --h-height: 85px;
   --f-height: 80px;
@@ -24,7 +26,7 @@ $white: #FFFFFF;
 $light-gray:#C1C1C1;
 $gray: #8F8F8F;
 $black: #1B1B1C;
-$transition: 300ms ease;
+$transition: 300ms ease-in-out;
 $radius: .67em;
 
 $bp-xs: 575px;
@@ -32,9 +34,7 @@ $bp-sm: 767px;
 $bp-md: 991px;
 $bp-lg: 1199px;
 $bp-xl: 1399px;
-$bp-xxl: 1679px;
-$bp-3xl: 1849px;
-
+$bp-xxl: 1599px;
 
 /* mixins */
 @mixin flex($dir: row, $x: center, $y: center, $wrap: nowrap) {
@@ -360,6 +360,9 @@ body {
   font-weight: 400;
   color: $black;
   overflow-x: hidden;
+  @media (max-width: $bp-xs) {
+    font-size: 13px;
+  }
 }
 
 
@@ -374,60 +377,245 @@ header {
 
 /* Slider */
 .main-slider {
-  @include flex(row, space-between, flex-start, nowrap);
+  @media (max-width: $bp-md) {
+    overflow: hidden;
+    position: relative;
+    padding-bottom: 2em;
+    @media (max-width: $bp-xs) {
+      padding-bottom: 1.5em;
+    }
+  }
+  &-box {
+    @include flex(row, space-between, flex-start, nowrap);
+    @media (max-width: $bp-md) {
+      width: 300%;
+      transition: 400ms ease-in-out;
+      &.pos-1 {
+        transform: translateX(0%);
+      }
+      &.pos-2 {
+        transform: translateX(calc(100% / 3 * -1));
+      }
+      &.pos-3 {
+        transform: translateX(calc(100% / 3 * 2 * -1));
+      }
+    }
+  }
   &-item {
-    --w: 16%;
+    --w: 15.5%;
     width: var(--w);
     position: relative;
     padding-top: 3.5em;
-    // transition: $transition;
+    transition: 400ms ease-in-out;
+    @media (max-width: $bp-lg) {
+      --w: 16.5%;
+      padding-top: 2.5em;
+    }
+    @media (max-width: $bp-md) {
+      --w: 100%;
+      padding-top: 0em;
+    }
     .svg-mini {
       position: relative;
       z-index: 1;
       width: 112%;
-      height: 440px;
+      height: 430px;
+      @media (max-width: $bp-xxl) {
+        height: 372px;
+      }
+      @media (max-width: $bp-xl) {
+        height: 320px;
+      }
+      @media (max-width: $bp-lg) {
+        height: 284px;
+      }
     }
-    h2 {
-      @include clamp(1, 1em);
+    .svg-mobile {
+      width: 100%;
+      height: 552px;
+      @media (max-width: $bp-sm) {
+        height: 410px;
+      }
+      @media (max-width: $bp-xs) {
+        height: 73vw;
+      }
+    }
+    .title-full {
+      position: absolute;
+      z-index: 10;
+      top: 0%;
+      left: 16%;
+      width: 84%;
+      overflow: hidden;
+      opacity: 0;
+      transition: 400ms linear 0ms;
+      @media (max-width: $bp-md) {
+        top: 5%;
+        left: 30%;
+        width: 70%;
+      }
+      @media (max-width: $bp-sm) {
+        top: 3%;
+      }
+      h2 {
+        line-height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0px;
+        @media (max-width: $bp-lg) {
+          font-size: 2.5em;
+        }
+        @media (max-width: $bp-md) {
+          font-size: 3em;
+        }
+        @media (max-width: $bp-sm) {
+          font-size: 2.5em;
+        }
+        @media (max-width: $bp-xs) {
+          font-size: 2.3em;
+        }
+      }
+    }
+    .title-mini {
+      margin-top: 5px;
+      width: 100%;
+      overflow: hidden;
+      opacity: 1;
+      transition: 400ms linear 400ms;
+      @media (max-width: $bp-xxl) {
+        margin-top: 10px;
+      }
+      @media (max-width: $bp-lg) {
+        margin-top: 0px;
+      }
+      @media (max-width: $bp-md) {
+        display: none;
+      }
+      h2 {
+        line-height: 100%;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin-bottom: 0px;
+        @media (max-width: $bp-xxl) {
+          font-size: 2.5em;
+        }
+        @media (max-width: $bp-xl) {
+          font-size: 2em;
+        }
+      }
     }
     .lots {
       width: fit-content;
       height: fit-content;
       position: absolute;
       z-index: 10;
-      bottom: 16%;
+      bottom: 9%;
       right: -6%;
       @include flex(column, center, center, nowrap);
       color: $white;
       font-size: .85em;
+      @media (max-width: $bp-xxl) {
+        font-size: .75em;
+      }
+      @media (max-width: $bp-xl) {
+        font-size: .6em;
+      }
+      @media (max-width: $bp-lg) {
+        font-size: .55em;
+      }
       .num {
         font-size: 1.1em;
         line-height: 140%;
         font-weight: 600;
+        @media (max-width: $bp-xl) {
+          font-size: 1.25em;
+        }
+      }
+    }
+    .link {
+      position: absolute;
+      z-index: 10;
+      bottom: 2em;
+      right: 2em;
+      opacity: 0;
+      @media (max-width: $bp-lg) {
+        bottom: 1em;
+        right: 1em;
+      }
+      @media (max-width: $bp-md) {
+        display: none;
       }
     }
     &-active {
       @extend .main-slider-item;
-      --w: 60%;
+      --w: 60.6%;
+      @media (max-width: $bp-xl) {
+        --w: 61%;
+      }
+      @media (max-width: $bp-lg) {
+        --w: 62%;
+      }
+      @media (max-width: $bp-md) {
+        --w: 100%;
+      }
       .svg-full {
         position: relative;
         z-index: 1;
         width: 100%;
         height: 524px;
         margin-top: -3.3em;
+        @media (max-width: $bp-xxl) {
+          height: 458px;
+          margin-top: -3em;
+        }
+        @media (max-width: $bp-xl) {
+          height: 400px;
+          margin-top: -2.6em;
+        }
+        @media (max-width: $bp-lg) {
+          height: 340px;
+          margin-top: -2em;
+        }
       }
-      h2 {
-        position: absolute;
-        z-index: 10;
-        top: 0%;
-        left: 16%;
+      .title-full {
+        opacity: 1;
+        transition: 400ms linear 400ms;
+      }
+      .title-mini {
+        height: 0px;
+        opacity: 0;
+        transition: 400ms linear 0ms;
       }
       .lots {
-        top: 5%;
+        top: -1.85em;
         left: 6.25%;
         bottom: unset;
         right: unset;
         font-size: 1em;
+        @media (max-width: $bp-xxl) {
+          font-size: .9em;
+        }
+        @media (max-width: $bp-xl) {
+          font-size: .8em;
+        }
+        @media (max-width: $bp-lg) {
+          font-size: .7em;
+          top: -1.65em;
+        }
+        @media (max-width: $bp-md) {
+          font-size: 1.3em;
+          top: 7%;
+          left: 12.5%;
+        }
+        @media (max-width: $bp-sm) {
+          font-size: 1em;
+        }
+        @media (max-width: $bp-xs) {
+          font-size: 3vw;
+          left: 12%;
+        }
         .num {
           line-height: 120%;
           font-size: 1.6em;
@@ -435,10 +623,45 @@ header {
         }
       }
       .link {
-        position: absolute;
-        z-index: 10;
-        bottom: 2em;
-        right: 2em;
+        opacity: 1;
+        transition: 200ms ease-in-out 800ms;
+      }
+    }
+  }
+  &-prev, &-next {
+    display: flex;
+    position: absolute;
+    top: 67.5%;
+    font-size: 2em;
+    @media (max-width: $bp-sm) {
+      top: 66.5%;
+      font-size: 1.5em;
+    }
+    @media (max-width: $bp-xs) {
+      font-size: 1.25em;
+    }
+  }
+  &-prev {left: 0px;}
+  &-next {right: 0px;}
+  &-indicators {
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    @include list();
+    @include flex();
+    li {
+      flex-grow: 1;
+      height: .6em;
+      background-color: rgba($color: $black, $alpha: .15);
+      border-radius: .3em;
+      transition: $transition;
+      @media (max-width: $bp-xs) {
+        height: .4em;
+      }
+      &:not(:first-child){margin-left: 2em;}
+      &.active {
+        background-color: rgba($color: $black, $alpha: 1);
       }
     }
   }

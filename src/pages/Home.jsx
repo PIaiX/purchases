@@ -20,33 +20,6 @@ const Home = () => {
       <Container>
         <section className="mb-6">
           <MainSlider/>
-          {/* <Swiper
-            className='main-slider'
-            spaceBetween={50}
-            slidesPerView={'auto'}
-          >
-            <SwiperSlide>
-              <MainSlide 
-              title={"World of Warcraft"} 
-              imgFull={"imgs/gif.gif"}
-              imgMini={"imgs/slide-cover-2.jpg"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MainSlide 
-              title={"Genshin Impact"} 
-              imgFull={"imgs/gif.gif"}
-              imgMini={"imgs/slide-cover-2.jpg"}
-              />
-            </SwiperSlide>
-            <SwiperSlide>
-              <MainSlide 
-              title={"World of Warcraft"} 
-              imgFull={"imgs/gif.gif"}
-              imgMini={"imgs/slide-cover-3.jpg"}
-              />
-            </SwiperSlide>
-          </Swiper> */}
         </section>
       </Container>
 
