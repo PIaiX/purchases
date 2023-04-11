@@ -5,6 +5,13 @@
 :root {
   --h-height: 85px;
   --f-height: 80px;
+  @media (max-width: 767px) {
+    --h-height: 70px;
+  }
+  @media (max-width: 575px) {
+    --h-height: 55px;
+    --f-height: 64px;
+  }
 }
 
 $main-font: "Open Sans";
@@ -88,6 +95,10 @@ $bp-xxl: 1599px;
 @mixin lightShadow {
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
+@mixin shadowMobile {
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5), 1px 1px 10px rgba(100, 100, 100, 0.15);
+  backdrop-filter: blur(2.5px);
+}
 @mixin blob {
   box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2), inset 0px 1px 3px rgba(245, 201, 249, 0.47);
 }
@@ -97,6 +108,12 @@ $bp-xxl: 1599px;
 @mixin blurShadow {
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   backdrop-filter: blur(5px);
+}
+@mixin bgTextureGradient {
+  background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal;
 }
 @mixin placeholder($color, $fw: 400){
   &:-moz-placeholder, &::-moz-placeholder,
@@ -163,7 +180,20 @@ h1, .h1 {
   font-size: 4em;
   font-weight: normal;
   text-align: left;
+  line-height: 120%;
   margin-bottom: .2em;
+  @media (max-width: $bp-lg) {
+    font-size: 3.5em;
+  }
+  @media (max-width: $bp-md) {
+    font-size: 3.2em;
+  }
+  @media (max-width: $bp-sm) {
+    font-size: 2.75em;
+  }
+  @media (max-width: $bp-xs) {
+    font-size: 2.3em;
+  }
 }
 h2 {
   font-family: $title-font;
@@ -171,12 +201,22 @@ h2 {
   font-weight: normal;
   text-align: left;
   margin-bottom: .67em;
+  @media (max-width: $bp-sm) {
+    font-size: 2.75em;
+  }
+  @media (max-width: $bp-xs) {
+    font-size: 2.3em;
+    margin-bottom: .5em;
+  }
 }
 h3 {
   font-size: 1.6em;
   font-weight: 400;
   text-align: left;
   margin-bottom: .2em;
+  @media (max-width: $bp-md) {
+    font-size: 1.4em;
+  }
 }
 h4 {
   font-size: 1.3em;
@@ -330,6 +370,9 @@ button {
   position: relative;
   input {
     width: 340px;
+    @media (max-width: $bp-lg) {
+      width: 280px;
+    }
   }
   button {
     position: absolute;
@@ -349,7 +392,15 @@ button {
   }
 }
 .flex-1 {flex: 1;}
-.mb-6 {margin-bottom: 6em;}
+.mb-6 {
+  margin-bottom: 6em;
+  @media (max-width: $bp-sm) {
+    margin-bottom: 5em;
+  }
+  @media (max-width: $bp-xs) {
+    margin-bottom: 4em;
+  }
+}
 
 body {
   margin: 0;
@@ -360,6 +411,9 @@ body {
   font-weight: 400;
   color: $black;
   overflow-x: hidden;
+  @media (max-width: $bp-md) {
+    padding-bottom: var(--f-height);
+  }
   @media (max-width: $bp-xs) {
     font-size: 13px;
   }
@@ -369,6 +423,9 @@ body {
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
   padding: 2em 0;
+  @media (max-width: $bp-xs) {
+    padding: 1em 0;
+  }
 }
 
 header {
@@ -673,13 +730,26 @@ header {
   background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
   position: relative;
-  .nav-catalog {
+  .container {
+    position: unset;
+    @media (max-width: $bp-md) {
+      @include flex(row, flex-start, stretch, nowrap);
+    }
+  }
+  &-nav {
     position: absolute;
     z-index: 10;
     top: 0%;
     left: 3%;
     width: fit-content;
     height: 100%;
+    @media (max-width: $bp-md) {
+      position: relative;
+      top: unset;
+      left: unset;
+      height: auto;
+      margin-left: 1em;
+    }
     ul {
       // clip-path: url(#fossa);
       position: sticky;
@@ -700,22 +770,28 @@ header {
       }
     }
   }
-  .container {
-    position: relative;
-    z-index: 1;
-  }
+  &-box {flex: 1;}
   &-part {
-    margin-bottom: 3.33em;
     padding: 1em 2.3em;
     background: $glass;
     @include blurShadow();
     border-radius: 10px;
+    &:not(:last-child){margin-bottom: 3.33em;}
+    @media (max-width: $bp-xxl) {
+      padding: 1em 1.5em;
+    }
+    @media (max-width: $bp-xs) {
+      padding: 1em;
+    }
   }
   .letter {
     font-size: 3.33em;
     font-weight: 700;
     color: rgba(67, 185, 198, 0.26);
     margin-bottom: 1rem;
+    @media (max-width: $bp-xs) {
+      line-height: 100%;
+    }
   }
 }
 .game-card {
@@ -726,6 +802,9 @@ header {
     object-fit: cover;
     border-radius: 50%;
     margin-right: 1.3em;
+    @media (max-width: $bp-xxl) {
+      margin-right: .5em;
+    }
   }
   h4 {
     padding: 0 0 .6em .65em;
@@ -783,6 +862,12 @@ header {
     @include list();
     @include flex(row, flex-start, center, wrap);
     padding: 1em .85em .85em;
+    @media (max-width: $bp-xxl) {
+      padding: .85em .5em .5em;
+    }
+    @media (max-width: $bp-xl) {
+      padding: .75em 0em 0;
+    }
     li { 
       margin-bottom: .67em;
       &:not(:last-child){margin-right: 1em;}
@@ -790,19 +875,47 @@ header {
   }
 }
 .sec-promo {
-  background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: overlay, normal;
+  @include bgTextureGradient();
   @include blurShadow();
   border-radius: $radius;
   padding: 0 10% 0 4em;
   color: $white;
   @include flex(row, space-between, center, nowrap);
   margin-top: 10%;
+  @media (max-width: $bp-xl) {
+    padding: 0 3em;
+  }
+  @media (max-width: $bp-lg) {
+    padding: 0 2em;
+  }
+  @media (max-width: $bp-md) {
+    margin-top: 15%;
+  }
+  @media (max-width: $bp-xs) {
+    padding: 1em;
+    height: 85px;
+  }
   img {
     width: 25%;
     margin-top: -11%;
+    @media (max-width: $bp-lg) {
+      width: 22%;
+      margin-top: -7%;
+    }
+    @media (max-width: $bp-md) {
+      width: 50%;
+      margin-top: -15%;
+    }
+    @media (max-width: $bp-xs) {
+      position: absolute;
+      bottom: 0px;
+      right: 0px;
+      width: 55%;
+    }
+  }
+  .text {
+    position: relative;
+    z-index: 10;
   }
 }
 
@@ -821,6 +934,10 @@ header {
     text-align: right;
     border-radius: $radius;
     margin-left: 3.5em;
+    @media (max-width: $bp-lg) {
+      margin-left: 0em;
+      margin-top: 3em;
+    }
   }
   .blog-list {
     @include list();
@@ -832,9 +949,27 @@ header {
         object-fit: cover;
         border-radius: $radius;
         margin-bottom: 1.3em;
+        @media (max-width: $bp-xxl) {
+          height: 200px;
+        }
+        @media (max-width: $bp-xl) {
+          height: 190px;
+        }
       }
       h5 {
         @include clamp(3, 1.3em);
+      }
+      &-mobile {
+        @include flex(row, flex-start, center, nowrap);
+        position: relative;
+        img {
+          width: 100px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: $radius;
+          margin-right: 1em;
+        }
+        h5 {flex:1;}
       }
     }
   }
@@ -856,7 +991,7 @@ header {
 .chat {
   background: rgba($color: $white, $alpha: .3);
   @include blurShadow();
-  padding: 3em 1.5em;
+  padding: 4em .7em 2em;
   border-radius: $radius;
   position: relative;
   &-count {
@@ -872,11 +1007,22 @@ header {
     text-align: center;
     border: .5em solid $white;
     box-sizing: content-box;
+    @media (max-width: $bp-md) {
+      top: -4em;
+      left: 2em;
+    }
+    @media (max-width: $bp-xs) {
+      left: 1em;
+    }
   }
   &-window {
-    height: 685px;
+    height: 698px;
     overflow: auto;
-    padding: 2em 3em;
+    padding: 2em 3.5em;
+    @media (max-width: $bp-md) {
+      padding: 1em 1.5em;
+      height: 500px;
+    }
     &-message {
       @include flex(row, flex-start, flex-start);
       &:not(:first-child){margin-top: 2em;}
@@ -955,6 +1101,7 @@ header {
   }
   &-form {
     @include flex(row, flex-start, center, nowrap);
+    padding: 0 3.5em;
     .input {
       flex: 1;
       background: url(imgs/bg/inputChat.svg) no-repeat center;
@@ -1000,6 +1147,12 @@ header {
   h2 {
     margin-bottom: 0.1em;
     padding: 0 0.35em;
+    @media (max-width: $bp-xxl) {
+      font-size: 2.85em;
+    }
+    @media (max-width: $bp-lg) {
+      font-size: 2.65em;
+    }
   }
   .offers-slider {
     height: 860px;
@@ -1020,7 +1173,7 @@ header {
       background: $glass;
       @include blurShadow();
       border-radius: $radius;
-      padding: 1em;
+      padding: 1.6em 1.6em .7em 1.6em;
       &-top {
         @include flex(row, space-between, center, nowrap);
         h5 {
@@ -1033,7 +1186,7 @@ header {
       }
       &-main {
         margin-top: 1em;
-        @include flex(row, space-between, center, nowrap);
+        @include flex(row, space-between, flex-start, nowrap);
         h5 {
           @include clamp(2, 1.4em, true);
         }
@@ -1057,6 +1210,15 @@ footer {
   height: var(--f-height);
   background-color: $black;
   color: $white;
+  @media (max-width: $bp-md) {
+    background-color: transparent;
+    color: $black;
+    position: fixed;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 100;
+  }
   .dev-link {
     width: fit-content;
     @include flex(row, center, center, nowrap);
@@ -1064,6 +1226,45 @@ footer {
     svg {
       margin-left: 0.3em;
       font-size: 1.2em;
+    }
+  }
+  .nav-mobile {
+    @include flex();
+    .logo {
+      padding: 1em 1.65em;
+      @include bgTextureGradient();
+      color: $white;
+      border-radius: $radius;
+    }
+    ul {
+      @include list();
+      @include flex(row, space-evenly);
+      flex: 1;
+      background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.8);
+      @include shadowMobile();
+      margin-left: 1.7em;
+      padding: .75em 1.5em;
+      border-radius: $radius;
+      @media (max-width: $bp-sm) {
+        justify-content: space-around;
+      }
+      @media (max-width: $bp-xs) {
+        justify-content: space-between;
+      }
+      li {
+        a {
+          @include flex();
+          font-size: 1.85em;
+          color: $gray;
+          transition: $transition;
+          svg {
+            path {stroke-width: 0.8px;}
+          }
+          &.active {
+            color: $green;
+          }
+        }
+      }
     }
   }
 }

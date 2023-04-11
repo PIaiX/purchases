@@ -14,9 +14,9 @@ const OfferCard = () => {
 
       <div className='offer-card-main'>
         <h5>Услуги Cyberpunk 2077</h5>
-        <div className='d-flex align-items-baseline ms-3'>
-          <h5>Платформа</h5>
-          <div className='fw-3 ms-3'>Xbox</div>
+        <div className='d-xl-flex text-end align-items-baseline ms-3'>
+          <div className='fs-12'>Платформа</div>
+          <div className='fw-3 ms-xl-3'>Xbox</div>
         </div>
       </div>
 
