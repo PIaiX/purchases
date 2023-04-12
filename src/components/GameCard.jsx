@@ -1,21 +1,27 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
+import BeadIcon from '../assets/imgs/bead.svg';
 
 const GameCard = () => {
   const [server, setServer] = useState(1);
-  const box = useRef();
+  const cut2 = useRef();
 
-  // const boxWidth = box.current.offsetWidth;
-  // console.log('boxWidth='+boxWidth);
+  useEffect(() => {
+    const servLi = document.getElementById('server-' + server);
+    cut2.current.style.left = Math.round(servLi.offsetLeft + servLi.offsetWidth/2)+'px';
+  });
 
   return (
     <div className="game-card">
-      <img src="imgs/archeage.jpg" alt="ArcheAge" />
+      <img src="imgs/archeage.jpg" alt="ArcheAge" className='img'/>
       <div>
         <h4>ArcheAge</h4>
-        <ul ref={box} className="servers">
-          <li className={(server===1) ? 'active' : ''} onClick={()=>setServer(1)}>RU/EU</li>
-          <li className={(server===2) ? 'active' : ''} onClick={()=>setServer(2)}>US</li>
-          <li className={(server===3) ? 'active' : ''} onClick={()=>setServer(3)}>FREE</li>
+        <ul className="servers">
+          <li ref={cut2} className="indicator">
+            <img src={BeadIcon} alt="bead" />
+          </li>
+          <li id="server-1" className={(server===1) ? 'active' : ''} onClick={()=>setServer(1)}>RU/EU</li>
+          <li id="server-2" className={(server===2) ? 'active' : ''} onClick={()=>setServer(2)}>US</li>
+          <li id="server-3" className={(server===3) ? 'active' : ''} onClick={()=>setServer(3)}>FREE</li>
         </ul>
         <ul className='categories'>
           <li>Золото</li>

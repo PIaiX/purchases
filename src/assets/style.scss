@@ -891,7 +891,7 @@ header {
 }
 .game-card {
   @include flex(row, flex-start, flex-start, nowrap);
-  img {
+  .img {
     width: 50px;
     height: 50px;
     object-fit: cover;
@@ -912,31 +912,7 @@ header {
     @include btnStyle();
     width: fit-content;
     border-radius: $radius;
-    &::before {
-      content: "";
-      position: absolute;
-      z-index: 10;
-      top: 0px;
-      left: 50%;
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      transform: translate(-50%, -50%);
-      background-color: $blue;
-      @include blob();
-    }
-    &::after {
-      content: "";
-      position: absolute;
-      z-index: 5;
-      top: 0px;
-      left: 50%;
-      width: 20px;
-      height: 7px;
-      transform: translate(-48%, 0%);
-      background: url(imgs/Subtract.svg) no-repeat center;
-      background-size: contain;
-    }
+    padding: 0 .5em;
     li {
       position: relative;
       color: $white;
@@ -945,12 +921,24 @@ header {
       padding: .6em .5em;
       transition: $transition;
       cursor: pointer;
-      &:first-child {padding-left: 1em;}
-      &:last-child {padding-right: 1em;}
-      &.active {
-        color: $dark-green;
-        
+      &.indicator {
+        transform: translateY(-50%) translateX(-50%);
+        padding: 0px;
+        position: absolute;
+        left: .5em;
+        top: -0.5px;
+        width: 1.5em;
+        height: 1em;
+        background: url(imgs/Subtract.svg) no-repeat center bottom;
+        background-size: 100% 50%;
+        @include flex();
+        img {
+          width: .53em;
+          height: .53em;
+          box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2);
+        }
       }
+      &.active {color: $dark-green;}
     }
   }
   .categories {
