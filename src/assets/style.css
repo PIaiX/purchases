@@ -64,7 +64,7 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 
-h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, select, input, textarea, button, div, blockquote, cite, figure, figcaption, table, ul, ol, dl, address {
+h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, select, input, textarea, button, div, blockquote, cite, figure, figcaption, table, ul, ol, dl, li, address {
   line-height: 140%;
   margin-bottom: 0px;
 }
@@ -859,8 +859,7 @@ header {
   z-index: 10;
   top: 0%;
   left: 3%;
-  width: -moz-fit-content;
-  width: fit-content;
+  width: 60px;
   height: 100%;
 }
 @media (max-width: 991px) {
@@ -872,27 +871,151 @@ header {
     margin-left: 1em;
   }
 }
-.sec-catalog-nav ul {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  list-style: none;
-  padding-left: 0px;
+.sec-catalog-nav .wrap {
   background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
-  background-color: rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.7);
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
-  padding: 1em;
   border-radius: 0.67em;
+  position: sticky;
+  top: 0.5em;
+  left: 0;
+  width: 100%;
+  height: -moz-fit-content;
+  height: fit-content;
+  max-height: calc(100vh - 2em);
+  padding: 0.5em;
+  transition: 300ms ease-in-out;
 }
-.sec-catalog-nav ul li {
+@media (max-width: 991px) {
+  .sec-catalog-nav .wrap {
+    float: right;
+  }
+}
+.sec-catalog-nav .wrap form {
+  position: relative;
+  border: 1px solid transparent;
+  border-radius: 0.67em;
+  margin-bottom: 0.25em;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  transition: 300ms ease-in-out;
+}
+.sec-catalog-nav .wrap form button {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  width: 3em;
+  color: #9DC4EF;
+}
+.sec-catalog-nav .wrap form button svg {
+  font-size: 1.6em;
+}
+.sec-catalog-nav .wrap form input {
+  width: 100%;
+  opacity: 0;
+  position: relative;
+  z-index: 1;
+  padding: 0.6em 0 0.6em 3em;
+}
+.sec-catalog-nav .wrap form input::-moz-placeholder {
+  color: #9DC4EF;
+  font-weight: 400;
+}
+.sec-catalog-nav .wrap form input::placeholder {
+  color: #9DC4EF;
+  font-weight: 400;
+}
+.sec-catalog-nav .wrap ul {
+  list-style: none;
+  padding-left: 0px;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  grid-auto-flow: column;
+}
+.sec-catalog-nav .wrap ul li {
+  grid-column: span 1;
+  grid-row: span 1;
   font-size: 1.3em;
   text-align: center;
+  padding: 0.4em;
 }
-.sec-catalog-nav ul li:not(:first-child) {
-  margin-top: 1em;
+.sec-catalog-nav .wrap ul li a {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  color: #1B1B1C;
+  position: relative;
+  background-color: transparent;
+  transition: 300ms ease-in-out;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  white-space: nowrap;
+}
+.sec-catalog-nav .wrap ul li a:hover {
+  background-color: rgba(157, 196, 239, 0.25);
+}
+.sec-catalog-nav .wrap ul li a.ss-active {
+  background-color: rgba(157, 196, 239, 0.5);
+}
+.sec-catalog-nav .wrap #cut {
+  font-size: 1.3em;
+  position: absolute;
+  top: 0px;
+  right: -0.5em;
+  width: 1em;
+  height: 1em;
+  transition: 300ms ease-in-out;
+  transform: translateY(0.25em);
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  border-radius: 50%;
+  overflow: hidden;
+}
+@media (max-width: 991px) {
+  .sec-catalog-nav .wrap #cut {
+    right: unset;
+    left: -0.5em;
+  }
+}
+.sec-catalog-nav .wrap #cut img {
+  width: 100%;
+  height: 100%;
+  transition: 300ms ease-in-out;
+}
+@media (max-width: 991px) {
+  .sec-catalog-nav .wrap #cut img {
+    transform: rotate(-180deg);
+  }
+}
+.sec-catalog-nav .wrap #cut.opened img {
+  transform: rotate(-180deg);
+}
+@media (max-width: 991px) {
+  .sec-catalog-nav .wrap #cut.opened img {
+    transform: rotate(0deg);
+  }
+}
+.sec-catalog-nav .wrap.full {
+  width: 180px;
+}
+.sec-catalog-nav .wrap.full form input {
+  opacity: 1;
 }
 .sec-catalog-box {
   flex: 1;

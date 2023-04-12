@@ -36,9 +36,9 @@ const MainSlider = () => {
       }>
         <MainSlide
           isActive={(activeSlide === 0) ? true : false} 
-          title={"World of Warcraft"} 
+          title={"wOw"} 
           imgFull={"imgs/slider/gif.gif"}
-          imgMini={"imgs/slider/slide-cover-3.jpg"}
+          imgMini={"imgs/slider/slide-cover-1.jpg"}
           onMouseEnter={() => setActiveSlide(0)}
         />
         <MainSlide 
