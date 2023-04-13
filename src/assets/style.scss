@@ -183,6 +183,9 @@ h1, .h1 {
   text-align: left;
   line-height: 120%;
   margin-bottom: .2em;
+  @media (max-width: $bp-xxl) {
+    font-size: 3.6em;
+  }
   @media (max-width: $bp-lg) {
     font-size: 3.5em;
   }
@@ -224,12 +227,24 @@ h4 {
   font-weight: 600;
   text-align: left;
   margin-bottom: .2em;
+  @media (max-width: $bp-md) {
+    font-size: 1.2em;
+  }
+  @media (max-width: $bp-sm) {
+    font-size: 1.1em;
+  }
 }
 h5 {
   font-size: 1.2em;
   font-weight: 400;
   text-align: left;
   margin-bottom: 0px;
+  @media (max-width: $bp-md) {
+    font-size: 1.1em;
+  }
+  @media (max-width: $bp-sm) {
+    font-size: 1em;
+  }
 }
 .fs {
   &-08 {font-size: 0.8em;}
@@ -400,6 +415,51 @@ button {
   }
   @media (max-width: $bp-xs) {
     margin-bottom: 4em;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 2em;
+  color: $light-gray;
+  @media (max-width: $bp-lg) {
+    margin-bottom: 1.5em;
+  }
+  ul {
+    @include list();
+    @include flex(row, flex-start, center, wrap);
+    li {
+      a {
+        font-size: 1.2em;
+        font-weight: 500;
+        @media (max-width: $bp-md) {
+          font-size: 1.1em;
+        }
+        @media (max-width: $bp-sm) {
+          font-size: 1em;
+        }
+      }
+      &:not(:first-child){
+        margin-left: 1em;
+        padding-left: 1.4em;
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          left: 0px;
+          display: block;
+          height: 100%;
+          width: 8px;
+          background: url(imgs/arrow-mini.svg) no-repeat center;
+          background-size: contain;
+          @media (max-width: $bp-md) {
+            width: 7px;
+          }
+          @media (max-width: $bp-sm) {
+            width: 6px;
+          }
+        }
+      }
+    }
   }
 }
 
@@ -1004,24 +1064,6 @@ header {
 
 /* Blog */
 .sec-blog {
-  .cognition {
-    flex: 1;
-    display: block;
-    background-color: $black;
-    background-image: linear-gradient(to right, transparent, $black), url(imgs/bg/cogito.jpg);
-    background-repeat: no-repeat;
-    background-size: 50% 100%, 75% auto;
-    background-position: 60% 50%, -10% 50%;
-    color: $white;
-    padding: .9em 2em;
-    text-align: right;
-    border-radius: $radius;
-    margin-left: 3.5em;
-    @media (max-width: $bp-lg) {
-      margin-left: 0em;
-      margin-top: 3em;
-    }
-  }
   .blog-list {
     @include list();
     &-item {
@@ -1053,6 +1095,98 @@ header {
           margin-right: 1em;
         }
         h5 {flex:1;}
+      }
+    }
+  }
+}
+.cognition {
+  flex: 1;
+  display: block;
+  background-color: $black;
+  background-image: linear-gradient(to right, transparent, $black), url(imgs/bg/cogito.jpg);
+  background-repeat: no-repeat;
+  background-size: 50% 100%, 75% auto;
+  background-position: 60% 50%, -10% 50%;
+  color: $white;
+  padding: .9em 2em;
+  text-align: right;
+  border-radius: $radius;
+  transition: $transition;
+  &:hover, &:focus, &:active {
+    color: $light-blue;
+  }
+}
+.page-blog {
+  .article-mini {
+    position: relative;
+    img {
+      width: 100%;
+      height: 270px;
+      object-fit: cover;
+      border-radius: $radius $radius 0 0;
+      @media (max-width: $bp-xxl) {
+        height: 250px;
+      }
+      @media (max-width: $bp-xl) {
+        height: 220px;
+      }
+      @media (max-width: $bp-lg) {
+        height: 180px;
+      }
+      @media (max-width: $bp-md) {
+        height: 200px;
+      }
+      @media (max-width: $bp-sm) {
+        height: 155px;
+      }
+      @media (max-width: $bp-xs) {
+        height: 33vw;
+      }
+    }
+    figcaption {
+      background-color: $white;
+      border-radius: 0 0 $radius $radius;
+      @include lightShadow();
+      padding: 1.5em 1.5em .6em;
+      @media (max-width: $bp-lg) {
+        padding: 1em 1.25em .6em;
+      }
+      @media (max-width: $bp-xs) {
+        padding: .6em 1em;
+      }
+      h5 {
+        font-weight: 600;
+        color: #000;
+        @include clamp(2, 1.2em, true);
+        a {line-height: 1.2em;}
+      }
+      time {
+        display: block;
+        text-align: right;
+        margin-top: .5em;
+        color: $pale-blue;
+        font-weight: 500;
+        font-size: 1.2em;
+        @media (max-width: $bp-md) {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+  article {
+    p {
+      color: #000;
+      margin-bottom: 2em;
+      @media (max-width: $bp-xs) {
+        margin-bottom: 1em;
+      }
+    }
+    img {
+      max-width: 100%;
+      border-radius: $radius;
+      margin-bottom: 2em;
+      @media (max-width: $bp-xs) {
+        margin-bottom: 1em;
       }
     }
   }

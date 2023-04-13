@@ -77,6 +77,11 @@ h1, .h1 {
   line-height: 120%;
   margin-bottom: 0.2em;
 }
+@media (max-width: 1599px) {
+  h1, .h1 {
+    font-size: 3.6em;
+  }
+}
 @media (max-width: 1199px) {
   h1, .h1 {
     font-size: 3.5em;
@@ -135,12 +140,32 @@ h4 {
   text-align: left;
   margin-bottom: 0.2em;
 }
+@media (max-width: 991px) {
+  h4 {
+    font-size: 1.2em;
+  }
+}
+@media (max-width: 767px) {
+  h4 {
+    font-size: 1.1em;
+  }
+}
 
 h5 {
   font-size: 1.2em;
   font-weight: 400;
   text-align: left;
   margin-bottom: 0px;
+}
+@media (max-width: 991px) {
+  h5 {
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 767px) {
+  h5 {
+    font-size: 1em;
+  }
 }
 
 .fs-08 {
@@ -404,6 +429,64 @@ button {
 @media (max-width: 575px) {
   .mb-6 {
     margin-bottom: 4em;
+  }
+}
+
+.breadcrumbs {
+  margin-bottom: 2em;
+  color: #C1C1C1;
+}
+@media (max-width: 1199px) {
+  .breadcrumbs {
+    margin-bottom: 1.5em;
+  }
+}
+.breadcrumbs ul {
+  list-style: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.breadcrumbs ul li a {
+  font-size: 1.2em;
+  font-weight: 500;
+}
+@media (max-width: 991px) {
+  .breadcrumbs ul li a {
+    font-size: 1.1em;
+  }
+}
+@media (max-width: 767px) {
+  .breadcrumbs ul li a {
+    font-size: 1em;
+  }
+}
+.breadcrumbs ul li:not(:first-child) {
+  margin-left: 1em;
+  padding-left: 1.4em;
+  position: relative;
+}
+.breadcrumbs ul li:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  left: 0px;
+  display: block;
+  height: 100%;
+  width: 8px;
+  background: url(imgs/arrow-mini.svg) no-repeat center;
+  background-size: contain;
+}
+@media (max-width: 991px) {
+  .breadcrumbs ul li:not(:first-child)::before {
+    width: 7px;
+  }
+}
+@media (max-width: 767px) {
+  .breadcrumbs ul li:not(:first-child)::before {
+    width: 6px;
   }
 }
 
@@ -1222,26 +1305,6 @@ header {
 }
 
 /* Blog */
-.sec-blog .cognition {
-  flex: 1;
-  display: block;
-  background-color: #1B1B1C;
-  background-image: linear-gradient(to right, transparent, #1B1B1C), url(imgs/bg/cogito.jpg);
-  background-repeat: no-repeat;
-  background-size: 50% 100%, 75% auto;
-  background-position: 60% 50%, -10% 50%;
-  color: #FFFFFF;
-  padding: 0.9em 2em;
-  text-align: right;
-  border-radius: 0.67em;
-  margin-left: 3.5em;
-}
-@media (max-width: 1199px) {
-  .sec-blog .cognition {
-    margin-left: 0em;
-    margin-top: 3em;
-  }
-}
 .sec-blog .blog-list {
   list-style: none;
   padding-left: 0px;
@@ -1293,6 +1356,126 @@ header {
 }
 .sec-blog .blog-list-item-mobile h5 {
   flex: 1;
+}
+
+.cognition {
+  flex: 1;
+  display: block;
+  background-color: #1B1B1C;
+  background-image: linear-gradient(to right, transparent, #1B1B1C), url(imgs/bg/cogito.jpg);
+  background-repeat: no-repeat;
+  background-size: 50% 100%, 75% auto;
+  background-position: 60% 50%, -10% 50%;
+  color: #FFFFFF;
+  padding: 0.9em 2em;
+  text-align: right;
+  border-radius: 0.67em;
+  transition: 300ms ease-in-out;
+}
+.cognition:hover, .cognition:focus, .cognition:active {
+  color: #66C6E4;
+}
+
+.page-blog .article-mini {
+  position: relative;
+}
+.page-blog .article-mini img {
+  width: 100%;
+  height: 270px;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: 0.67em 0.67em 0 0;
+}
+@media (max-width: 1599px) {
+  .page-blog .article-mini img {
+    height: 250px;
+  }
+}
+@media (max-width: 1399px) {
+  .page-blog .article-mini img {
+    height: 220px;
+  }
+}
+@media (max-width: 1199px) {
+  .page-blog .article-mini img {
+    height: 180px;
+  }
+}
+@media (max-width: 991px) {
+  .page-blog .article-mini img {
+    height: 200px;
+  }
+}
+@media (max-width: 767px) {
+  .page-blog .article-mini img {
+    height: 155px;
+  }
+}
+@media (max-width: 575px) {
+  .page-blog .article-mini img {
+    height: 33vw;
+  }
+}
+.page-blog .article-mini figcaption {
+  background-color: #FFFFFF;
+  border-radius: 0 0 0.67em 0.67em;
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+  padding: 1.5em 1.5em 0.6em;
+}
+@media (max-width: 1199px) {
+  .page-blog .article-mini figcaption {
+    padding: 1em 1.25em 0.6em;
+  }
+}
+@media (max-width: 575px) {
+  .page-blog .article-mini figcaption {
+    padding: 0.6em 1em;
+  }
+}
+.page-blog .article-mini figcaption h5 {
+  font-weight: 600;
+  color: #000;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.2em;
+  height: 2.4em;
+}
+.page-blog .article-mini figcaption h5 a {
+  line-height: 1.2em;
+}
+.page-blog .article-mini figcaption time {
+  display: block;
+  text-align: right;
+  margin-top: 0.5em;
+  color: #9DC4EF;
+  font-weight: 500;
+  font-size: 1.2em;
+}
+@media (max-width: 991px) {
+  .page-blog .article-mini figcaption time {
+    font-size: 1em;
+  }
+}
+.page-blog article p {
+  color: #000;
+  margin-bottom: 2em;
+}
+@media (max-width: 575px) {
+  .page-blog article p {
+    margin-bottom: 1em;
+  }
+}
+.page-blog article img {
+  max-width: 100%;
+  border-radius: 0.67em;
+  margin-bottom: 2em;
+}
+@media (max-width: 575px) {
+  .page-blog article img {
+    margin-bottom: 1em;
+  }
 }
 
 /* bottom background */
