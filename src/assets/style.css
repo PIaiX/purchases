@@ -277,6 +277,48 @@ input.p-blue::placeholder, textarea.p-blue::placeholder {
   font-weight: 400;
 }
 
+input[type=checkbox], input[type=radio] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #48D868;
+  background-color: transparent;
+  border-radius: 50%;
+  box-shadow: none;
+  padding: 0px;
+  margin: 0px;
+  transition: 300ms ease-in-out;
+  position: relative;
+}
+input[type=checkbox]::before, input[type=radio]::before {
+  content: "";
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  height: 10px;
+  width: 10px;
+  border-radius: 50%;
+  background-color: #48D868;
+  transition: 300ms ease-in-out;
+  opacity: 0;
+}
+input[type=checkbox]:checked::before, input[type=radio]:checked::before {
+  opacity: 1;
+}
+
+label {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+label span {
+  flex: 1;
+}
+
 button {
   background: none;
   border: none;
@@ -1159,56 +1201,6 @@ header {
 .game-card h4 {
   padding: 0 0 0.6em 0.65em;
 }
-.game-card .servers {
-  position: relative;
-  list-style: none;
-  padding-left: 0px;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
-  background: rgba(72, 216, 104, 0.8);
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
-  width: -moz-fit-content;
-  width: fit-content;
-  border-radius: 0.67em;
-  padding: 0 0.5em;
-}
-.game-card .servers li {
-  position: relative;
-  color: #FFFFFF;
-  width: -moz-fit-content;
-  width: fit-content;
-  text-transform: uppercase;
-  padding: 0.6em 0.5em;
-  transition: 300ms ease-in-out;
-  cursor: pointer;
-}
-.game-card .servers li.indicator {
-  transform: translateY(-50%) translateX(-50%);
-  padding: 0px;
-  position: absolute;
-  left: 0.5em;
-  top: -0.5px;
-  width: 1.5em;
-  height: 1em;
-  background: url(imgs/Subtract.svg) no-repeat center bottom;
-  background-size: 100% 50%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  flex-wrap: nowrap;
-}
-.game-card .servers li.indicator img {
-  width: 0.53em;
-  height: 0.53em;
-  box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2);
-}
-.game-card .servers li.active {
-  color: #005A47;
-}
 .game-card .categories {
   list-style: none;
   padding-left: 0px;
@@ -1234,6 +1226,57 @@ header {
 }
 .game-card .categories li:not(:last-child) {
   margin-right: 1em;
+}
+
+.servers {
+  position: relative;
+  list-style: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  background: rgba(72, 216, 104, 0.8);
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  width: -moz-fit-content;
+  width: fit-content;
+  border-radius: 0.67em;
+  padding: 0 0.5em;
+}
+.servers li {
+  position: relative;
+  color: #FFFFFF;
+  width: -moz-fit-content;
+  width: fit-content;
+  text-transform: uppercase;
+  padding: 0.6em 0.5em;
+  transition: 300ms ease-in-out;
+  cursor: pointer;
+}
+.servers li.indicator {
+  transform: translateY(-50%) translateX(-50%);
+  padding: 0px;
+  position: absolute;
+  left: 0.5em;
+  top: -0.5px;
+  width: 1.5em;
+  height: 1em;
+  background: url(imgs/Subtract.svg) no-repeat center bottom;
+  background-size: 100% 50%;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.servers li.indicator img {
+  width: 0.53em;
+  height: 0.53em;
+  box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2);
+}
+.servers li.active {
+  color: #005A47;
 }
 
 .sec-promo {
@@ -1302,6 +1345,87 @@ header {
 .sec-promo .text {
   position: relative;
   z-index: 10;
+}
+
+.page-game .categories {
+  list-style: none;
+  padding-left: 0px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-top: 1.34em;
+  font-size: 1.2em;
+  margin-bottom: 3em;
+}
+.page-game .categories li {
+  margin-right: 1.1em;
+  margin-bottom: 1.1em;
+}
+.page-game .categories li button {
+  background-color: rgba(157, 196, 239, 0.2);
+  padding: 0.55em;
+  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
+  border-radius: 0.335em;
+}
+.page-game .filter {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.page-game .filter input {
+  border-color: #9DC4EF;
+}
+.page-game .filter input::-moz-placeholder {
+  color: #9DC4EF;
+  font-weight: 400;
+}
+.page-game .filter input::placeholder {
+  color: #9DC4EF;
+  font-weight: 400;
+}
+.page-game .filter input[type=search] {
+  width: 340px;
+}
+.page-game .filter input[type=number] {
+  width: 50px;
+  padding: 0.6em 0.4em;
+  text-align: center;
+}
+.page-game .offers {
+  background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 0.67em;
+}
+.page-game .offers .top {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  background-color: rgba(157, 196, 239, 0.2);
+  border-radius: 0.67em 0.67em 0px 0px;
+  padding: 0 2em;
+}
+.page-game .offers .top li {
+  padding: 1em;
+}
+.page-game .offers ul {
+  list-style: none;
+  padding-left: 0px;
+  padding: 2em;
+}
+.page-game .offers ul .offer {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
 }
 
 /* Blog */
@@ -1419,7 +1543,7 @@ header {
 .page-blog .article-mini figcaption {
   background-color: #FFFFFF;
   border-radius: 0 0 0.67em 0.67em;
-  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   padding: 1.5em 1.5em 0.6em;
 }
 @media (max-width: 1199px) {
@@ -1641,7 +1765,7 @@ header {
   background: url(imgs/bg/inputChat.svg) no-repeat center;
   background-size: 100% 100%;
   height: 4em;
-  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
 }
 .chat-form .input input {
   border: none;

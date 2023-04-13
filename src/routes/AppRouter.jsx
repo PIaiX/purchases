@@ -5,11 +5,13 @@ import Home from '../pages/Home'
 import NotFound from '../pages/NotFound'
 import Blog from '../pages/Blog'
 import Article from '../pages/Article'
+import Game from '../pages/Game'
 
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
       <Route index element={<Home />}/>
+      <Route path="game" element={<Game/>} />
       <Route path="blog" element={<Blog/>} />
       <Route path="blog/:id" element={<Article/>} />
       <Route path="*" element={<NotFound />} />

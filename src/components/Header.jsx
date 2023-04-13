@@ -18,7 +18,7 @@ const Header = () => {
             </Link>
             <Link to='/registration' className='d-none d-lg-flex ms-4 ms-xl-5'>Регистрация</Link>
             <form action="" className='d-none d-lg-flex form-search ms-4 ms-xl-5'>
-              <input type="text" placeholder='Поиск по играм' className='p-blue'/>
+              <input type="search" placeholder='Поиск по играм' className='p-blue'/>
               <button type='submit'>
                 <SearchIcon />
               </button>
