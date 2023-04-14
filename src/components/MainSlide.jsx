@@ -6,7 +6,7 @@ import SlideMobile from './svg/SlideMobile';
 import useIsMobile from '../hooks/isMobile';
 
 const MainSlide = (props) => {
-  const {mobile} = useIsMobile('991px');
+  const {mobile} = useIsMobile('1109px');
 
   return (
     <div 

@@ -16,7 +16,7 @@ import useIsMobile from '../hooks/isMobile';
 import CatalogSection from '../components/CatalogSection';
 
 const Home = () => {
-  const {mobile} = useIsMobile('991px');
+  const {mobile} = useIsMobile('1109px');
 
   return (
     <main>

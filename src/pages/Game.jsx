@@ -37,11 +37,11 @@ const Game = () => {
               </ul>
 
               <form action="" className='filter'>
-                <label className='me-5'>
-                  <span>Только продавцы онлайн</span>
+                <label className='fs-12 me-5 mb-3'>
+                  <span className='me-2'>Только продавцы онлайн</span>
                   <input type="checkbox" />
                 </label>
-                <input type="search" placeholder='Поиск по описанию'/>
+                <input type="search" placeholder='Поиск по описанию' className='mb-3'/>
                 <div className='d-flex align-items-baseline'>
                   <span>Уровень</span>
                   <input type="number" placeholder='от' className='ms-2'/>

@@ -6,7 +6,7 @@ import PrevIcon from './svg/PrevIcon';
 
 const MainSlider = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const {mobile} = useIsMobile('991px');
+  const {mobile} = useIsMobile('1109px');
 
   const handleNext = () => {
     const nextSlide = activeSlide+1;

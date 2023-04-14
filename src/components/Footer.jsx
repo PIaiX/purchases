@@ -12,7 +12,7 @@ import useIsMobile from '../hooks/isMobile';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const {mobile} = useIsMobile('991px');
+  const {mobile} = useIsMobile('1109px');
 
   return (
     <footer>

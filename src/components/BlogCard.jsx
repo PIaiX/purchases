@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom';
 import useIsMobile from '../hooks/isMobile';
 
 const BlogCard = (props) => {
-  const {mobile} = useIsMobile('991px');
+  const {mobile} = useIsMobile('1109px');
 
   return (
     <figure className={(mobile) ? 'blog-list-item-mobile' : 'blog-list-item'}>

@@ -1,3 +1,4 @@
+@import 'bootstrapCustom';
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
 
 // "homepage": "https://ngf93.github.io/purchases",
@@ -5,10 +6,10 @@
 :root {
   --h-height: 85px;
   --f-height: 80px;
-  @media (max-width: 767px) {
+  @include media-breakpoint-down(md) {
     --h-height: 70px;
   }
-  @media (max-width: 575px) {
+  @include media-breakpoint-down(sm) {
     --h-height: 55px;
     --f-height: 64px;
   }
@@ -36,12 +37,6 @@ $black: #1B1B1C;
 $transition: 300ms ease-in-out;
 $radius: .67em;
 
-$bp-xs: 575px;
-$bp-sm: 767px;
-$bp-md: 991px;
-$bp-lg: 1199px;
-$bp-xl: 1399px;
-$bp-xxl: 1599px;
 
 /* mixins */
 @mixin flex($dir: row, $x: center, $y: center, $wrap: nowrap) {
@@ -100,7 +95,8 @@ $bp-xxl: 1599px;
   backdrop-filter: blur(2.5px);
 }
 @mixin blob {
-  box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2), inset 0px 1px 3px rgba(245, 201, 249, 0.47);
+  box-shadow: inset 0px 1px 3px rgba(245, 201, 249, 0.47);
+  filter: drop-shadow(0px 1px 3px rgba(70,67,118,.2));
 }
 @mixin btnStyle {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
@@ -182,19 +178,19 @@ h1, .h1 {
   text-align: left;
   line-height: 120%;
   margin-bottom: .2em;
-  @media (max-width: $bp-xxl) {
+  @include media-breakpoint-down(xxxl) {
     font-size: 3.6em;
   }
-  @media (max-width: $bp-lg) {
+  @include media-breakpoint-down(xl) {
     font-size: 3.5em;
   }
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     font-size: 3.2em;
   }
-  @media (max-width: $bp-sm) {
+  @include media-breakpoint-down(md) {
     font-size: 2.75em;
   }
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm) {
     font-size: 2.3em;
   }
 }
@@ -204,10 +200,10 @@ h2 {
   font-weight: normal;
   text-align: left;
   margin-bottom: .67em;
-  @media (max-width: $bp-sm) {
+  @include media-breakpoint-down(md) {
     font-size: 2.75em;
   }
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm) {
     font-size: 2.3em;
     margin-bottom: .5em;
   }
@@ -217,7 +213,7 @@ h3 {
   font-weight: 400;
   text-align: left;
   margin-bottom: .2em;
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     font-size: 1.4em;
   }
 }
@@ -226,10 +222,10 @@ h4 {
   font-weight: 600;
   text-align: left;
   margin-bottom: .2em;
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     font-size: 1.2em;
   }
-  @media (max-width: $bp-sm) {
+  @include media-breakpoint-down(md) {
     font-size: 1.1em;
   }
 }
@@ -238,10 +234,10 @@ h5 {
   font-weight: 400;
   text-align: left;
   margin-bottom: 0px;
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     font-size: 1.1em;
   }
-  @media (max-width: $bp-sm) {
+  @include media-breakpoint-down(md) {
     font-size: 1em;
   }
 }
@@ -421,7 +417,7 @@ button {
   position: relative;
   input {
     width: 340px;
-    @media (max-width: $bp-lg) {
+    @include media-breakpoint-down(xl) {
       width: 280px;
     }
   }
@@ -437,18 +433,13 @@ button {
   }
 }
 
-@media (min-width: 1600px) {
-  .container {
-    max-width: 1509px;
-  }
-}
 .flex-1 {flex: 1;}
 .mb-6 {
   margin-bottom: 6em;
-  @media (max-width: $bp-sm) {
+  @include media-breakpoint-down(md) {
     margin-bottom: 5em;
   }
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm) {
     margin-bottom: 4em;
   }
 }
@@ -456,7 +447,7 @@ button {
 .breadcrumbs {
   margin-bottom: 2em;
   color: $light-gray;
-  @media (max-width: $bp-lg) {
+  @include media-breakpoint-down(xl) {
     margin-bottom: 1.5em;
   }
   ul {
@@ -466,10 +457,10 @@ button {
       a {
         font-size: 1.2em;
         font-weight: 500;
-        @media (max-width: $bp-md) {
+        @include media-breakpoint-down(lg) {
           font-size: 1.1em;
         }
-        @media (max-width: $bp-sm) {
+        @include media-breakpoint-down(md) {
           font-size: 1em;
         }
       }
@@ -486,10 +477,10 @@ button {
           width: 8px;
           background: url(imgs/arrow-mini.svg) no-repeat center;
           background-size: contain;
-          @media (max-width: $bp-md) {
+          @include media-breakpoint-down(lg){
             width: 7px;
           }
-          @media (max-width: $bp-sm) {
+          @include media-breakpoint-down(md) {
             width: 6px;
           }
         }
@@ -507,10 +498,10 @@ body {
   font-weight: 400;
   color: $black;
   overflow-x: hidden;
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     padding-bottom: var(--f-height);
   }
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm) {
     font-size: 13px;
   }
 }
@@ -519,7 +510,7 @@ body {
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
   padding: 2em 0;
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm){
     padding: 1em 0;
   }
 }
@@ -530,17 +521,17 @@ header {
 
 /* Slider */
 .main-slider {
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg){
     overflow: hidden;
     position: relative;
     padding-bottom: 2em;
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       padding-bottom: 1.5em;
     }
   }
   &-box {
     @include flex(row, space-between, flex-start, nowrap);
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       width: 300%;
       transition: 400ms ease-in-out;
       &.pos-1 {
@@ -560,11 +551,11 @@ header {
     position: relative;
     padding-top: 3.5em;
     transition: 400ms ease-in-out;
-    @media (max-width: $bp-lg) {
+    @include media-breakpoint-down(xl) {
       --w: 16.5%;
       padding-top: 2.5em;
     }
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       --w: 100%;
       padding-top: 0em;
     }
@@ -573,23 +564,23 @@ header {
       z-index: 1;
       width: 112%;
       height: 430px;
-      @media (max-width: $bp-xxl) {
+      @include media-breakpoint-down(xxxl) {
         height: 372px;
       }
-      @media (max-width: $bp-xl) {
+      @include media-breakpoint-down(xxl) {
         height: 320px;
       }
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         height: 284px;
       }
     }
     .svg-mobile {
       width: 100%;
       height: 552px;
-      @media (max-width: $bp-sm) {
+      @include media-breakpoint-down(md){
         height: 410px;
       }
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         height: 73vw;
       }
     }
@@ -602,12 +593,12 @@ header {
       overflow: hidden;
       opacity: 0;
       transition: 400ms linear 0ms;
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         top: 5%;
         left: 30%;
         width: 70%;
       }
-      @media (max-width: $bp-sm) {
+      @include media-breakpoint-down(md) {
         top: 3%;
       }
       h2 {
@@ -616,16 +607,16 @@ header {
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 0px;
-        @media (max-width: $bp-lg) {
+        @include media-breakpoint-down(xl) {
           font-size: 2.5em;
         }
-        @media (max-width: $bp-md) {
+        @include media-breakpoint-down(lg) {
           font-size: 3em;
         }
-        @media (max-width: $bp-sm) {
+        @include media-breakpoint-down(md) {
           font-size: 2.5em;
         }
-        @media (max-width: $bp-xs) {
+        @include media-breakpoint-down(sm) {
           font-size: 2.3em;
         }
       }
@@ -636,13 +627,13 @@ header {
       overflow: hidden;
       opacity: 1;
       transition: 400ms linear 400ms;
-      @media (max-width: $bp-xxl) {
+      @include media-breakpoint-down(xxxl) {
         margin-top: 10px;
       }
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         margin-top: 0px;
       }
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
       h2 {
@@ -651,10 +642,10 @@ header {
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 0px;
-        @media (max-width: $bp-xxl) {
+        @include media-breakpoint-down(xxxl) {
           font-size: 2.5em;
         }
-        @media (max-width: $bp-xl) {
+        @include media-breakpoint-down(xxl) {
           font-size: 2em;
         }
       }
@@ -669,20 +660,20 @@ header {
       @include flex(column, center, center, nowrap);
       color: $white;
       font-size: .85em;
-      @media (max-width: $bp-xxl) {
+      @include media-breakpoint-down(xxxl) {
         font-size: .75em;
       }
-      @media (max-width: $bp-xl) {
+      @include media-breakpoint-down(xxl) {
         font-size: .6em;
       }
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         font-size: .55em;
       }
       .num {
         font-size: 1.1em;
         line-height: 140%;
         font-weight: 600;
-        @media (max-width: $bp-xl) {
+        @include media-breakpoint-down(xxl) {
           font-size: 1.25em;
         }
       }
@@ -693,24 +684,24 @@ header {
       bottom: 2em;
       right: 2em;
       opacity: 0;
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         bottom: 1em;
         right: 1em;
       }
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         display: none;
       }
     }
     &-active {
       @extend .main-slider-item;
       --w: 60.6%;
-      @media (max-width: $bp-xl) {
+      @include media-breakpoint-down(xxl) {
         --w: 61%;
       }
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         --w: 62%;
       }
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         --w: 100%;
       }
       .svg-full {
@@ -719,15 +710,15 @@ header {
         width: 100%;
         height: 524px;
         margin-top: -3.3em;
-        @media (max-width: $bp-xxl) {
+        @include media-breakpoint-down(xxxl) {
           height: 458px;
           margin-top: -3em;
         }
-        @media (max-width: $bp-xl) {
+        @include media-breakpoint-down(xxl) {
           height: 400px;
           margin-top: -2.6em;
         }
-        @media (max-width: $bp-lg) {
+        @include media-breakpoint-down(xl) {
           height: 340px;
           margin-top: -2em;
         }
@@ -747,25 +738,25 @@ header {
         bottom: unset;
         right: unset;
         font-size: 1em;
-        @media (max-width: $bp-xxl) {
+        @include media-breakpoint-down(xxxl) {
           font-size: .9em;
         }
-        @media (max-width: $bp-xl) {
+        @include media-breakpoint-down(xxl) {
           font-size: .8em;
         }
-        @media (max-width: $bp-lg) {
+        @include media-breakpoint-down(xl) {
           font-size: .7em;
           top: -1.65em;
         }
-        @media (max-width: $bp-md) {
+        @include media-breakpoint-down(lg) {
           font-size: 1.3em;
           top: 7%;
           left: 12.5%;
         }
-        @media (max-width: $bp-sm) {
+        @include media-breakpoint-down(md) {
           font-size: 1em;
         }
-        @media (max-width: $bp-xs) {
+        @include media-breakpoint-down(sm) {
           font-size: 3vw;
           left: 12%;
         }
@@ -786,11 +777,11 @@ header {
     position: absolute;
     top: 67.5%;
     font-size: 2em;
-    @media (max-width: $bp-sm) {
+    @include media-breakpoint-down(md) {
       top: 66.5%;
       font-size: 1.5em;
     }
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       font-size: 1.25em;
     }
   }
@@ -809,7 +800,7 @@ header {
       background-color: rgba($color: $black, $alpha: .15);
       border-radius: .3em;
       transition: $transition;
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         height: .4em;
       }
       &:not(:first-child){margin-left: 2em;}
@@ -825,10 +816,9 @@ header {
 .sec-catalog {
   background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
-  position: relative;
   .container {
-    position: unset;
-    @media (max-width: $bp-md) {
+    position: relative;
+    @include media-breakpoint-down(lg) {
       @include flex(row, flex-start, stretch, nowrap);
     }
   }
@@ -836,13 +826,13 @@ header {
     position: absolute;
     z-index: 10;
     top: 0%;
-    left: 3%;
+    right: calc(100% + 12px);
     width: 60px;
     height: 100%;
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       position: relative;
       top: unset;
-      left: unset;
+      right: unset;
       height: auto;
       margin-left: 1em;
     }
@@ -859,7 +849,7 @@ header {
       max-height: calc(100vh - 2em);
       padding: .5em;
       transition: $transition;
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         float: right;
       }
       form {
@@ -928,7 +918,7 @@ header {
         @include flex();
         border-radius: 50%;
         overflow: hidden;
-        @media (max-width: $bp-md) {
+        @include media-breakpoint-down(lg) {
           right: unset;
           left: -.5em;
         }
@@ -936,14 +926,14 @@ header {
           width: 100%;
           height: 100%;
           transition: $transition;
-          @media (max-width: $bp-md) {
+          @include media-breakpoint-down(lg) {
             transform:rotate(-180deg);
           }
         }
         &.opened {
           img {
             transform:rotate(-180deg);
-            @media (max-width: $bp-md) {
+            @include media-breakpoint-down(lg) {
               transform:rotate(0deg);
             }
           }
@@ -967,10 +957,10 @@ header {
     @include blurShadow();
     border-radius: 10px;
     &:not(:last-child){margin-bottom: 3.33em;}
-    @media (max-width: $bp-xxl) {
+    @include media-breakpoint-down(xxxl) {
       padding: 1em 1.5em;
     }
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       padding: 1em;
     }
   }
@@ -979,7 +969,7 @@ header {
     font-weight: 700;
     color: rgba(67, 185, 198, 0.26);
     margin-bottom: 1rem;
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       line-height: 100%;
     }
   }
@@ -992,7 +982,7 @@ header {
     object-fit: cover;
     border-radius: 50%;
     margin-right: 1.3em;
-    @media (max-width: $bp-xxl) {
+    @include media-breakpoint-down(xxxl) {
       margin-right: .5em;
     }
   }
@@ -1003,10 +993,10 @@ header {
     @include list();
     @include flex(row, flex-start, center, wrap);
     padding: 1em .85em .85em;
-    @media (max-width: $bp-xxl) {
+    @include media-breakpoint-down(xxxl) {
       padding: .85em .5em .5em;
     }
-    @media (max-width: $bp-xl) {
+    @include media-breakpoint-down(xxl) {
       padding: .75em 0em 0;
     }
     li { 
@@ -1038,15 +1028,15 @@ header {
       position: absolute;
       left: .5em;
       top: -0.5px;
-      width: 1.5em;
-      height: 1em;
+      width: 20px;
+      height: 14px;
       background: url(imgs/Subtract.svg) no-repeat center bottom;
       background-size: 100% 50%;
       @include flex();
       img {
-        width: .53em;
-        height: .53em;
-        box-shadow: 0px 1px 3px rgba(70, 67, 118, 0.2);
+        width: 8px;
+        height: 8px;
+        filter: drop-shadow(0px 1px 3px rgba(70,67,118,.2));
       }
     }
     &.active {color: $dark-green;}
@@ -1060,31 +1050,31 @@ header {
   color: $white;
   @include flex(row, space-between, center, nowrap);
   margin-top: 10%;
-  @media (max-width: $bp-xl) {
+  @include media-breakpoint-down(xxl) {
     padding: 0 3em;
   }
-  @media (max-width: $bp-lg) {
+  @include media-breakpoint-down(xl) {
     padding: 0 2em;
   }
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     margin-top: 15%;
   }
-  @media (max-width: $bp-xs) {
+  @include media-breakpoint-down(sm) {
     padding: 1em;
     height: 85px;
   }
   img {
     width: 25%;
     margin-top: -11%;
-    @media (max-width: $bp-lg) {
+    @include media-breakpoint-down(xl) {
       width: 22%;
       margin-top: -7%;
     }
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       width: 50%;
       margin-top: -15%;
     }
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       position: absolute;
       bottom: 0px;
       right: 0px;
@@ -1116,7 +1106,7 @@ header {
   }
   .filter {
     @include flex(row, flex-start, center, wrap);
-    input {
+    input:not([type="checkbox"]) {
       border-color: $pale-blue;
       @include placeholder($pale-blue);
     }
@@ -1136,8 +1126,10 @@ header {
       background-color: rgba($pale-blue, 0.2);
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
-      li {
-        padding: 1em;
+      div {
+        font-size: 1.2em;
+        font-weight: 600;
+        padding: .5em;
       }
     }
     ul {
@@ -1163,10 +1155,10 @@ header {
         object-fit: cover;
         border-radius: $radius;
         margin-bottom: 1.3em;
-        @media (max-width: $bp-xxl) {
+        @include media-breakpoint-down(xxxl) {
           height: 200px;
         }
-        @media (max-width: $bp-xl) {
+        @include media-breakpoint-down(xxl) {
           height: 190px;
         }
       }
@@ -1190,14 +1182,15 @@ header {
 }
 .cognition {
   flex: 1;
-  display: block;
+  @include flex(row, flex-end, center, nowrap);
   background-color: $black;
   background-image: linear-gradient(to right, transparent, $black), url(imgs/bg/cogito.jpg);
   background-repeat: no-repeat;
   background-size: 50% 100%, 75% auto;
   background-position: 60% 50%, -10% 50%;
   color: $white;
-  padding: .9em 2em;
+  padding: 0em 2em;
+  height: 60px;
   text-align: right;
   border-radius: $radius;
   transition: $transition;
@@ -1213,22 +1206,22 @@ header {
       height: 270px;
       object-fit: cover;
       border-radius: $radius $radius 0 0;
-      @media (max-width: $bp-xxl) {
+      @include media-breakpoint-down(xxxl) {
         height: 250px;
       }
-      @media (max-width: $bp-xl) {
+      @include media-breakpoint-down(xxl) {
         height: 220px;
       }
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         height: 180px;
       }
-      @media (max-width: $bp-md) {
+      @include media-breakpoint-down(lg) {
         height: 200px;
       }
-      @media (max-width: $bp-sm) {
+      @include media-breakpoint-down(md) {
         height: 155px;
       }
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         height: 33vw;
       }
     }
@@ -1237,10 +1230,10 @@ header {
       border-radius: 0 0 $radius $radius;
       @include lightShadow();
       padding: 1.5em 1.5em .6em;
-      @media (max-width: $bp-lg) {
+      @include media-breakpoint-down(xl) {
         padding: 1em 1.25em .6em;
       }
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         padding: .6em 1em;
       }
       h5 {
@@ -1256,7 +1249,7 @@ header {
         color: $pale-blue;
         font-weight: 500;
         font-size: 1.2em;
-        @media (max-width: $bp-md) {
+        @include media-breakpoint-down(lg) {
           font-size: 1em;
         }
       }
@@ -1266,7 +1259,7 @@ header {
     p {
       color: #000;
       margin-bottom: 2em;
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
       }
     }
@@ -1274,7 +1267,7 @@ header {
       max-width: 100%;
       border-radius: $radius;
       margin-bottom: 2em;
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
       }
     }
@@ -1313,11 +1306,11 @@ header {
     text-align: center;
     border: .5em solid $white;
     box-sizing: content-box;
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       top: -4em;
       left: 2em;
     }
-    @media (max-width: $bp-xs) {
+    @include media-breakpoint-down(sm) {
       left: 1em;
     }
   }
@@ -1325,7 +1318,7 @@ header {
     height: 698px;
     overflow: auto;
     padding: 2em 3.5em;
-    @media (max-width: $bp-md) {
+    @include media-breakpoint-down(lg) {
       padding: 1em 1.5em;
       height: 500px;
     }
@@ -1453,10 +1446,10 @@ header {
   h2 {
     margin-bottom: 0.1em;
     padding: 0 0.35em;
-    @media (max-width: $bp-xxl) {
+    @include media-breakpoint-down(xxxl) {
       font-size: 2.85em;
     }
-    @media (max-width: $bp-lg) {
+    @include media-breakpoint-down(xl) {
       font-size: 2.65em;
     }
   }
@@ -1516,7 +1509,7 @@ footer {
   height: var(--f-height);
   background-color: $black;
   color: $white;
-  @media (max-width: $bp-md) {
+  @include media-breakpoint-down(lg) {
     background-color: transparent;
     color: $black;
     position: fixed;
@@ -1551,10 +1544,10 @@ footer {
       margin-left: 1.7em;
       padding: .75em 1.5em;
       border-radius: $radius;
-      @media (max-width: $bp-sm) {
+      @include media-breakpoint-down(md) {
         justify-content: space-around;
       }
-      @media (max-width: $bp-xs) {
+      @include media-breakpoint-down(sm) {
         justify-content: space-between;
       }
       li {
