@@ -9046,6 +9046,11 @@ header {
   border-radius: 0.67em;
   position: relative;
 }
+@media (max-width: 575.98px) {
+  .chat {
+    padding: 3em 0.7em 1em;
+  }
+}
 .chat-count {
   position: absolute;
   top: -3em;

@@ -1294,6 +1294,9 @@ header {
   padding: 4em .7em 2em;
   border-radius: $radius;
   position: relative;
+  @include media-breakpoint-down(sm) {
+    padding: 3em .7em 1em;
+  }
   &-count {
     position: absolute;
     top: -3em;
