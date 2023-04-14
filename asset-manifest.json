@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/static/css/main.c7639261.css",
+    "main.css": "/static/css/main.fb8b685e.css",
     "main.js": "/static/js/main.67ec518a.js",
     "static/media/bebasneuecyrillic.ttf": "/static/media/bebasneuecyrillic.f39fe92d35bac3b2fe60.ttf",
     "static/media/cogito.jpg": "/static/media/cogito.a7a9226ba2e056868f03.jpg",
@@ -14,11 +14,11 @@
     "static/media/send.svg": "/static/media/send.f0b1499e7642e258df1e7e2d8fb14570.svg",
     "static/media/Subtract.svg": "/static/media/Subtract.c84980053522d86f78d0.svg",
     "static/media/arrow-mini.svg": "/static/media/arrow-mini.705720f49325e72aa313.svg",
-    "main.c7639261.css.map": "/static/css/main.c7639261.css.map",
+    "main.fb8b685e.css.map": "/static/css/main.fb8b685e.css.map",
     "main.67ec518a.js.map": "/static/js/main.67ec518a.js.map"
   },
   "entrypoints": [
-    "static/css/main.c7639261.css",
+    "static/css/main.fb8b685e.css",
     "static/js/main.67ec518a.js"
   ]
 }
