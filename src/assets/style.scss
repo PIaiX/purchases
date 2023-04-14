@@ -88,7 +88,7 @@ $radius: .67em;
   backdrop-filter: blur(4px);
 }
 @mixin lightShadow {
-  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
 @mixin shadowMobile {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5), 1px 1px 10px rgba(100, 100, 100, 0.15);
@@ -1027,7 +1027,7 @@ header {
       padding: 0px;
       position: absolute;
       left: .5em;
-      top: -0.5px;
+      top: 1px;
       width: 20px;
       height: 14px;
       background: url(imgs/Subtract.svg) no-repeat center bottom;
@@ -1043,6 +1043,7 @@ header {
   }
 }
 .sec-promo {
+  position: relative;
   @include bgTextureGradient();
   @include blurShadow();
   border-radius: $radius;
@@ -1322,6 +1323,12 @@ header {
       padding: 1em 1.5em;
       height: 500px;
     }
+    @include media-breakpoint-down(md) {
+      padding: 1em;
+    }
+    @include media-breakpoint-down(sm) {
+      padding: 1em .5em;
+    }
     &-message {
       @include flex(row, flex-start, flex-start);
       &:not(:first-child){margin-top: 2em;}
@@ -1401,12 +1408,37 @@ header {
   &-form {
     @include flex(row, flex-start, center, nowrap);
     padding: 0 3.5em;
+    @include media-breakpoint-down(lg) {
+      padding: 0 1.5em;
+    }
+    @include media-breakpoint-down(md) {
+      padding: 0 1em;
+    }
+    @include media-breakpoint-down(sm) {
+      padding: 0 .5em;
+    }
     .input {
+      position: relative;
       flex: 1;
-      background: url(imgs/bg/inputChat.svg) no-repeat center;
-      background-size: 100% 100%;
+      // background: url(imgs/bg/inputChat.svg) no-repeat center;
+      // background-size: 100% 100%;
+      background-color: $white;
+      border-radius: $radius*0.5 0px 0px $radius*0.5;
       height: 4em;
+      box-shadow: inset 0px 0px 0px 1px rgba(157,196,239,.2);
       @include lightShadow();
+      &::after {
+        content: '';
+        position: absolute;
+        top: 0px;
+        left: calc(100% - 1px);
+        height: 100%;
+        width: calc(4em / 3);
+        background: url(imgs/bg/inputChatEnd.svg) no-repeat center;
+        background-size: 100% 100%;
+        display: block;
+        z-index: 10;
+      }
       input {
         border: none;
         background-color: transparent;
@@ -1414,7 +1446,8 @@ header {
       }
     }
     button {
-      margin-left: -.34em;
+      // margin-left: -.34em;
+      margin-left: 1em;
       width: 3.34em;
       height: 3.34em;
       padding: 0px;

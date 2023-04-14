@@ -8674,7 +8674,7 @@ header {
   padding: 0px;
   position: absolute;
   left: 0.5em;
-  top: -0.5px;
+  top: 1px;
   width: 20px;
   height: 14px;
   background: url(imgs/Subtract.svg) no-repeat center bottom;
@@ -8695,6 +8695,7 @@ header {
 }
 
 .sec-promo {
+  position: relative;
   background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
   background-size: cover;
   background-repeat: no-repeat;
@@ -8781,7 +8782,7 @@ header {
 .page-game .categories li button {
   background-color: rgba(157, 196, 239, 0.2);
   padding: 0.55em;
-  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   border-radius: 0.335em;
 }
 .page-game .filter {
@@ -8965,7 +8966,7 @@ header {
 .page-blog .article-mini figcaption {
   background-color: #FFFFFF;
   border-radius: 0 0 0.67em 0.67em;
-  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   padding: 1.5em 1.5em 0.6em;
 }
 @media (max-width: 1289.98px) {
@@ -9085,6 +9086,16 @@ header {
     height: 500px;
   }
 }
+@media (max-width: 767.98px) {
+  .chat-window {
+    padding: 1em;
+  }
+}
+@media (max-width: 575.98px) {
+  .chat-window {
+    padding: 1em 0.5em;
+  }
+}
 .chat-window-message, .chat-window-message-mine {
   display: flex;
   flex-direction: row;
@@ -9182,12 +9193,41 @@ header {
   flex-wrap: nowrap;
   padding: 0 3.5em;
 }
+@media (max-width: 1109.98px) {
+  .chat-form {
+    padding: 0 1.5em;
+  }
+}
+@media (max-width: 767.98px) {
+  .chat-form {
+    padding: 0 1em;
+  }
+}
+@media (max-width: 575.98px) {
+  .chat-form {
+    padding: 0 0.5em;
+  }
+}
 .chat-form .input {
+  position: relative;
   flex: 1;
-  background: url(imgs/bg/inputChat.svg) no-repeat center;
-  background-size: 100% 100%;
+  background-color: #FFFFFF;
+  border-radius: 0.335em 0px 0px 0.335em;
   height: 4em;
-  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
+  box-shadow: inset 0px 0px 0px 1px rgba(157, 196, 239, 0.2);
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+}
+.chat-form .input::after {
+  content: "";
+  position: absolute;
+  top: 0px;
+  left: calc(100% - 1px);
+  height: 100%;
+  width: 1.3333333333em;
+  background: url(imgs/bg/inputChatEnd.svg) no-repeat center;
+  background-size: 100% 100%;
+  display: block;
+  z-index: 10;
 }
 .chat-form .input input {
   border: none;
@@ -9195,7 +9235,7 @@ header {
   height: 100%;
 }
 .chat-form button {
-  margin-left: -0.34em;
+  margin-left: 1em;
   width: 3.34em;
   height: 3.34em;
   padding: 0px;

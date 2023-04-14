@@ -53,7 +53,7 @@ const Home = () => {
                     slidesPerView={'auto'}
                     direction={'vertical'}
                     scrollbar={{ draggable: true }}
-                    mousewheel={true}
+                    mousewheel={{releaseOnEdges: true}}
                   >
                     <SwiperSlide>
                       <OfferCard/>
