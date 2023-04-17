@@ -1,7 +1,6 @@
 import React from 'react';
 import Container from 'react-bootstrap/Container';
 import {Link} from 'react-router-dom';
-import SearchIcon from './svg/SearchIcon';
 import fav from '../assets/imgs/fav.svg';
 import LanguageSwitcher from './utils/LanguageSwitcher';
 
@@ -17,12 +16,7 @@ const Header = () => {
               <span>Избранное</span>
             </Link>
             <Link to='/registration' className='d-none d-lg-flex ms-4 ms-xl-5'>Регистрация</Link>
-            <form action="" className='d-none d-lg-flex form-search ms-4 ms-xl-5'>
-              <input type="search" placeholder='Поиск по играм' className='p-blue'/>
-              <button type='submit'>
-                <SearchIcon />
-              </button>
-            </form>
+            <input type="search" className='d-none d-lg-flex ms-4 ms-xl-5' placeholder='Поиск по описанию'/>
           </div>
           <div className='d-none d-lg-flex align-items-center'>
             <Link to='/help' className='me-4 me-xl-5'>Помощь</Link>

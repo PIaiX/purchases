@@ -87,6 +87,9 @@ $radius: .67em;
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 4px 15px rgba(100, 100, 100, 0.08);
   backdrop-filter: blur(4px);
 }
+@mixin boxShadow($size: 15px) {
+  box-shadow: 0px 4px $size rgba(100, 100, 100, 0.08);
+}
 @mixin lightShadow {
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
@@ -273,10 +276,10 @@ h5 {
 
 /* Form elements */
 input, textarea {
-  background: $white;
+  background-color: rgba($white, $alpha: .8);
   border: 1px solid $light-gray;
   border-radius: $radius;
-  padding: 0.6em 1.65em;
+  padding: 0.7em 1.65em;
   width: 100%;
   outline: none;
   display: block;
@@ -316,12 +319,35 @@ input {
       opacity: 1;
     }
   }
+  &[type='search'] {
+    padding-right: 2.5em;
+    background: url(imgs/SearchIcon.svg) no-repeat calc(100% - .67em) 50% rgba($white, $alpha: .85);
+    background-size: 1.6em;
+  }
 }
 label {
   display: flex;
   justify-content: flex-start;
   align-items: center;
   span {flex:1;}
+}
+
+select {
+  @include no-appearance();
+  cursor: pointer;
+  min-width: 250px;
+  border-radius: $radius;
+  padding: 0.75em 1.65em;
+  border: none;
+  @include boxShadow(12px);
+  background: url(imgs/chevron-down.svg), $glass;
+  background-repeat: no-repeat;
+  background-position: calc(100% - 0.67em) 50%, 50% 50%;
+  background-size: 1.6em, cover;
+  transition: $transition;
+  &:hover, &:focus {
+    background-color: rgba($pale-blue, .1);
+  }
 }
 
 button {
@@ -413,25 +439,6 @@ button {
     }
   }
 }
-.form-search {
-  position: relative;
-  input {
-    width: 340px;
-    @include media-breakpoint-down(xl) {
-      width: 280px;
-    }
-  }
-  button {
-    position: absolute;
-    top: 0px;
-    right: 0px;
-    height: 100%;
-    color: $pale-blue;
-    font-size: 1.6em;
-    width: 1.6em;
-    @include flex(row, center, center, nowrap);
-  }
-}
 
 .flex-1 {flex: 1;}
 .mb-6 {
@@ -517,6 +524,10 @@ main {
 
 header {
   height: var(--h-height);
+  input {
+    border-color: $pale-blue;
+    @include placeholder($pale-blue);
+  }
 }
 
 /* Slider */
@@ -1027,7 +1038,7 @@ header {
       padding: 0px;
       position: absolute;
       left: .5em;
-      top: 1px;
+      top: -1px;
       width: 20px;
       height: 14px;
       background: url(imgs/Subtract.svg) no-repeat center bottom;
@@ -1088,33 +1099,85 @@ header {
   }
 }
 .page-game {
+  background: url(imgs/bg/gradient.jpg) no-repeat center bottom;
+  background-size: 100% 65%;
+  .img {
+    position: relative;
+    z-index: 1;
+    @include media-breakpoint-down(xxxl) {
+      width: 120%;
+      margin-left: -20%;
+    }
+    svg {
+      width: 100%;
+      height: auto;
+    }
+    &-lots {
+      position: absolute;
+      top: 14%;
+      left: 10.7%;
+      text-align: center;
+      color: $white;
+      @include media-breakpoint-down(xxxl) {
+        top: 13%;
+        left: 10.5%;
+      }
+      .num {
+        font-size: 1.6em;
+      }
+    }
+  }
   .categories {
+    position: relative;
+    z-index: 10;
     @include list();
     @include flex(row, flex-start, center, wrap);
     margin-top: 1.34em;
     font-size: 1.2em;
     margin-bottom: 3em;
+    @include media-breakpoint-down(xxxl) {
+      margin-top: 1em;
+      margin-bottom: 2em;
+    }
+    @include media-breakpoint-down(xxl) {
+      margin-bottom: 1em;
+    }
     li {
       margin-right: 1.1em;
       margin-bottom: 1.1em;
-      button {
+      button, a {
         background-color: rgba($pale-blue, 0.2);
         padding: .55em;
-        @include lightShadow();
+        @include boxShadow();
         border-radius: $radius*0.5;
+        transition: $transition;
+        &:hover, &:focus {
+          background-color: rgba($pale-blue, 0.6);
+        }
+        &:active, &.active {
+          background-color: rgba($pale-blue, 1);
+          color: $dark-blue;
+        }
       }
     }
   }
   .filter {
+    position: relative;
+    z-index: 10;
     @include flex(row, flex-start, center, wrap);
     input:not([type="checkbox"]) {
       border-color: $pale-blue;
       @include placeholder($pale-blue);
     }
-    input[type="search"]{width: 340px;}
+    input[type="search"]{
+      width: 340px;
+      @include media-breakpoint-down(xxl) {
+        width: 300px;
+      }
+    }
     input[type="number"]{
-      width: 50px;
-      padding: .6em .4em;
+      width: 70px;
+      padding: 0.7em 0.75em;
       text-align: center;
     }
   }
@@ -1122,6 +1185,11 @@ header {
     background: $glass;
     @include blurShadow();
     border-radius: $radius;
+    --pad: 15px 20px;
+    --serv: 220px;
+    --seller: 220px;
+    --count: 165px;
+    --price: 120px;
     .top {
       @include flex(row, flex-start, center, nowrap);
       background-color: rgba($pale-blue, 0.2);
@@ -1130,14 +1198,65 @@ header {
       div {
         font-size: 1.2em;
         font-weight: 600;
-        padding: .5em;
+        padding: var(--pad);
+        &.serv {
+          width: var(--serv);
+        }
+        &.descr {
+          flex: 1;
+        }
+        &.seller {
+          width: var(--seller);
+        }
+        &.count {
+          width: var(--count);
+          text-align: center;
+        }
+        &.price {
+          width: var(--price);
+          text-align: center;
+        }
       }
     }
     ul {
       @include list();
       padding: 2em;
-      .offer {
+      .offer-line {
         @include flex(row, flex-start, center, nowrap);
+        background-color: $white;
+        @include boxShadow();
+        border-radius: $radius;
+        .serv {
+          width: var(--serv);
+          padding: var(--pad);
+        }
+        .descr {
+          flex: 1;
+          padding: var(--pad);
+        }
+        .seller {
+          padding: var(--pad);
+          width: var(--seller);
+          @include flex(row, flex-start);
+          img {
+            width: 50px;
+            height: 50px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-right: .75em;
+          }
+          h5 {margin-bottom: .3em;}
+        }
+        .count {
+          padding: var(--pad);
+          width: var(--count);
+          text-align: center;
+        }
+        .price {
+          padding: var(--pad);
+          width: var(--price);
+          text-align: center;
+        }
       }
     }
   }
@@ -1423,8 +1542,6 @@ header {
     .input {
       position: relative;
       flex: 1;
-      // background: url(imgs/bg/inputChat.svg) no-repeat center;
-      // background-size: 100% 100%;
       background-color: $white;
       border-radius: $radius*0.5 0px 0px $radius*0.5;
       height: 4em;
