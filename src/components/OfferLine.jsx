@@ -9,12 +9,15 @@ const OfferLine = (props) => {
       <div className="seller">
         <img src={props.sellerImg} alt={props.seller} />
         <div>
-          <h5>{props.seller}</h5>
+          <h5 className='mb-xl-1'>{props.seller}</h5>
           <StarRating rate={props.sellerRating}/>
         </div>
       </div>
-      <div className="count">{props.count}</div>
-      <div className='price'>{props.price} ₽</div>
+      <div className="availability">
+        <span>{props.count}</span>
+        <span className='gray d-inline d-xl-none ms-1'>шт.</span>
+      </div>
+      <div className='price'>{props.price} <span className='rouble ms-1'>₽</span></div>
     </div>
   );
 };

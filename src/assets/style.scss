@@ -170,7 +170,7 @@ a, a:hover, a:focus, a:active {
   cursor: pointer;
 }
 h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, select, input, textarea, button, div, blockquote, cite, figure, figcaption, table, ul, ol, dl, li, address {
-  line-height: 140%;
+  line-height: 135%;
   margin-bottom: 0px;
 }
 
@@ -272,6 +272,8 @@ h5 {
   &-8 {font-weight: 800;}
   &-9 {font-weight: 900;}
 }
+.gray {color: $gray;}
+.dark-blue {color: $dark-blue;}
 .rouble {font-family: 'Verdana', 'Tahoma', 'Arial Black';} 
 
 /* Form elements */
@@ -347,6 +349,9 @@ select {
   transition: $transition;
   &:hover, &:focus {
     background-color: rgba($pale-blue, .1);
+  }
+  @include media-breakpoint-down(md) {
+    min-width: 200px;
   }
 }
 
@@ -1101,119 +1106,190 @@ header {
 .page-game {
   background: url(imgs/bg/gradient.jpg) no-repeat center bottom;
   background-size: 100% 65%;
-  .img {
+  &-top {
     position: relative;
-    z-index: 1;
-    @include media-breakpoint-down(xxxl) {
-      width: 120%;
-      margin-left: -20%;
-    }
-    svg {
-      width: 100%;
-      height: auto;
-    }
-    &-lots {
+    .img {
       position: absolute;
-      top: 14%;
-      left: 10.7%;
-      text-align: center;
-      color: $white;
+      bottom: 0px;
+      right: 0px;
+      width: 40%;
+      height: auto;
+      z-index: 1;
       @include media-breakpoint-down(xxxl) {
-        top: 13%;
-        left: 10.5%;
+        width: 45%;
       }
-      .num {
-        font-size: 1.6em;
-      }
-    }
-  }
-  .categories {
-    position: relative;
-    z-index: 10;
-    @include list();
-    @include flex(row, flex-start, center, wrap);
-    margin-top: 1.34em;
-    font-size: 1.2em;
-    margin-bottom: 3em;
-    @include media-breakpoint-down(xxxl) {
-      margin-top: 1em;
-      margin-bottom: 2em;
-    }
-    @include media-breakpoint-down(xxl) {
-      margin-bottom: 1em;
-    }
-    li {
-      margin-right: 1.1em;
-      margin-bottom: 1.1em;
-      button, a {
-        background-color: rgba($pale-blue, 0.2);
-        padding: .55em;
-        @include boxShadow();
-        border-radius: $radius*0.5;
-        transition: $transition;
-        &:hover, &:focus {
-          background-color: rgba($pale-blue, 0.6);
-        }
-        &:active, &.active {
-          background-color: rgba($pale-blue, 1);
-          color: $dark-blue;
-        }
-      }
-    }
-  }
-  .filter {
-    position: relative;
-    z-index: 10;
-    @include flex(row, flex-start, center, wrap);
-    input:not([type="checkbox"]) {
-      border-color: $pale-blue;
-      @include placeholder($pale-blue);
-    }
-    input[type="search"]{
-      width: 340px;
       @include media-breakpoint-down(xxl) {
-        width: 300px;
+        width: 50%;
+      }
+      @include media-breakpoint-down(xl) {
+        width: 100%;
+      }
+      svg {
+        width: 100%;
+        height: auto;
+      }
+      &-lots {
+        position: absolute;
+        top: 14%;
+        left: 10.7%;
+        text-align: center;
+        color: $white;
+        .num {
+          font-size: 1.6em;
+        }
+        @include media-breakpoint-down(sm) {
+          font-size: 2.5vw;
+        }
       }
     }
-    input[type="number"]{
-      width: 70px;
-      padding: 0.7em 0.75em;
-      text-align: center;
+    .categories {
+      position: unset;
+      @include list();
+      @include flex(row, flex-start, center, wrap);
+      margin-top: 1.34em;
+      margin-bottom: 3em;
+      @include media-breakpoint-down(xxxl) {
+        margin-top: 1em;
+        margin-bottom: 2em;
+      }
+      @include media-breakpoint-down(xxl) {
+        margin-bottom: 1em;
+      }
+      @include media-breakpoint-down(xl) {
+        position: relative;
+        width: 60%;
+        height: 460px;
+        align-content: flex-end;
+        justify-content: center;
+        margin-bottom: 0em;
+      }
+      @include media-breakpoint-down(lg) {
+        width: 80%;
+      }
+      @include media-breakpoint-down(md) {
+        width: 100%;
+        height: 430px;
+      }
+      @include media-breakpoint-down(sm) {
+        height: calc(85vw - 24px);
+      }
+      li {
+        font-size: 1.2em;
+        margin-right: 1.1em;
+        margin-bottom: 1.1em;
+        @include media-breakpoint-down(xl) {
+          margin-bottom: .6em;
+          position: relative;
+          z-index: 10;
+        }
+        @include media-breakpoint-down(md) {
+          font-size: 1em;
+        }
+        button, a {
+          background-color: rgba($pale-blue, 0.2);
+          padding: .55em;
+          @include boxShadow();
+          border-radius: $radius*0.5;
+          transition: $transition;
+          &:hover, &:focus {
+            background-color: rgba($pale-blue, 0.6);
+          }
+          &:active, &.active {
+            background-color: rgba($pale-blue, 1);
+            color: $white;
+          }
+          @include media-breakpoint-down(xl) {
+            background-color: rgba($pale-blue, 0.85);
+            &:hover, &:focus, &:active, &.active {
+              background-color: $blue;
+              color: $white;
+            }
+          }
+        }
+      }
+    }
+    .filter {
+      position: relative;
+      z-index: 10;
+      fieldset {
+        @include flex(row, flex-start, center, wrap);
+        @include media-breakpoint-down(lg) {
+          margin-top: 1em;
+        }
+        @include media-breakpoint-down(sm) {
+          &>* {width: 100% !important;}
+        }
+      }
+      input:not([type="checkbox"]) {
+        border-color: $pale-blue;
+        @include placeholder($pale-blue);
+      }
+      input[type="search"]{
+        width: 340px;
+        @include media-breakpoint-down(xxl) {
+          width: 270px;
+        }
+        @include media-breakpoint-down(md) {
+          width: 200px;
+        }
+      }
+      input[type="number"]{
+        width: 70px;
+        padding: 0.7em 0.75em;
+        text-align: center;
+      }
+      @include media-breakpoint-down(xl) {
+        background: rgba($white, $alpha: .75);
+        padding: 1em;
+        border-radius: $radius;
+        @include shadow();
+      }
     }
   }
-  .offers {
+  &-offers {
     background: $glass;
     @include blurShadow();
     border-radius: $radius;
     --pad: 15px 20px;
     --serv: 220px;
     --seller: 220px;
-    --count: 165px;
+    --availability: 165px;
     --price: 120px;
+    @include media-breakpoint-down(xl) {
+      background: transparent;
+      border-radius: 0px;
+      box-shadow: none;
+      --pad: 0px 1em;
+    }
+    @include media-breakpoint-down(md) {
+      --pad: 0px .5em;
+      --price: 90px;
+    }
     .top {
-      @include flex(row, flex-start, center, nowrap);
       background-color: rgba($pale-blue, 0.2);
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
+      display: grid;
+      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+      grid-template-rows: 1fr;
+      grid-template-areas: 
+      "serv descr seller availability price";
+      @include media-breakpoint-down(xl) {
+        display: none;
+      }
       div {
         font-size: 1.2em;
         font-weight: 600;
         padding: var(--pad);
-        &.serv {
-          width: var(--serv);
-        }
-        &.descr {
-          flex: 1;
-        }
-        &.seller {
-          width: var(--seller);
-        }
-        &.count {
-          width: var(--count);
+        &.serv {grid-area: serv;}
+        &.descr {grid-area: descr;}
+        &.seller {grid-area: seller;}
+        &.availability {
+          grid-area: availability;
           text-align: center;
         }
         &.price {
-          width: var(--price);
+          grid-area: price;
           text-align: center;
         }
       }
@@ -1221,41 +1297,83 @@ header {
     ul {
       @include list();
       padding: 2em;
+      @include media-breakpoint-down(xl) {
+        padding: 0px;
+      }
       .offer-line {
-        @include flex(row, flex-start, center, nowrap);
+        display: grid;
+        grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+        grid-template-rows: 1fr;
+        grid-template-areas: 
+        "serv descr seller availability price";
         background-color: $white;
         @include boxShadow();
         border-radius: $radius;
-        .serv {
-          width: var(--serv);
+        @include media-breakpoint-down(xl) {
+          grid-template-columns:auto var(--price);
+          grid-template-rows: 2em auto 3em;
+          grid-template-areas: 
+          "serv price"
+          "descr descr"
+          "seller availability";
+          gap: 10px 0px;
+          padding: 1em 0;
+        }
+        @include media-breakpoint-down(md) {
+          padding: .5em 0;
+        }
+        &>div {
+          grid-column: span 1;
+          grid-row: span 1;
           padding: var(--pad);
+        }
+        .serv {
+          grid-area: serv;
+          @include media-breakpoint-down(xl) {
+            color: $blue;
+            @include flex(row, flex-start, center, nowrap);
+          }
         }
         .descr {
-          flex: 1;
-          padding: var(--pad);
+          grid-area: descr;
+          @include media-breakpoint-down(xl) {
+            @include clamp(3, 1.2em, true);
+          }
         }
         .seller {
-          padding: var(--pad);
-          width: var(--seller);
+          grid-area: seller;
           @include flex(row, flex-start);
+          @include media-breakpoint-between(sm, xl) {
+            font-size: .8em;
+          }
           img {
             width: 50px;
             height: 50px;
             object-fit: cover;
             border-radius: 50%;
             margin-right: .75em;
+            @include media-breakpoint-down(xl) {
+              width: 40px;
+              height: 40px;
+            }
           }
-          h5 {margin-bottom: .3em;}
         }
-        .count {
-          padding: var(--pad);
-          width: var(--count);
+        .availability {
+          grid-area: availability;
           text-align: center;
+          @include media-breakpoint-down(xl) {
+            @include flex(row, flex-end, center, nowrap);
+            text-align: right;
+          }
         }
         .price {
-          padding: var(--pad);
-          width: var(--price);
+          grid-area: price;
           text-align: center;
+          @include media-breakpoint-down(xl) {
+            @include flex(row, flex-end, center, nowrap);
+            text-align: right;
+            font-weight: 600;
+          }
         }
       }
     }
