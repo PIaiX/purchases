@@ -8722,7 +8722,7 @@ header input::placeholder {
 .sec-promo {
   position: relative;
   background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
-  background-size: cover;
+  background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
@@ -9693,6 +9693,38 @@ header input::placeholder {
   flex-wrap: nowrap;
 }
 
+.sec-registration .title {
+  border-radius: 0.67em;
+  background: url(imgs/bg/texture.png), linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
+  background-size: cover, 100% 100%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal;
+  color: #FFFFFF;
+  height: 135px;
+  padding: 0 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+}
+.sec-registration .title img {
+  position: absolute;
+  right: 20%;
+  bottom: 0%;
+  height: 160%;
+  z-index: 10;
+}
+.sec-registration form {
+  background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  border-radius: 0.67em;
+  padding: 2em;
+}
+
 footer {
   height: var(--f-height);
   background-color: #1B1B1C;
@@ -9733,7 +9765,7 @@ footer .nav-mobile {
 footer .nav-mobile .logo {
   padding: 1em 1.65em;
   background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
-  background-size: cover;
+  background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
   color: #FFFFFF;

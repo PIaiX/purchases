@@ -6,6 +6,7 @@ import NotFound from '../pages/NotFound'
 import Blog from '../pages/Blog'
 import Article from '../pages/Article'
 import Game from '../pages/Game'
+import Registration from '../pages/Registration'
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -14,6 +15,7 @@ const router = createHashRouter(
       <Route path="game" element={<Game/>} />
       <Route path="blog" element={<Blog/>} />
       <Route path="blog/:id" element={<Article/>} />
+      <Route path="registration" element={<Registration/>} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

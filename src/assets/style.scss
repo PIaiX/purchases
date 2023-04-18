@@ -114,6 +114,12 @@ $radius: .67em;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
 }
+@mixin bgTextureGradient($grad: linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%)) {
+  background: url(imgs/bg/texture.png), $grad;
+  background-size: cover, 100% 100%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal;
+}
 @mixin placeholder($color, $fw: 400){
   &:-moz-placeholder, &::-moz-placeholder,
   &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder {
@@ -197,7 +203,7 @@ h1, .h1 {
     font-size: 2.3em;
   }
 }
-h2 {
+h2, .h2 {
   font-family: $title-font;
   font-size: 3em;
   font-weight: normal;
@@ -1773,6 +1779,31 @@ header {
         @include flex(row, space-between, center, nowrap);
       }
     }
+  }
+}
+
+.sec-registration {
+  .title {
+    border-radius: $radius;
+    @include bgTextureGradient(linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    color: $white;
+    height: 135px;
+    padding: 0 3em;
+    @include flex(row, flex-start, center, nowrap);
+    position: relative;
+    img {
+      position: absolute;
+      right: 20%;
+      bottom: 0%;
+      height: 160%;
+      z-index: 10;
+    }
+  }
+  form {
+    background: $glass;
+    @include blurShadow();
+    border-radius: $radius;
+    padding: 2em;
   }
 }
 
