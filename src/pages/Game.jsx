@@ -109,25 +109,25 @@ const Game = () => {
             </div>
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
               <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.png"} count={1} price={186.97}/>
+                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.jpg"} count={1} price={186.97}/>
               </li>
               <li>
                 <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"imgs/user.jpg"} count={2} price={186.97}/>
               </li>
               <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.png"} count={1} price={186.97}/>
+                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.jpg"} count={1} price={186.97}/>
               </li>
               <li>
                 <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"imgs/user.jpg"} count={2} price={186.97}/>
               </li>
               <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.png"} count={1} price={186.97}/>
+                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.jpg"} count={1} price={186.97}/>
               </li>
               <li>
                 <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"imgs/user.jpg"} count={2} price={186.97}/>
               </li>
               <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.png"} count={1} price={186.97}/>
+                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"imgs/user.jpg"} count={1} price={186.97}/>
               </li>
               <li>
                 <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"imgs/user.jpg"} count={2} price={186.97}/>
