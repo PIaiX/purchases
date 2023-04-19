@@ -10,7 +10,7 @@ const Header = () => {
       <Container className='h-100'>
         <div className="h-100 d-flex align-items-center justify-content-between">
           <div className='d-flex align-items-center'>
-            <button type='button' className='btn-1 d-none d-lg-flex'>Войти</button>
+            <Link to='/login' className='btn-1 d-none d-lg-flex'>Войти</Link>
             <Link to='/favs' className='d-flex align-items-center ms-lg-4 ms-xl-5'>
               <img src={fav} alt="Избранное"/>
               <span>Избранное</span>

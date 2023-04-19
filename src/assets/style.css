@@ -7667,8 +7667,16 @@ h5, .h5 {
   color: #8F8F8F;
 }
 
+.pale-blue {
+  color: #9DC4EF;
+}
+
 .dark-blue {
   color: #0D59AB;
+}
+
+.rose {
+  color: #FF9F9F;
 }
 
 .rouble {
@@ -7679,7 +7687,7 @@ h5, .h5 {
 input, textarea {
   background-color: rgba(255, 255, 255, 0.8);
   border: 1px solid #C1C1C1;
-  border-radius: 0.67em;
+  border-radius: 0.335em;
   padding: 0.7em 1.65em;
   width: 100%;
   outline: none;
@@ -7753,6 +7761,26 @@ label span {
   flex: 1;
 }
 
+.labeled-input {
+  position: relative;
+}
+.labeled-input label {
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  left: 1em;
+  transform: translateY(-60%);
+  width: -moz-fit-content;
+  width: fit-content;
+  background-color: #FFFFFF;
+  color: #8F8F8F;
+  padding: 0 0.67em;
+}
+.labeled-input input {
+  position: relative;
+  z-index: 1;
+}
+
 select {
   appearance: none;
   -webkit-appearance: none;
@@ -7823,6 +7851,9 @@ button {
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
   border-radius: 0.67em;
+}
+.btn[disabled], [disabled].btn-1, [disabled].btn-2 {
+  background: #C1C1C1;
 }
 
 .lang-switcher {
@@ -9716,13 +9747,60 @@ header input::placeholder {
   height: 160%;
   z-index: 10;
 }
-.sec-registration form {
+.sec-registration .box {
   background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
   border-radius: 0.67em;
   padding: 2em;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  flex-wrap: nowrap;
+}
+.sec-registration .box form.midi {
+  width: 530px;
+}
+.sec-registration .box form.midi input[type=number] {
+  font-family: "Bebas";
+  font-size: 2.3em;
+  padding: 0px 10px;
+  text-align: center;
+  line-height: 120%;
+}
+.sec-registration .box form.mini {
+  width: 440px;
+}
+
+.sec-login form {
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+}
+.sec-login .cover {
+  border-radius: 0.67em;
+  background: url(imgs/bg/texture.png), linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
+  background-size: cover, 100% 100%;
+  background-repeat: no-repeat;
+  background-blend-mode: overlay, normal;
+  color: #FFFFFF;
+  height: 350px;
+  padding: 0 3em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  position: relative;
+}
+.sec-login .cover img {
+  position: absolute;
+  right: 20%;
+  bottom: 0%;
+  height: 160%;
+  z-index: 10;
 }
 
 footer {

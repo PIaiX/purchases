@@ -28,6 +28,7 @@ $dark-green: #005A47;
 $green: #48D868;
 $pale-green: #94E5A6;
 $aqua: rgba(67, 185, 198, 0.26);
+$rose: #FF9F9F;
 
 $white: #FFFFFF;
 $pale-gray: #D9D9D9;
@@ -279,14 +280,16 @@ h5 {
   &-9 {font-weight: 900;}
 }
 .gray {color: $gray;}
+.pale-blue {color: $pale-blue;}
 .dark-blue {color: $dark-blue;}
+.rose {color: $rose;}
 .rouble {font-family: 'Verdana', 'Tahoma', 'Arial Black';} 
 
 /* Form elements */
 input, textarea {
   background-color: rgba($white, $alpha: .8);
   border: 1px solid $light-gray;
-  border-radius: $radius;
+  border-radius: $radius*0.5;
   padding: 0.7em 1.65em;
   width: 100%;
   outline: none;
@@ -338,6 +341,24 @@ label {
   justify-content: flex-start;
   align-items: center;
   span {flex:1;}
+}
+.labeled-input {
+  position: relative;
+  label {
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 1em;
+    transform: translateY(-60%);
+    width: fit-content;
+    background-color: $white;
+    color: $gray;
+    padding: 0 .67em;
+  }
+  input {
+    position: relative;
+    z-index: 1;
+  }
 }
 
 select {
@@ -397,6 +418,9 @@ button {
     color: $black;
     @include blurShadow();
     border-radius: $radius;
+  }
+  &[disabled]{
+    background: $light-gray;
   }
 }
 
@@ -1799,11 +1823,49 @@ header {
       z-index: 10;
     }
   }
-  form {
+  .box {
     background: $glass;
     @include blurShadow();
     border-radius: $radius;
     padding: 2em;
+    @include flex(row, space-between, flex-start, nowrap);
+    form {
+      &.midi {
+        width: 530px;
+        input[type="number"]{
+          font-family: 'Bebas';
+          font-size: 2.3em;
+          padding: 0px 10px;
+          text-align: center;
+          line-height: 120%;
+        }
+      }
+      &.mini {
+        width: 440px;
+      }
+    }
+  }
+}
+
+.sec-login {
+  form {
+    @include blurShadow();
+  }
+  .cover {
+    border-radius: $radius;
+    @include bgTextureGradient(linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    color: $white;
+    height: 350px;
+    padding: 0 3em;
+    @include flex(row, flex-start, center, nowrap);
+    position: relative;
+    img {
+      position: absolute;
+      right: 20%;
+      bottom: 0%;
+      height: 160%;
+      z-index: 10;
+    }
   }
 }
 
