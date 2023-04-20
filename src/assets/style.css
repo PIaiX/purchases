@@ -7751,6 +7751,13 @@ input[type=search] {
   background: url(imgs/SearchIcon.svg) no-repeat calc(100% - 0.67em) 50% rgba(255, 255, 255, 0.85);
   background-size: 1.6em;
 }
+input.code {
+  font-family: "Bebas";
+  font-size: 2.3em;
+  padding: 0px 10px;
+  text-align: center;
+  line-height: 120%;
+}
 
 label {
   display: flex;
@@ -9726,7 +9733,7 @@ header input::placeholder {
 
 .sec-registration .title {
   border-radius: 0.67em;
-  background: url(imgs/bg/texture.png), linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
+  background: url(imgs/bg/texture.png), linear-gradient(165deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
   background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
@@ -9763,31 +9770,27 @@ header input::placeholder {
 .sec-registration .box form.midi {
   width: 530px;
 }
-.sec-registration .box form.midi input[type=number] {
-  font-family: "Bebas";
-  font-size: 2.3em;
-  padding: 0px 10px;
-  text-align: center;
-  line-height: 120%;
-}
 .sec-registration .box form.mini {
   width: 440px;
 }
 
-.sec-login form {
+.sec-login .wrap {
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
+  padding: 2em 25% 1.5em 2em;
+  border-radius: 0.67em;
+  height: 100%;
 }
 .sec-login .cover {
   border-radius: 0.67em;
-  background: url(imgs/bg/texture.png), linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
+  background: url(imgs/bg/texture.png), linear-gradient(115deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%);
   background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
   color: #FFFFFF;
-  height: 350px;
-  padding: 0 3em;
+  height: 395px;
+  padding: 0 6em;
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -9795,12 +9798,23 @@ header input::placeholder {
   flex-wrap: nowrap;
   position: relative;
 }
+.sec-login .cover h2, .sec-login .cover .h2 {
+  line-height: 100%;
+}
 .sec-login .cover img {
   position: absolute;
-  right: 20%;
+  right: 0%;
   bottom: 0%;
-  height: 160%;
+  height: 95%;
   z-index: 10;
+}
+
+.sec-password .wrap {
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  padding: 2em 25% 1.5em 2em;
+  border-radius: 0.67em;
 }
 
 footer {

@@ -109,12 +109,6 @@ $radius: .67em;
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
   backdrop-filter: blur(5px);
 }
-@mixin bgTextureGradient {
-  background: url(imgs/bg/texture.png), linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%);
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-blend-mode: overlay, normal;
-}
 @mixin bgTextureGradient($grad: linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%)) {
   background: url(imgs/bg/texture.png), $grad;
   background-size: cover, 100% 100%;
@@ -334,6 +328,13 @@ input {
     padding-right: 2.5em;
     background: url(imgs/SearchIcon.svg) no-repeat calc(100% - .67em) 50% rgba($white, $alpha: .85);
     background-size: 1.6em;
+  }
+  &.code {
+    font-family: 'Bebas';
+    font-size: 2.3em;
+    padding: 0px 10px;
+    text-align: center;
+    line-height: 120%;
   }
 }
 label {
@@ -1809,7 +1810,7 @@ header {
 .sec-registration {
   .title {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    @include bgTextureGradient(linear-gradient(165deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
     color: $white;
     height: 135px;
     padding: 0 3em;
@@ -1832,13 +1833,6 @@ header {
     form {
       &.midi {
         width: 530px;
-        input[type="number"]{
-          font-family: 'Bebas';
-          font-size: 2.3em;
-          padding: 0px 10px;
-          text-align: center;
-          line-height: 120%;
-        }
       }
       &.mini {
         width: 440px;
@@ -1848,24 +1842,38 @@ header {
 }
 
 .sec-login {
-  form {
+  .wrap {
     @include blurShadow();
+    padding: 2em 25% 1.5em 2em;
+    border-radius: $radius;
+    height: 100%;
   }
   .cover {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(160deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    @include bgTextureGradient(linear-gradient(115deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
     color: $white;
-    height: 350px;
-    padding: 0 3em;
+    height: 395px;
+    padding: 0 6em;
     @include flex(row, flex-start, center, nowrap);
     position: relative;
+    h2 {
+      line-height: 100%;
+    }
     img {
       position: absolute;
-      right: 20%;
+      right: 0%;
       bottom: 0%;
-      height: 160%;
+      height: 95%;
       z-index: 10;
     }
+  }
+}
+
+.sec-password {
+  .wrap {
+    @include blurShadow();
+    padding: 2em 25% 1.5em 2em;
+    border-radius: $radius;
   }
 }
 

@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CheckMark from '../components/svg/CheckMark';
 import CrossMark from '../components/svg/CrossMark';
+import AuthorizationForm from '../components/forms/AuthorizationForm';
 
 const Registration = () => {
   return (
@@ -41,11 +42,11 @@ const Registration = () => {
                       <button type='button' className='btn-1 h-100 w-100'>Подтвердить</button>
                     </Col>
                   </Row>
-                  <p className='my-4'>Введите код, отправленный на указанную электронную почту</p>
 
+                  <p className='my-4'>Введите код, отправленный на указанную электронную почту</p>
                   <Row className='g-4 mb-5'>
                     <Col md={4}>
-                      <input type="number" placeholder='0000'/>
+                      <input className='code' type="number" placeholder='0000'/>
                     </Col>
                     <Col md={4}><button type='button' className='btn-1 h-100'>Отправить</button></Col>
                   </Row>
@@ -77,28 +78,7 @@ const Registration = () => {
                   <button type='submit' disabled className='btn-1 mt-4'>Зарегистрироваться</button>
                 </form>
 
-                <form action="" className='mini'>
-                  <h4>Уже есть аккаунт?</h4>
-                  <p className='mb-4'>Введите данные учётной записи</p>
-                  <div className="labeled-input mb-4">
-                    <label>
-                      <span>Email</span>
-                      <CheckMark className="pale-blue fs-13 ms-2"/>
-                    </label>
-                    <input type="email" placeholder='user@mail.com'/>
-                  </div>
-
-                  <div className="labeled-input mb-1">
-                    <label>
-                      <span>Пароль</span>
-                      <CheckMark className="pale-blue fs-13 ms-2"/>
-                    </label>
-                    <input type="password" placeholder='Введите пароль'/>
-                  </div>
-                  <p className='rose fs-08'>Неверный логин или пароль. Попробуйте снова или воспользуйтесь формой восстановления пароля.</p>
-
-                  <button type='submit' className='btn-1 mt-4'>Войти</button>
-                </form>
+                <AuthorizationForm title={'Уже есть аккаунт?'}/>
               </div>
             </Col>
           </Row>
