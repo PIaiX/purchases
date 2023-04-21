@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import CheckMark from '../svg/CheckMark';
 import CrossMark from '../svg/CrossMark';
-import { Link } from 'react-router-dom';
+import InputPassword from '../utils/InputPassword';
 
 const PasswordForm = () => {
   return (
@@ -41,12 +41,13 @@ const PasswordForm = () => {
               <span>Новый пароль</span>
               <CheckMark className="pale-blue fs-13 ms-2"/>
             </label>
-            <input type="password" placeholder='Введите пароль'/>
+            <InputPassword placeholder='Придумайте пароль' />
           </div>
         </Col>
       </Row>
-      <p className='fs-08'>Пароль должен содержать не менее 6 символов, и среди них должны быть заглавные и строчные буквы, цифры, специальные символы (т. е. *, %, &,!)</p>
       <p className='rose fs-08'>Слишком короткий пароль</p>
+      <p className='fs-08'>Пароль должен содержать не менее 6 символов, и среди них должны быть заглавные и строчные буквы, цифры, специальные символы (т. е. *, %, &,!)</p>
+      
       <Row className='mt-4'>
         <Col md={8}>
           <div className="labeled-input mb-2">
@@ -54,7 +55,7 @@ const PasswordForm = () => {
               <span>Подтверждение пароля</span>
               <CheckMark className="pale-blue fs-13 ms-2"/>
             </label>
-            <input type="password" placeholder='Введите пароль'/>
+            <InputPassword placeholder='Повторите пароль' />
           </div>
         </Col>
       </Row>

@@ -10,10 +10,10 @@ const PasswordRestoration = () => {
       <Container>
         <section className='sec-password mb-6'>
           <Row className='justify-content-center'>
-            <Col lg={10}>
+            <Col xs={12} xl={10}>
               <h1 className='h2'>Восстановление пароля</h1>
               <Row>
-                <Col lg={6}>
+                <Col lg={7} xxl={6}>
                   <div className="wrap">
                     <PasswordForm/>
                   </div>

@@ -2,6 +2,7 @@ import React from 'react';
 import CheckMark from '../svg/CheckMark';
 import CrossMark from '../svg/CrossMark';
 import { Link } from 'react-router-dom';
+import InputPassword from '../utils/InputPassword';
 
 const AuthorizationForm = (props) => {
   return (
@@ -24,7 +25,7 @@ const AuthorizationForm = (props) => {
           <span>Пароль</span>
           <CrossMark className="rose fs-13 ms-2"/>
         </label>
-        <input type="password" placeholder='Введите пароль'/>
+        <InputPassword placeholder='Введите пароль' />
       </div>
       <p className='rose fs-08'>Неверный логин или пароль. Попробуйте снова или <Link to="/password" className='text-decoration-underline'>воспользуйтесь формой восстановления пароля</Link>.</p>
 

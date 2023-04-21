@@ -11,7 +11,7 @@ const Login = () => {
       <Container>
         <section className='sec-login mb-6'>
           <Row className='justify-content-center'>
-            <Col lg={10}>
+            <Col xs={12} xl={10}>
               <h1 className='h2'>Авторизация</h1>
               <Row>
                 <Col lg={5}>
