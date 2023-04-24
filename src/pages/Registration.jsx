@@ -16,7 +16,7 @@ const Registration = () => {
                 <h1 className='h2 mb-0'>Регистрация нового пользователя</h1>
                 <img src="imgs/head2.png" alt="head" />
               </div>
-              <div className='box mt-4'>
+              <div className='box mt-3 mt-sm-4'>
                 <RegistrationForm/>
 
                 <AuthorizationForm title={'Уже есть аккаунт?'}/>

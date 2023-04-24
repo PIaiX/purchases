@@ -245,6 +245,12 @@ h5 {
     font-size: 1em;
   }
 }
+h6 {
+  font-size: 1em;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 0px;
+}
 .fs {
   &-08 {font-size: 0.8em;}
   &-09 {font-size: 0.9em;}
@@ -284,7 +290,7 @@ input, textarea {
   background-color: rgba($white, $alpha: .8);
   border: 1px solid $light-gray;
   border-radius: $radius*0.5;
-  padding: 0.7em 1.65em;
+  padding: 0.725em 1.65em;
   width: 100%;
   outline: none;
   display: block;
@@ -293,6 +299,9 @@ input, textarea {
   &.p-blue {
     border: 1px solid $pale-blue;
     @include placeholder($pale-blue, 400);
+  }
+  &:hover, &:focus, &:active {
+    border: 1px solid $blue;
   }
 }
 input {
@@ -322,6 +331,32 @@ input {
     }
     &:checked::before {
       opacity: 1;
+    }
+  }
+  &.switch {
+    @include no-appearance;
+    width: 40px;
+    height: 20px;
+    border: none;
+    border-radius: 10px;
+    background-color: $gray;
+    &::before {
+      content: '';
+      position: absolute;
+      top: 2px;
+      left: 3px;
+      height: 16px;
+      width: 16px;
+      border-radius: 50%;
+      background-color: $white;
+      transition: $transition;
+      opacity: 1;
+    }
+    &:checked {
+      background-color: $green;
+      &::before {
+        left: calc(100% - 19px);
+      }
     }
   }
   &[type='search'] {
@@ -359,6 +394,12 @@ label {
   input {
     position: relative;
     z-index: 1;
+    &:hover + label, &:focus + label, &:active + label {
+      color: $blue;
+    }
+  }
+  &:hover, &:focus, &:active {
+    label {color: $blue;}
   }
 }
 .password {
@@ -442,6 +483,13 @@ button {
     @include blurShadow();
     border-radius: $radius;
   }
+  &-3 {
+    @extend .btn;
+    background: $rose;
+    color: $white;
+    @include blurShadow();
+    border-radius: $radius;
+  }
   &[disabled]{
     background: $light-gray;
   }
@@ -495,6 +543,15 @@ button {
         fill: $blue;
       }
     }
+  }
+}
+.link {
+  color: $pale-blue;
+  text-decoration: underline;
+  transition: $transition;
+  &:hover {
+    color: $dark-blue;
+    text-decoration: underline;
   }
 }
 
@@ -1831,6 +1888,10 @@ header {
 
 /* Registration page */
 .sec-registration {
+  margin-top: 4em;
+  @include media-breakpoint-down(lg) {
+    margin-top: 0em;
+  }
   .title {
     border-radius: $radius;
     @include bgTextureGradient(linear-gradient(165deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
@@ -1841,6 +1902,16 @@ header {
     position: relative;
     @include media-breakpoint-down(lg) {
       padding-right: 25%;
+    }
+    @include media-breakpoint-down(sm) {
+      height: 100px;
+      padding: 0 1em;
+      padding-right: 1em;
+    }
+    h1 {
+      line-height: 100%;
+      position: relative;
+      z-index: 20;
     }
     img {
       position: absolute;
@@ -1856,6 +1927,9 @@ header {
         height: unset;
         width: 22%;
       }
+      @include media-breakpoint-down(md) {
+        width: 28%;
+      }
     }
   }
   .box {
@@ -1864,17 +1938,30 @@ header {
     border-radius: $radius;
     padding: 2em;
     @include flex(row, space-between, flex-start, nowrap);
+    @include media-breakpoint-down(lg) {
+      flex-direction: column;
+    }
+    @include media-breakpoint-down(sm) {
+      padding: 1.5em;
+    }
     form {
       &.midi {
         width: 530px;
         @include media-breakpoint-down(xxl) {
           width: 480px;
         }
+        @include media-breakpoint-down(lg) {
+          width: 100%;
+        }
       }
       &.mini {
         width: 440px;
         @include media-breakpoint-down(xxl) {
           width: 330px;
+        }
+        @include media-breakpoint-down(lg) {
+          width: 100%;
+          margin-top: 4em;
         }
       }
     }
@@ -1891,15 +1978,37 @@ header {
     @include media-breakpoint-down(xxxl) {
       padding: 2em 2em 1.5em 2em;
     }
+    @include media-breakpoint-down(sm) {
+      padding: 1.5em 1.5em 1em 1.5em;
+    }
   }
   .cover {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(115deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    @include bgTextureGradient(linear-gradient(115deg, $black 0%, $blue 55%, #000000 100%));
     color: $white;
     height: 395px;
     padding: 0 6em;
     @include flex(row, flex-start, center, nowrap);
     position: relative;
+    overflow: hidden;
+    @include safariFix();
+    @include media-breakpoint-down(xxxl) {
+      padding: 0 5em;
+    }
+    @include media-breakpoint-down(xxl) {
+      height: 412px;
+      padding: 0 3em;
+    }
+    @include media-breakpoint-down(lg) {
+      height: 150px;
+      overflow: visible;
+      margin-bottom: 2em;
+    }
+    @include media-breakpoint-down(sm) {
+      height: 100px;
+      padding: 0 1em;
+      margin-bottom: 1em;
+    }
     h2 {
       line-height: 100%;
     }
@@ -1909,6 +2018,22 @@ header {
       bottom: 0%;
       height: 95%;
       z-index: 10;
+      @include media-breakpoint-down(xxxl) {
+        height: 85%;
+      }
+      @include media-breakpoint-down(xxl) {
+        height: 70%;
+      }
+      @include media-breakpoint-down(lg) {
+        height: 110%;
+        right: 15%;
+      }
+      @include media-breakpoint-down(md) {
+        right: 5%;
+      }
+      @include media-breakpoint-down(sm) {
+        height: 100%;
+      }
     }
   }
 }
@@ -1922,8 +2047,79 @@ header {
     @include media-breakpoint-down(xxxl) {
       padding: 2em 2em 1.5em 2em;
     }
+    @include media-breakpoint-down(sm) {
+      padding: 1.5em 1.5em 1em 1.5em;
+    }
   }
 }
+
+/***********
+ACCOUNT
+***********/
+.account {
+  &-nav {
+    &-balance {
+      background-color: $blue;
+      color: $white;
+      padding: 1em;
+      border-radius: $radius;
+      text-align: center;
+      margin-bottom: 1em;
+      div {
+        @include flex();
+        span {
+          font-family: $title-font;
+          font-size: 2em;
+          margin-right: .34em;
+          line-height: 90%;
+        }
+        svg {
+          font-size: 1.5em;
+          padding: 0.1em;
+          border: 1px solid $white;
+          border-radius: 50%;
+        }
+      }
+    }
+    ul {
+      @include list();
+      li {
+        &:not(:first-child){margin-top: 1.5em;}
+        a {
+          color: $gray;
+          @include flex(row, flex-start, center, nowrap);
+          padding: .67em 1em;
+          border-radius: $radius;
+          transition: $transition;
+          svg {font-size: 1.6em;}
+          span {margin-left: .5em;}
+          &:hover, &:focus {
+            color: $blue;
+          }
+          &.active {
+            background-color: rgba($pale-blue, .2);
+            color: $blue;
+          }
+        }
+      }
+    }
+  }
+  .post {
+    background-color: rgba($pale-blue, .2);
+    border-radius: $radius;
+    color: #000;
+    text-align: center;
+    width: 124px;
+    padding-bottom: .2em;
+    img {
+      width: 110%;
+      margin-top: -25%;
+    }
+  }
+}
+/***********
+ACCOUNT END
+***********/
 
 footer {
   height: var(--f-height);

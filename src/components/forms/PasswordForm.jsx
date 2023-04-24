@@ -10,14 +10,14 @@ const PasswordForm = () => {
     <form action="" className='mini'>
       <p className='mb-5'>Введите адрес электронной почты, которую вы вводили при регистрации</p>
 
-      <Row>
+      <Row className='g-3 g-md-4'>
         <Col md={8}>
           <div className="labeled-input">
+            <input type="email" placeholder='user@mail.com'/>
             <label>
               <span>E-mail</span>
               <CrossMark className="rose fs-13 ms-2"/>
             </label>
-            <input type="email" placeholder='user@mail.com'/>
           </div>
         </Col>
         <Col md={4}>
@@ -27,21 +27,21 @@ const PasswordForm = () => {
       <p className="rose">Пользователь с такими данными не зарегистрирован</p>
 
       <p className='mt-4 mb-3'>Введите код, отправленный на указанную электронную почту</p>
-      <Row className='g-4 mb-5'>
+      <Row className='g-3 g-md-4 mb-5'>
         <Col md={4}>
           <input className='code' type="number" placeholder='0000'/>
         </Col>
-        <Col md={4}><button type='button' className='btn-1 h-100'>Отправить</button></Col>
+        <Col md={4}><button type='button' className='btn-1 h-100 w-100'>Отправить</button></Col>
       </Row>
 
       <Row>
         <Col md={8}>
           <div className="labeled-input mb-2">
+            <InputPassword placeholder='Придумайте пароль' />
             <label>
               <span>Новый пароль</span>
               <CheckMark className="pale-blue fs-13 ms-2"/>
             </label>
-            <InputPassword placeholder='Придумайте пароль' />
           </div>
         </Col>
       </Row>
@@ -51,11 +51,11 @@ const PasswordForm = () => {
       <Row className='mt-4'>
         <Col md={8}>
           <div className="labeled-input mb-2">
+            <InputPassword placeholder='Повторите пароль' />
             <label>
               <span>Подтверждение пароля</span>
               <CheckMark className="pale-blue fs-13 ms-2"/>
             </label>
-            <InputPassword placeholder='Повторите пароль' />
           </div>
         </Col>
       </Row>
