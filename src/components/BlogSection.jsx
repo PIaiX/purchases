@@ -1,17 +1,17 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+// import {Link} from 'react-router-dom';
 import BlogCard from './BlogCard';
-import useIsMobile from '../hooks/isMobile';
+// import useIsMobile from '../hooks/isMobile';
 
 const BlogSection = () => {
-  const {mobile} = useIsMobile('1289px');
+  // const {isMobile} = useIsMobile('1289px');
 
   return (
     <section className='sec-blog mb-6'>
       <div className="d-flex align-items-center justify-content-between mb-4">
         <h2 className='h1 mb-0'>Новости биржи игровых ценностей</h2>
         {/* {
-          (!mobile) &&
+          (!isMobile) &&
           <Link to='/blog' className='cognition ms-5'><h3 className='fw-7 text-end mb-0'>Познать больше</h3></Link>
         } */}
       </div>
@@ -33,7 +33,7 @@ const BlogSection = () => {
         </li>
       </ul>
       {/* {
-        (mobile) &&
+        (isMobile) &&
         <Link to='/blog' className='cognition mt-5'><h3 className='fw-7 text-end mb-0'>Познать больше</h3></Link>
       } */}
     </section>

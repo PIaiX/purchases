@@ -60,12 +60,12 @@ $radius: .67em;
   isolation: isolate;
   transform: translateZ(0);
 }
-@mixin absBG($z: 1) {
+@mixin absBG($z: 1, $top: 0%, $h: 100%) {
   position: absolute;
-  top: 0px;
+  top: $top;
   left: 0px;
   width: 100%;
-  height: 100%;
+  height: $h;
   z-index: $z;
 }
 @mixin clamp($count, $line, $strict: false) {
@@ -281,6 +281,7 @@ h6 {
 }
 .gray {color: $gray;}
 .pale-blue {color: $pale-blue;}
+.blue {color: $blue;}
 .dark-blue {color: $dark-blue;}
 .rose {color: $rose;}
 .rouble {font-family: 'Verdana', 'Tahoma', 'Arial Black';} 
@@ -339,7 +340,7 @@ input {
     height: 20px;
     border: none;
     border-radius: 10px;
-    background-color: $gray;
+    background-color: $light-gray;
     &::before {
       content: '';
       position: absolute;
@@ -2084,15 +2085,32 @@ ACCOUNT
     ul {
       @include list();
       li {
-        &:not(:first-child){margin-top: 1.5em;}
+        &:not(:first-child){
+          margin-top: 1.5em;
+          @include media-breakpoint-down(lg) {
+            margin-top: .5em;
+          }
+        }
         a {
           color: $gray;
           @include flex(row, flex-start, center, nowrap);
           padding: .67em 1em;
           border-radius: $radius;
           transition: $transition;
+          @include media-breakpoint-down(lg) {
+            font-size: 1.2em;
+          }
           svg {font-size: 1.6em;}
-          span {margin-left: .5em;}
+          div {
+            margin-left: .5em;
+            flex: 1;
+          }
+          .badge {
+            background-color: rgba($pale-blue, .2);
+            padding: .34em;
+            border-radius: $radius;
+            color: #000;
+          }
           &:hover, &:focus {
             color: $blue;
           }
@@ -2104,6 +2122,187 @@ ACCOUNT
       }
     }
   }
+  .user {
+    @include flex(row, flex-start, center, nowrap);
+    @include lightShadow();
+    @include media-breakpoint-down(sm) {
+      flex-wrap: wrap;
+    }
+    &-photo {
+      position: relative;
+      z-index: 2;
+      width: 110px;
+      height: 110px;
+      border-radius: 100%;
+      overflow: hidden;
+      @include safariFix();
+      border: 5px solid $white;
+      box-sizing: content-box;
+      @include media-breakpoint-down(xxl) {
+        width: 100px;
+        height: 100px;
+      }
+      @include media-breakpoint-down(md) {
+        width: 90px;
+        height: 90px;
+      }
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        position: relative;
+        z-index: 0;
+      }
+      &::after {
+        content: '';
+        @include absBG(1, 50%, 50%);
+        background: linear-gradient(to bottom, transparent, #000 50%);
+        background-size: cover;
+      }
+      button {
+        position: absolute;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 2;
+        bottom: .25em;
+        color: $white;
+        font-size: 1.34em;
+        transition: $transition;
+        &:hover {
+          color: $green;
+        }
+      }
+    }
+    &-main {
+      position: relative;
+      z-index: 1;
+      height: 144px;
+      flex: 1;
+      position: relative;
+      margin-left: -60px;
+      padding-left: 72px;
+      @include flex(column, center, flex-start, nowrap);
+      @include media-breakpoint-up(sm) {
+        &::before {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          top: 0px;
+          left: 0px;
+          height: 100%;
+          width: 70%;
+          background-color: #ebf3fc;
+          border-radius: $radius 0 0 $radius;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          z-index: -1;
+          top: 0px;
+          right: 0px;
+          height: 100%;
+          width: 50%;
+          background-color: #ebf3fc;
+          transform: skewX(-25deg);
+          border-radius: $radius;
+        }
+      }
+      @include media-breakpoint-down(sm) {
+        background-color: rgba($pale-blue, .2);
+        border-radius: $radius;
+      }
+      .title {
+        font-family: $title-font;
+        font-size: 2em;
+        line-height: 100%;
+        @include clamp(2, 1.2em);
+      }
+    }
+    &-info {
+      @include list();
+      @include flex(column, flex-start, flex-end, nowrap);
+      margin-left: -1em;
+      width: 230px;
+      @include media-breakpoint-down(xxxl) {
+        width: 215px;
+      }
+      @include media-breakpoint-down(xxl) {
+        width: 200px;
+      }
+      @include media-breakpoint-down(md) {
+        width: 170px;
+        font-size: .9em;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 100%;
+        margin-left: 0em;
+        margin-top: 1em;
+      }
+      li {
+        position: relative;
+        padding: .6em;
+        height: 41px;
+        color: $black;
+        font-weight: 600;
+        width: 100%;
+        @include flex(row, space-between, center, nowrap);
+        @include media-breakpoint-up(sm) {
+          &:first-child {width: 79%;}
+          &:nth-child(2) {width: 89.5%;}
+          &::before {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: 0px;
+            left: 0px;
+            height: 100%;
+            width: 50%;
+            background-color: $white;
+            transform: skewX(-25deg);
+            border-radius: $radius;
+          }
+          &::after {
+            content: '';
+            position: absolute;
+            z-index: -1;
+            top: 0px;
+            right: 0px;
+            height: 100%;
+            width: 70%;
+            background-color: $white;
+            border-radius: 0 $radius $radius 0;
+          }
+        }
+        @include media-breakpoint-down(sm) {
+          background-color: $white;
+          border-radius: $radius;
+        }
+        div {
+          @include flex();
+          svg {
+            font-size: 1.6em;
+            margin-right: .34em;
+            &.svg {
+              stroke-width: 1.3px;
+            }
+            &.path {
+              path {stroke-width: 1.3px;}
+            }
+          }
+        }
+        &:not(:first-child){margin-top: 11px;}
+      }
+    }
+  }
+  .qr-code {
+    display: block;
+    max-width: 100%;
+    margin: 0 auto;
+    @include media-breakpoint-down(xxl) {
+      width: 100px;
+      margin-bottom: .25em;
+    }
+  }
   .post {
     background-color: rgba($pale-blue, .2);
     border-radius: $radius;
@@ -2111,9 +2310,21 @@ ACCOUNT
     text-align: center;
     width: 124px;
     padding-bottom: .2em;
+    max-width: 100%;
+    @include media-breakpoint-down(xxl) {
+      @include flex(row, flex-start, center, nowrap);
+      width: 100%;
+      text-align: left;
+      padding: .3em .6em;
+    }
     img {
       width: 110%;
       margin-top: -25%;
+      @include media-breakpoint-down(xxl) {
+        width: 3em;
+        margin-top: unset;
+        margin-right: .5em;
+      }
     }
   }
 }

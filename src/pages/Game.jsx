@@ -10,8 +10,8 @@ import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
 
 const Game = () => {
-  const {mobile} = useIsMobile('1109px');
-  const [filterShow, setFilterShow] = useState((!mobile) ? true : false);
+  const {isMobile} = useIsMobile('1109px');
+  const [filterShow, setFilterShow] = useState((!isMobile) ? true : false);
 
   return (
     <main>
@@ -53,7 +53,7 @@ const Game = () => {
 
                 <form action="" className='filter mb-4 mb-xxxl-5'>
                   {
-                    (mobile) &&
+                    (isMobile) &&
                     <button onClick={()=>setFilterShow(!filterShow)} type='button' className='dark-blue fs-12 fw-5'>
                       <span className='me-2'>Фильтры</span>
                       <FilterIcon className="fs-12"/>

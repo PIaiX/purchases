@@ -16,7 +16,7 @@ import useIsMobile from '../hooks/isMobile';
 import CatalogSection from '../components/CatalogSection';
 
 const Home = () => {
-  const {mobile} = useIsMobile('1109px');
+  const {isMobile} = useIsMobile('1109px');
 
   return (
     <main>
@@ -42,7 +42,7 @@ const Home = () => {
               <Chat/>
             </Col>
             {
-              (!mobile) &&
+              (!isMobile) &&
               <Col xs={12} lg={5} xxl={4}>
                 <section className='sec-popular'>
                   <h2>Популярные объявления</h2>

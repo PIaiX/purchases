@@ -1,8 +1,10 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiUser, FiList } from "react-icons/fi";
+import { FiUser, FiList, FiMessageCircle, FiMail } from "react-icons/fi";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import { MdCurrencyRuble } from "react-icons/md";
+import { TbBusinessplan, TbChartInfographic } from "react-icons/tb";
+import { TfiHeadphoneAlt } from "react-icons/tfi";
 
 const AccountMenu = () => {
   return (
@@ -18,19 +20,52 @@ const AccountMenu = () => {
         <li>
           <NavLink to="profile">
             <FiUser/>
-            <span>Профиль</span>
+            <div>Профиль</div>
           </NavLink>
         </li>
         <li>
           <NavLink to="offers">
             <FiList/>
-            <span>Мои объявления</span>
+            <div>Мои объявления</div>
           </NavLink>
         </li>
         <li>
-          <NavLink to="history">
+          <NavLink to="purchase-history">
             <RxCounterClockwiseClock/>
-            <span>История покупок</span>
+            <div>История покупок</div>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="sales-history">
+            <TbChartInfographic/>
+            <div>История продаж</div>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="finance">
+            <TbBusinessplan/>
+            <div>Финансы</div>
+          </NavLink>
+        </li>
+        
+        <li className='mt-4 mt-lg-5'>
+          <NavLink to="messages">
+            <FiMail/>
+            <div>Сообщения</div>
+            <span className='badge'>+32</span>
+          </NavLink>
+        </li>
+        <li>
+          <NavLink to="reviews">
+            <FiMessageCircle/>
+            <div>Отзывы</div>
+          </NavLink>
+        </li>
+
+        <li className='mt-4 mt-lg-5'>
+          <NavLink to="callback">
+            <TfiHeadphoneAlt/>
+            <div>Обратная связь</div>
           </NavLink>
         </li>
       </ul>

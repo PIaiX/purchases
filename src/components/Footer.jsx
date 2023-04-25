@@ -12,18 +12,18 @@ import useIsMobile from '../hooks/isMobile';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const {mobile} = useIsMobile('1109px');
+  const {isMobile} = useIsMobile('1109px');
 
   return (
     <footer>
       <Container className='h-100'>
         {
-          (mobile)
+          (isMobile)
           ? <nav className='nav-mobile'>
             <Link to='/' className='logo'>logo</Link>
             <ul>
               <li><NavLink to='/search'><SearchIcon/></NavLink></li>
-              <li><NavLink to='/support'><SupportIcon/></NavLink></li>
+              <li><NavLink to='/account'><SupportIcon/></NavLink></li>
               <li><NavLink to='/chat'><ChatIcon/></NavLink></li>
               <li><NavLink to='/menu'><MenuIcon/></NavLink></li>
             </ul>

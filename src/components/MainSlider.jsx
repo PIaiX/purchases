@@ -6,7 +6,7 @@ import PrevIcon from './svg/PrevIcon';
 
 const MainSlider = () => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const {mobile} = useIsMobile('1109px');
+  const {isMobile} = useIsMobile('1109px');
 
   const handleNext = () => {
     const nextSlide = activeSlide+1;
@@ -57,14 +57,14 @@ const MainSlider = () => {
         />
       </div>
       {
-        (mobile) &&
+        (isMobile) &&
         <>
         <button type='button' className="main-slider-prev" onClick={()=>handlePrev()}><PrevIcon/></button>
         <button type='button' className="main-slider-next" onClick={()=>handleNext()}><NextIcon/></button>
         </>
       }
       {
-        (mobile) &&
+        (isMobile) &&
         <ul className='main-slider-indicators'>
           <li className={(activeSlide===0)?'active':''}></li>
           <li className={(activeSlide===1)?'active':''}></li>
