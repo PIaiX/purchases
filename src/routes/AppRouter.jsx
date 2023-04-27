@@ -23,6 +23,7 @@ const router = createHashRouter(
       <Route path="login" element={<Login/>} />
       <Route path="*" element={<NotFound />} />
       <Route path="account/*" element={<AccountRouter/>} />
+      <Route path="help" element={<Blog/>} />
     </Route>
   )
 )

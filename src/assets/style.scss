@@ -551,6 +551,22 @@ button {
       background: $dark-green;
     }
   }
+  //голубая кнопка
+  &-5 {
+    @extend .btn;
+    background: $blue;
+    color: $white;
+    @include blurShadow();
+    border-radius: $radius;
+    &:hover, &:focus {
+      color: $white;
+      background: $dark-blue;
+    }
+    &:active, &.active {
+      color: $white;
+      background: $dark-green;
+    }
+  }
   &[disabled]{
     background: $light-gray;
   }
@@ -745,6 +761,34 @@ nav.pagination {
           text-align: right;
         }
         .btns {width: 60px;}
+      }
+      &.line-3 {
+        display: grid;
+        grid-template-columns: 140px 110px 1fr 200px 130px 80px;
+        grid-template-rows: 1fr;
+        grid-template-areas: "date id descr seller status price";
+        @include media-breakpoint-down(xxl) {
+          grid-template-columns: 83px 90px 1fr 200px 130px 80px;
+          font-size: 1em;
+        }
+        .date {
+          grid-area: date;
+        }
+        .id {
+          grid-area: id;
+        }
+        .descr {
+          grid-area: descr;
+        }
+        .seller {
+          grid-area: seller;
+        }
+        .status {
+          grid-area: status;
+        }
+        .price {
+          grid-area: price;
+        }
       }
     }
   }
@@ -1602,86 +1646,85 @@ header {
       @include media-breakpoint-down(xl) {
         padding: 0px;
       }
-      .offer-line {
-        display: grid;
-        grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
-        grid-template-rows: 1fr;
-        grid-template-areas: 
-        "serv descr seller availability price";
-        background-color: $white;
-        @include boxShadow();
-        border-radius: $radius;
-        @include media-breakpoint-down(xl) {
-          grid-template-columns:auto var(--price);
-          grid-template-rows: 2em auto 3em;
-          grid-template-areas: 
-          "serv price"
-          "descr descr"
-          "seller availability";
-          gap: 10px 0px;
-          padding: 1em 0;
-        }
-        @include media-breakpoint-down(md) {
-          padding: .5em 0;
-        }
-        &>div {
-          grid-column: span 1;
-          grid-row: span 1;
-          padding: var(--pad);
-        }
-        .serv {
-          grid-area: serv;
-          @include media-breakpoint-down(xl) {
-            color: $blue;
-            @include flex(row, flex-start, center, nowrap);
-          }
-        }
-        .descr {
-          grid-area: descr;
-          @include media-breakpoint-down(xl) {
-            @include clamp(3, 1.2em, true);
-          }
-        }
-        .seller {
-          grid-area: seller;
-          @include flex(row, flex-start);
-          @include media-breakpoint-between(sm, xl) {
-            font-size: .8em;
-          }
-          img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 50%;
-            margin-right: .75em;
-            @include media-breakpoint-down(xl) {
-              width: 40px;
-              height: 40px;
-            }
-          }
-        }
-        .availability {
-          grid-area: availability;
-          text-align: center;
-          @include media-breakpoint-down(xl) {
-            @include flex(row, flex-end, center, nowrap);
-            text-align: right;
-          }
-        }
-        .price {
-          grid-area: price;
-          text-align: center;
-          @include media-breakpoint-down(xl) {
-            @include flex(row, flex-end, center, nowrap);
-            text-align: right;
-            font-weight: 600;
-          }
-        }
-      }
     }
   }
 }
-
+.offer-line {
+  display: grid;
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "serv descr seller availability price";
+  background-color: $white;
+  @include boxShadow();
+  border-radius: $radius;
+  @include media-breakpoint-down(xl) {
+    grid-template-columns:auto var(--price);
+    grid-template-rows: 2em auto 3em;
+    grid-template-areas: 
+    "serv price"
+    "descr descr"
+    "seller availability";
+    gap: 10px 0px;
+    padding: 1em 0;
+  }
+  @include media-breakpoint-down(md) {
+    padding: .5em 0;
+  }
+  &>div {
+    grid-column: span 1;
+    grid-row: span 1;
+    padding: var(--pad);
+  }
+  .serv {
+    grid-area: serv;
+    @include media-breakpoint-down(xl) {
+      color: $blue;
+      @include flex(row, flex-start, center, nowrap);
+    }
+  }
+  .descr {
+    grid-area: descr;
+    @include media-breakpoint-down(xl) {
+      @include clamp(3, 1.2em, true);
+    }
+  }
+  .seller {
+    grid-area: seller;
+    @include flex(row, flex-start);
+    @include media-breakpoint-between(sm, xl) {
+      font-size: .8em;
+    }
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: .75em;
+      @include media-breakpoint-down(xl) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+  .availability {
+    grid-area: availability;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      @include flex(row, flex-end, center, nowrap);
+      text-align: right;
+    }
+  }
+  .price {
+    grid-area: price;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      @include flex(row, flex-end, center, nowrap);
+      text-align: right;
+      font-weight: 600;
+    }
+  }
+}
 
 /* Blog */
 .sec-blog {
@@ -2577,6 +2620,79 @@ ACCOUNT
     }
   }
 }
+.offer-line-3 {
+  background-color: $white;
+  border-radius: $radius;
+  @include lightShadow();
+  padding: 1em;
+  color: $total-black;
+  display: grid;
+  grid-template-columns: 145px 110px 1fr 200px 130px 80px;
+  grid-template-rows: 1fr;
+  grid-template-areas: "date id descr seller status price";
+  @include media-breakpoint-down(xxl) {
+    grid-template-columns: 85px 90px 1fr 200px 130px 80px;
+    font-size: 13px;
+  }
+  @include media-breakpoint-down(xl) {
+    font-size: 14px;
+    grid-template-columns: 2fr 1fr;
+    grid-template-rows: auto;
+    gap: .5em;
+    grid-template-areas: 
+      "descr descr"
+      "id id"
+      "status status"
+      "seller date"
+      "seller price";
+  }
+  @include media-breakpoint-down(md) {
+    font-size: 13px;
+  }
+  &>div {
+    @include flex(row, flex-start, center, nowrap);
+  }
+  .date {
+    grid-area: date;
+    @include media-breakpoint-down(xxl) {
+      @include flex(column, center, flex-start, nowrap);
+    }
+    @include media-breakpoint-down(xl) {
+      align-items: flex-end;
+    }
+  }
+  .id {
+    grid-area: id;
+  }
+  .descr {
+    grid-area: descr;
+  }
+  .seller {
+    grid-area: seller;
+    @include flex(row, flex-start);
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: .75em;
+      @include media-breakpoint-down(xl) {
+        width: 40px;
+        height: 40px;
+      }
+    }
+  }
+  .status {
+    grid-area: status;
+  }
+  .price {
+    grid-area: price;
+    @include media-breakpoint-down(xl) {
+      justify-content: flex-end;
+    }
+  }
+}
+
 /***********
 ACCOUNT END
 ***********/
