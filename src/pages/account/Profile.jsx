@@ -5,13 +5,12 @@ import LabeledInput from '../../components/utils/LabeledInput';
 import StarRating from '../../components/utils/StarRating';
 import Joystick from '../../components/svg/Joystick';
 import { TbHeartHandshake } from "react-icons/tb";
-import { FiMessageCircle, FiEdit } from "react-icons/fi";
+import { FiMessageCircle, FiEdit, FiArrowLeftCircle } from "react-icons/fi";
 import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle } from "react-icons/fi";
 
 const Profile = () => {
   return (
-    <section className='mb-5'>
+    <section className='mb-3 mb-sm-5'>
       <div className="d-lg-none d-flex align-items-center mb-4 mb-lg-0">
         <Link to='/account' className='d-flex fs-20 blue me-4'><FiArrowLeftCircle/></Link>
         <h1 className='h2 mb-0'>Профиль</h1>
@@ -42,7 +41,6 @@ const Profile = () => {
               <li>
                 <div>
                   <Joystick className='path'/>
-                  {/* <IoGameControllerOutline  className='path'/> */}
                   <span>Лотов:</span>
                 </div>
                 <span>336</span>
@@ -64,20 +62,20 @@ const Profile = () => {
             </Col>
             <Col xs={9} xl={12} xxl={6}>
               <button type="button" className='post ms-auto'>
-                <img src="imgs/plusx2.png" alt="plusx2" />
+                <img src="imgs/icons/plusx2.png" alt="plusx2" />
                 <div>Разместить объявление</div>
               </button>
             </Col>
           </Row>
         </Col>
       </Row>
-      <Row className='gy-5 mb-5'>
+      <Row className='gy-5 mb-md-5'>
         <Col xs={12} xxl={9}>
-          <h3 className='mb-5'>Основное</h3>
+          <h3 className='mb-4 mb-sm-5'>Основное</h3>
           <form action="">
             <Row xs={1} md={2} className='gx-xl-5 gy-5 gy-lg-0'>
               <Col>
-                <LabeledInput className="mb-5" type={"text"} label={"Имя/Ник"}/>
+                <LabeledInput className="mb-4 mb-sm-5" type={"text"} label={"Имя/Ник"}/>
                 <LabeledInput className="mb-4" type={"email"} label={"E-mail"}/>
                 <label className='mb-3'>
                   <input type="checkbox" className='switch'/>
@@ -91,14 +89,14 @@ const Profile = () => {
               <Col>
                 <LabeledInput className="mb-3" type={"tel"} label={"Номер телефона"}/>
                 <p className='rose'>Только верифицированные пользовтаели могут публиковать объявления на бирже Game.</p>
-                <button type='button' className='btn-3 mt-4'>Пройти верификацию</button>
+                <Link to="phone" className='btn-3 mt-4'>Пройти верификацию</Link>
               </Col>
             </Row>
-            <button type='submit' disabled className='btn-1 mt-4'>Сохранить изменения</button>
+            <Link to="email" className='btn-1 mt-4'>Сохранить изменения</Link>
           </form>
         </Col>
         <Col xs={12} xxl={10}>
-          <h3 className='mb-5'>Изменить пароль</h3>
+          <h3 className='mb-4 mb-sm-5'>Изменить пароль</h3>
           <form action="">
             <Row xs={1} xl={3} className='g-4'>
               <Col>

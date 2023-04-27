@@ -8,6 +8,15 @@ const LabeledInput = (props) => {
       {
         (props.type === 'password')
         ? <InputPassword />
+        : (props.type === 'select')
+        ? <select>
+          <option value="0" selected disabled>Выбрать</option>
+          {
+            props.options.map(obj => {
+              return <option key={obj.value} value={obj.value}>{obj.text}</option>
+            })
+          }
+        </select>
         : <input type={props.type} />
       }
       <label>

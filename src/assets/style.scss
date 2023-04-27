@@ -21,7 +21,7 @@ $pale-blue: #9DC4EF;
 $blue: #4A83DC;
 $light-blue: #66C6E4;
 $dark-blue: #0D59AB;
-$gradient-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
+$gradient-1: linear-gradient(120.98deg, $blue 48.77%, #3266B8 85.89%);
 $gradient-2: linear-gradient(120.98deg, rgba(72, 216, 104, 0.8) 48.77%, rgba(120, 216, 72, 0.8) 85.89%);
 $glass: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
 $dark-green: #005A47;
@@ -35,6 +35,7 @@ $pale-gray: #D9D9D9;
 $light-gray:#C1C1C1;
 $gray: #8F8F8F;
 $black: #1B1B1C;
+$total-black: #000;
 $transition: 300ms ease-in-out;
 $radius: .67em;
 
@@ -284,6 +285,8 @@ h6 {
 .blue {color: $blue;}
 .dark-blue {color: $dark-blue;}
 .rose {color: $rose;}
+.black {color: $black;}
+.total-black {color: $total-black;}
 .rouble {font-family: 'Verdana', 'Tahoma', 'Arial Black';} 
 
 /* Form elements */
@@ -379,30 +382,7 @@ label {
   align-items: center;
   span {flex:1;}
 }
-.labeled-input {
-  position: relative;
-  label {
-    position: absolute;
-    z-index: 10;
-    top: 0px;
-    left: 1em;
-    transform: translateY(-60%);
-    width: fit-content;
-    background-color: $white;
-    color: $gray;
-    padding: 0 .67em;
-  }
-  input {
-    position: relative;
-    z-index: 1;
-    &:hover + label, &:focus + label, &:active + label {
-      color: $blue;
-    }
-  }
-  &:hover, &:focus, &:active {
-    label {color: $blue;}
-  }
-}
+
 .password {
   position: relative;
   input {
@@ -446,6 +426,49 @@ select {
     min-width: 200px;
   }
 }
+.labeled-input {
+  position: relative;
+  label {
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 1em;
+    transform: translateY(-60%);
+    width: fit-content;
+    background-color: $white;
+    color: $gray;
+    padding: 0 .67em;
+  }
+  input {
+    position: relative;
+    z-index: 1;
+    border-radius: $radius*0.5;
+    &:hover + label, &:focus + label, &:active + label {
+      color: $blue;
+    }
+  }
+  select {
+    border-radius: $radius*0.5;
+    width: 100%;
+    border: 1px solid $light-gray;
+    box-shadow: none;
+    background: url(imgs/chevron-down-gray.svg) transparent;
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.67em) 50%;
+    background-size: 1.6em;
+    min-width: 150px;
+    &:hover, &:focus, &:active {
+      background: url(imgs/chevron-down.svg) transparent;
+      background-repeat: no-repeat;
+      background-position: calc(100% - 0.67em) 50%;
+      background-size: 1.6em;
+      border: 1px solid $blue;
+    }
+  }
+  &:hover, &:focus, &:active {
+    label {color: $blue;}
+  }
+}
 
 button {
   background: none;
@@ -462,34 +485,71 @@ button {
   text-align: center;
   transition: $transition;
   width: fit-content;
-  font-weight: 400;
   border-radius: $radius;
+  //голубая градиентная кнопка
   &-1 {
     @extend .btn;
     color: $white;
-    background: $gradient-1;
+    background-color: $blue;
+    background-image: linear-gradient(150deg, $blue 25%, #3266B8 50%, $blue 75%);
+    background-size: 200% 100%;
+    background-position: left center;
     &:hover, &:focus {
       color: $white;
-      background: $gradient-1;
+      background-position: right center;
     }
     &:active, &.active {
       color: $white !important;
-      background: $gradient-1;
+      background-position: center center;
     }
   }
+  //белая кнопка
   &-2 {
     @extend .btn;
     background: #FFFFFF;
     color: $black;
     @include blurShadow();
     border-radius: $radius;
+    &:hover, &:focus {
+      color: $white;
+      background: $light-blue;
+    }
+    &:active, &.active {
+      color: $black;
+      background: $light-blue;
+    }
   }
+  //розовая кнопка
   &-3 {
     @extend .btn;
     background: $rose;
     color: $white;
     @include blurShadow();
     border-radius: $radius;
+    &:hover, &:focus {
+      color: $white;
+      background: $light-blue;
+    }
+    &:active, &.active {
+      color: $white;
+      background: $pale-green;
+    }
+  }
+  //черная кнопка
+  &-4 {
+    @extend .btn;
+    background: $total-black;
+    color: $white;
+    @include blurShadow();
+    border-radius: $radius;
+    &:hover, &:focus {
+      color: $white;
+      background: $dark-blue;
+    }
+    &:active, &.active {
+      color: $white;
+      background: $dark-green;
+    }
   }
   &[disabled]{
     background: $light-gray;
@@ -550,9 +610,18 @@ button {
   color: $pale-blue;
   text-decoration: underline;
   transition: $transition;
-  &:hover {
+  &:hover, &:focus, &:active {
     color: $dark-blue;
     text-decoration: underline;
+  }
+  &-2 {
+    color: $blue;
+    text-decoration: none;
+    transition: $transition;
+    &:hover, &:focus, &:active {
+      color: $light-blue;
+      text-decoration: none;
+    }
   }
 }
 
@@ -567,6 +636,7 @@ button {
   }
 }
 
+/* Breadcrumbs */
 .breadcrumbs {
   margin-bottom: 2em;
   color: $light-gray;
@@ -612,6 +682,86 @@ button {
   }
 }
 
+/* Pagination */
+nav.pagination {
+  ul {
+    @include list();
+    @include flex();
+    li {
+      &:not(:first-child){margin-left: 1.3em;}
+      a {
+        width: 2em;
+        height: 2em;
+        border-radius: 50%;
+        background-color: transparent;
+        color: $blue;
+        @include flex();
+        transition: $transition;
+        svg {font-size: 1.2em;}
+        &:hover, &:focus {
+          background-color: rgba($pale-blue, .15);
+        }
+        &:active, &.active {
+          background-color: rgba($pale-blue, .3);
+          @include lightShadow();
+        }
+      }
+    }
+  }
+}
+
+/* Box */
+.list-wrapping {
+  background: $glass;
+  @include blurShadow();
+  border-radius: $radius;
+  --padX: 1.3em;
+  --padY: 1em;
+  @include media-breakpoint-down(xl) {
+    background: transparent;
+    border-radius: 0px;
+    box-shadow: none;
+    --padX: 0px;
+  }
+  &-top {
+    background-color: rgba($pale-blue, 0.2);
+    border-radius: $radius $radius 0px 0px;
+    padding: var(--padY) var(--padX);
+    @include media-breakpoint-down(xl) {
+      display: none;
+    }
+    ul {
+      @include list();
+      @include flex();
+      padding: .25em 1em;
+      font-weight: 700;
+      font-size: 1.2em;
+      &.line-2 {
+        .descr {
+          flex: 1;
+        }
+        .price {
+          width: 100px;
+          text-align: right;
+        }
+        .btns {width: 60px;}
+      }
+    }
+  }
+  &-main {
+    padding: var(--padX);
+    ul {
+      @include list();
+    }
+  }
+  &-bottom {
+    padding: 0 var(--padX) var(--padX);
+    @include media-breakpoint-down(xl) {
+      padding: var(--padY) 0 0;
+    }
+  }
+}
+
 body {
   margin: 0;
   font-family: $main-font, 'Arial', 'Tahoma', 'Verdana';
@@ -636,7 +786,19 @@ main {
   @include media-breakpoint-down(sm){
     padding: 1em 0;
   }
+  &.account {
+    position: relative;
+    overflow: hidden;
+    .account-bg {
+      @include absBG(1, 60%, auto);
+    }
+    .container {
+      position: relative;
+      z-index: 2;
+    }
+  }
 }
+
 
 header {
   height: var(--h-height);
@@ -811,6 +973,8 @@ header {
       bottom: 2em;
       right: 2em;
       opacity: 0;
+      color: $white;
+      text-decoration: none;
       @include media-breakpoint-down(xl) {
         bottom: 1em;
         right: 1em;
@@ -1129,6 +1293,33 @@ header {
     li { 
       margin-bottom: .67em;
       &:not(:last-child){margin-right: 1em;}
+    }
+  }
+  &-mini {
+    @include flex(row, flex-start, center, nowrap);
+    background-color: $white;
+    border-radius: $radius;
+    @include lightShadow();
+    padding: 1.6em 1.2em;
+    @include media-breakpoint-down(sm) {
+      padding: 1em .75em;
+    }
+    .img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 1.3em;
+      @include media-breakpoint-down(xxxl) {
+        margin-right: .5em;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 30px;
+        height: 30px;
+      }
+    }
+    h6 {
+      font-size: 1.1em;
     }
   }
 }
@@ -1587,7 +1778,7 @@ header {
       }
       h5 {
         font-weight: 600;
-        color: #000;
+        color: $total-black;
         @include clamp(2, 1.2em, true);
         a {line-height: 1.2em;}
       }
@@ -1606,7 +1797,7 @@ header {
   }
   article {
     p {
-      color: #000;
+      color: $total-black;
       margin-bottom: 2em;
       @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
@@ -1895,7 +2086,7 @@ header {
   }
   .title {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(165deg, #1B1B1C 0%, #4A83DC 55%, #000000 100%));
+    @include bgTextureGradient(linear-gradient(165deg, $black 0%, #4A83DC 55%, $total-black 100%));
     color: $white;
     height: 135px;
     padding: 0 3em;
@@ -1985,7 +2176,7 @@ header {
   }
   .cover {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(115deg, $black 0%, $blue 55%, #000000 100%));
+    @include bgTextureGradient(linear-gradient(115deg, $black 0%, $blue 55%, $total-black 100%));
     color: $white;
     height: 395px;
     padding: 0 6em;
@@ -2109,7 +2300,7 @@ ACCOUNT
             background-color: rgba($pale-blue, .2);
             padding: .34em;
             border-radius: $radius;
-            color: #000;
+            color: $total-black;
           }
           &:hover, &:focus {
             color: $blue;
@@ -2146,6 +2337,10 @@ ACCOUNT
         width: 90px;
         height: 90px;
       }
+      @include media-breakpoint-down(sm) {
+        width: 70px;
+        height: 70px;
+      }
       img {
         width: 100%;
         height: 100%;
@@ -2156,7 +2351,7 @@ ACCOUNT
       &::after {
         content: '';
         @include absBG(1, 50%, 50%);
-        background: linear-gradient(to bottom, transparent, #000 50%);
+        background: linear-gradient(to bottom, transparent, $total-black 50%);
         background-size: cover;
       }
       button {
@@ -2210,6 +2405,8 @@ ACCOUNT
       @include media-breakpoint-down(sm) {
         background-color: rgba($pale-blue, .2);
         border-radius: $radius;
+        padding-left: 65px;
+        height: 120px;
       }
       .title {
         font-family: $title-font;
@@ -2306,7 +2503,7 @@ ACCOUNT
   .post {
     background-color: rgba($pale-blue, .2);
     border-radius: $radius;
-    color: #000;
+    color: $total-black;
     text-align: center;
     width: 124px;
     padding-bottom: .2em;
@@ -2327,11 +2524,64 @@ ACCOUNT
       }
     }
   }
+  .add-offer {
+    padding: 3em 2em;
+    border-radius: $radius;
+    background: $glass;
+    @include blurShadow();
+    @include media-breakpoint-down(sm) {
+      padding: 2em 1.5em;
+    }
+  }
+}
+.offer-line-2 {
+  @include flex(row, space-between, center, nowrap);
+  background-color: $white;
+  border-radius: $radius;
+  @include lightShadow();
+  padding: 1em;
+  color: $total-black;
+  @include media-breakpoint-down(xl) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .descr {
+    flex: 1;
+    @include clamp(2, 1.2em);
+    @include media-breakpoint-down(xl) {
+      margin-bottom: 1em;
+      @include clamp(4, 1.2em);
+    }
+  }
+  .price {
+    width: 100px;
+    text-align: right;
+    @include media-breakpoint-down(xl) {
+      flex: 1;
+    }
+  }
+  .btns {
+    width: 60px;
+    @include flex(row, flex-end, center, nowrap);
+    button {
+      @include flex();
+      color: $blue;
+      font-size: 1.35em;
+      transition: $transition;
+      &:hover, &:focus {
+        color: $light-blue;
+      }
+       &:active {
+        color: $dark-blue;
+      }
+    }
+  }
 }
 /***********
 ACCOUNT END
 ***********/
 
+/* Footer */
 footer {
   height: var(--f-height);
   background-color: $black;
@@ -2391,6 +2641,56 @@ footer {
           }
         }
       }
+    }
+  }
+}
+
+/* Modal */
+.modal {
+  &-content {
+    background-color: $white;
+    border: none;
+    border-radius: $radius;
+  }
+  &-header {
+    position: relative;
+    height: 35px;
+    padding: 0px;
+    background-color: rgba($pale-blue, .2);
+    border: none;
+    .warning {
+      position: absolute;
+      right: 2em;
+      bottom: .25em;
+      @include media-breakpoint-down(lg) {
+        width: 20%;
+      }
+    }
+    .btn-close {
+      background: url(imgs/close.svg) no-repeat center;
+      background-size: contain;
+      background-color: $white;
+      width: 1.34em;
+      height: 1.34em;
+      padding: 0px;
+      margin: 0px;
+      border-radius: 50%;
+      overflow: hidden;
+      @include safariFix();
+      transition: $transition;
+      position: absolute;
+      top: .5em;
+      right: .5em;
+      z-index: 1;
+      &:hover, &:focus {
+        background-color: $dark-blue;
+      }
+    }
+  }
+  &-body {
+    padding: 1.34em 2.68em;
+    @include media-breakpoint-down(sm) {
+      padding: 1.34em;
     }
   }
 }

@@ -4,6 +4,10 @@ import useIsMobile from '../hooks/isMobile'
 import AccountLayout from '../layouts/AccountLayout'
 import Profile from '../pages/account/Profile'
 import AccountMenu from '../pages/account/AccountMenu';
+import Offers from '../pages/account/Offers'
+import AddOffer from '../pages/account/AddOffer'
+import PhoneVerification from '../pages/account/PhoneVerification'
+import EmailVerification from '../pages/account/EmailVerification'
 
 const AccountRouter = () => {
   const {isMobile} = useIsMobile('1109px')
@@ -17,6 +21,10 @@ const AccountRouter = () => {
           : <Route index element={<Navigate to="profile" replace={true} />} />
         }
         <Route path="profile" element={<Profile/>} />
+        <Route path="profile/phone" element={<PhoneVerification/>} />
+        <Route path="profile/email" element={<EmailVerification/>} />
+        <Route path="offers" element={<Offers/>} />
+        <Route path="offers/add" element={<AddOffer/>} />
       </Route>
     </Routes>
   )
