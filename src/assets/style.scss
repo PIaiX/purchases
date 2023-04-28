@@ -252,6 +252,13 @@ h6 {
   text-align: center;
   margin-bottom: 0px;
 }
+.topic {
+  background-color: $blue;
+  color: $white;
+  padding: 1em 2em;
+  border-radius: $radius;
+  h1, h2, a {line-height: 100%;}
+}
 .fs {
   &-08 {font-size: 0.8em;}
   &-09 {font-size: 0.9em;}
@@ -2696,6 +2703,34 @@ ACCOUNT
 /***********
 ACCOUNT END
 ***********/
+
+.privacy-policy {
+  h4, p {
+    margin-bottom: 1em;
+  }
+  h4:not(:first-child) {margin-top: 2em;}
+}
+
+.faq {
+  .box {
+    background-color: $total-black;
+    color: $white;
+    border-radius: $radius;
+    position: relative;
+    padding: 3em 40% 3em 2em;
+    img {
+      position: absolute;
+      bottom: 0px;
+      right: 5%;
+      width: 35%;
+      height: 110%;
+      object-fit: scale-down;
+      object-position: center bottom;
+      z-index: 0;
+    }
+  }
+}
+
 
 /* Footer */
 footer {
