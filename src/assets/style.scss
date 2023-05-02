@@ -733,6 +733,25 @@ nav.pagination {
   }
 }
 
+.accordion {
+  --bs-accordion-color: #1B1B1C;
+  --bs-accordion-btn-color: #4A83DC;
+  --bs-accordion-active-color: #4A83DC;
+  --bs-accordion-btn-bg: transparent;
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-btn-padding-y: .5em;
+  --bs-accordion-btn-padding-x: 0px;
+  --bs-accordion-body-padding-x: 0px;
+  --bs-accordion-border-color: rgba(157, 196, 239, 0.3);
+  --bs-accordion-btn-icon-width: 2em;
+  --bs-accordion-btn-icon: url(imgs/chevron-down-blue.svg);
+  --bs-accordion-btn-active-icon: url(imgs/chevron-down-blue.svg);
+  &-button {
+    box-shadow: unset;
+    font-weight: 600;
+  }
+}
+
 /* Box */
 .list-wrapping {
   background: $glass;
@@ -836,17 +855,6 @@ main {
   padding: 2em 0;
   @include media-breakpoint-down(sm){
     padding: 1em 0;
-  }
-  &.account {
-    position: relative;
-    overflow: hidden;
-    .account-bg {
-      @include absBG(1, 60%, auto);
-    }
-    .container {
-      position: relative;
-      z-index: 2;
-    }
   }
 }
 
@@ -2299,6 +2307,15 @@ header {
 ACCOUNT
 ***********/
 .account {
+  position: relative;
+  overflow: hidden;
+  .account-bg {
+    @include absBG(1, 60%, auto);
+  }
+  .container {
+    position: relative;
+    z-index: 2;
+  }
   &-nav {
     &-balance {
       background-color: $blue;
@@ -2710,7 +2727,16 @@ ACCOUNT END
   }
   h4:not(:first-child) {margin-top: 2em;}
 }
-
+.rules {
+  color: #000;
+  hr {
+    border: none;
+    opacity: 1;
+    height: 1px;
+    background-color: rgba($pale-blue, .3);
+    margin: .6em 0 1.2em;
+  }
+}
 .faq {
   .box {
     background-color: $total-black;

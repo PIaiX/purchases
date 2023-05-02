@@ -8719,6 +8719,25 @@ nav.pagination ul li a:active, nav.pagination ul li a.active {
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
 
+.accordion {
+  --bs-accordion-color: #1B1B1C;
+  --bs-accordion-btn-color: #4A83DC;
+  --bs-accordion-active-color: #4A83DC;
+  --bs-accordion-btn-bg: transparent;
+  --bs-accordion-active-bg: transparent;
+  --bs-accordion-btn-padding-y: .5em;
+  --bs-accordion-btn-padding-x: 0px;
+  --bs-accordion-body-padding-x: 0px;
+  --bs-accordion-border-color: rgba(157, 196, 239, 0.3);
+  --bs-accordion-btn-icon-width: 2em;
+  --bs-accordion-btn-icon: url(imgs/chevron-down-blue.svg);
+  --bs-accordion-btn-active-icon: url(imgs/chevron-down-blue.svg);
+}
+.accordion-button {
+  box-shadow: unset;
+  font-weight: 600;
+}
+
 /* Box */
 .list-wrapping {
   background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
@@ -8844,22 +8863,6 @@ main {
   main {
     padding: 1em 0;
   }
-}
-main.account {
-  position: relative;
-  overflow: hidden;
-}
-main.account .account-bg {
-  position: absolute;
-  top: 60%;
-  left: 0px;
-  width: 100%;
-  height: auto;
-  z-index: 1;
-}
-main.account .container {
-  position: relative;
-  z-index: 2;
 }
 
 header {
@@ -10844,6 +10847,22 @@ header input::placeholder {
 /***********
 ACCOUNT
 ***********/
+.account {
+  position: relative;
+  overflow: hidden;
+}
+.account .account-bg {
+  position: absolute;
+  top: 60%;
+  left: 0px;
+  width: 100%;
+  height: auto;
+  z-index: 1;
+}
+.account .container {
+  position: relative;
+  z-index: 2;
+}
 .account-nav-balance {
   background-color: #4A83DC;
   color: #FFFFFF;
@@ -11390,6 +11409,17 @@ ACCOUNT END
 }
 .privacy-policy h4:not(:first-child), .privacy-policy .h4:not(:first-child) {
   margin-top: 2em;
+}
+
+.rules {
+  color: #000;
+}
+.rules hr {
+  border: none;
+  opacity: 1;
+  height: 1px;
+  background-color: rgba(157, 196, 239, 0.3);
+  margin: 0.6em 0 1.2em;
 }
 
 .faq .box {

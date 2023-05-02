@@ -12,6 +12,8 @@ import PasswordRestoration from '../pages/PasswordRestoration'
 import AccountRouter from './AccountRouter'
 import FAQ from '../pages/FAQ'
 import PrivacyPolicy from '../pages/PrivacyPolicy'
+import Rules from '../pages/Rules'
+import Cookie from '../pages/Cookie'
 
 const router = createHashRouter(
   createRoutesFromElements(
@@ -27,8 +29,8 @@ const router = createHashRouter(
       <Route path="account/*" element={<AccountRouter/>} />
       <Route path="help" element={<FAQ/>} />
       <Route path="privacy" element={<PrivacyPolicy/>} />
-      <Route path="rules" element={<PrivacyPolicy/>} />
-      <Route path="cookie" element={<PrivacyPolicy/>} />
+      <Route path="rules" element={<Rules/>} />
+      <Route path="cookie" element={<Cookie/>} />
     </Route>
   )
 )

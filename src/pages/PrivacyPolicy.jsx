@@ -2,10 +2,12 @@ import React from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import bgImg from '../assets/imgs/bg/gradient.jpg';
 
 const PrivacyPolicy = () => {
   return (
-    <main>
+    <main className='account'>
+      <img src={bgImg} alt="bgImg" className='account-bg'/>
       <Container>
         <section className='privacy-policy mb-md-5'>
           <Row className='justify-content-center'>
