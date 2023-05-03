@@ -13,42 +13,42 @@ const PurchaseHistory = () => {
       </div>
 
       <div className="list-wrapping">
-            <div className="list-wrapping-top">
-              <ul className='line-3'>
-                <li className="date">Дата</li>
-                <li className="id">ID заказа</li>
-                <li className="descr">Детали</li>
-                <li className="seller">Продавец</li>
-                <li className="status">Статус</li>
-                <li className="price">Цена</li>
-              </ul>
-            </div>
-            <div className="list-wrapping-main">
-              <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-              </ul>
-            </div>
-            <div className="list-wrapping-bottom">
-              <NavPagination/>
-            </div>
-          </div>
+        <div className="list-wrapping-top">
+          <ul className='line-3'>
+            <li className="date">Дата</li>
+            <li className="id">ID заказа</li>
+            <li className="descr">Детали</li>
+            <li className="seller">Продавец</li>
+            <li className="status">Статус</li>
+            <li className="price">Цена</li>
+          </ul>
+        </div>
+        <div className="list-wrapping-main">
+          <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+          </ul>
+        </div>
+        <div className="list-wrapping-bottom">
+          <NavPagination/>
+        </div>
+      </div>
     </section>
   );
 };

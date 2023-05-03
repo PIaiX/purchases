@@ -56,7 +56,7 @@ const AccountMenu = () => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="reviews">
+          <NavLink to="feedback">
             <FiMessageCircle/>
             <div>Отзывы</div>
           </NavLink>

@@ -17,7 +17,9 @@ const LabeledInput = (props) => {
             })
           }
         </select>
-        : <input type={props.type} />
+        : (props.type === 'textarea')
+        ? <textarea name="" rows={props.rows} placeholder={props.placeholder}></textarea>
+        :<input type={props.type} />
       }
       <label>
         <span>{props.label}</span>
