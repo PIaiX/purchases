@@ -1,26 +1,30 @@
 {
   "files": {
-    "main.css": "/purchases/static/css/main.5b69a910.css",
-    "main.js": "/purchases/static/js/main.8e149667.js",
+    "main.css": "/purchases/static/css/main.06ae5bf1.css",
+    "main.js": "/purchases/static/js/main.ddca00c5.js",
+    "static/media/girl.png": "/purchases/static/media/girl.67010099caf55b7f8591.png",
+    "static/media/texture.png": "/purchases/static/media/texture.fdf098fc14db4efae277.png",
     "static/media/bebasneuecyrillic.ttf": "/purchases/static/media/bebasneuecyrillic.f39fe92d35bac3b2fe60.ttf",
     "static/media/cogito.jpg": "/purchases/static/media/cogito.a7a9226ba2e056868f03.jpg",
-    "static/media/texture.png": "/purchases/static/media/texture.f266f798e493d075b4fb.png",
     "static/media/gradient.jpg": "/purchases/static/media/gradient.3d5bf269bd151bad288c.jpg",
     "static/media/fav.svg": "/purchases/static/media/fav.95f0556368f369ff974f7ef2f97294ec.svg",
     "static/media/inputChatEnd.svg": "/purchases/static/media/inputChatEnd.4fb5f137c511ecb5aa2c.svg",
     "static/media/bead.svg": "/purchases/static/media/bead.bb453aa81f54bee94eca19efaef5886a.svg",
+    "static/media/close.svg": "/purchases/static/media/close.70c6c27fddbf04304591.svg",
     "index.html": "/purchases/index.html",
     "static/media/arrow.svg": "/purchases/static/media/arrow.305693ae57e5e419fce83ec9274ba108.svg",
     "static/media/SearchIcon.svg": "/purchases/static/media/SearchIcon.1d5684bf57498728851f.svg",
     "static/media/send.svg": "/purchases/static/media/send.f0b1499e7642e258df1e7e2d8fb14570.svg",
     "static/media/Subtract.svg": "/purchases/static/media/Subtract.c84980053522d86f78d0.svg",
     "static/media/arrow-mini.svg": "/purchases/static/media/arrow-mini.705720f49325e72aa313.svg",
-    "static/media/chevron-down.svg": "/purchases/static/media/chevron-down.e2fe758979446017b7f0.svg",
-    "main.5b69a910.css.map": "/purchases/static/css/main.5b69a910.css.map",
-    "main.8e149667.js.map": "/purchases/static/js/main.8e149667.js.map"
+    "static/media/chevron-down-gray.svg": "/purchases/static/media/chevron-down-gray.4801f8b5797a0374d9bd.svg",
+    "static/media/chevron-down.svg": "/purchases/static/media/chevron-down.8ebe33b5e703ae624cb3.svg",
+    "static/media/chevron-down-blue.svg": "/purchases/static/media/chevron-down-blue.c184a2d325b43d0131f4.svg",
+    "main.06ae5bf1.css.map": "/purchases/static/css/main.06ae5bf1.css.map",
+    "main.ddca00c5.js.map": "/purchases/static/js/main.ddca00c5.js.map"
   },
   "entrypoints": [
-    "static/css/main.5b69a910.css",
-    "static/js/main.8e149667.js"
+    "static/css/main.06ae5bf1.css",
+    "static/js/main.ddca00c5.js"
   ]
 }
