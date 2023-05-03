@@ -37,7 +37,7 @@ const AccountRouter = () => {
         <Route path="messages" element={<Feedback/>} />
         <Route path="feedback" element={<Feedback/>} />
         <Route path="feedback/add" element={<LeaveFeedback/>} />
-        <Route path="callback" element={<Callback/>} />
+        <Route path="feedback" element={<Callback/>} />
       </Route>
     </Routes>
   )
