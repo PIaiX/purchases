@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle } from "react-icons/fi";
+import ReturnIcon from '../../components/svg/ReturnIcon';
 import InputRating from '../../components/utils/InputRating';
 import LabeledInput from '../../components/utils/LabeledInput';
 
@@ -10,7 +10,9 @@ const LeaveFeedback = () => {
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
       <div className="d-flex align-items-center mb-4 mb-xl-5">
-        <Link to='/account/feedback' className='d-flex d-lg-none  fs-20 blue me-4'><FiArrowLeftCircle/></Link>
+        <Link to='/account/feedback' className='d-flex d-lg-none  fs-20 blue me-4'>
+          <ReturnIcon/>
+        </Link>
         <h1 className='h2 mb-0'>Оставить отзыв</h1>
       </div>
       <Row xs={1} xxl={2} className='gx-xxl-5'>

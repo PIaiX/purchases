@@ -48,7 +48,7 @@ const AccountMenu = () => {
           </NavLink>
         </li>
         
-        <li className='mt-4 mt-lg-5'>
+        <li className='mt-sm-4 mt-lg-5'>
           <NavLink to="messages">
             <FiMail/>
             <div>Сообщения</div>
@@ -62,7 +62,7 @@ const AccountMenu = () => {
           </NavLink>
         </li>
 
-        <li className='mt-4 mt-lg-5'>
+        <li className='mt-sm-4 mt-lg-5'>
           <NavLink to="callback">
             <TfiHeadphoneAlt/>
             <div>Обратная связь</div>

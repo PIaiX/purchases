@@ -17,7 +17,7 @@ const useIsMobile = (width) => {
         return () => window.removeEventListener('resize', updateView)
     })
 
-    return {isMobile}
+    return isMobile
 }
 
 export default useIsMobile

@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle } from "react-icons/fi";
+import ReturnIcon from '../../components/svg/ReturnIcon';
 import LabeledInput from '../../components/utils/LabeledInput';
 
 const AddOffer = () => {
@@ -11,7 +11,9 @@ const AddOffer = () => {
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
           <div className="d-flex align-items-center mb-4 mb-lg-5">
-            <Link to='/account' className='d-lg-none d-flex fs-20 blue me-4'><FiArrowLeftCircle/></Link>
+            <Link to='/account/offers' className='d-lg-none d-flex fs-20 blue me-4'>
+              <ReturnIcon/>
+            </Link>
             <h1 className='h2 mb-0'>Новое объявление</h1>
           </div>
 

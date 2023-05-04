@@ -23,7 +23,7 @@ const LabeledInput = (props) => {
       }
       <label>
         <span>{props.label}</span>
-        <CheckMark className="pale-blue fs-13 ms-2"/>
+        {/* <CheckMark className="pale-blue fs-13 ms-2"/> */}
       </label>
     </div>
   );

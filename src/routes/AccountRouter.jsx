@@ -12,17 +12,23 @@ import PurchaseHistory from '../pages/account/PurchaseHistory'
 import SalesHistory from '../pages/account/SalesHistory'
 import Finance from '../pages/account/Finance'
 import Feedback from '../pages/account/Feedback'
+import Messages from '../pages/account/Messages'
 import LeaveFeedback from '../pages/account/LeaveFeedback'
 import Callback from '../pages/account/Callback'
+import MessagesChat from '../pages/account/MessagesChat'
+import MessagesList from '../pages/account/MessagesList'
+import CallbackChat from '../pages/account/CallbackChat'
 
 const AccountRouter = () => {
-  const {isMobile} = useIsMobile('1109px')
+  const isMobileLG = useIsMobile('1109px')
+  const isMobileXL = useIsMobile('1289px')
+  console.log('isMobileXL ='+isMobileXL)
 
   return (
     <Routes>
-      <Route path="/" element={<AccountLayout isMobile={isMobile}/>}>
+      <Route path="/" element={<AccountLayout isMobile={isMobileLG}/>}>
         {
-          (isMobile) 
+          (isMobileLG) 
           ? <Route index element={<AccountMenu />} />
           : <Route index element={<Navigate to="profile" replace={true} />} />
         }
@@ -34,10 +40,18 @@ const AccountRouter = () => {
         <Route path="purchase-history" element={<PurchaseHistory/>} />
         <Route path="sales-history" element={<SalesHistory/>} />
         <Route path="finance" element={<Finance/>} />
-        <Route path="messages" element={<Feedback/>} />
+        <Route path="messages" element={<Messages isMobileXL={isMobileXL}/>}>
+          {
+            (isMobileXL) 
+            ? <Route index element={<MessagesList/>} />
+            : <Route index element={<Navigate to=":id" replace={true} />} />
+          }
+          <Route path=":id" element={<MessagesChat/>} />
+        </Route>
         <Route path="feedback" element={<Feedback/>} />
         <Route path="feedback/add" element={<LeaveFeedback/>} />
-        <Route path="feedback" element={<Callback/>} />
+        <Route path="callback" element={<Callback/>} />
+        <Route path="callback/:id" element={<CallbackChat/>} />
       </Route>
     </Routes>
   )

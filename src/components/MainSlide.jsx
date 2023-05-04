@@ -6,7 +6,7 @@ import SlideMobile from './svg/SlideMobile';
 import useIsMobile from '../hooks/isMobile';
 
 const MainSlide = (props) => {
-  const {isMobile} = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('1109px');
 
   return (
     <div 
@@ -15,7 +15,7 @@ const MainSlide = (props) => {
     >
       <div className="position-relative">
         {
-          (isMobile)
+          (isMobileLG)
           ? <SlideMobile img={props.imgFull} className="svg-mobile"/>
           : (props.isActive) 
           ? <SlideFull img={props.imgFull} className="svg-full"/>

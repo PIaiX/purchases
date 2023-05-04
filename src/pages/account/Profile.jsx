@@ -5,14 +5,15 @@ import LabeledInput from '../../components/utils/LabeledInput';
 import StarRating from '../../components/utils/StarRating';
 import Joystick from '../../components/svg/Joystick';
 import { TbHeartHandshake } from "react-icons/tb";
-import { FiMessageCircle, FiEdit, FiArrowLeftCircle } from "react-icons/fi";
+import { FiMessageCircle, FiEdit } from "react-icons/fi";
 import {Link} from 'react-router-dom';
+import ReturnIcon from '../../components/svg/ReturnIcon';
 
 const Profile = () => {
   return (
     <section className='mb-3 mb-sm-5'>
       <div className="d-lg-none d-flex align-items-center mb-4 mb-lg-0">
-        <Link to='/account' className='d-flex fs-20 blue me-4'><FiArrowLeftCircle/></Link>
+        <Link to='/account' className='d-flex fs-20 blue me-4'><ReturnIcon/></Link>
         <h1 className='h2 mb-0'>Профиль</h1>
       </div>
       <Row className='mb-5'>
@@ -61,10 +62,10 @@ const Profile = () => {
               <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code'/>
             </Col>
             <Col xs={9} xl={12} xxl={6}>
-              <button type="button" className='post ms-auto'>
+              <Link to="/account/offers/add" className='post ms-auto'>
                 <img src="imgs/icons/plusx2.png" alt="plusx2" />
                 <div>Разместить объявление</div>
-              </button>
+              </Link>
             </Col>
           </Row>
         </Col>

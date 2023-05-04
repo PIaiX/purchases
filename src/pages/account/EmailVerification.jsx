@@ -1,13 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle } from "react-icons/fi";
+import ReturnIcon from '../../components/svg/ReturnIcon';
 import LabeledInput from '../../components/utils/LabeledInput';
 
 const EmailVerification = () => {
   return (
     <section className='mb-3 mb-sm-5'>
       <div className="d-flex align-items-center mb-4 mb-lg-5">
-        <Link to='/account/profile' className='d-flex d-lg-none fs-20 blue me-4'><FiArrowLeftCircle/></Link>
+        <Link to='/account/profile' className='d-flex d-lg-none fs-20 blue me-4'>
+          <ReturnIcon/>
+        </Link>
         <h1 className='h2 mb-0'>Подтверждение Электронной почты</h1>
       </div>
 

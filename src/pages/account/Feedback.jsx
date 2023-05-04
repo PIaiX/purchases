@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {Link} from 'react-router-dom';
-import { FiArrowLeftCircle, FiEdit } from "react-icons/fi";
+import ReturnIcon from '../../components/svg/ReturnIcon';
+import { FiEdit } from "react-icons/fi";
 import StarRating from '../../components/utils/StarRating';
 import NavPagination from '../../components/NavPagination';
 import FeedbackLine from '../../components/FeedbackLine';
@@ -11,7 +12,9 @@ const Feedback = () => {
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
       <div className="d-flex align-items-center mb-4 mb-xl-5">
-        <Link to='/account' className='d-flex d-lg-none  fs-20 blue me-4'><FiArrowLeftCircle/></Link>
+        <Link to='/account' className='d-flex d-lg-none  fs-20 blue me-4'>
+          <ReturnIcon/>
+        </Link>
         <h1 className='h2 mb-0'>Отзывы</h1>
       </div>
 

@@ -569,12 +569,12 @@ button {
     @include blurShadow();
     border-radius: $radius;
     &:hover, &:focus {
+      background: $rose;
       color: $white;
-      background: $light-blue;
     }
     &:active, &.active {
+      background: $rose;
       color: $white;
-      background: $pale-green;
     }
   }
   //черная кнопка
@@ -891,6 +891,27 @@ nav.pagination {
           grid-area: sum;
         }
       }
+      &.line-appeal {
+        display: grid;
+        grid-template-columns: 35% 13% 22% 20% 10%;
+        grid-template-rows: 1fr;
+        grid-template-areas: "subject id status date btns";
+        .subject {
+          grid-area: subject;
+        }
+        .id {
+          grid-area: id;
+        }
+        .status {
+          grid-area: status;
+        }
+        .date {
+          grid-area: date;
+        }
+        .btns {
+          grid-area: btns;
+        }
+      }
     }
   }
   &-main {
@@ -928,6 +949,9 @@ body {
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
   padding: 2em 0;
+  @include media-breakpoint-down(lg){
+    min-height: calc(100vh - var(--f-height));
+  }
   @include media-breakpoint-down(sm){
     padding: 1em 0;
   }
@@ -936,6 +960,9 @@ main {
 
 header {
   height: var(--h-height);
+  @include media-breakpoint-down(lg){
+    display: none;
+  }
   input {
     border-color: $pale-blue;
     @include placeholder($pale-blue);
@@ -948,9 +975,9 @@ header {
     overflow: hidden;
     position: relative;
     padding-bottom: 2em;
-    @include media-breakpoint-down(sm) {
-      padding-bottom: 1.5em;
-    }
+  }
+  @include media-breakpoint-down(sm) {
+    padding-bottom: 1.5em;
   }
   &-box {
     @include flex(row, space-between, flex-start, nowrap);
@@ -1261,6 +1288,9 @@ header {
       height: auto;
       margin-left: 1em;
     }
+    @include media-breakpoint-down(sm) {
+      width: 40px;
+    }
     .wrap {
       background: $glass;
       background-color: rgba(255, 255, 255, 0.7);
@@ -1276,6 +1306,9 @@ header {
       transition: $transition;
       @include media-breakpoint-down(lg) {
         float: right;
+      }
+      @include media-breakpoint-down(sm) {
+        padding: 0;
       }
       form {
         position: relative;
@@ -1366,6 +1399,9 @@ header {
       }
       &.full {
         width: 180px;
+        @include media-breakpoint-down(sm) {
+          width: 130px;
+        }
         form {
           // border: 1px solid $pale-blue;
           input {
@@ -2643,6 +2679,7 @@ ACCOUNT
     }
   }
   .post {
+    display: block;
     background-color: rgba($pale-blue, .2);
     border-radius: $radius;
     color: $total-black;
@@ -2723,6 +2760,86 @@ ACCOUNT
       padding: 1em 1.2em;
       border-radius: $radius;
       @include flex();
+    }
+  }
+  .sec-messages {
+    @include flex(row, flex-start, stretch, wrap);
+    background-color: $white;
+    @include blurShadow();
+    border-radius: $radius;
+    &-list {
+      width: 35%;
+      border-right: 1px solid rgba($pale-blue, .3);
+      padding: 1em;
+      @include media-breakpoint-down(xxl) {
+        width: 40%;
+      }
+      @include media-breakpoint-down(xl) {
+        width: 100%;
+      }
+      ul {
+        margin-top: 1.5em;
+        @include list();
+        li {
+          &:not(:first-child){margin-top: 1.5em;}
+        }
+      }
+    }
+    &-chat {
+      width: 65%;
+      padding: 1em 0 2em;
+      position: relative;
+      @include media-breakpoint-down(xxl) {
+        width: 60%;
+      }
+      @include media-breakpoint-down(xl) {
+        width: 100%;
+      }
+      .chat-window {
+        height: 600px;
+        @include media-breakpoint-down(xxl) {
+          padding: 1.5em;
+        }
+      }
+      .chat-form {
+        @include media-breakpoint-down(xxl) {
+          padding: 0 1.5em;
+        }
+      }
+    }
+  }
+  .sec-callback {
+    .box {
+      background: $glass;
+      border-radius: $radius;
+      @include blurShadow();
+      padding: 3em 2em;
+    }
+    form {
+      width: 70%;
+      @include media-breakpoint-down(xl) {
+        width: 100%;
+      }
+    }
+  }
+  .sec-appeal {
+    .top {
+      background-color: rgba($pale-blue, .2);
+      border-radius: $radius $radius 0 0;
+      @include flex(row, space-between, center, nowrap);
+      padding: 1.3em 2em;
+      @include media-breakpoint-down(sm) {
+        padding: 1em 1.5em;
+      }
+    }
+    .box {
+      background: rgba($white, .3);
+      border-radius: 0 0 $radius $radius;
+      @include blurShadow();
+      padding: 1.5em 2em;
+      .chat-window{
+        height: 550px;
+      }
     }
   }
   .rouble {
@@ -2973,6 +3090,88 @@ ACCOUNT
     }
   }
 }
+.appeal-line {
+  background-color: $white;
+  border-radius: $radius;
+  @include lightShadow();
+  padding: 1em;
+  color: $total-black;
+  display: grid;
+  grid-template-columns: 35% 13% 22% 20% 10%;
+  grid-template-rows: 1fr;
+  grid-template-areas: "subject id status time btns";
+  @include media-breakpoint-down(xl) {
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-areas: 
+    "date id" 
+    "subject subject"
+    "status btns";
+    gap: .5em;
+  }
+  .subject {
+    grid-area: subject;
+  }
+  .id {
+    grid-area: id;
+    @include media-breakpoint-down(xl) {
+      text-align: right;
+    }
+  }
+  .status {
+    grid-area: status;
+  }
+  time {
+    grid-area: time;
+  }
+  .btns {
+    grid-area: btns;
+    @include flex(row, flex-end, center, nowrap);
+  }
+}
+.dialog-preview {
+  @include flex(row, flex-start, center, nowrap);
+  padding: .3em .6em;
+  border-radius: $radius;
+  position: relative;
+  &.active {
+    background-color: rgba($light-gray, .2)
+  }
+  img {
+    @include rounedImg(50px);
+    margin-right: .5em;
+    position: relative;
+    z-index: 1;
+  }
+  .indicator {
+    position: absolute;
+    bottom: .4em;
+    left: 48px;
+    width: .67em;
+    height: .67em;
+    border-radius: 50%;
+    z-index: 10;
+    &.green {
+      background-color: $green;
+    }
+  }
+  .text {
+    flex: 1;
+    h5 {
+      @include clamp(1, 1.2em, true);
+    }
+    time {
+      font-weight: 300;
+      color: $gray;
+      font-size: .7em;
+    }
+    p {
+      @include clamp(1, 1.2em, true);
+      font-weight: 300;
+      color: $gray;
+    }
+  }
+}
 /***********
 ACCOUNT END
 ***********/
@@ -3025,7 +3224,7 @@ footer {
     bottom: 0px;
     left: 0px;
     width: 100%;
-    z-index: 100;
+    z-index: 10000;
   }
   .dev-link {
     width: fit-content;
@@ -3060,7 +3259,7 @@ footer {
         justify-content: space-between;
       }
       li {
-        a {
+        a, button {
           @include flex();
           font-size: 1.85em;
           color: $gray;
@@ -3069,7 +3268,10 @@ footer {
             path {stroke-width: 0.8px;}
           }
           &.active {
-            color: $green;
+            color: $blue;
+            svg {
+              path {stroke-width: 1px;}
+            }
           }
         }
       }
@@ -3123,6 +3325,55 @@ footer {
     padding: 1.34em 2.68em;
     @include media-breakpoint-down(sm) {
       padding: 1.34em;
+    }
+  }
+}
+
+.offcanvas {
+  &-body {
+    position: relative;
+    ul {
+      @include list();
+      background-color: $glass;
+      border-radius: $radius;
+      padding: 0 1em;
+      font-size: 1.2em;
+      @include blurShadow();
+      li {
+        a {
+          display: block;
+          padding: .75em 0;
+          color: $total-black;
+        }
+        &:not(:first-child){
+          border-top: 1px solid #F3F3F3;
+        }
+      }
+    }
+    .sec-promo {
+      h1 {
+        font-size: 2.2em;
+      }
+      img {
+        width: 40%;
+        margin-top: -10%;
+      }
+    }
+    .dev-link {
+      @include flex();
+    }
+    .close {
+      position: absolute;
+      top: 0px;
+      right: 0px;
+      font-size: 1.5em;
+      @include flex();
+      color: $gray;
+      transition: $transition;
+      padding: .5em;
+      &:hover, &:focus, &:active {
+        color: $black;
+      }
     }
   }
 }
