@@ -7,7 +7,7 @@ const LabeledInput = (props) => {
     <div className={"labeled-input " + props.className}>
       {
         (props.type === 'password')
-        ? <InputPassword />
+        ? <InputPassword placeholder={props.placeholder}/>
         : (props.type === 'select')
         ? <select>
           <option value="0" selected disabled>Выбрать</option>
@@ -19,7 +19,7 @@ const LabeledInput = (props) => {
         </select>
         : (props.type === 'textarea')
         ? <textarea name="" rows={props.rows} placeholder={props.placeholder}></textarea>
-        :<input type={props.type} />
+        :<input type={props.type} placeholder={props.placeholder}/>
       }
       <label>
         <span>{props.label}</span>

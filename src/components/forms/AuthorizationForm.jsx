@@ -3,6 +3,7 @@ import CheckMark from '../svg/CheckMark';
 import CrossMark from '../svg/CrossMark';
 import { Link } from 'react-router-dom';
 import InputPassword from '../utils/InputPassword';
+import LabeledInput from '../utils/LabeledInput';
 
 const AuthorizationForm = (props) => {
   return (
@@ -12,21 +13,9 @@ const AuthorizationForm = (props) => {
         <h4 className='mb-3'>{props.title}</h4>
       }
       <p className='mb-4 mb-sm-5'>Введите данные учётной записи</p>
-      <div className="labeled-input mb-4 mb-sm-5">
-        <input type="email" placeholder='user@mail.com'/>
-        <label>
-          <span>Email</span>
-          <CheckMark className="pale-blue fs-13 ms-2"/>
-        </label>
-      </div>
+      <LabeledInput className="mb-4 mb-sm-5" type="email" label={'Email'} placeholder='user@mail.com'/>
 
-      <div className="labeled-input mb-2">
-        <InputPassword placeholder='Введите пароль' />
-        <label>
-          <span>Пароль</span>
-          <CrossMark className="rose fs-13 ms-2"/>
-        </label>
-      </div>
+      <LabeledInput className="mb-2" type="password" label={'Пароль'} placeholder='Введите пароль'/>
       <p className='rose fs-08'>Неверный логин или пароль. Попробуйте снова или <Link to="/password" className='text-decoration-underline'>воспользуйтесь формой восстановления пароля</Link>.</p>
 
       <Link to='/account' className='btn-1 mt-4'>Войти</Link>

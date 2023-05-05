@@ -1,9 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import CheckMark from '../svg/CheckMark';
-import CrossMark from '../svg/CrossMark';
-import InputPassword from '../utils/InputPassword';
+import LabeledInput from '../utils/LabeledInput';
 
 const PasswordForm = () => {
   return (
@@ -12,13 +10,7 @@ const PasswordForm = () => {
 
       <Row className='g-3 g-md-4'>
         <Col md={8}>
-          <div className="labeled-input">
-            <input type="email" placeholder='user@mail.com'/>
-            <label>
-              <span>E-mail</span>
-              <CrossMark className="rose fs-13 ms-2"/>
-            </label>
-          </div>
+          <LabeledInput type="email" placeholder='user@mail.com' label={'E-mail'}/>
         </Col>
         <Col md={4}>
           <button type='button' className='btn-1 h-100 w-100'>Восстановить</button>
@@ -31,18 +23,14 @@ const PasswordForm = () => {
         <Col md={4}>
           <input className='code' type="number" placeholder='0000'/>
         </Col>
-        <Col md={4}><button type='button' className='btn-1 h-100 w-100'>Отправить</button></Col>
+        <Col md={4}>
+          <button type='button' className='btn-1 h-100 w-100'>Отправить</button>
+        </Col>
       </Row>
 
       <Row>
         <Col md={8}>
-          <div className="labeled-input mb-2">
-            <InputPassword placeholder='Придумайте пароль' />
-            <label>
-              <span>Новый пароль</span>
-              <CheckMark className="pale-blue fs-13 ms-2"/>
-            </label>
-          </div>
+          <LabeledInput className="mb-2" type="password" placeholder='Придумайте пароль' label={'Новый пароль'}/>
         </Col>
       </Row>
       <p className='rose fs-08'>Слишком короткий пароль</p>
@@ -50,13 +38,7 @@ const PasswordForm = () => {
       
       <Row className='mt-4'>
         <Col md={8}>
-          <div className="labeled-input mb-2">
-            <InputPassword placeholder='Повторите пароль' />
-            <label>
-              <span>Подтверждение пароля</span>
-              <CheckMark className="pale-blue fs-13 ms-2"/>
-            </label>
-          </div>
+          <LabeledInput className="mb-2" type="password" placeholder='Повторите пароль' label={'Подтверждение пароля'}/>
         </Col>
       </Row>
 
