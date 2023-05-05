@@ -28,11 +28,11 @@ const Footer = () => {
           {
             (isMobileLG)
             ? <nav className='nav-mobile'>
-              <Link to='/' className='logo'>logo</Link>
+              <Link to='/' onClick={handleCloseMenu} className='logo'>logo</Link>
               <ul>
-                <li><NavLink to='/fav'><HeartIcon/></NavLink></li>
-                <li><NavLink to='/account' end><SupportIcon/></NavLink></li>
-                <li><NavLink to='/account/messages' end><ChatIcon/></NavLink></li>
+                <li><NavLink to='/fav' onClick={handleCloseMenu}><HeartIcon/></NavLink></li>
+                <li><NavLink to='/account' end onClick={handleCloseMenu}><SupportIcon/></NavLink></li>
+                <li><NavLink to='/account/messages' end onClick={handleCloseMenu}><ChatIcon/></NavLink></li>
                 <li><button type='button' onClick={handleShowMenu}><MenuIcon/></button></li>
               </ul>
             </nav>
