@@ -18,6 +18,7 @@ import Callback from '../pages/account/Callback'
 import MessagesChat from '../pages/account/MessagesChat'
 import MessagesList from '../pages/account/MessagesList'
 import CallbackChat from '../pages/account/CallbackChat'
+import SecFavorites from '../components/SecFavorites'
 
 const AccountRouter = () => {
   const isMobileLG = useIsMobile('1109px')
@@ -47,11 +48,13 @@ const AccountRouter = () => {
             : <Route index element={<Navigate to=":id" replace={true} />} />
           }
           <Route path=":id" element={<MessagesChat/>} />
+          <Route path="general" element={<MessagesChat/>} />
         </Route>
         <Route path="feedback" element={<Feedback/>} />
         <Route path="feedback/add" element={<LeaveFeedback/>} />
         <Route path="callback" element={<Callback/>} />
         <Route path="callback/:id" element={<CallbackChat/>} />
+        <Route path="favs" element={<SecFavorites/>} />
       </Route>
     </Routes>
   )

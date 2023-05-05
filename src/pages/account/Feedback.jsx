@@ -12,7 +12,7 @@ const Feedback = () => {
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
       <div className="d-flex align-items-center mb-4 mb-xl-5">
-        <Link to='/account' className='d-flex d-lg-none  fs-20 blue me-4'>
+        <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Отзывы</h1>

@@ -1,5 +1,6 @@
 import React from 'react';
 import DialogPreview from './DialogPreview';
+import {Link} from 'react-router-dom';
 
 const MessagesList = () => {
   return (
@@ -8,6 +9,15 @@ const MessagesList = () => {
         <input type="search" placeholder='Поиск пользователя' className='p-blue'/>
       </form>
       <ul>
+        <li>
+          <Link to="general" className='general-chat'>
+            <div className="count">
+              <div class="fs-13">102</div>
+              <div>online</div>
+            </div>
+            <h5>Общий чат</h5>
+          </Link>
+        </li>
         <li>
           <DialogPreview link={'1'}/>
         </li>

@@ -1,12 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import { FiUser, FiList, FiMessageCircle, FiMail } from "react-icons/fi";
+import { FiUser, FiList, FiMessageCircle, FiMail, FiHeart } from "react-icons/fi";
 import { RxCounterClockwiseClock } from "react-icons/rx";
 import { MdCurrencyRuble } from "react-icons/md";
 import { TbBusinessplan, TbChartInfographic } from "react-icons/tb";
 import { TfiHeadphoneAlt } from "react-icons/tfi";
+import useIsMobile from '../../hooks/isMobile';
 
-const AccountMenu = () => {
+const AccountMenu = (props) => {
+  const isMobileLG = useIsMobile('1109px')
+
   return (
     <nav className='account-nav'>
       <div className='account-nav-balance'>
@@ -23,6 +26,15 @@ const AccountMenu = () => {
             <div>Профиль</div>
           </NavLink>
         </li>
+        {
+          (isMobileLG) &&
+          <li>
+            <NavLink to="favs">
+              <FiHeart/>
+              <div>Избранное</div>
+            </NavLink>
+          </li>
+        }
         <li>
           <NavLink to="offers">
             <FiList/>

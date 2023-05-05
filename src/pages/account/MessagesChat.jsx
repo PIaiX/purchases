@@ -9,9 +9,8 @@ import ReturnIcon from '../../components/svg/ReturnIcon';
 const MessagesChat = () => {
   return (
     <div className="sec-messages-chat">
-      <Link to='/account/messages' className='d-flex align-items-center d-xl-none link-2 ms-4 mb-2'>
-        <ReturnIcon className="fs-20"/>
-        <span className='ms-2'>назад</span>
+      <Link to='/account/messages' className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
+        <ReturnIcon/>
       </Link>
       <div className="chat-window">
         <UserMessage name={'User8name'} time={'12:36'} text={'Куплю аккаунт в игре Marvel Future Fight с хорошей прокачкой'}/>

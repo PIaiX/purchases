@@ -13,7 +13,7 @@ const Profile = () => {
   return (
     <section className='mb-3 mb-sm-5'>
       <div className="d-lg-none d-flex align-items-center mb-4 mb-lg-0">
-        <Link to='/account' className='d-flex fs-20 blue me-4'><ReturnIcon/></Link>
+        <Link to='/account' className='d-flex return-icon me-2 me-sm-4'><ReturnIcon/></Link>
         <h1 className='h2 mb-0'>Профиль</h1>
       </div>
       <Row className='mb-5'>

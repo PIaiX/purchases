@@ -959,6 +959,9 @@ main {
 
 
 header {
+  background-color: $white;
+  position: relative;
+  z-index: 1042;
   height: var(--h-height);
   @include media-breakpoint-down(lg){
     display: none;
@@ -966,6 +969,13 @@ header {
   input {
     border-color: $pale-blue;
     @include placeholder($pale-blue);
+  }
+  .profile-link {
+    @include flex();
+    img {
+      @include rounedImg(30px);
+      margin-right: .5em;
+    }
   }
 }
 
@@ -2414,12 +2424,63 @@ header {
   }
 }
 
+.sec-favorites {
+  ul {
+    @include list();
+  }
+  .fav-item {
+    @include flex(row, flex-start, center, nowrap);
+    background-color: $white;
+    @include lightShadow();
+    padding: .65em 1.3em;
+    border-radius: $radius;
+    @include media-breakpoint-down(xxl) {
+      padding: .5em 1em;
+    }
+    img {
+      @include rounedImg(50px);
+      margin-right: 1em;
+    }
+    h5 {
+      flex: 1;
+      @include clamp(2, 1.2em, false);
+    }
+    button {
+      @include flex();
+      color: $gray;
+      font-size: 1.35em;
+      svg {
+        stroke-width: 1px;
+      }
+    }
+  }
+}
+
 /***********
 ACCOUNT
 ***********/
 .account {
   position: relative;
   overflow: hidden;
+  .return-icon {
+    font-size: 2em;
+    color: $blue;
+  }
+  @include media-breakpoint-down(lg) {
+    h1 {
+      color: $blue;
+      font-size: 1.5em;
+    }
+  }
+  @include media-breakpoint-down(sm) {
+    h1 {
+      font-size: 1.25em;
+    }
+    .return-icon {
+      font-size: 1.6em;
+      color: $blue;
+    }
+  }
   .account-bg {
     @include absBG(1, 60%, auto);
   }
@@ -2709,7 +2770,7 @@ ACCOUNT
     background: $glass;
     @include blurShadow();
     @include media-breakpoint-down(sm) {
-      padding: 2em 1.5em;
+      padding: 1.5em;
     }
   }
   .sec-feedback {
@@ -2776,12 +2837,30 @@ ACCOUNT
       }
       @include media-breakpoint-down(xl) {
         width: 100%;
+        border-right: none;
       }
       ul {
         margin-top: 1.5em;
         @include list();
         li {
           &:not(:first-child){margin-top: 1.5em;}
+        }
+      }
+      .general-chat {
+        @include flex(row, flex-start, center, nowrap);
+        padding: 0.3em 0.6em;
+        .count {
+          background-color: $black;
+          color: $white;
+          @include rounedImg(50px);
+          @include flex(column, center, center, nowrap);
+          font-size: 10px;
+          text-align: center;
+          line-height: 100%;
+        }
+        h5 {
+          margin-left: 0.5em;
+          flex: 1;
         }
       }
     }
@@ -2799,6 +2878,9 @@ ACCOUNT
         height: 600px;
         @include media-breakpoint-down(xxl) {
           padding: 1.5em;
+        }
+        @include media-breakpoint-down(ыь) {
+          height: 400px;
         }
       }
       .chat-form {
@@ -3376,4 +3458,18 @@ footer {
       }
     }
   }
+  &-top {
+    background-color: transparent;
+    height: fit-content !important;
+    .offcanvas-body {
+      padding: calc(var(--h-height) + 1em) 1em 2em 1em;
+      background-color: $white;
+      border-radius: 0px 0px $radius $radius;
+    }
+  }
+}
+
+
+.fav-modal {
+  z-index: 1041;
 }

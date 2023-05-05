@@ -11,9 +11,9 @@ const Offers = () => {
     <section className='mb-3 mb-sm-5'>
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
-          <div className="d-md-flex align-items-center mb-5">
+          <div className="d-md-flex align-items-center mb-4 mb-lg-5">
             <div className="d-flex align-items-center">
-              <Link to='/account' className='d-lg-none d-flex fs-20 blue me-4'><ReturnIcon/></Link>
+              <Link to='/account' className='d-lg-none d-flex return-icon me-2 me-sm-4'><ReturnIcon/></Link>
               <h1 className='h2 mb-0'>Мои объявления</h1>
             </div>
             <Link to='add' className='mt-4 mt-md-0 ms-md-4 ms-xl-5 btn-4 fs-15 fw-7 flex-1 justify-content-end'>+ новое объявление</Link>

@@ -9596,6 +9596,9 @@ main {
 }
 
 header {
+  background-color: #FFFFFF;
+  position: relative;
+  z-index: 1042;
   height: var(--h-height);
 }
 @media (max-width: 1109.98px) {
@@ -9613,6 +9616,21 @@ header input::-moz-placeholder {
 header input::placeholder {
   color: #9DC4EF;
   font-weight: 400;
+}
+header .profile-link {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+header .profile-link img {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 0.5em;
 }
 
 /* Slider */
@@ -11594,12 +11612,81 @@ header input::placeholder {
   }
 }
 
+.sec-favorites ul {
+  list-style: none;
+  padding-left: 0px;
+}
+.sec-favorites .fav-item {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  background-color: #FFFFFF;
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+  padding: 0.65em 1.3em;
+  border-radius: 0.67em;
+}
+@media (max-width: 1469.98px) {
+  .sec-favorites .fav-item {
+    padding: 0.5em 1em;
+  }
+}
+.sec-favorites .fav-item img {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  margin-right: 1em;
+}
+.sec-favorites .fav-item h5, .sec-favorites .fav-item .h5 {
+  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.2em;
+  max-height: 2.4em;
+}
+.sec-favorites .fav-item button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  color: #8F8F8F;
+  font-size: 1.35em;
+}
+.sec-favorites .fav-item button svg {
+  stroke-width: 1px;
+}
+
 /***********
 ACCOUNT
 ***********/
 .account {
   position: relative;
   overflow: hidden;
+}
+.account .return-icon {
+  font-size: 2em;
+  color: #4A83DC;
+}
+@media (max-width: 1109.98px) {
+  .account h1, .account .h1 {
+    color: #4A83DC;
+    font-size: 1.5em;
+  }
+}
+@media (max-width: 575.98px) {
+  .account h1, .account .h1 {
+    font-size: 1.25em;
+  }
+  .account .return-icon {
+    font-size: 1.6em;
+    color: #4A83DC;
+  }
 }
 .account .account-bg {
   position: absolute;
@@ -11981,7 +12068,7 @@ ACCOUNT
 }
 @media (max-width: 575.98px) {
   .account .add-offer {
-    padding: 2em 1.5em;
+    padding: 1.5em;
   }
 }
 .account .sec-feedback .user {
@@ -12075,6 +12162,7 @@ ACCOUNT
 @media (max-width: 1289.98px) {
   .account .sec-messages-list {
     width: 100%;
+    border-right: none;
   }
 }
 .account .sec-messages-list ul {
@@ -12084,6 +12172,35 @@ ACCOUNT
 }
 .account .sec-messages-list ul li:not(:first-child) {
   margin-top: 1.5em;
+}
+.account .sec-messages-list .general-chat {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.3em 0.6em;
+}
+.account .sec-messages-list .general-chat .count {
+  background-color: #1B1B1C;
+  color: #FFFFFF;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  font-size: 10px;
+  text-align: center;
+  line-height: 100%;
+}
+.account .sec-messages-list .general-chat h5, .account .sec-messages-list .general-chat .h5 {
+  margin-left: 0.5em;
+  flex: 1;
 }
 .account .sec-messages-chat {
   width: 65%;
@@ -12102,6 +12219,7 @@ ACCOUNT
 }
 .account .sec-messages-chat .chat-window {
   height: 600px;
+  height: 400px;
 }
 @media (max-width: 1469.98px) {
   .account .sec-messages-chat .chat-window {
@@ -12863,4 +12981,18 @@ footer .nav-mobile ul li a.active svg path, footer .nav-mobile ul li button.acti
 }
 .offcanvas-body .close:hover, .offcanvas-body .close:focus, .offcanvas-body .close:active {
   color: #1B1B1C;
+}
+.offcanvas-top {
+  background-color: transparent;
+  height: -moz-fit-content !important;
+  height: fit-content !important;
+}
+.offcanvas-top .offcanvas-body {
+  padding: calc(var(--h-height) + 1em) 1em 2em 1em;
+  background-color: #FFFFFF;
+  border-radius: 0px 0px 0.67em 0.67em;
+}
+
+.fav-modal {
+  z-index: 1041;
 }/*# sourceMappingURL=style.css.map */
