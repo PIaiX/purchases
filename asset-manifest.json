@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/purchases/static/css/main.97ab0fcb.css",
-    "main.js": "/purchases/static/js/main.ed5d6a5f.js",
+    "main.css": "/purchases/static/css/main.8e6cfd9a.css",
+    "main.js": "/purchases/static/js/main.71ec7971.js",
     "static/media/girl.png": "/purchases/static/media/girl.67010099caf55b7f8591.png",
     "static/media/texture.png": "/purchases/static/media/texture.fdf098fc14db4efae277.png",
     "static/media/bebasneuecyrillic.ttf": "/purchases/static/media/bebasneuecyrillic.f39fe92d35bac3b2fe60.ttf",
@@ -20,11 +20,11 @@
     "static/media/chevron-down-gray.svg": "/purchases/static/media/chevron-down-gray.4801f8b5797a0374d9bd.svg",
     "static/media/chevron-down.svg": "/purchases/static/media/chevron-down.8ebe33b5e703ae624cb3.svg",
     "static/media/chevron-down-blue.svg": "/purchases/static/media/chevron-down-blue.c184a2d325b43d0131f4.svg",
-    "main.97ab0fcb.css.map": "/purchases/static/css/main.97ab0fcb.css.map",
-    "main.ed5d6a5f.js.map": "/purchases/static/js/main.ed5d6a5f.js.map"
+    "main.8e6cfd9a.css.map": "/purchases/static/css/main.8e6cfd9a.css.map",
+    "main.71ec7971.js.map": "/purchases/static/js/main.71ec7971.js.map"
   },
   "entrypoints": [
-    "static/css/main.97ab0fcb.css",
-    "static/js/main.ed5d6a5f.js"
+    "static/css/main.8e6cfd9a.css",
+    "static/js/main.71ec7971.js"
   ]
 }
