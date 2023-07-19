@@ -184,14 +184,11 @@ h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, selec
 
 h1, .h1 {
   font-family: $title-font;
-  font-size: 4em;
+  font-size: 3.6em;
   font-weight: normal;
   text-align: left;
   line-height: 120%;
   margin-bottom: .2em;
-  @include media-breakpoint-down(xxxl) {
-    font-size: 3.6em;
-  }
   @include media-breakpoint-down(xl) {
     font-size: 3.5em;
   }
@@ -1023,10 +1020,7 @@ header {
       position: relative;
       z-index: 1;
       width: 112%;
-      height: 430px;
-      @include media-breakpoint-down(xxxl) {
-        height: 372px;
-      }
+      height: 372px;
       @include media-breakpoint-down(xxl) {
         height: 320px;
       }
@@ -1082,14 +1076,11 @@ header {
       }
     }
     .title-mini {
-      margin-top: 5px;
+      margin-top: 10px;
       width: 100%;
       overflow: hidden;
       opacity: 1;
       transition: 400ms linear 400ms;
-      @include media-breakpoint-down(xxxl) {
-        margin-top: 10px;
-      }
       @include media-breakpoint-down(xl) {
         margin-top: 0px;
       }
@@ -1102,9 +1093,7 @@ header {
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 0px;
-        @include media-breakpoint-down(xxxl) {
-          font-size: 2.5em;
-        }
+        font-size: 2.5em;
         @include media-breakpoint-down(xxl) {
           font-size: 2em;
         }
@@ -1119,10 +1108,7 @@ header {
       right: -6%;
       @include flex(column, center, center, nowrap);
       color: $white;
-      font-size: .85em;
-      @include media-breakpoint-down(xxxl) {
-        font-size: .75em;
-      }
+      font-size: .75em;
       @include media-breakpoint-down(xxl) {
         font-size: .6em;
       }
@@ -1170,12 +1156,8 @@ header {
         position: relative;
         z-index: 1;
         width: 100%;
-        height: 524px;
-        margin-top: -3.3em;
-        @include media-breakpoint-down(xxxl) {
-          height: 458px;
-          margin-top: -3em;
-        }
+        height: 458px;
+        margin-top: -3em;
         @include media-breakpoint-down(xxl) {
           height: 400px;
           margin-top: -2.6em;
@@ -1199,10 +1181,7 @@ header {
         left: 6.25%;
         bottom: unset;
         right: unset;
-        font-size: 1em;
-        @include media-breakpoint-down(xxxl) {
-          font-size: .9em;
-        }
+        font-size: .9em;
         @include media-breakpoint-down(xxl) {
           font-size: .8em;
         }
@@ -1423,14 +1402,11 @@ header {
   }
   &-box {flex: 1;}
   &-part {
-    padding: 1em 2.3em;
+    padding: 1em 1.5em;
     background: $glass;
     @include blurShadow();
     border-radius: 10px;
     &:not(:last-child){margin-bottom: 3.33em;}
-    @include media-breakpoint-down(xxxl) {
-      padding: 1em 1.5em;
-    }
     @include media-breakpoint-down(sm) {
       padding: 1em;
     }
@@ -1452,10 +1428,7 @@ header {
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: 1.3em;
-    @include media-breakpoint-down(xxxl) {
-      margin-right: .5em;
-    }
+    margin-right: .5em;
   }
   h4 {
     padding: 0 0 .6em .65em;
@@ -1463,10 +1436,7 @@ header {
   .categories {
     @include list();
     @include flex(row, flex-start, center, wrap);
-    padding: 1em .85em .85em;
-    @include media-breakpoint-down(xxxl) {
-      padding: .85em .5em .5em;
-    }
+    padding: .85em .5em .5em;
     @include media-breakpoint-down(xxl) {
       padding: .75em 0em 0;
     }
@@ -1489,10 +1459,7 @@ header {
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      margin-right: 1.3em;
-      @include media-breakpoint-down(xxxl) {
-        margin-right: .5em;
-      }
+      margin-right: .5em;
       @include media-breakpoint-down(sm) {
         width: 30px;
         height: 30px;
@@ -1594,12 +1561,9 @@ header {
       position: absolute;
       bottom: 0px;
       right: 0px;
-      width: 40%;
+      width: 45%;
       height: auto;
       z-index: 1;
-      @include media-breakpoint-down(xxxl) {
-        width: 45%;
-      }
       @include media-breakpoint-down(xxl) {
         width: 50%;
       }
@@ -1628,12 +1592,8 @@ header {
       position: unset;
       @include list();
       @include flex(row, flex-start, center, wrap);
-      margin-top: 1.34em;
-      margin-bottom: 3em;
-      @include media-breakpoint-down(xxxl) {
-        margin-top: 1em;
-        margin-bottom: 2em;
-      }
+      margin-top: 1em;
+      margin-bottom: 2em;
       @include media-breakpoint-down(xxl) {
         margin-bottom: 1em;
       }
@@ -1870,13 +1830,10 @@ header {
       position: relative;
       img {
         width: 100%;
-        height: 220px;
+        height: 200px;
         object-fit: cover;
         border-radius: $radius;
         margin-bottom: 1.3em;
-        @include media-breakpoint-down(xxxl) {
-          height: 200px;
-        }
         @include media-breakpoint-down(xxl) {
           height: 190px;
         }
@@ -1922,12 +1879,9 @@ header {
     position: relative;
     img {
       width: 100%;
-      height: 270px;
+      height: 250px;
       object-fit: cover;
       border-radius: $radius $radius 0 0;
-      @include media-breakpoint-down(xxxl) {
-        height: 250px;
-      }
       @include media-breakpoint-down(xxl) {
         height: 220px;
       }
@@ -2198,9 +2152,7 @@ header {
   h2 {
     margin-bottom: 0.1em;
     padding: 0 0.35em;
-    @include media-breakpoint-down(xxxl) {
-      font-size: 2.85em;
-    }
+    font-size: 2.85em;
     @include media-breakpoint-down(xl) {
       font-size: 2.65em;
     }
@@ -2343,12 +2295,9 @@ header {
 .sec-login {
   .wrap {
     @include blurShadow();
-    padding: 2em 25% 1.5em 2em;
+    padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
     height: 100%;
-    @include media-breakpoint-down(xxxl) {
-      padding: 2em 2em 1.5em 2em;
-    }
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
     }
@@ -2358,14 +2307,11 @@ header {
     @include bgTextureGradient(linear-gradient(115deg, $black 0%, $blue 55%, $total-black 100%));
     color: $white;
     height: 395px;
-    padding: 0 6em;
+    padding: 0 5em;
     @include flex(row, flex-start, center, nowrap);
     position: relative;
     overflow: hidden;
     @include safariFix();
-    @include media-breakpoint-down(xxxl) {
-      padding: 0 5em;
-    }
     @include media-breakpoint-down(xxl) {
       height: 412px;
       padding: 0 3em;
@@ -2387,11 +2333,8 @@ header {
       position: absolute;
       right: 0%;
       bottom: 0%;
-      height: 95%;
+      height: 85%;
       z-index: 10;
-      @include media-breakpoint-down(xxxl) {
-        height: 85%;
-      }
       @include media-breakpoint-down(xxl) {
         height: 70%;
       }
@@ -2413,11 +2356,8 @@ header {
 .sec-password {
   .wrap {
     @include blurShadow();
-    padding: 2em 25% 1.5em 2em;
+    padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
-    @include media-breakpoint-down(xxxl) {
-      padding: 2em 2em 1.5em 2em;
-    }
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
     }
@@ -2658,10 +2598,7 @@ ACCOUNT
       @include list();
       @include flex(column, flex-start, flex-end, nowrap);
       margin-left: -1em;
-      width: 230px;
-      @include media-breakpoint-down(xxxl) {
-        width: 215px;
-      }
+      width: 215px;
       @include media-breakpoint-down(xxl) {
         width: 200px;
       }
