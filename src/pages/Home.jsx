@@ -31,55 +31,6 @@ const Home = () => {
       <Container>
         <BlogSection/>
       </Container>
-
-      {
-        (!isMobileLG) &&
-        <section className='sec-bottom'>
-          <Container>
-            <Row className='mb-md-5'>
-              <Col xs={12} lg={7} xxl={8}>
-                <section className='sec-chat'>
-                  <h2>Общий чат</h2>
-                </section>
-                <Chat/>
-              </Col>
-              <Col xs={12} lg={5} xxl={4}>
-                <section className='sec-popular'>
-                  <h2>Популярные объявления</h2>
-                  <Swiper
-                    modules={[Scrollbar, Mousewheel]}
-                    className='offers-slider'
-                    spaceBetween={30}
-                    slidesPerView={'auto'}
-                    direction={'vertical'}
-                    scrollbar={{ draggable: true }}
-                    mousewheel={{releaseOnEdges: true}}
-                  >
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard/>
-                    </SwiperSlide>
-                  </Swiper>
-                </section>
-              </Col>
-            </Row>
-          </Container>
-        </section>
-      }
     </main>
   );
 };
