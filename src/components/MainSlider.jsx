@@ -8,6 +8,11 @@ const MainSlider = () => {
   const [activeSlide, setActiveSlide] = useState(0);
   const isMobileLG = useIsMobile('1109px');
 
+  const handleClick = (num) => {
+    setActiveSlide(num);
+    console.log(num);
+  }
+
   const handleNext = () => {
     const nextSlide = activeSlide+1;
     if (nextSlide > 2){
@@ -39,21 +44,21 @@ const MainSlider = () => {
           title={"wOw"} 
           imgFull={"imgs/slider/gif.gif"}
           imgMini={"imgs/slider/slide-cover-1.jpg"}
-          onMouseEnter={() => setActiveSlide(0)}
+          onClick={()=>handleClick(0)}
         />
         <MainSlide 
           isActive={(activeSlide === 1) ? true : false} 
           title={"Genshin Impact"} 
           imgFull={"imgs/slider/960x0.jpg"}
           imgMini={"imgs/slider/slide-cover-2.jpg"}
-          onMouseEnter={() => setActiveSlide(1)}
+          onClick={()=>handleClick(1)}
         />
         <MainSlide 
           isActive={(activeSlide === 2) ? true : false} 
           title={"Atomic Heart"} 
           imgFull={"imgs/slider/atomic.jpg"}
           imgMini={"imgs/slider/slide-cover-3.jpg"}
-          onMouseEnter={() => setActiveSlide(2)}
+          onClick={()=>handleClick(2)}
         />
       </div>
       {

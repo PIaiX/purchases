@@ -12,6 +12,7 @@ const MainSlide = (props) => {
     <div 
       className={(props.isActive) ? 'main-slider-item-active' : 'main-slider-item'} 
       onMouseEnter={props.onMouseEnter}
+      onClick={props.onClick}
     >
       <div className="position-relative">
         {
