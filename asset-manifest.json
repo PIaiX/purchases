@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/purchases/static/css/main.8e6cfd9a.css",
-    "main.js": "/purchases/static/js/main.71ec7971.js",
+    "main.css": "/purchases/static/css/main.1b684691.css",
+    "main.js": "/purchases/static/js/main.da352ff2.js",
     "static/media/girl.png": "/purchases/static/media/girl.67010099caf55b7f8591.png",
     "static/media/texture.png": "/purchases/static/media/texture.fdf098fc14db4efae277.png",
     "static/media/bebasneuecyrillic.ttf": "/purchases/static/media/bebasneuecyrillic.f39fe92d35bac3b2fe60.ttf",
     "static/media/cogito.jpg": "/purchases/static/media/cogito.a7a9226ba2e056868f03.jpg",
+    "static/media/joystick.svg": "/purchases/static/media/joystick.7e0c4c37a0331f82e93dcc1ab1bd5f23.svg",
     "static/media/gradient.jpg": "/purchases/static/media/gradient.3d5bf269bd151bad288c.jpg",
-    "static/media/fav.svg": "/purchases/static/media/fav.95f0556368f369ff974f7ef2f97294ec.svg",
     "static/media/inputChatEnd.svg": "/purchases/static/media/inputChatEnd.4fb5f137c511ecb5aa2c.svg",
     "static/media/bead.svg": "/purchases/static/media/bead.bb453aa81f54bee94eca19efaef5886a.svg",
     "static/media/close.svg": "/purchases/static/media/close.70c6c27fddbf04304591.svg",
@@ -20,11 +20,11 @@
     "static/media/chevron-down-gray.svg": "/purchases/static/media/chevron-down-gray.4801f8b5797a0374d9bd.svg",
     "static/media/chevron-down.svg": "/purchases/static/media/chevron-down.8ebe33b5e703ae624cb3.svg",
     "static/media/chevron-down-blue.svg": "/purchases/static/media/chevron-down-blue.c184a2d325b43d0131f4.svg",
-    "main.8e6cfd9a.css.map": "/purchases/static/css/main.8e6cfd9a.css.map",
-    "main.71ec7971.js.map": "/purchases/static/js/main.71ec7971.js.map"
+    "main.1b684691.css.map": "/purchases/static/css/main.1b684691.css.map",
+    "main.da352ff2.js.map": "/purchases/static/js/main.da352ff2.js.map"
   },
   "entrypoints": [
-    "static/css/main.8e6cfd9a.css",
-    "static/js/main.71ec7971.js"
+    "static/css/main.1b684691.css",
+    "static/js/main.da352ff2.js"
   ]
 }
