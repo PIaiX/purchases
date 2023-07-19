@@ -8,10 +8,12 @@ import Plaix from './svg/Plaix';
 import PLaixIcon from './svg/PLaixIcon';
 import SupportIcon from './svg/SupportIcon';
 import MenuIcon from './svg/MenuIcon';
+import Joystick from '../assets/imgs/joystick.svg';
 import ChatIcon from './svg/ChatIcon';
 import HeartIcon from './svg/HeartIcon';
 import useIsMobile from '../hooks/isMobile';
 import { RxCross1 } from "react-icons/rx";
+import SearchIcon from './svg/SearchIcon';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
@@ -28,8 +30,11 @@ const Footer = () => {
           {
             (isMobileLG)
             ? <nav className='nav-mobile'>
-              <Link to='/' onClick={handleCloseMenu} className='logo'>logo</Link>
+              <Link to='/' onClick={handleCloseMenu} className='logo'>
+                <img src={Joystick} alt="Joystick" />
+              </Link>
               <ul>
+                <li><Link to='/'><SearchIcon/></Link></li>
                 <li><NavLink to='/fav' onClick={handleCloseMenu}><HeartIcon/></NavLink></li>
                 <li><NavLink to='/account' end onClick={handleCloseMenu}><SupportIcon/></NavLink></li>
                 <li><NavLink to='/account/messages' end onClick={handleCloseMenu}><ChatIcon/></NavLink></li>

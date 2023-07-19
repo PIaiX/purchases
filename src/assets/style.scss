@@ -303,7 +303,7 @@ h6 {
 input, textarea {
   background-color: rgba($white, $alpha: .8);
   border: 1px solid $light-gray;
-  border-radius: $radius*0.5;
+  border-radius: $radius;
   padding: 0.725em 1.65em;
   width: 100%;
   outline: none;
@@ -800,6 +800,55 @@ nav.pagination {
   &-button {
     box-shadow: unset;
     font-weight: 600;
+  }
+}
+.dropdown {
+  &-toggle {
+    @include flex();
+    &::after {
+      display: none;
+    }
+  }
+  &-menu {
+    --bs-dropdown-spacer: 0.125rem;
+    --bs-dropdown-font-size: 1em;
+    --bs-dropdown-color: #1C1C1C;
+    --bs-dropdown-bg: #fff;
+    --bs-dropdown-border-color: #F4F6F8;
+    --bs-dropdown-border-radius: 10px;
+    --bs-dropdown-border-width: 0px;
+    --bs-dropdown-inner-border-radius: 9px;
+    --bs-dropdown-link-color: #1C1C1C;
+    --bs-dropdown-link-hover-color: #1C1C1C;
+    --bs-dropdown-link-hover-bg: #F4F6F8;
+    --bs-dropdown-link-active-color: #fff;
+    --bs-dropdown-link-active-bg: #4A83DC;
+    --bs-dropdown-item-padding-x: 1em;
+    --bs-dropdown-item-padding-y: 0.5em;
+    --bs-dropdown-box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
+    box-shadow: var(--bs-dropdown-box-shadow);
+    padding: 0px;
+    overflow: hidden;
+    @include safariFix();
+  }
+  &-item {
+    padding: 0px;
+    a {
+      display: block;
+      padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+      text-align: left;
+      width: 100%;
+      justify-content: flex-start !important;
+      transition: $transition;
+      &:hover, &:focus {
+        color: var(--bs-dropdown-link-hover-color) !important;
+        background-color: var(--bs-dropdown-link-hover-bg);
+      }
+      &:active {
+        color: var(--bs-dropdown-link-active-color) !important;
+        background-color: var(--bs-dropdown-link-active-bg);
+      }
+    }
   }
 }
 
@@ -3257,10 +3306,10 @@ footer {
   .nav-mobile {
     @include flex();
     .logo {
-      padding: 1em 1.65em;
-      @include bgTextureGradient();
-      color: $white;
-      border-radius: $radius;
+      padding: 0px;
+      img {
+        width: 70px;
+      }
     }
     ul {
       @include list();

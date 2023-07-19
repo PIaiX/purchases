@@ -10,7 +10,6 @@ const MainSlider = () => {
 
   const handleClick = (num) => {
     setActiveSlide(num);
-    console.log(num);
   }
 
   const handleNext = () => {

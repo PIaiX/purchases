@@ -2,12 +2,12 @@ import React, { useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Modal from 'react-bootstrap/Modal';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import LanguageSwitcher from './utils/LanguageSwitcher';
+import Dropdown from 'react-bootstrap/Dropdown';
+// import LanguageSwitcher from './utils/LanguageSwitcher';
 import {Link} from 'react-router-dom';
-import fav from '../assets/imgs/fav.svg';
-import Exit from './svg/Exit';
 import SecFavorites from './SecFavorites';
-
+import Logo from './svg/Logo';
+import { RxChevronDown } from "react-icons/rx";
 
 const Header = () => {
   const [showAdvice, setShowAdvice] = useState(false);
@@ -23,25 +23,46 @@ const Header = () => {
     <Container>
       <header>
         <div className="h-100 d-flex align-items-center justify-content-between">
+          <Link to="/">
+            <Logo />
+          </Link>
           <div className='d-flex align-items-center'>
-            <Link to='/login' className='btn-1 d-none d-lg-flex'>Войти</Link>
+            <Dropdown>
+              <Dropdown.Toggle as="a">
+                <span>Информация</span>
+                <RxChevronDown className='fs-12 ms-1'/>
+              </Dropdown.Toggle>
+              <Dropdown.Menu>
+                <Dropdown.Item as="button" onClick={handleShowFav} className='d-xl-none'>
+                  <Link to="/">Избранное</Link>
+                </Dropdown.Item>
+                <Dropdown.Item as="div">
+                  <Link to="/">Информация</Link>
+                </Dropdown.Item>
+                <Dropdown.Item as="div">
+                  <Link to="/help">Помощь</Link>
+                </Dropdown.Item>
+                <Dropdown.Item as="div">
+                  <Link to="/">Обратная связь</Link>
+                </Dropdown.Item>
+              </Dropdown.Menu>
+            </Dropdown>
             <button type='button' onClick={handleShowFav} className='d-flex align-items-center ms-lg-4 ms-xxl-5'>
-              <img src={fav} alt="Избранное"/>
               <span className='d-none d-xl-inline'>Избранное</span>
             </button>
-            <Link to='/registration' className='d-none d-lg-flex ms-4 ms-xxl-5'>Регистрация</Link>
-            <input type="search" className='d-none d-lg-flex ms-4 ms-xxl-5' placeholder='Поиск по описанию'/>
           </div>
           <div className='d-none d-lg-flex align-items-center'>
-            <Link to='/help' className='me-4 me-xxl-5'>Помощь</Link>
-            <LanguageSwitcher/>
-            <button className='profile-link ms-4 ms-xxl-5' onClick={handleShowAdvice}>
+            <input type="search" className='d-none d-lg-flex ms-4 ms-xxl-5' placeholder='Поиск по описанию'/>
+            <Link to='/registration' className='ms-4'>Регистрация</Link>
+            <Link to='/login' className='btn-1 ms-4'>Войти</Link>
+            {/* <LanguageSwitcher/> */}
+            {/* <button className='profile-link ms-4 ms-xxl-5' onClick={handleShowAdvice}>
               <img src="imgs/user.jpg" alt="user" />
               <span>Weatherwax</span>
             </button>
             <button type='button' className='blue fs-15 ms-4'>
               <Exit/>
-            </button>
+            </button> */}
           </div>
         </div>
       </header>
