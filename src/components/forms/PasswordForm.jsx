@@ -42,7 +42,7 @@ const PasswordForm = () => {
         </Col>
       </Row>
 
-      <button type='submit' className='btn-1 mt-4'>Сохранить</button>
+      <button type='submit' className='btn-1 mt-4 mx-auto'>Сохранить</button>
     </form>
   );
 };

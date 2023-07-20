@@ -1,9 +1,6 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import CheckMark from '../svg/CheckMark';
-import CrossMark from '../svg/CrossMark';
-import InputPassword from '../utils/InputPassword';
 import LabeledInput from '../utils/LabeledInput';
 
 const RegistrationForm = () => {

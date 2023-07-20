@@ -10,23 +10,13 @@ const Login = () => {
     <main>
       <Container>
         <section className='sec-login mb-6'>
+          <h1 className='h2 text-center'>Авторизация</h1>
           <Row className='justify-content-center'>
-            <Col xs={12} xl={10}>
-              <h1 className='h2'>Авторизация</h1>
-              <Row className='row flex-lg-row-reverse'>
-                <Col lg={7}>
-                  <div className="cover">
-                    <h2 className='mb-0'>Тысячи лотов <br/>уже ждут тебя</h2>
-                    <img src="imgs/head2.png" alt="head" />
-                  </div>
-                </Col>
-                <Col lg={5}>
-                  <div className="wrap">
-                    <AuthorizationForm/>
-                    <Link to="/registration" className='mt-3 link d-block'>Регистрация</Link>
-                  </div>
-                </Col>
-              </Row>
+            <Col xs={12} md={8} lg={6} xl={5}>
+              <div className="wrap">
+                <AuthorizationForm/>
+                <Link to="/registration" className='mt-3 text-center link d-block'>Регистрация</Link>
+              </div>
             </Col>
           </Row>
         </section>

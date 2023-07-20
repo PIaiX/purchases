@@ -9,16 +9,12 @@ const PasswordRestoration = () => {
     <main>
       <Container>
         <section className='sec-password mb-6'>
+          <h1 className='h2 text-center'>Восстановление пароля</h1>
           <Row className='justify-content-center'>
-            <Col xs={12} xl={10}>
-              <h1 className='h2'>Восстановление пароля</h1>
-              <Row>
-                <Col lg={7} xxl={6}>
-                  <div className="wrap">
-                    <PasswordForm/>
-                  </div>
-                </Col>
-              </Row>
+            <Col xs={12} xl={5}>
+              <div className="wrap">
+                <PasswordForm/>
+              </div>
             </Col>
           </Row>
         </section>

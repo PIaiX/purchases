@@ -13,7 +13,7 @@ const AccountLayout = ({isMobile}) => {
           (isMobile)
           ? <Outlet/>
           : <div className="row justify-content-between">
-            <div className="col-4 col-xl-3 col-xxxl-2">
+            <div className="col-4 col-xl-3 col-xxl-2">
               <AccountMenu/>
             </div>
             <div className="col-8 col-xl-9"><Outlet/></div>

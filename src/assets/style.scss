@@ -28,7 +28,7 @@ $dark-green: #005A47;
 $green: #48D868;
 $pale-green: #94E5A6;
 $aqua: rgba(67, 185, 198, 0.26);
-$rose: #FF9F9F;
+$rose: #FF5630;
 
 $white: #FFFFFF;
 $pale-gray: #D9D9D9;
@@ -132,6 +132,12 @@ $radius: .67em;
   height: $w;
   border-radius: 50%;
   object-fit: cover;
+}
+@mixin roundedImg($w, $rad:50%, $fit:cover) {
+  width: $w;
+  height: $w;
+  border-radius: $rad;
+  object-fit: $fit;
 }
 
 /*****************
@@ -485,13 +491,13 @@ select {
   input {
     position: relative;
     z-index: 1;
-    border-radius: $radius*0.5;
+    border-radius: $radius;
     &:hover + label, &:focus + label, &:active + label {
       color: $blue;
     }
   }
   select {
-    border-radius: $radius*0.5;
+    border-radius: $radius;
     width: 100%;
     border: 1px solid $light-gray;
     box-shadow: none;
@@ -512,6 +518,100 @@ select {
     label {color: $blue;}
   }
 }
+.files {
+  &-label {
+    position: relative;
+    @include flex();
+    transition: $transition;
+    &:hover {
+      cursor: pointer;
+    }
+    input {
+      position: absolute;
+      z-index: -1;
+      opacity: 0;
+      width: 1px;
+      height: 1px;
+      top: 0px;
+      left: 0px;
+      padding: 0px;
+    }
+    .icon {
+      @include flex();
+      width: 2.5em;
+      height: 2.5em;
+      border-radius: 50%;
+      border: 1px solid rgba($color: $pale-blue, $alpha: 0.35);
+      svg {
+        color: $blue;
+        font-size: 1.5em;
+        stroke-width: 1.25px;
+      }
+    }
+    
+    .ind {
+      position: absolute;
+      bottom: -.25em;
+      right: 0px;
+      color: $blue;
+      font-weight: 600;
+      line-height: 1em;
+      font-size: .9em;
+      &:empty {
+        display: none;
+      }
+    }
+  }
+  &-list {
+    @include list();
+    @include flex(row, flex-start, stretch, nowrap);
+    li {
+      img {
+        @include roundedImg(100px, $radius, cover);
+      }
+    }
+  }
+}
+// .input-file {
+//   display: flex;
+//   align-items: center;
+//   position: relative;
+//   border-radius: $radius;
+//   transition: $transition;
+//   background-color: $white;
+//   border: 1px solid $light-gray;
+//   position: relative;
+//   &:hover {
+//     cursor: pointer;
+//   }
+//   input {
+//     position: absolute;
+//     z-index: -1;
+//     opacity: 0;
+//     width: 1px;
+//     height: 1px;
+//     top: 0px;
+//     left: 0px;
+//     padding: 0px;
+//   }
+//   svg {
+//     color: $blue;
+//     font-size: 1.5em;
+//     stroke-width: 1.25px;
+//   }
+//   .ind {
+//     position: absolute;
+//     bottom: -.25em;
+//     right: 0px;
+//     color: $blue;
+//     font-weight: 600;
+//     line-height: 1em;
+//     font-size: .9em;
+//     &:empty {
+//       display: none;
+//     }
+//   }
+// }
 
 button {
   background: none;
@@ -694,6 +794,10 @@ button {
       text-decoration: none;
     }
   }
+}
+.return-link {
+  @include flex();
+  font-size: 2em;
 }
 
 @include media-breakpoint-down(sm) {
@@ -1024,6 +1128,7 @@ header {
     }
   }
 }
+
 
 /* Slider */
 .main-slider {
@@ -2264,77 +2369,78 @@ header {
   @include media-breakpoint-down(lg) {
     margin-top: 0em;
   }
-  .title {
-    border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(165deg, $black 0%, #4A83DC 55%, $total-black 100%));
-    color: $white;
-    height: 135px;
-    padding: 0 3em;
-    @include flex(row, flex-start, center, nowrap);
-    position: relative;
-    @include media-breakpoint-down(lg) {
-      padding-right: 25%;
-    }
-    @include media-breakpoint-down(sm) {
-      height: 100px;
-      padding: 0 1em;
-      padding-right: 1em;
-    }
-    h1 {
-      line-height: 100%;
-      position: relative;
-      z-index: 20;
-    }
-    img {
-      position: absolute;
-      right: 20%;
-      bottom: 0%;
-      height: 160%;
-      z-index: 10;
+  // .title {
+  //   border-radius: $radius;
+  //   @include bgTextureGradient(linear-gradient(165deg, $black 0%, #4A83DC 55%, $total-black 100%));
+  //   color: $white;
+  //   height: 135px;
+  //   padding: 0 3em;
+  //   @include flex(row, flex-start, center, nowrap);
+  //   position: relative;
+  //   @include media-breakpoint-down(lg) {
+  //     padding-right: 25%;
+  //   }
+  //   @include media-breakpoint-down(sm) {
+  //     height: 100px;
+  //     padding: 0 1em;
+  //     padding-right: 1em;
+  //   }
+  //   h1 {
+  //     line-height: 100%;
+  //     position: relative;
+  //     z-index: 20;
+  //   }
+  //   img {
+  //     position: absolute;
+  //     right: 20%;
+  //     bottom: 0%;
+  //     height: 160%;
+  //     z-index: 10;
+  //     @include media-breakpoint-down(xxl) {
+  //       right: 10%;
+  //     }
+  //     @include media-breakpoint-down(lg) {
+  //       right: 3%;
+  //       height: unset;
+  //       width: 22%;
+  //     }
+  //     @include media-breakpoint-down(md) {
+  //       width: 28%;
+  //     }
+  //   }
+  // }
+  // .box {
+  //   background: $glass;
+  //   @include blurShadow();
+  //   border-radius: $radius;
+  //   padding: 2em;
+  //   @include flex(row, space-between, flex-start, nowrap);
+  //   @include media-breakpoint-down(lg) {
+  //     flex-direction: column;
+  //   }
+  //   @include media-breakpoint-down(sm) {
+  //     padding: 1.5em;
+  //   }
+    
+  // }
+  form {
+    &.midi {
+      width: 530px;
       @include media-breakpoint-down(xxl) {
-        right: 10%;
+        width: 480px;
       }
       @include media-breakpoint-down(lg) {
-        right: 3%;
-        height: unset;
-        width: 22%;
-      }
-      @include media-breakpoint-down(md) {
-        width: 28%;
+        width: 100%;
       }
     }
-  }
-  .box {
-    background: $glass;
-    @include blurShadow();
-    border-radius: $radius;
-    padding: 2em;
-    @include flex(row, space-between, flex-start, nowrap);
-    @include media-breakpoint-down(lg) {
-      flex-direction: column;
-    }
-    @include media-breakpoint-down(sm) {
-      padding: 1.5em;
-    }
-    form {
-      &.midi {
-        width: 530px;
-        @include media-breakpoint-down(xxl) {
-          width: 480px;
-        }
-        @include media-breakpoint-down(lg) {
-          width: 100%;
-        }
+    &.mini {
+      width: 440px;
+      @include media-breakpoint-down(xxl) {
+        width: 330px;
       }
-      &.mini {
-        width: 440px;
-        @include media-breakpoint-down(xxl) {
-          width: 330px;
-        }
-        @include media-breakpoint-down(lg) {
-          width: 100%;
-          margin-top: 4em;
-        }
+      @include media-breakpoint-down(lg) {
+        width: 100%;
+        margin-top: 4em;
       }
     }
   }
@@ -2505,7 +2611,7 @@ ACCOUNT
       @include list();
       li {
         &:not(:first-child){
-          margin-top: 1.5em;
+          margin-top: 1em;
           @include media-breakpoint-down(lg) {
             margin-top: .5em;
           }
@@ -3277,6 +3383,22 @@ ACCOUNT END
       z-index: 0;
     }
   }
+  ul {
+    @include list();
+    li {
+      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.35);
+      padding: .5em 0px;
+      margin-bottom: 1em;
+      a {
+        color: $blue;
+        font-weight: 600;
+        transition: $transition;
+        &:hover, &:focus, &:active {
+          color: $dark-blue;
+        }
+      }
+    }
+  }
 }
 
 
@@ -3333,7 +3455,7 @@ footer {
           color: $gray;
           transition: $transition;
           svg {
-            path {stroke-width: 0.8px;}
+            path {stroke-width: 1px;}
           }
           &.active {
             color: $blue;
@@ -3346,6 +3468,7 @@ footer {
     }
   }
 }
+
 
 /* Modal */
 .modal {

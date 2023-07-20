@@ -43,7 +43,10 @@ const Header = () => {
                   <Link to="/help">Помощь</Link>
                 </Dropdown.Item>
                 <Dropdown.Item as="div">
-                  <Link to="/">Обратная связь</Link>
+                  <Link to="/rules">Правила</Link>
+                </Dropdown.Item>
+                <Dropdown.Item as="div">
+                  <Link to="/feedback">Обратная связь</Link>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

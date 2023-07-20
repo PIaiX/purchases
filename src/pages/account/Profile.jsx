@@ -5,7 +5,7 @@ import LabeledInput from '../../components/utils/LabeledInput';
 import StarRating from '../../components/utils/StarRating';
 import Joystick from '../../components/svg/Joystick';
 import { TbHeartHandshake } from "react-icons/tb";
-import { FiMessageCircle, FiEdit } from "react-icons/fi";
+import { FiMessageCircle, FiEdit, FiShare } from "react-icons/fi";
 import {Link} from 'react-router-dom';
 import ReturnIcon from '../../components/svg/ReturnIcon';
 
@@ -16,60 +16,49 @@ const Profile = () => {
         <Link to='/account' className='d-flex return-icon me-2 me-sm-4'><ReturnIcon/></Link>
         <h1 className='h2 mb-0'>Профиль</h1>
       </div>
-      <Row className='mb-5'>
-        <Col xl={9} xxl={8}>
-          <div className='user'>
-            <div className="user-photo">
-              <img src="imgs/user2.jpg" alt="userphoto" />
-              <button type='button'><FiEdit/></button>
-            </div>
-            <div className="user-main">
-              <div className='title'>Weatherwax</div>
-              <div className="d-flex align-items-center">
-                <StarRating rate={5}/> 
-                <span className='fs-13 fw-7 ms-2'>5</span>
-              </div>
-              <p className='mt-2'>3 года на платформе</p>
-            </div>
-            <ul className="user-info">
-              <li>
-                <div>
-                  <TbHeartHandshake className='svg'/>
-                  <span>Сделок:</span>
-                </div>
-                <span>1033</span>
-              </li>
-              <li>
-                <div>
-                  <Joystick className='path'/>
-                  <span>Лотов:</span>
-                </div>
-                <span>336</span>
-              </li>
-              <li>
-                <div>
-                  <FiMessageCircle className='svg'/>
-                  <span>Отзывов:</span>
-                </div>
-                <span>193</span>
-              </li>
-            </ul>
+      <div className="d-flex align-items-start mb-5">
+        <div className='user flex-1'>
+          <div className="user-photo">
+            <img src="imgs/user2.jpg" alt="userphoto" />
+            <button type='button'><FiEdit/></button>
           </div>
-        </Col>
-        <Col xl={3} xxl={4}>
-          <Row xs={2} xl={1} xxl={2} className='align-items-center mt-3 mt-xl-0'>
-            <Col xs={3} xl={12} xxl={6}>
-              <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code'/>
-            </Col>
-            <Col xs={9} xl={12} xxl={6}>
-              <Link to="/account/offers/add" className='post ms-auto'>
-                <img src="imgs/icons/plusx2.png" alt="plusx2" />
-                <div>Разместить объявление</div>
-              </Link>
-            </Col>
-          </Row>
-        </Col>
-      </Row>
+          <div className="user-main">
+            <div className='title'>Weatherwax</div>
+            <div className="d-flex align-items-center">
+              <StarRating rate={5}/> 
+              <span className='fs-13 fw-7 ms-2'>5</span>
+            </div>
+            <p className='mt-2'>3 года на платформе</p>
+          </div>
+          <ul className="user-info">
+            <li>
+              <div>
+                <TbHeartHandshake className='svg'/>
+                <span>Сделок:</span>
+              </div>
+              <span>1033</span>
+            </li>
+            <li>
+              <div>
+                <Joystick className='path'/>
+                <span>Лотов:</span>
+              </div>
+              <span>336</span>
+            </li>
+            <li>
+              <div>
+                <FiMessageCircle className='svg'/>
+                <span>Отзывов:</span>
+              </div>
+              <span>193</span>
+            </li>
+          </ul>
+        </div>
+        <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code ms-5'/>
+        <button type='button' className='fs-15 dark-blue ms-4'>
+          <FiShare/>
+        </button>
+      </div>
       <Row className='gy-5 mb-md-5'>
         <Col xs={12} xxl={9}>
           <h3 className='mb-4 mb-sm-5'>Основное</h3>
@@ -78,14 +67,6 @@ const Profile = () => {
               <Col>
                 <LabeledInput className="mb-4 mb-sm-5" type={"text"} label={"Имя/Ник"}/>
                 <LabeledInput className="mb-4" type={"email"} label={"E-mail"}/>
-                <label className='mb-3'>
-                  <input type="checkbox" className='switch'/>
-                  <span className='ms-3'>Получать уведомления на почту</span>
-                </label>
-                <label>
-                  <input type="checkbox" className='switch'/>
-                  <span className='ms-3'>Получать уведомления в Telegram</span>
-                </label>
               </Col>
               <Col>
                 <LabeledInput className="mb-3" type={"tel"} label={"Номер телефона"}/>
