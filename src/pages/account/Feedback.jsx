@@ -10,13 +10,13 @@ import PurchaseLine from '../../components/PurchaseLine';
 const Feedback = () => {
   const [isMyFeedback, setIsMyFeedback] = useState(false);
   return (
-    <section className='sec-feedback mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-xl-5">
+    <section className='sec-feedback mb-6'>
+      {/* <div className="d-flex align-items-center mb-4 mb-xl-5">
         <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Отзывы</h1>
-      </div>
+      </div> */}
 
       <div className="d-xl-flex align-items-stretch justify-content-between">
         <div className='user'>
@@ -57,7 +57,7 @@ const Feedback = () => {
             <div className="list-wrapping-top">
               <h5 className='fw-6'>Оставить отзыв</h5>
             </div>
-            <div className="list-wrapping-main">
+            <div className="list-wrapping-main p-3">
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
                 <li>
                   <PurchaseLine/>
@@ -75,7 +75,7 @@ const Feedback = () => {
             <div className="list-wrapping-top">
               <h5 className='fw-6'>Мои отзывы</h5>
             </div>
-            <div className="list-wrapping-main">
+            <div className="list-wrapping-main p-3">
               <ul className='row row-cols-1 g-4'>
                 <li>
                   <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!"/>
@@ -97,7 +97,7 @@ const Feedback = () => {
           <div className="list-wrapping-top">
             <h5 className='fw-6'>Всего 193 отзыва</h5>
           </div>
-          <div className="list-wrapping-main">
+          <div className="list-wrapping-main p-4">
             <ul className='row row-cols-1 g-3'>
               <li>
                 <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!"/>

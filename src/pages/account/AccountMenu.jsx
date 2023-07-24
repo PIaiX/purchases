@@ -60,7 +60,7 @@ const AccountMenu = (props) => {
           </NavLink>
         </li>
         <li>
-          <NavLink to="/">
+          <NavLink to="settings">
             <div>Настройки</div>
           </NavLink>
         </li>

@@ -9,12 +9,12 @@ import LabeledInput from '../../components/utils/LabeledInput';
 const LeaveFeedback = () => {
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-xl-5">
+      {/* <div className="d-flex align-items-center mb-4 mb-xl-5">
         <Link to='/account/feedback' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Оставить отзыв</h1>
-      </div>
+      </div> */}
       <Row xs={1} xxl={2} className='gx-xxl-5'>
         <Col>
           <form action="">
@@ -29,32 +29,32 @@ const LeaveFeedback = () => {
             <div className="list-wrapping-top">
               <h5 className='fw-6'>Аккаунты ArcheAge</h5>
             </div>
-            <div className="list-wrapping-main">
+            <div className="list-wrapping-main p-4">
               <h5 className='fw-6 d-xl-none mb-3'>Аккаунты ArcheAge</h5>
               <ul className='info-list mb-2 mb-sm-4'>
-                <li className='box'>
-                  <span className='gray me-3'>Сервер</span>
+                <li>
+                  <span className='blue me-1'>Сервер</span>
                   <span>Airin + Blackbird</span>
                 </li>
-                <li className='box'>
-                  <span className='gray me-3'>Регион</span>
+                <li>
+                  <span className='blue me-1'>Регион</span>
                   <span>Free</span>
                 </li>
-                <li className='box'>
-                  <span className='gray me-3'>Уровень</span>
+                <li>
+                  <span className='blue me-1'>Уровень</span>
                   <span>88</span>
                 </li>
-                <li className='box'>
-                  <span className='gray me-3'>Раса</span>
+                <li>
+                  <span className='blue me-1'>Раса</span>
                   <span>Эльф</span>
                 </li>
-                <li className='box'>
-                  <span className='gray me-3'>Профессия</span>
+                <li>
+                  <span className='blue me-1'>Профессия</span>
                   <span>Архимаг</span>
                 </li>
               </ul>
               <p className='gray mb-2'>Описание</p>
-              <div className='box'>
+              <div>
                 <p>Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты)
                   <br/>88 уровеньСкриншоты аккаунта по ссылке: https://imgur.com/a/qOAzOUN 
                   <br/>Аккаунт с релиза<br/>54 шестизвездочных операторов

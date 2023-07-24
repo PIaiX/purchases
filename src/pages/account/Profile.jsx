@@ -11,7 +11,7 @@ import ReturnIcon from '../../components/svg/ReturnIcon';
 
 const Profile = () => {
   return (
-    <section className='mb-3 mb-sm-5'>
+    <section className='sec-profile mb-6'>
       <div className="d-lg-none d-flex align-items-center mb-4 mb-lg-0">
         <Link to='/account' className='d-flex return-icon me-2 me-sm-4'><ReturnIcon/></Link>
         <h1 className='h2 mb-0'>Профиль</h1>
@@ -53,34 +53,43 @@ const Profile = () => {
               <span>193</span>
             </li>
           </ul>
+          <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code ms-3 ms-xl-5'/>
         </div>
-        <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code ms-5'/>
-        <button type='button' className='fs-15 dark-blue ms-4'>
+        
+        <button type='button' className='share-btn ms-2 ms-xl-4'>
           <FiShare/>
         </button>
       </div>
       <Row className='gy-5 mb-md-5'>
-        <Col xs={12} xxl={9}>
+        <Col xs={12} xxl={10}>
           <h3 className='mb-4 mb-sm-5'>Основное</h3>
           <form action="">
-            <Row xs={1} md={2} className='gx-xl-5 gy-5 gy-lg-0'>
-              <Col>
-                <LabeledInput className="mb-4 mb-sm-5" type={"text"} label={"Имя/Ник"}/>
-                <LabeledInput className="mb-4" type={"email"} label={"E-mail"}/>
+            <Row className='g-4 gy-xl-5'>
+              <Col md={6} xl={4}>
+                <LabeledInput type={"text"} label={"Имя/Ник"}/>
               </Col>
-              <Col>
-                <LabeledInput className="mb-3" type={"tel"} label={"Номер телефона"}/>
+              <Col md={6} xl={{ span: 4, offset: 1 }}>
+                <LabeledInput type={"tel"} label={"Номер телефона"}/>
+              </Col>
+              <Col md={6} xl={4}>
+                <LabeledInput type={"email"} label={"E-mail"}/>
+              </Col>
+              <Col md={6} xl={{ span: 6, offset: 1 }}>
                 <p className='rose'>Только верифицированные пользовтаели могут публиковать объявления на бирже Game.</p>
-                <Link to="phone" className='btn-3 mt-4'>Пройти верификацию</Link>
+              </Col>
+              <Col md={6} xl={4}>
+                <button type="submit" className='btn-1'>Сохранить изменения</button>
+              </Col>
+              <Col md={6} xl={{ span: 4, offset: 1 }}>
+                <Link to="phone" className='btn-3'>Пройти верификацию</Link>
               </Col>
             </Row>
-            <Link to="email" className='btn-1 mt-4'>Сохранить изменения</Link>
           </form>
         </Col>
         <Col xs={12} xxl={10}>
           <h3 className='mb-4 mb-sm-5'>Изменить пароль</h3>
           <form action="">
-            <Row xs={1} xl={3} className='g-4'>
+            <Row xs={1} md={2} xl={3} className='g-4'>
               <Col>
                 <LabeledInput type={"password"} label={"Старый пароль"}/>
               </Col>

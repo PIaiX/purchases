@@ -1065,13 +1065,16 @@ nav.pagination {
     }
   }
   &-main {
-    padding: var(--padX);
+    padding: 0px;
     ul {
       @include list();
+      li {
+        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .2);
+      }
     }
   }
   &-bottom {
-    padding: 0 var(--padX) var(--padX);
+    padding: var(--padX) var(--padX);
     @include media-breakpoint-down(xl) {
       padding: var(--padY) 0 0;
     }
@@ -1087,9 +1090,6 @@ body {
   font-weight: 400;
   color: $black;
   overflow-x: hidden;
-  @include media-breakpoint-down(lg) {
-    padding-bottom: var(--f-height);
-  }
   @include media-breakpoint-down(sm) {
     font-size: 13px;
   }
@@ -1101,6 +1101,7 @@ main {
   padding: 2em 0;
   @include media-breakpoint-down(lg){
     min-height: calc(100vh - var(--f-height));
+    padding-bottom: var(--f-height);
   }
   @include media-breakpoint-down(sm){
     padding: 1em 0;
@@ -2647,10 +2648,23 @@ ACCOUNT
       }
     }
   }
+  .sec-profile {
+    position: relative;
+    .share-btn {
+      font-size: 1.5em;
+      color: $dark-blue;
+      @include media-breakpoint-down(md) {
+        position: absolute;
+        top: 0em;
+        right: 0em;
+      }
+    }
+  }
   .user {
+    position: relative;
     @include flex(row, flex-start, center, nowrap);
     @include lightShadow();
-    @include media-breakpoint-down(sm) {
+    @include media-breakpoint-down(md) {
       flex-wrap: wrap;
     }
     &-photo {
@@ -2711,7 +2725,7 @@ ACCOUNT
       margin-left: -60px;
       padding-left: 72px;
       @include flex(column, center, flex-start, nowrap);
-      @include media-breakpoint-up(sm) {
+      @include media-breakpoint-up(md) {
         &::before {
           content: '';
           position: absolute;
@@ -2736,17 +2750,20 @@ ACCOUNT
           border-radius: $radius;
         }
       }
-      @include media-breakpoint-down(sm) {
+      @include media-breakpoint-down(md) {
         background-color: rgba($pale-blue, .2);
         border-radius: $radius;
         padding-left: 65px;
         height: 120px;
       }
+      @include media-breakpoint-down(sm) {
+        height: 100px;
+      }
       .title {
         font-family: $title-font;
         font-size: 2em;
         line-height: 100%;
-        @include clamp(2, 1.2em);
+        @include clamp(2, 1em);
       }
     }
     &-info {
@@ -2758,13 +2775,13 @@ ACCOUNT
         width: 200px;
       }
       @include media-breakpoint-down(md) {
-        width: 170px;
         font-size: .9em;
-      }
-      @include media-breakpoint-down(sm) {
         width: 100%;
         margin-left: 0em;
         margin-top: 1em;
+        flex-direction: row;
+        justify-content: center;
+        gap: 1em;
       }
       li {
         position: relative;
@@ -2774,7 +2791,7 @@ ACCOUNT
         font-weight: 600;
         width: 100%;
         @include flex(row, space-between, center, nowrap);
-        @include media-breakpoint-up(sm) {
+        @include media-breakpoint-up(md) {
           &:first-child {width: 79%;}
           &:nth-child(2) {width: 89.5%;}
           &::before {
@@ -2801,15 +2818,24 @@ ACCOUNT
             border-radius: 0 $radius $radius 0;
           }
         }
-        @include media-breakpoint-down(sm) {
+        @include media-breakpoint-down(md) {
           background-color: $white;
           border-radius: $radius;
+          flex-direction: column;
+          height: auto;
+          width: 23%;
         }
         div {
           @include flex();
+          @include media-breakpoint-down(md) {
+            flex-direction: column;
+          }
           svg {
             font-size: 1.6em;
             margin-right: .34em;
+            @include media-breakpoint-down(md) {
+              color: $blue;
+            }
             &.svg {
               stroke-width: 1.3px;
             }
@@ -2821,14 +2847,22 @@ ACCOUNT
         &:not(:first-child){margin-top: 11px;}
       }
     }
-  }
-  .qr-code {
-    display: block;
-    max-width: 100%;
-    margin: 0 auto;
-    @include media-breakpoint-down(xxl) {
+    .qr-code {
+      display: block;
       width: 100px;
-      margin-bottom: .25em;
+      align-self: flex-start;
+      @include media-breakpoint-down(xl) {
+        width: 80px;
+      }
+      @include media-breakpoint-down(md) {
+        position: absolute;
+        top: 1em;
+        right: 1em;
+        z-index: 10;
+      }
+      @include media-breakpoint-down(sm) {
+        width: 50px;
+      }
     }
   }
   .post {
@@ -2854,6 +2888,18 @@ ACCOUNT
         margin-top: unset;
         margin-right: .5em;
       }
+    }
+  }
+  .btn-add-offer {
+    background-color: rgba($color: $pale-blue, $alpha: .2);
+    color: $pale-blue;
+    @include flex();
+    font-size: 6.5em;
+    border-radius: 10px;
+    @include lightShadow();
+    transition: $transition;
+    &:hover, &:focus, &:active {
+      color: $blue;
     }
   }
   .add-offer {
@@ -2897,8 +2943,9 @@ ACCOUNT
       @include list();
       @include flex(row, flex-start, center, wrap);
       li {
-        margin-right: 2em;
-        margin-bottom: 1.3em;
+        margin-right: 1.5em;
+        margin-bottom: 1em;
+        border-bottom: none;
         @include media-breakpoint-down(sm) {
           margin-right: 1em;
           margin-bottom: .75em;
@@ -2908,7 +2955,7 @@ ACCOUNT
   }
   .sec-finance {
     .balance {
-      background-color: $pale-blue;
+      background-color: $blue;
       color: $white;
       padding: 1em 1.2em;
       border-radius: $radius;
@@ -2988,11 +3035,8 @@ ACCOUNT
       border-radius: $radius;
       @include blurShadow();
       padding: 3em 2em;
-    }
-    form {
-      width: 70%;
-      @include media-breakpoint-down(xl) {
-        width: 100%;
+      @include media-breakpoint-down(sm) {
+        padding: 1.5em;
       }
     }
   }
@@ -3027,9 +3071,6 @@ ACCOUNT
 }
 .offer-line-2 {
   @include flex(row, space-between, center, nowrap);
-  background-color: $white;
-  border-radius: $radius;
-  @include lightShadow();
   padding: 1em;
   color: $total-black;
   @include media-breakpoint-down(xl) {
@@ -3069,9 +3110,6 @@ ACCOUNT
   }
 }
 .offer-line-3 {
-  background-color: $white;
-  border-radius: $radius;
-  @include lightShadow();
   padding: 1em;
   color: $total-black;
   display: grid;
@@ -3216,9 +3254,6 @@ ACCOUNT
   }
 }
 .operation-line {
-  background-color: $white;
-  border-radius: $radius;
-  @include lightShadow();
   padding: 1em;
   color: $total-black;
   display: grid;

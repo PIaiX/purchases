@@ -4,6 +4,7 @@ import ReturnIcon from '../../components/svg/ReturnIcon';
 import LabeledInput from '../../components/utils/LabeledInput';
 import NavPagination from '../../components/NavPagination';
 import AppealLine from '../../components/AppealLine';
+import InputFileImg from '../../components/utils/InputFileImg';
 
 const Callback = () => {
   const [cbSection, setCbSection] = useState(1);
@@ -11,12 +12,12 @@ const Callback = () => {
 
   return (
     <section className='sec-callback mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-lg-5">
+      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
         <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Обратная связь</h1>
-      </div>
+      </div> */}
       
       <ul className='list-unstyled d-flex justify-content-start mb-4 mb-sm-5'>
         <li>
@@ -47,7 +48,7 @@ const Callback = () => {
               <li className="btns"></li>
             </ul>
           </div>
-          <div className="list-wrapping-main">
+          <div className="list-wrapping-main p-3">
             <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-3'>
               <li>
                 <AppealLine id={'15296'}/>
@@ -68,22 +69,36 @@ const Callback = () => {
           </div>
         </div>
         : <div className="row">
-          <div className="col-xxl-9">
+          <div className="col-xxl-10">
             <div className="box">
               <form action="">
-                <LabeledInput 
-                  className="mb-5"
-                  type={"select"} 
-                  label={"Игра"} 
-                  options={[{value:1, text: 'World of Warcraft'}, {value:2, text: 'World of Warcraft'}, {value:3, text: 'World of Warcraft'}]}
-                />
-                <LabeledInput 
-                  type={"textarea"} 
-                  label={"Обращение"} 
-                  placeholder={'Предоставьте как можно более подробную информацию, приложите необходимые скриншоты.'}
-                  rows={4}
-                />
-                <button type='submit' className='btn-1 mt-5'>Отправить</button>
+                <div className="row g-4 g-md-5">
+                  <div className="col-md-6">
+                    <LabeledInput 
+                      type={"select"} 
+                      label={"Тема"} 
+                      options={[{value:1, text: 'Тема 1'}, {value:2, text: 'Тема 2'}, {value:3, text: 'Тема 3'}]}
+                    />
+                  </div>
+                  <div className="col-md-6">
+                    <LabeledInput 
+                      type={"select"} 
+                      label={"Подтема"} 
+                      options={[{value:1, text: 'Подтема 1'}, {value:2, text: 'Подтема 2'}, {value:3, text: 'Подтема 3'}]}
+                    />
+                  </div>
+                  <div className="col-md-12">
+                    <LabeledInput 
+                      className="mb-3"
+                      type={"textarea"} 
+                      label={"Обращение"} 
+                      placeholder={'Предоставьте как можно более подробную информацию, приложите необходимые скриншоты.'}
+                      rows={4}
+                    />
+                    <InputFileImg/>
+                  </div>
+                </div>
+                <button type='submit' className='btn-1 mt-4 mt-md-5'>Отправить</button>
               </form>
             </div>
           </div>

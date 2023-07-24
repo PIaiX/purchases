@@ -6,51 +6,51 @@ import OfferLine3 from '../../components/OfferLine3';
 
 const SalesHistory = () => {
   return (
-    <section className='mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-lg-5">
+    <section className='mb-6'>
+      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
         <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>История Продаж</h1>
-      </div>
+      </div> */}
 
       <div className="list-wrapping">
-            <div className="list-wrapping-top">
-              <ul className='line-3'>
-                <li className="date">Дата</li>
-                <li className="id">ID заказа</li>
-                <li className="descr">Детали</li>
-                <li className="seller">Продавец</li>
-                <li className="status">Статус</li>
-                <li className="price">Цена</li>
-              </ul>
-            </div>
-            <div className="list-wrapping-main">
-              <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-                <li>
-                  <OfferLine3/>
-                </li>
-              </ul>
-            </div>
-            <div className="list-wrapping-bottom">
-              <NavPagination/>
-            </div>
-          </div>
+        <div className="list-wrapping-top">
+          <ul className='line-3'>
+            <li className="date">Дата</li>
+            <li className="id">ID заказа</li>
+            <li className="descr">Детали</li>
+            <li className="seller">Продавец</li>
+            <li className="status">Статус</li>
+            <li className="price">Цена</li>
+          </ul>
+        </div>
+        <div className="list-wrapping-main">
+          <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-4 g-xl-0'>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+            <li>
+              <OfferLine3/>
+            </li>
+          </ul>
+        </div>
+        <div className="list-wrapping-bottom">
+          <NavPagination/>
+        </div>
+      </div>
     </section>
   );
 };

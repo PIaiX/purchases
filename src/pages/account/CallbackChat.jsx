@@ -9,15 +9,15 @@ import { RxChevronLeft } from "react-icons/rx";
 const CallbackChat = () => {
   return (
     <section className='sec-appeal mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-lg-5">
+      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
         <Link to='/account/callback' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Обращение ID-15296</h1>
-      </div>
+      </div> */}
 
       <div className="row">
-        <div className="col-xxl-9">
+        <div className="col-xxl-10">
           <div className="top">
             <h4>Тема: <span className='fw-4'>Не получается совершить покупку</span></h4>
             <Link to="/account/callback" className='blue d-flex align-items-center'>

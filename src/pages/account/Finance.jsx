@@ -8,15 +8,15 @@ import { RxChevronRight } from "react-icons/rx";
 const Finance = () => {
   const [balanceSection, setBalanceSection] = useState(2);
   return (
-    <section className='sec-finance mb-3 mb-sm-5'>
-      <div className="d-flex align-items-center mb-4 mb-lg-5">
+    <section className='sec-finance mb-6'>
+      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
         <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
           <ReturnIcon/>
         </Link>
         <h1 className='h2 mb-0'>Финансы</h1>
-      </div>
+      </div> */}
 
-      <div className="list-wrapping mb-4 mb-sm-5">
+      {/* <div className="list-wrapping mb-4 mb-sm-5">
         <div className="list-wrapping-top">
           <h5 className='fw-6'>Заголовок о комиссии</h5>
         </div>
@@ -29,7 +29,7 @@ const Finance = () => {
             </button>
           </div>
         </div>
-      </div>
+      </div> */}
 
       <div className="d-xl-flex mb-4 mb-sm-5">
         <div className='balance me-xl-3 me-xxl-5 mb-4 mb-xl-0'>
@@ -104,7 +104,7 @@ const Finance = () => {
             </ul>
           </div>
           <div className="list-wrapping-main">
-            <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-3'>
+            <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0'>
               <li>
                 <Operation/>
               </li>
