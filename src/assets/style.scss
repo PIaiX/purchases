@@ -296,6 +296,7 @@ h6 {
   &-8 {font-weight: 800;}
   &-9 {font-weight: 900;}
 }
+.white {color: $white;}
 .gray {color: $gray;}
 .pale-blue {color: $pale-blue;}
 .blue {color: $blue;}
@@ -304,6 +305,15 @@ h6 {
 .black {color: $black;}
 .total-black {color: $total-black;}
 .title-font {font-family: $title-font;}
+.bg-blue {
+  background-color: $blue;
+}
+.ruble {
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  border: 1px solid $white;
+}
 
 /* Form elements */
 input, textarea {
@@ -624,7 +634,7 @@ button {
 }
 .btn {
   @include flex(row, center, center, nowrap);
-  padding: .65em 1.65em;
+  padding: .8em 1.6em;
   text-align: center;
   transition: $transition;
   width: fit-content;
