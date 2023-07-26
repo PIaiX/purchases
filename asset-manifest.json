@@ -1,8 +1,7 @@
 {
   "files": {
-    "main.css": "/purchases/static/css/main.1b684691.css",
-    "main.js": "/purchases/static/js/main.da352ff2.js",
-    "static/media/girl.png": "/purchases/static/media/girl.67010099caf55b7f8591.png",
+    "main.css": "/purchases/static/css/main.3fa2e877.css",
+    "main.js": "/purchases/static/js/main.eefd0984.js",
     "static/media/texture.png": "/purchases/static/media/texture.fdf098fc14db4efae277.png",
     "static/media/bebasneuecyrillic.ttf": "/purchases/static/media/bebasneuecyrillic.f39fe92d35bac3b2fe60.ttf",
     "static/media/cogito.jpg": "/purchases/static/media/cogito.a7a9226ba2e056868f03.jpg",
@@ -20,11 +19,11 @@
     "static/media/chevron-down-gray.svg": "/purchases/static/media/chevron-down-gray.4801f8b5797a0374d9bd.svg",
     "static/media/chevron-down.svg": "/purchases/static/media/chevron-down.8ebe33b5e703ae624cb3.svg",
     "static/media/chevron-down-blue.svg": "/purchases/static/media/chevron-down-blue.c184a2d325b43d0131f4.svg",
-    "main.1b684691.css.map": "/purchases/static/css/main.1b684691.css.map",
-    "main.da352ff2.js.map": "/purchases/static/js/main.da352ff2.js.map"
+    "main.3fa2e877.css.map": "/purchases/static/css/main.3fa2e877.css.map",
+    "main.eefd0984.js.map": "/purchases/static/js/main.eefd0984.js.map"
   },
   "entrypoints": [
-    "static/css/main.1b684691.css",
-    "static/js/main.da352ff2.js"
+    "static/css/main.3fa2e877.css",
+    "static/js/main.eefd0984.js"
   ]
 }
