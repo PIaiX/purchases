@@ -582,46 +582,7 @@ select {
     }
   }
 }
-// .input-file {
-//   display: flex;
-//   align-items: center;
-//   position: relative;
-//   border-radius: $radius;
-//   transition: $transition;
-//   background-color: $white;
-//   border: 1px solid $light-gray;
-//   position: relative;
-//   &:hover {
-//     cursor: pointer;
-//   }
-//   input {
-//     position: absolute;
-//     z-index: -1;
-//     opacity: 0;
-//     width: 1px;
-//     height: 1px;
-//     top: 0px;
-//     left: 0px;
-//     padding: 0px;
-//   }
-//   svg {
-//     color: $blue;
-//     font-size: 1.5em;
-//     stroke-width: 1.25px;
-//   }
-//   .ind {
-//     position: absolute;
-//     bottom: -.25em;
-//     right: 0px;
-//     color: $blue;
-//     font-weight: 600;
-//     line-height: 1em;
-//     font-size: .9em;
-//     &:empty {
-//       display: none;
-//     }
-//   }
-// }
+
 
 button {
   background: none;
@@ -808,6 +769,13 @@ button {
 .return-link {
   @include flex();
   font-size: 2em;
+}
+.return-title {
+  display: none;
+  @include media-breakpoint-down(lg) {
+    @include flex(row, flex-start, center, nowrap);
+    margin-bottom: 2em;
+  }
 }
 
 @include media-breakpoint-down(sm) {
@@ -1080,6 +1048,9 @@ nav.pagination {
       @include list();
       li {
         border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .2);
+        @include media-breakpoint-down(xl) {
+          border-bottom: none;
+        }
       }
     }
   }
@@ -2569,6 +2540,7 @@ ACCOUNT
   position: relative;
   overflow: hidden;
   .return-icon {
+    display: flex;
     font-size: 2em;
     color: $blue;
   }
@@ -3077,6 +3049,83 @@ ACCOUNT
     border-radius: 50%;
     border: 1px solid #fff;
     @include flex();
+  }
+}
+.settings-line {
+  padding: 1em;
+  color: $total-black;
+  display: grid;
+  grid-template-columns: 150px 110px auto 140px 120px 60px;
+  grid-template-rows: auto;
+  grid-template-areas: "session system browser ip region btns";
+  gap: 0.5em;
+  // @include media-breakpoint-down(xl) {
+  //   flex-direction: column;
+  //   align-items: stretch;
+  // }
+  @include media-breakpoint-down(xl) {
+    grid-template-columns: 1fr 1fr 80px;
+    grid-template-areas: 
+    "session system btns"
+    "browser browser browser"
+    "ip ip region";
+    border: 1px solid $pale-gray;
+    border-radius: $radius;
+  }
+  @include media-breakpoint-down(md) {
+    font-size: .8em;
+    gap: 0.25em;
+    grid-template-columns: 1fr 1fr 60px;
+  }
+  @include media-breakpoint-down(sm) {
+    font-size: 1em;
+  }
+  .session {
+    grid-area: session;
+  }
+  .system {
+    grid-area: system;
+    text-align: left;
+    @include media-breakpoint-down(xl) {
+      text-align: right;
+    }
+  }
+  .browser {
+    grid-area: browser;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      text-align: left;
+    }
+  }
+  .ip {
+    grid-area: ip;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      text-align: left;
+    }
+  }
+  .region {
+    grid-area: region;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      text-align: right;
+    }
+  }
+  .btns {
+    grid-area: btns;
+    @include flex(row, flex-end, center, nowrap);
+    button {
+      @include flex();
+      color: $blue;
+      font-size: 1.35em;
+      transition: $transition;
+      &:hover, &:focus {
+        color: $light-blue;
+      }
+       &:active {
+        color: $dark-blue;
+      }
+    }
   }
 }
 .offer-line-2 {

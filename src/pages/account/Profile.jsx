@@ -7,15 +7,12 @@ import Joystick from '../../components/svg/Joystick';
 import { TbHeartHandshake } from "react-icons/tb";
 import { FiMessageCircle, FiEdit, FiShare } from "react-icons/fi";
 import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const Profile = () => {
   return (
     <section className='sec-profile mb-6'>
-      <div className="d-lg-none d-flex align-items-center mb-4 mb-lg-0">
-        <Link to='/account' className='d-flex return-icon me-2 me-sm-4'><ReturnIcon/></Link>
-        <h1 className='h2 mb-0'>Профиль</h1>
-      </div>
+      <ReturnTitle link={'/account'} title={'Профиль'}/>
       <div className="d-flex align-items-start mb-5">
         <div className='user flex-1'>
           <div className="user-photo">

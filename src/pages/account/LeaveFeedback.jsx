@@ -2,19 +2,14 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import InputRating from '../../components/utils/InputRating';
 import LabeledInput from '../../components/utils/LabeledInput';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const LeaveFeedback = () => {
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
-      {/* <div className="d-flex align-items-center mb-4 mb-xl-5">
-        <Link to='/account/feedback' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>Оставить отзыв</h1>
-      </div> */}
+      <ReturnTitle link={'/account/feedback'} title={'Оставить отзыв'}/>
       <Row xs={1} xxl={2} className='gx-xxl-5'>
         <Col>
           <form action="">

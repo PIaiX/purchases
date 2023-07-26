@@ -1,22 +1,16 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import { FiEdit } from "react-icons/fi";
 import StarRating from '../../components/utils/StarRating';
 import NavPagination from '../../components/NavPagination';
 import FeedbackLine from '../../components/FeedbackLine';
 import PurchaseLine from '../../components/PurchaseLine';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const Feedback = () => {
   const [isMyFeedback, setIsMyFeedback] = useState(false);
   return (
     <section className='sec-feedback mb-6'>
-      {/* <div className="d-flex align-items-center mb-4 mb-xl-5">
-        <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>Отзывы</h1>
-      </div> */}
+      <ReturnTitle link={'/account'} title={'Отзывы'}/>
 
       <div className="d-xl-flex align-items-stretch justify-content-between">
         <div className='user'>

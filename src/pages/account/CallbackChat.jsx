@@ -1,20 +1,15 @@
 import React from 'react';
 import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import UserMessage from '../../components/chat/UserMessage';
 import MyMessage from '../../components/chat/MyMessage';
 import send from '../../assets/imgs/send.svg';
 import { RxChevronLeft } from "react-icons/rx";
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const CallbackChat = () => {
   return (
     <section className='sec-appeal mb-3 mb-sm-5'>
-      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
-        <Link to='/account/callback' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>Обращение ID-15296</h1>
-      </div> */}
+      <ReturnTitle link={'/account/callback'} title={'Обращение ID-15296'}/>
 
       <div className="row">
         <div className="col-xxl-10">

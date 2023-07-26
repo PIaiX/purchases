@@ -1,10 +1,9 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import LabeledInput from '../../components/utils/LabeledInput';
 import NavPagination from '../../components/NavPagination';
 import AppealLine from '../../components/AppealLine';
 import InputFileImg from '../../components/utils/InputFileImg';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const Callback = () => {
   const [cbSection, setCbSection] = useState(1);
@@ -12,12 +11,7 @@ const Callback = () => {
 
   return (
     <section className='sec-callback mb-3 mb-sm-5'>
-      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
-        <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>Обратная связь</h1>
-      </div> */}
+      <ReturnTitle link={'/account'} title={'Обратная связь'}/>
       
       <ul className='list-unstyled d-flex justify-content-start mb-4 mb-sm-5'>
         <li>

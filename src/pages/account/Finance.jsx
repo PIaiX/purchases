@@ -1,20 +1,13 @@
 import React, {useState} from 'react';
-import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import NavPagination from '../../components/NavPagination';
 import Operation from '../../components/Operation';
-import { RxChevronRight } from "react-icons/rx";
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const Finance = () => {
   const [balanceSection, setBalanceSection] = useState(2);
   return (
     <section className='sec-finance mb-6'>
-      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
-        <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>Финансы</h1>
-      </div> */}
+      <ReturnTitle link={'/account'} title={'Финансы'}/>
 
       {/* <div className="list-wrapping mb-4 mb-sm-5">
         <div className="list-wrapping-top">

@@ -1,21 +1,15 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import LabeledInput from '../../components/utils/LabeledInput';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const AddOffer = () => {
   return (
     <section className='mb-3 mb-sm-5'>
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
-          {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
-            <Link to='/account/offers' className='d-lg-none d-flex return-icon me-2 me-sm-4'>
-              <ReturnIcon/>
-            </Link>
-            <h1 className='h2 mb-0'>Новое объявление</h1>
-          </div> */}
+          <ReturnTitle link={'/account/offers'} title={'Новое объявление'}/>
 
           <form action="" className='add-offer'>
             <Row>

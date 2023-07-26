@@ -1,18 +1,12 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
-import ReturnIcon from '../../components/svg/ReturnIcon';
 import NavPagination from '../../components/NavPagination';
 import OfferLine3 from '../../components/OfferLine3';
+import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const SalesHistory = () => {
   return (
     <section className='mb-6'>
-      {/* <div className="d-flex align-items-center mb-4 mb-lg-5">
-        <Link to='/account' className='d-flex d-lg-none return-icon me-2 me-sm-4'>
-          <ReturnIcon/>
-        </Link>
-        <h1 className='h2 mb-0'>История Продаж</h1>
-      </div> */}
+      <ReturnTitle link={'/account'} title={'История Продаж'}/>
 
       <div className="list-wrapping">
         <div className="list-wrapping-top">
