@@ -16,12 +16,14 @@ import Rules from '../pages/Rules';
 import Cookie from '../pages/Cookie';
 import QuestionPage from '../pages/QuestionPage';
 import Feedback from '../pages/Feedback';
+import Trader from '../pages/Trader';
 
 const router = createHashRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>
       <Route index element={<Home />}/>
       <Route path="game" element={<Game/>} />
+      <Route path="trader" element={<Trader/>} />
       <Route path="blog" element={<Blog/>} />
       <Route path="blog/:id" element={<Article/>} />
       <Route path="registration" element={<Registration/>} />

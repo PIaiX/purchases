@@ -1,5 +1,6 @@
 import React from 'react';
 import StarRating from './utils/StarRating';
+import {Link} from 'react-router-dom';
 
 const OfferLine = (props) => {
   return (
@@ -7,9 +8,9 @@ const OfferLine = (props) => {
       <div className="serv">{props.serv}</div>
       <div className="descr">{props.descr}</div>
       <div className="seller">
-        <img src={props.sellerImg} alt={props.seller} />
+        <Link to='/trader'><img src={props.sellerImg} alt={props.seller} /></Link>
         <div>
-          <h5 className='mb-xl-1'>{props.seller}</h5>
+          <h5 className='mb-xl-1'><Link to='/trader'>{props.seller}</Link></h5>
           <StarRating rate={props.sellerRating}/>
         </div>
       </div>
