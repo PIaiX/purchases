@@ -87,11 +87,11 @@ const Feedback = () => {
             </div>
           </div>
         </>
-        :<div className="list-wrapping mt-5">
+        :<div className="list-wrapping mt-4 mt-sm-5">
           <div className="list-wrapping-top">
             <h5 className='fw-6'>Всего 193 отзыва</h5>
           </div>
-          <div className="list-wrapping-main p-4">
+          <div className="list-wrapping-main p-sm-4">
             <ul className='row row-cols-1 g-3'>
               <li>
                 <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!"/>

@@ -11519,6 +11519,16 @@ ACCOUNT
 .account .btn-add-offer:hover, .account .btn-add-offer:focus, .account .btn-add-offer:active {
   color: #4A83DC;
 }
+@media (max-width: 767.98px) {
+  .account .btn-add-offer {
+    font-size: 4.5em;
+  }
+}
+@media (max-width: 575.98px) {
+  .account .btn-add-offer {
+    font-size: 3em;
+  }
+}
 .account .add-offer {
   padding: 3em 2em;
   border-radius: 0.67em;
@@ -11851,6 +11861,8 @@ ACCOUNT
   .offer-line-2 {
     flex-direction: column;
     align-items: stretch;
+    border: 1px solid #D9D9D9;
+    border-radius: 0.67em;
   }
 }
 .offer-line-2 .descr {
@@ -11923,6 +11935,8 @@ ACCOUNT
 }
 @media (max-width: 1289.98px) {
   .offer-line-3 {
+    border: 1px solid #D9D9D9;
+    border-radius: 0.67em;
     font-size: 14px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;

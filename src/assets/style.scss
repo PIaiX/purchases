@@ -2883,6 +2883,12 @@ ACCOUNT
     &:hover, &:focus, &:active {
       color: $blue;
     }
+    @include media-breakpoint-down(md) {
+      font-size: 4.5em;
+    }
+    @include media-breakpoint-down(sm) {
+      font-size: 3em;
+    }
   }
   .add-offer {
     padding: 3em 2em;
@@ -3135,6 +3141,8 @@ ACCOUNT
   @include media-breakpoint-down(xl) {
     flex-direction: column;
     align-items: stretch;
+    border: 1px solid $pale-gray;
+    border-radius: $radius;
   }
   .descr {
     flex: 1;
@@ -3180,6 +3188,8 @@ ACCOUNT
     font-size: 13px;
   }
   @include media-breakpoint-down(xl) {
+    border: 1px solid $pale-gray;
+    border-radius: $radius;
     font-size: 14px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;

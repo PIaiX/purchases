@@ -42,7 +42,7 @@ const Callback = () => {
               <li className="btns"></li>
             </ul>
           </div>
-          <div className="list-wrapping-main p-3">
+          <div className="list-wrapping-main p-sm-3">
             <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-3'>
               <li>
                 <AppealLine id={'15296'}/>

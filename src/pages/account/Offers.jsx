@@ -15,11 +15,11 @@ const Offers = () => {
           <ReturnTitle link={'/account'} title={'Мои объявления'}/>
 
           <div className="d-flex align-items-start">
-            <Link to='add' className='btn-add-offer me-4'>
+            <Link to='add' className='btn-add-offer me-3 me-md-4'>
               <Plus/>
             </Link>
             <div className='flex-1'>
-              <ul className='list-unstyled g-2 g-sm-4 row row-cols-2 row-cols-md-3 row-cols-xxl-4'>
+              <ul className='list-unstyled g-2 g-sm-4 row row-cols-sm-2 row-cols-md-3 row-cols-xxl-4'>
                 <li>
                   <GameMiniCard/>
                 </li>
@@ -43,7 +43,7 @@ const Offers = () => {
               </ul>
             </div>
             <div className="list-wrapping-main">
-              <ul>
+              <ul className='g-4 g-xl-0 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-1'>
                 <li>
                   <OfferLine2/>
                 </li>

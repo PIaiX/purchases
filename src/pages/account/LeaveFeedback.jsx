@@ -24,7 +24,7 @@ const LeaveFeedback = () => {
             <div className="list-wrapping-top">
               <h5 className='fw-6'>Аккаунты ArcheAge</h5>
             </div>
-            <div className="list-wrapping-main p-4">
+            <div className="list-wrapping-main p-sm-4">
               <h5 className='fw-6 d-xl-none mb-3'>Аккаунты ArcheAge</h5>
               <ul className='info-list mb-2 mb-sm-4'>
                 <li>
