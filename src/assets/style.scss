@@ -31,6 +31,7 @@ $aqua: rgba(67, 185, 198, 0.26);
 $rose: #FF5630;
 
 $white: #FFFFFF;
+$extrapale-gray: #ECF4FC;
 $pale-gray: #D9D9D9;
 $light-gray:#C1C1C1;
 $gray: #8F8F8F;
@@ -138,6 +139,11 @@ $radius: .67em;
   height: $w;
   border-radius: $rad;
   object-fit: $fit;
+}
+@mixin textEllipsis {
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
 }
 
 /*****************
@@ -296,7 +302,9 @@ h6 {
   &-8 {font-weight: 800;}
   &-9 {font-weight: 900;}
 }
+.green {color: $green;}
 .white {color: $white;}
+.light-gray {color: $light-gray;}
 .gray {color: $gray;}
 .pale-blue {color: $pale-blue;}
 .blue {color: $blue;}
@@ -314,6 +322,7 @@ h6 {
   border-radius: 50%;
   border: 1px solid $white;
 }
+.lh-n {line-height: normal;}
 
 /* Form elements */
 input, textarea {
@@ -778,6 +787,7 @@ button {
   }
 }
 
+.min-250 {min-width: 250px;}
 @include media-breakpoint-down(sm) {
   .w-xs-100 {width: 100%;}
 }
@@ -1954,6 +1964,177 @@ header {
       @include flex(row, flex-end, center, nowrap);
       text-align: right;
       font-weight: 600;
+    }
+  }
+}
+
+/* Trader page */
+.trader-line {
+  display: grid;
+  grid-template-columns: 160px auto 120px;
+  grid-template-rows: 1fr;
+  grid-template-areas: 
+  "serv descr price";
+  background-color: $white;
+  @include boxShadow();
+  border-radius: $radius;
+  border-bottom: none;
+  // @include media-breakpoint-down(xl) {
+  //   grid-template-columns:auto var(--price);
+  //   grid-template-rows: 2em auto 3em;
+  //   grid-template-areas: 
+  //   "serv price"
+  //   "descr descr"
+  //   "seller availability";
+  //   gap: 10px 0px;
+  //   padding: 1em 0;
+  // }
+  &>div {
+    grid-column: span 1;
+    grid-row: span 1;
+    padding: 1em;
+  }
+  .serv {
+    grid-area: serv;
+    @include media-breakpoint-down(xl) {
+      color: $blue;
+      @include flex(row, flex-start, center, nowrap);
+    }
+  }
+  .descr {
+    grid-area: descr;
+    @include media-breakpoint-down(xl) {
+      @include clamp(3, 1.2em, true);
+    }
+  }
+  .price {
+    grid-area: price;
+    text-align: center;
+    @include media-breakpoint-down(xl) {
+      @include flex(row, flex-end, center, nowrap);
+      text-align: right;
+      font-weight: 600;
+    }
+  }
+}
+
+/* Lot page */
+.lot-page {
+  &-box {
+    border: 1px solid rgba($color: $pale-blue, $alpha: .25);
+    border-radius: $radius;
+    .game {
+      @include flex(column, center, center, nowrap);
+      width: fit-content;
+      img {
+        @include roundedImg(50px, 50%, cover);
+      }
+    }
+    time {
+      font-size: .8em;
+    }
+    hr {
+      background-color: rgba($color: $pale-blue, $alpha: .25);
+      width: 100%;
+      height: 1px;
+      border: none;
+      margin: 0px;
+      opacity: 1;
+    }
+    .seller {
+      @include flex(row, flex-start, center, nowrap);
+      img {
+        @include roundedImg(70px, 50%, cover);
+        margin-right: 1em;
+      }
+      .rating {
+        font-size: 1.2em;
+        font-weight: 700;
+        @include flex();
+        svg {
+          color: $blue;
+          font-size: 1.1em;
+          path {
+            fill: $blue;
+          }
+        }
+      }
+    }
+    .tag-gray {
+      background-color: $extrapale-gray;
+      padding: .25em .5em;
+      border-radius: .5em;
+    }
+    .tag-green {
+      background-color: $green;
+      color: $white;
+      padding: .25em .5em;
+      border-radius: .5em;
+    }
+  }
+  .specifications {
+    @include list();
+    font-size: .9em;
+    li {
+      @include flex(row, space-between, center, nowrap);
+      position: relative;
+      &::after {
+        content: '';
+        position: absolute;
+        bottom: .2em;
+        left: 0em;
+        width: 100%;
+        height: 1px;
+        background-color: rgba($color: $pale-blue, $alpha: .25);
+      }
+      &:not(:first-child){
+        margin-top: .25em;
+      }
+      span {
+        position: relative;
+        z-index: 2;
+        background-color: $white;
+        padding: 0em 0.5em;
+        line-height: normal;
+        @include textEllipsis();
+        &:first-child {
+          color: $gray;
+        }
+        &:last-child {
+          color: $blue;
+          width: 45%;
+        }
+      }
+    }
+  }
+}
+.review-card {
+  border: 1px solid rgba($color: $pale-blue, $alpha: .25);
+  background-color: rgba($color: $pale-blue, $alpha: .1);
+  border-radius: $radius;
+  padding: .75em;
+  .user {
+    @include flex();
+    &-photo {
+      @include roundedImg(30px, 50%, cover);
+      border: none;
+      margin-right: .5em;
+    }
+  }
+  time {
+    font-size: .8em;
+    color: $pale-blue;
+  }
+  .rating {
+    font-size: 1.2em;
+    font-weight: 700;
+    @include flex();
+    svg {
+      color: $blue;
+      font-size: 1.1em;
+      path {
+        fill: $blue;
+      }
     }
   }
 }

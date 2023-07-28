@@ -6,7 +6,7 @@ const OfferLine = (props) => {
   return (
     <div className='offer-line'>
       <div className="serv">{props.serv}</div>
-      <div className="descr">{props.descr}</div>
+      <div className="descr"><Link to="/game/lot">{props.descr}</Link></div>
       <div className="seller">
         <Link to='/trader'><img src={props.sellerImg} alt={props.seller} /></Link>
         <div>
