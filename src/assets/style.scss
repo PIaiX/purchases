@@ -2072,6 +2072,51 @@ header {
       border-radius: .5em;
     }
   }
+  &-grid {
+    display: grid;
+    grid-template-columns: 100px calc(5fr - 80px) 5fr;
+    grid-template-rows: 30px 40px 30px 60px 70px;
+    gap: 0px 0px;
+    grid-template-areas: 
+    "game . date"
+    "game info date"
+    "game title title"
+    "payment payment payment"
+    "text text specifications";
+    .game {
+      grid-area: game;
+      padding: 1em;
+    }
+    .date {
+      grid-area: date;
+      @include flex(row, flex-end, center, nowrap);
+      padding: 1em;
+      color: $light-gray;
+    }
+    .info {
+      grid-area: info;
+      @include flex(row, flex-start, center, nowrap);
+    }
+    .title {
+      grid-area: title;
+      color: $blue;
+    }
+    .payment {
+      grid-area: payment;
+      @include flex(row, flex-start, flex-end, nowrap);
+      padding: 1em;
+      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
+    }
+    .text {
+      grid-area: text;
+      padding: 1em;
+      @include flex(row, flex-start, center, nowrap);
+    }
+    .specifications {
+      grid-area: specifications;
+      padding: 1em;
+    }
+  }
   .specifications {
     @include list();
     font-size: .9em;
@@ -2088,7 +2133,7 @@ header {
         background-color: rgba($color: $pale-blue, $alpha: .25);
       }
       &:not(:first-child){
-        margin-top: .25em;
+        margin-top: .5em;
       }
       span {
         position: relative;
@@ -2114,7 +2159,10 @@ header {
   border-radius: $radius;
   padding: .75em;
   .user {
-    @include flex();
+    @include flex(row, flex-start, center, nowrap);
+    @include media-breakpoint-down(xxl) {
+      flex: 1;
+    }
     &-photo {
       @include roundedImg(30px, 50%, cover);
       border: none;

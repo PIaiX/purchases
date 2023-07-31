@@ -10518,6 +10518,62 @@ header .profile-link img {
   padding: 0.25em 0.5em;
   border-radius: 0.5em;
 }
+.lot-page-grid {
+  display: grid;
+  grid-template-columns: 100px calc(5fr - 80px) 5fr;
+  grid-template-rows: 30px 40px 30px 60px 70px;
+  gap: 0px 0px;
+  grid-template-areas: "game . date" "game info date" "game title title" "payment payment payment" "text text specifications";
+}
+.lot-page-grid .game {
+  grid-area: game;
+  padding: 1em;
+}
+.lot-page-grid .date {
+  grid-area: date;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 1em;
+  color: #C1C1C1;
+}
+.lot-page-grid .info {
+  grid-area: info;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.lot-page-grid .title {
+  grid-area: title;
+  color: #4A83DC;
+}
+.lot-page-grid .payment {
+  grid-area: payment;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: flex-end;
+  flex-wrap: nowrap;
+  padding: 1em;
+  border-bottom: 1px solid rgba(157, 196, 239, 0.25);
+}
+.lot-page-grid .text {
+  grid-area: text;
+  padding: 1em;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.lot-page-grid .specifications {
+  grid-area: specifications;
+  padding: 1em;
+}
 .lot-page .specifications {
   list-style: none;
   padding-left: 0px;
@@ -10541,7 +10597,7 @@ header .profile-link img {
   background-color: rgba(157, 196, 239, 0.25);
 }
 .lot-page .specifications li:not(:first-child) {
-  margin-top: 0.25em;
+  margin-top: 0.5em;
 }
 .lot-page .specifications li span {
   position: relative;
@@ -10570,9 +10626,14 @@ header .profile-link img {
 .review-card .user {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
+}
+@media (max-width: 1469.98px) {
+  .review-card .user {
+    flex: 1;
+  }
 }
 .review-card .user-photo {
   width: 30px;
