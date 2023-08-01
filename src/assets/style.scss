@@ -2020,103 +2020,6 @@ header {
 
 /* Lot page */
 .lot-page {
-  &-box {
-    border: 1px solid rgba($color: $pale-blue, $alpha: .25);
-    border-radius: $radius;
-    .game {
-      @include flex(column, center, center, nowrap);
-      width: fit-content;
-      img {
-        @include roundedImg(50px, 50%, cover);
-      }
-    }
-    time {
-      font-size: .8em;
-    }
-    hr {
-      background-color: rgba($color: $pale-blue, $alpha: .25);
-      width: 100%;
-      height: 1px;
-      border: none;
-      margin: 0px;
-      opacity: 1;
-    }
-    .seller {
-      @include flex(row, flex-start, center, nowrap);
-      img {
-        @include roundedImg(70px, 50%, cover);
-        margin-right: 1em;
-      }
-      .rating {
-        font-size: 1.2em;
-        font-weight: 700;
-        @include flex();
-        svg {
-          color: $blue;
-          font-size: 1.1em;
-          path {
-            fill: $blue;
-          }
-        }
-      }
-    }
-    .tag-gray {
-      background-color: $extrapale-gray;
-      padding: .25em .5em;
-      border-radius: .5em;
-    }
-    .tag-green {
-      background-color: $green;
-      color: $white;
-      padding: .25em .5em;
-      border-radius: .5em;
-    }
-  }
-  &-grid {
-    display: grid;
-    grid-template-columns: 100px calc(5fr - 80px) 5fr;
-    grid-template-rows: 30px 40px 30px 60px 70px;
-    gap: 0px 0px;
-    grid-template-areas: 
-    "game . date"
-    "game info date"
-    "game title title"
-    "payment payment payment"
-    "text text specifications";
-    .game {
-      grid-area: game;
-      padding: 1em;
-    }
-    .date {
-      grid-area: date;
-      @include flex(row, flex-end, center, nowrap);
-      padding: 1em;
-      color: $light-gray;
-    }
-    .info {
-      grid-area: info;
-      @include flex(row, flex-start, center, nowrap);
-    }
-    .title {
-      grid-area: title;
-      color: $blue;
-    }
-    .payment {
-      grid-area: payment;
-      @include flex(row, flex-start, flex-end, nowrap);
-      padding: 1em;
-      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
-    }
-    .text {
-      grid-area: text;
-      padding: 1em;
-      @include flex(row, flex-start, center, nowrap);
-    }
-    .specifications {
-      grid-area: specifications;
-      padding: 1em;
-    }
-  }
   .specifications {
     @include list();
     font-size: .9em;
@@ -2148,7 +2051,159 @@ header {
         &:last-child {
           color: $blue;
           width: 45%;
+          @include media-breakpoint-down(sm) {
+            width: fit-content;
+            margin-left: 1em;
+          }
         }
+      }
+    }
+  }
+  &-box {
+    border: 1px solid rgba($color: $pale-blue, $alpha: .25);
+    border-radius: $radius;
+    hr {
+      background-color: rgba($color: $pale-blue, $alpha: .25);
+      width: 100%;
+      height: 1px;
+      border: none;
+      margin: 0px;
+      opacity: 1;
+    }
+    .seller {
+      @include flex(row, flex-start, center, nowrap);
+      img {
+        @include roundedImg(70px, 50%, cover);
+        margin-right: 1em;
+      }
+      .rating {
+        font-size: 1.2em;
+        font-weight: 700;
+        @include flex();
+        svg {
+          color: $blue;
+          font-size: 1.1em;
+          path {
+            fill: $blue;
+          }
+        }
+      }
+    }
+  }
+  &-grid {
+    display: grid;
+    grid-template-columns: 120px 4fr 5fr;
+    grid-template-rows: 35px 40px 30px 85px 70px;
+    gap: 0px 0px;
+    grid-template-areas: 
+    "game . date"
+    "game info info"
+    "game title title"
+    "payment payment payment"
+    "text text specifications";
+    @include media-breakpoint-down(xl) {
+      grid-template-columns: 120px 3fr 5fr;
+    }
+    @include media-breakpoint-down(md) {
+      grid-template-columns: 120px auto;
+      grid-template-rows: auto;
+      grid-template-areas: 
+      "game date"
+      "game info"
+      "title title"
+      "text text"
+      "specifications specifications"
+      "payment payment";
+    }
+    @include media-breakpoint-down(sm) {
+      grid-template-columns: 100px auto;
+    }
+    .game {
+      grid-area: game;
+      width: 100%;
+      @include flex(column, flex-end, center, nowrap);
+      @include media-breakpoint-down(md) {
+        padding: 1em;
+      }
+      img {
+        @include roundedImg(50px, 50%, cover);
+      }
+    }
+    .date {
+      grid-area: date;
+      @include flex(row, flex-end, flex-end, nowrap);
+      padding: 0px 1em;
+      color: $light-gray;
+      @include media-breakpoint-down(sm) {
+        align-items: center;
+      }
+      time {font-size: .8em;}
+    }
+    .info {
+      grid-area: info;
+      @include flex(row, flex-start, center, nowrap);
+      @include media-breakpoint-down(sm) {
+        @include flex(column, space-evenly, stretch, nowrap);
+      }
+      .tag-gray {
+        background-color: $extrapale-gray;
+        padding: .25em .5em;
+        border-radius: .5em;
+      }
+      .tag-green {
+        background-color: $green;
+        color: $white;
+        padding: .25em .5em;
+        border-radius: .5em;
+      }
+    }
+    .title {
+      grid-area: title;
+      color: $blue;
+      @include flex(row, flex-start, flex-end, nowrap);
+      @include media-breakpoint-down(md) {
+        padding: 1em;
+      }
+      p {
+        @include media-breakpoint-up(md) {
+          @include textEllipsis();
+        }
+      }
+    }
+    .payment {
+      grid-area: payment;
+      @include flex(row, flex-start, flex-end, nowrap);
+      padding: 1em;
+      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
+      @include media-breakpoint-down(md) {
+        @include flex(column, center, stretch, nowrap);
+        border-bottom: none;
+        button {
+          width: 100%;
+          margin-top: .5em;
+        }
+      }
+    }
+    .text {
+      grid-area: text;
+      padding: 1em;
+      @include flex(row, flex-start, center, nowrap);
+      @include media-breakpoint-down(md) {
+        padding-top: 0px;
+        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
+      }
+    }
+    .specifications {
+      grid-area: specifications;
+      padding: 1em;
+      @include media-breakpoint-down(xxl) {
+        font-size: .8em;
+      }
+      @include media-breakpoint-down(md) {
+        font-size: 1em;
+      }
+      @include media-breakpoint-down(sm) {
+        font-size: .9em;
       }
     }
   }
