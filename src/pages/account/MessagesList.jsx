@@ -15,7 +15,7 @@ const MessagesList = () => {
               <div class="fs-13">102</div>
               <div>online</div>
             </div>
-            <h5>Общий чат</h5>
+            <h6>Общий чат</h6>
           </Link>
         </li>
         <li>

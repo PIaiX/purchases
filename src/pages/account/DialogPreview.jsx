@@ -8,7 +8,7 @@ const DialogPreview = (props) => {
       <div className="indicator green"></div>
       <div className="text">
         <div className='d-flex justify-content-between align-items-center mb-1'>
-          <h5>Obnyalpodnyal</h5>
+          <h6>Obnyalpodnyal</h6>
           <time>3 дня назад</time>
         </div>
         <p>Куплю аккаунт в игре Marvel Future Fight</p>

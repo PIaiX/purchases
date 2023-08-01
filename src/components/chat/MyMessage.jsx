@@ -4,9 +4,11 @@ const MyMessage = (props) => {
   return (
     <div className="chat-window-message-mine">
       <div className='text'>
-        <h5>{props.name}</h5>
+        <div className='gray fs-08 d-flex align-items-center mb-2'>
+          <time className='me-2'>{props.time}</time>
+          <time className='me-2'>06/07/23</time>
+        </div>
         <div className="bubble">
-          <time>{props.time}</time>
           <p>{props.text}</p>
         </div>
       </div>

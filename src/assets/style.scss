@@ -707,6 +707,46 @@ button {
   }
 }
 
+.input-file-simple {
+  position: relative;
+  color: $gray;
+  transition: $transition;
+  &:hover {
+    cursor: pointer;
+    color: $blue;
+  }
+  input {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+    width: 1px;
+    height: 1px;
+    top: 0px;
+    left: 0px;
+    padding: 0px;
+  }
+  svg {
+    color: currentColor;
+    font-size: 1.25em;
+  }
+  .ind {
+    position: absolute;
+    bottom: -0.75em;
+    right: -0.75em;
+    color: $white;
+    line-height: 1em;
+    font-size: .75em;
+    background: $blue;
+    width: 1.3em;
+    height: 1.3em;
+    border-radius: 50%;
+    @include flex();
+    &:empty {
+      display: none;
+    }
+  }
+}
+
 .lang-switcher {
   position: relative;
   button {
@@ -2381,39 +2421,11 @@ header {
   }
 }
 .chat {
-  background: rgba($color: $white, $alpha: .3);
-  @include blurShadow();
-  padding: 4em .7em 2em;
-  border-radius: $radius;
   position: relative;
-  @include media-breakpoint-down(sm) {
-    padding: 3em .7em 1em;
-  }
-  &-count {
-    position: absolute;
-    top: -3em;
-    left: 3em;
-    width: 6em;
-    height: 6em;
-    border-radius: 50%;
-    background-color: $black;
-    color: $white;
-    @include flex(column);
-    text-align: center;
-    border: .5em solid $white;
-    box-sizing: content-box;
-    @include media-breakpoint-down(lg) {
-      top: -4em;
-      left: 2em;
-    }
-    @include media-breakpoint-down(sm) {
-      left: 1em;
-    }
-  }
   &-window {
     height: 698px;
     overflow: auto;
-    padding: 2em 3.5em;
+    padding: 1em 1.5em;
     @include media-breakpoint-down(lg) {
       padding: 1em 1.5em;
       height: 500px;
@@ -2426,75 +2438,41 @@ header {
     }
     &-message {
       @include flex(row, flex-start, flex-start);
-      &:not(:first-child){margin-top: 2em;}
+      &:not(:first-child){margin-top: 1.5em;}
       img {
         width: 3.34em;
         height: 3.34em;
         border-radius: 50%;
-        margin-right: -2.5em;
         position: relative;
         z-index: 10;
-        border: 0.34em solid #fbfbfd;
-        box-sizing: content-box;
+        margin-right: 1em;
       }
       .text {
         flex: 1;
         @include flex(column, flex-start, flex-start, nowrap);
-        h5 {
-          padding-left: 3em;
-          margin-bottom: .34em;
-        }
         .bubble {
           position: relative;
           width: fit-content;
           min-width: 50%;
-          background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba($color: $pale-blue, $alpha: .2);
-          @include shadow();
+          background: rgba($color: $pale-blue, $alpha: 0.2);
           border-radius: $radius;
-          padding: 1em 15% 1.2em 4em;
-          font-weight: 300;
+          padding: 1em;
+          font-weight: 400;
+          font-size: .9em;
           text-align: left;
-          time {
-            position: absolute;
-            top: .3em;
-            right: 1em;
-            font-size: .85em;
-          }
-          .toAnswer {
-            position: absolute;
-            bottom: .3em;
-            right: .5em;
-            color: $dark-blue;
-            font-size: 1.35em;
-            @include flex();
-            transition: $transition;
-            transform: scale(1);
-            &:hover, &:focus, &:active {
-              color: $green;
-              transform: scale(1.2);
-            }
-          }
         }
       }
       &-mine {
         @extend .chat-window-message;
         img {
-          margin-left: -2.5em;
+          margin-left: 1em;
           margin-right: 0px;
         }
         .text {
           align-items: flex-end;
-          h5 {
-            padding-right: 3em;
-            padding-left: 0;
-          }
           .bubble {
-            background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba($color: $pale-green, $alpha: .4);
+            background: rgba($color: $pale-green, $alpha: 0.2);
             text-align: right;
-            time {
-              top: unset;
-              bottom: .3em;
-            }
           }
         }
       }
@@ -2502,67 +2480,12 @@ header {
   }
   &-form {
     @include flex(row, flex-start, center, nowrap);
-    padding: 0 3.5em;
-    @include media-breakpoint-down(lg) {
-      padding: 0 1.5em;
-    }
-    @include media-breakpoint-down(md) {
-      padding: 0 1em;
-    }
-    @include media-breakpoint-down(sm) {
-      padding: 0 .5em;
-    }
-    .input {
-      position: relative;
-      flex: 1;
-      background-color: $white;
-      border-radius: $radius*0.5 0px 0px $radius*0.5;
-      height: 4em;
-      box-shadow: inset 0px 0px 0px 1px rgba(157,196,239,.2);
-      @include lightShadow();
-      &::after {
-        content: '';
-        position: absolute;
-        top: 0px;
-        left: calc(100% - 1px);
-        height: 100%;
-        width: calc(4em / 3);
-        background: url(imgs/bg/inputChatEnd.svg) no-repeat center;
-        background-size: 100% 100%;
-        display: block;
-        z-index: 10;
-      }
-      input {
-        border: none;
-        background-color: transparent;
-        height: 100%;
-      }
-    }
-    button {
-      // margin-left: -.34em;
-      margin-left: 1em;
-      width: 3.34em;
-      height: 3.34em;
-      padding: 0px;
-      border-radius: 50%;
-      padding-top: 0.25em;
-      padding-right: 0.25em;
-      img {width: 1.75em;}
-    }
-  }
-  &-report {
-    position: absolute;
-    top: 0.75em;
-    right: 0.75em;
-    z-index: 10;
-    color: $dark-blue;
-    @include flex();
-    font-size: 1.6em;
-    transition: $transition;
-    transform: scale(1);
-    &:hover, &:focus, &:active {
-      color: #e9003a;
-      transform: scale(1.2);
+    border-top: 1px solid rgba($pale-blue, .3);
+    padding: 0.5em;
+    input {
+      border: none;
+      background-color: transparent;
+      height: 100%;
     }
   }
 }
@@ -3032,12 +2955,15 @@ ACCOUNT
   .sec-messages {
     @include flex(row, flex-start, stretch, wrap);
     background-color: $white;
-    @include blurShadow();
+    border: 1px solid rgba($pale-blue, .3);
+    box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
+    backdrop-filter: blur(4px);
     border-radius: $radius;
+    overflow: hidden;
+    @include safariFix();
     &-list {
       width: 35%;
       border-right: 1px solid rgba($pale-blue, .3);
-      padding: 1em;
       @include media-breakpoint-down(xxl) {
         width: 40%;
       }
@@ -3045,34 +2971,34 @@ ACCOUNT
         width: 100%;
         border-right: none;
       }
+      form {
+        border-bottom: 1px solid rgba($pale-blue, .3);
+      }
       ul {
         margin-top: 1.5em;
         @include list();
-        li {
-          &:not(:first-child){margin-top: 1.5em;}
-        }
       }
       .general-chat {
         @include flex(row, flex-start, center, nowrap);
-        padding: 0.3em 0.6em;
+        padding: 0.75em 1.3em;
         .count {
           background-color: $black;
           color: $white;
-          @include rounedImg(50px);
+          @include rounedImg(4.8em);
           @include flex(column, center, center, nowrap);
           font-size: 10px;
           text-align: center;
           line-height: 100%;
         }
-        h5 {
+        h6 {
           margin-left: 0.5em;
           flex: 1;
+          text-align: left;
         }
       }
     }
     &-chat {
       width: 65%;
-      padding: 1em 0 2em;
       position: relative;
       @include media-breakpoint-down(xxl) {
         width: 60%;
@@ -3693,22 +3619,22 @@ ACCOUNT
 }
 .dialog-preview {
   @include flex(row, flex-start, center, nowrap);
-  padding: .3em .6em;
+  padding: .75em 1.3em;
   border-radius: $radius;
   position: relative;
   &.active {
     background-color: rgba($light-gray, .2)
   }
   img {
-    @include rounedImg(50px);
+    @include rounedImg(3em);
     margin-right: .5em;
     position: relative;
     z-index: 1;
   }
   .indicator {
     position: absolute;
-    bottom: .4em;
-    left: 48px;
+    bottom: 0.5em;
+    left: 3.5em;
     width: .67em;
     height: .67em;
     border-radius: 50%;
@@ -3719,7 +3645,7 @@ ACCOUNT
   }
   .text {
     flex: 1;
-    h5 {
+    h6 {
       @include clamp(1, 1.2em, true);
     }
     time {

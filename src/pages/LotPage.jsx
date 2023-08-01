@@ -8,6 +8,7 @@ import ReviewCard from '../components/ReviewCard';
 import StarIcon from '../components/svg/StarIcon';
 import { FiMessageCircle, FiEdit, FiShare, FiAlertTriangle, FiChevronDown } from "react-icons/fi";
 import LabeledInput from '../components/utils/LabeledInput';
+import Chat from '../components/chat/Chat';
 
 const LotPage = () => {
   return (
@@ -109,7 +110,9 @@ const LotPage = () => {
                                 <p className='blue'>Напишите продавцу перед покупкой</p>
                             </div>
                             <hr />
-                            <div className="p-3"></div>
+                            <div className="p-0">
+                                <Chat/>
+                            </div>
                         </div>
                     </Col>
                     <Col xs={12} lg={4} className='mt-5 mt-lg-0'>
