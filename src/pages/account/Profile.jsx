@@ -13,6 +13,9 @@ import QRCode from "react-qr-code";
 import { useForm, useWatch } from "react-hook-form";
 import { NotificationManager } from "react-notifications";
 import Meta from "../../components/Meta";
+import { Button } from "react-bootstrap";
+import { editAccount } from "../../services/account";
+import { authActivatePhone, authEditPassword } from "../../services/auth";
 
 const Profile = () => {
   const { isAuth, user } = useSelector((state) => state.auth);
@@ -26,13 +29,52 @@ const Profile = () => {
     reValidateMode: "onSubmit",
     defaultValues: user,
   });
+
+  const {
+    register: registerPassword,
+    formState: { errors: errorsPassword, isValid: isValidPassword },
+    handleSubmit: handleSubmitPassword,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
+
+  const {
+    register: registerPhone,
+    formState: { errors: errorsPhone, isValid: isValidPhone },
+    handleSubmit: handleSubmitPhone,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
+
   const form = useWatch({ control });
 
   const onSubmit = useCallback((data) => {
     setLoading(true);
-    editMember(data)
+    editAccount(data)
       .then(() => {
         dispatch(setUser(data));
+        NotificationManager.success("Данные успешно обновлены");
+      })
+      .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const onSubmitPhone = useCallback((data) => {
+    setLoading(true);
+    authActivatePhone(data)
+      .then(() => {
+        NotificationManager.success("Данные успешно обновлены");
+      })
+      .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
+      .finally(() => setLoading(false));
+  }, []);
+
+  const onSubmitPassword = useCallback((data) => {
+    setLoading(true);
+    authEditPassword(data)
+      .then(() => {
         NotificationManager.success("Данные успешно обновлены");
       })
       .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
@@ -94,81 +136,117 @@ const Profile = () => {
           <FiShare />
         </button>
       </div>
-      <Row className="gy-5 mb-md-5">
+      <Row className="mb-md-4">
         <Col xs={12} xxl={10}>
-          <h3 className="mb-4 mb-sm-5">Основное</h3>
-          <form action="">
-            <Row className="g-4 gy-xl-5">
-              <Col md={6} xl={4}>
-                <LabeledInput
-                  type="text"
-                  label="Имя/Ник"
-                  name="firstName"
-                  errors={errors}
-                  defaultValue={form?.firstName}
-                  register={register}
-                  validation={{ required: "Обязательное поле" }}
-                />
-              </Col>
-              <Col md={6} xl={{ span: 4, offset: 1 }}>
-                <LabeledInput
-                  type="tel"
-                  label="Номер телефона"
-                  name="phone"
-                  errors={errors}
-                  defaultValue={form?.phone}
-                  register={register}
-                  validation={{ required: "Обязательное поле" }}
-                />
-              </Col>
-              <Col md={6} xl={4}>
-                <LabeledInput
-                  type="email"
-                  label="E-mail"
-                  name="email"
-                  errors={errors}
-                  defaultValue={form?.email}
-                  register={register}
-                  validation={{ required: "Обязательное поле" }}
-                />
-              </Col>
-              <Col md={6} xl={{ span: 6, offset: 1 }}>
-                <p className="rose">
-                  Только верифицированные пользовтаели могут публиковать
-                  объявления на бирже Game.
-                </p>
-              </Col>
-              <Col md={6} xl={4}>
-                <button type="submit" className="btn-1">
-                  Сохранить изменения
-                </button>
-              </Col>
-              <Col md={6} xl={{ span: 4, offset: 1 }}>
-                <Link to="phone" className="btn-3">
-                  Пройти верификацию
-                </Link>
-              </Col>
-            </Row>
-          </form>
+          <h3 className="mb-3 mb-sm-4">Основное</h3>
+          <Row className="g-3 gy-xl-4">
+            <Col md={6} xl={4}>
+              <LabeledInput
+                type="text"
+                label="Имя/Ник"
+                name="firstName"
+                errors={errors}
+                defaultValue={form?.firstName}
+                register={register}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col md={6} xl={4}>
+              <LabeledInput
+                type="email"
+                label="Email"
+                name="email"
+                errors={errors}
+                defaultValue={form?.email}
+                register={register}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col md={6} xl={4}>
+              <Button
+                type="submit"
+                variant="primary"
+                disabled={!isValid}
+                onSubmit={handleSubmit(onSubmit)}
+                className="btn-1 mb-4"
+              >
+                Сохранить изменения
+              </Button>
+            </Col>
+          </Row>
+        </Col>
+      </Row>
+      <Row className="g-3 gy-xl-4">
+        <Col md={6}>
+          <LabeledInput
+            type="tel"
+            label="Номер телефона"
+            name="phone"
+            errors={errorsPhone}
+            defaultValue={form?.phone}
+            register={registerPhone}
+            validation={{ required: "Обязательное поле" }}
+          />
+        </Col>
+        <Col md={6}>
+          <p className="rose fs-09">
+            Только верифицированные пользовтаели могут публиковать объявления на
+            бирже Game.
+          </p>
+        </Col>
+        <Col md={6}>
+          <Button
+            variant="primary"
+            disabled={!isValidPhone}
+            onSubmit={handleSubmitPhone(onSubmitPhone)}
+            className="btn-3 mb-4"
+          >
+            Пройти верификацию
+          </Button>
         </Col>
         <Col xs={12} xxl={10}>
-          <h3 className="mb-4 mb-sm-5">Изменить пароль</h3>
-          <form action="">
-            <Row xs={1} md={2} xl={3} className="g-4">
-              <Col>
-                <LabeledInput type="password" label="Старый пароль" />
-              </Col>
-              <Col>
-                <LabeledInput type="password" label="Новый пароль" />
-              </Col>
-              <Col>
-                <LabeledInput type="password" label="Подтверждение пароля" />
-              </Col>
-            </Row>
-            <button type="submit" className="btn-1 mt-4">
-              Изменить
-            </button>
-          </form>
+          <h3 className="mb-3 mb-sm-4">Изменить пароль</h3>
+          <Row xs={1} md={2} xl={3} className="g-4">
+            <Col>
+              <LabeledInput
+                type="password"
+                name="lastPassword"
+                label="Старый пароль"
+                errors={errorsPassword}
+                register={registerPassword}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col>
+              <LabeledInput
+                type="password"
+                name="newPassword"
+                label="Новый пароль"
+                errors={errorsPassword}
+                register={registerPassword}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col>
+              <LabeledInput
+                type="password"
+                name="confirmNewPassword"
+                errors={errorsPassword}
+                label="Подтверждение пароля"
+                register={registerPassword}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+          </Row>
+          <Button
+            variant="primary"
+            type="submit"
+            disabled={!isValidPassword}
+            onSubmit={handleSubmitPassword(onSubmitPassword)}
+            className="btn-1 mt-4"
+          >
+            Изменить
+          </Button>
         </Col>
       </Row>
     </section>

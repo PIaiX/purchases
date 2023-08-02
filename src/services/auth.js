@@ -35,28 +35,38 @@ const refreshAuth = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
   }
 });
 
-const authRegister = async (payloads = {}) => {
-  const data = await $api.post(apiRoutes.AUTH_REGISTRATION, payloads);
+const authRegister = async (params) => {
+  const data = await $api.post(apiRoutes.AUTH_REGISTRATION, params);
   return data;
 };
 
-const authActivate = async (payloads = {}) => {
-  const data = await $authApi.post(apiRoutes.AUTH_ACTIVATE, payloads);
+const authActivate = async (key) => {
+  const data = await $api.post(apiRoutes.AUTH_ACTIVATE, { key });
   return data;
 };
 
-const authNewKeyActivate = async () => {
-  const data = await $authApi.post(apiRoutes.AUTH_NEW_KEY_ACTIVATE, payloads);
+const authActivatePhone = async (params) => {
+  const data = await $authApi.post(apiRoutes.AUTH_ACTIVATE_PHONE, params);
   return data;
 };
 
-const authPasswordRecovery = async (payloads = {}) => {
-  const data = await $api.post(apiRoutes.AUTH_RECOVERY, payloads);
+const authEditPassword = async (params) => {
+  const data = await $authApi.post(apiRoutes.AUTH_EDIT_PASSWORD, params);
   return data;
 };
 
-const authEditEmail = async (payloads = {}) => {
-  const data = await $authApi.post(apiRoutes.AUTH_EDIT_EMAIL, payloads);
+const authNewKeyActivate = async (params) => {
+  const data = await $authApi.post(apiRoutes.AUTH_NEW_KEY_ACTIVATE, params);
+  return data;
+};
+
+const authPasswordRecovery = async (params) => {
+  const data = await $api.post(apiRoutes.AUTH_RECOVERY, params);
+  return data;
+};
+
+const authEditEmail = async (params) => {
+  const data = await $authApi.post(apiRoutes.AUTH_EDIT_EMAIL, params);
   return data;
 };
 
@@ -64,6 +74,8 @@ export {
   authActivate,
   authEditEmail,
   authNewKeyActivate,
+  authEditPassword,
+  authActivatePhone,
   authPasswordRecovery,
   authRegister,
   checkAuth,

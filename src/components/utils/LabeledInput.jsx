@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Eye from '../svg/Eye';
-import CloseEye from '../svg/CloseEye';
+import Eye from "../svg/Eye";
+import CloseEye from "../svg/CloseEye";
 // import CheckMark from '../svg/CheckMark'
 
 const LabeledInput = ({
@@ -14,6 +14,8 @@ const LabeledInput = ({
   options,
   register,
   validation,
+  minLength = "",
+  maxLength = 250,
   errors,
 }) => {
   const [visible, setVisibility] = useState(false);
@@ -25,9 +27,8 @@ const LabeledInput = ({
             <input
               type={visible ? "text" : "password"}
               autoComplete="current-password"
-              minLength="8"
-              maxLength="20"
-              size="8"
+              minLength={minLength}
+              maxLength={maxLength}
               required
               placeholder={placeholder}
               onChange={(e) =>
@@ -57,7 +58,6 @@ const LabeledInput = ({
           </select>
         ) : type === "textarea" ? (
           <textarea
-            name=""
             rows={rows}
             placeholder={placeholder}
             onChange={(e) => onChange && !register && onChange(e.target.value)}

@@ -5,6 +5,8 @@ const apiRoutes = {
   // Auth
   AUTH_REGISTRATION: BASE_URL + "/auth/registration",
   AUTH_ACTIVATE: BASE_URL + "/auth/activate",
+  AUTH_ACTIVATE_PHONE: BASE_URL + "/auth/activatePhone",
+  AUTH_EDIT_PASSWORD: BASE_URL + "/auth/editPassword",
   AUTH_NEW_KEY_ACTIVATE: BASE_URL + "/auth/newActivate",
   AUTH_RECOVERY: BASE_URL + "/auth/recovery",
   AUTH_EDIT_EMAIL: BASE_URL + "/auth/editEmail",
