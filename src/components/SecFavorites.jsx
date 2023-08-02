@@ -13,7 +13,7 @@ const SecFavorites = () => {
       <div className='row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xxl-4 g-4 g-xxxl-5'>
         <div>
           <div className="fav-item">
-            <img src="imgs/img5.jpg" alt="AFK Arena" />
+            <img src="/imgs/img5.jpg" alt="AFK Arena" />
             <h5>World of Warcraft®: Wrath of the Lich King® Classic</h5>
             <button type="button">
               <FiTrash/>
@@ -22,7 +22,7 @@ const SecFavorites = () => {
         </div>
         <div>
           <div className="fav-item">
-            <img src="imgs/img5.jpg" alt="Critical Strike" />
+            <img src="/imgs/img5.jpg" alt="Critical Strike" />
             <h5>Critical Strike</h5>
             <button type="button">
               <FiTrash/>
@@ -31,7 +31,7 @@ const SecFavorites = () => {
         </div>
         <div>
           <div className="fav-item">
-            <img src="imgs/img5.jpg" alt="Critical Strike" />
+            <img src="/imgs/img5.jpg" alt="Critical Strike" />
             <h5>Critical Strike</h5>
             <button type="button">
               <FiTrash/>

@@ -4,7 +4,7 @@ import StarRating from './utils/StarRating';
 const FeedbackLine = (props) => {
   return (
     <div className="feedback-line">
-      <img src="imgs/user.jpg" alt="user" />
+      <img src="/imgs/user.jpg" alt="user" />
       <div className='feedback-line-main'>
         <div className='feedback-line-top'>
           <h5>{props.user}</h5>

@@ -5,7 +5,7 @@ import ServerSwitcher from './utils/ServerSwitcher';
 const GameCard = () => {
   return (
     <div className="game-card">
-      <Link to='/game'><img src="imgs/archeage.jpg" alt="ArcheAge" className='img'/></Link>
+      <Link to='/game'><img src="/imgs/archeage.jpg" alt="ArcheAge" className='img'/></Link>
       <div>
         <h4><Link to='/game'>ArcheAge</Link></h4>
         <ServerSwitcher serversArr={[

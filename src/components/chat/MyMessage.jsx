@@ -12,7 +12,7 @@ const MyMessage = (props) => {
           <p>{props.text}</p>
         </div>
       </div>
-      <img src="imgs/user.jpg" alt={props.name} />
+      <img src="/imgs/user.jpg" alt={props.name} />
     </div>
   );
 };

@@ -60,7 +60,7 @@ const CatalogSection = () => {
                 <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none'/>удовольствие</h1>
                 <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
               </div>
-              <img src="imgs/head.png" alt="head" />
+              <img src="/imgs/head.png" alt="head" />
               <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
             </div>
 

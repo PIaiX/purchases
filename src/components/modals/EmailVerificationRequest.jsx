@@ -9,7 +9,7 @@ const EmailVerificationRequest = () => {
   return (
     <Modal show={showAdvice} onHide={handleCloseAdvice} size={'lg'} centered>
       <Modal.Header closeButton>
-        <img src="imgs/icons/warning.png" alt="warning" className='warning'/>
+        <img src="/imgs/icons/warning.png" alt="warning" className='warning'/>
       </Modal.Header>
       <Modal.Body>
         <h2 className='mb-0'>Пожалуйста, войдите или зарегистрируйтесь</h2>

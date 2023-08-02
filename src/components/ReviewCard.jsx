@@ -18,7 +18,7 @@ const ReviewCard = () => {
             </div>
             <div className='d-flex align-items-center'>
                 <Link to="/trader" className='user'>
-                    <img src="imgs/user.jpg" alt="name8user" className='user-photo'/>
+                    <img src="/imgs/user.jpg" alt="name8user" className='user-photo'/>
                     <span>name8user</span>
                 </Link>
                 <div className='rating ms-3'>

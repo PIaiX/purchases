@@ -15,7 +15,7 @@ const Feedback = () => {
       <div className="d-xl-flex align-items-stretch justify-content-between">
         <div className='user'>
           <div className="user-photo">
-            <img src="imgs/user2.jpg" alt="userphoto" />
+            <img src="/imgs/user2.jpg" alt="userphoto" />
             <button type='button'><FiEdit/></button>
           </div>
           <div className="user-main">

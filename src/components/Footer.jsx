@@ -89,7 +89,7 @@ const Footer = () => {
             <div className='text'>
               <h1 className='mb-0'>Играй в свое <br className='d-sm-none'/>удовольствие</h1>
             </div>
-            <img src="imgs/head.png" alt="head" />
+            <img src="/imgs/head.png" alt="head" />
           </div>
           <a href="/" className='dev-link mx-auto'>
             <PLaixIcon/>

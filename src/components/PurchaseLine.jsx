@@ -11,7 +11,7 @@ const PurchaseLine = () => {
       </time>
       <div className='purchase-line-text'>Сервер Airin + Blackbird ,Тяж, Лайт, Маг Сэт Ада Пустые</div>
       <div className='purchase-line-user'>
-        <img src="imgs/user.jpg" alt="user" className='me-2'/>
+        <img src="/imgs/user.jpg" alt="user" className='me-2'/>
         <div>
           <h6 className='mb-1'>User8name</h6>
           <Link to='add' className='btn-6 px-3 py-2'>Оценить</Link>

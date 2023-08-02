@@ -24,7 +24,7 @@ const LotPage = () => {
                     <Col xs={12} lg={8}>
                         <div className="lot-page-box lot-page-grid mb-4">
                             <div className="game">
-                                <img src="imgs/img5.jpg" alt="AFK Arena" />
+                                <img src="/imgs/img5.jpg" alt="AFK Arena" />
                                 <h6 className='mt-2'>AFK Arena</h6>
                             </div>
 
@@ -81,7 +81,7 @@ const LotPage = () => {
                         <div className="lot-page-box">
                             <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                 <div className="seller w-xs-100">
-                                    <img src="imgs/user.jpg" alt="Weatherwax" />
+                                    <img src="/imgs/user.jpg" alt="Weatherwax" />
                                     <h3 className='title-font lh-n mb-0'>Weatherwax</h3>
                                     <div className='rating ms-3'>
                                         <StarIcon/>

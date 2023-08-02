@@ -11,7 +11,7 @@ const OfferLine3 = () => {
       </div>
       <div className="descr">Сервер Airin + Blackbird ,Тяж, Лайт, Маг Сэт Ада Пустые</div>
       <div className="seller">
-        <img src="imgs/user.jpg" alt="User8name" />
+        <img src="/imgs/user.jpg" alt="User8name" />
         <div>
           <h6 className='text-start mb-xl-1'>User8name</h6>
           <p className='gray fs-08'>ваша оценка</p>

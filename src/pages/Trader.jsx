@@ -25,7 +25,7 @@ const Trader = () => {
               <div className="d-flex align-items-center mb-5">
                 <div className='user flex-1'>
                   <div className="user-photo">
-                    <img src="imgs/user2.jpg" alt="userphoto" />
+                    <img src="/imgs/user2.jpg" alt="userphoto" />
                     <button type='button'><FiEdit/></button>
                   </div>
                   <div className="user-main">
@@ -59,7 +59,7 @@ const Trader = () => {
                       <span>193</span>
                     </li>
                   </ul>
-                  <img src="imgs/qr-code.svg" alt="qr-code" className='qr-code align-self-center ms-3 ms-xl-5'/>
+                  <img src="/imgs/qr-code.svg" alt="qr-code" className='qr-code align-self-center ms-3 ms-xl-5'/>
                 </div>
                 <div>
                   <button type='button' className='d-flex dark-blue fs-15 ms-2 ms-xl-4'>
