@@ -1,35 +1,141 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import LabeledInput from '../../components/utils/LabeledInput';
-import ReturnTitle from '../../components/utils/ReturnTitle';
+import React, { useCallback, useEffect } from "react";
+import { Button, Col, Row } from "react-bootstrap";
+import { useForm, useWatch } from "react-hook-form";
+import { NotificationManager } from "react-notifications";
+import { Link, useLocation } from "react-router-dom";
+import Input from "../../components/utils/Input";
+import ReturnTitle from "../../components/utils/ReturnTitle";
+import { authEditPhone } from "../../services/auth";
+
 const PhoneVerification = () => {
+  const { state } = useLocation();
+
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    setValue,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
+
+  const form = useWatch({ control });
+
+  useEffect(() => {
+    state && reset(state);
+  }, [state]);
+
+  const onSubmit = useCallback(
+    (data) => {
+      authEditPhone(data)
+        .then(() => {
+          setValue("count", form?.count ? form.count + 1 : 1);
+          setValue("step", form?.step ? form.step + 1 : 1);
+          if (!form?.step || form?.step === 1) {
+            NotificationManager.success(
+              "Код подтверждения отправлен на указанный номер телефона"
+            );
+          } else {
+            reset({ step: 2 });
+            NotificationManager.success("Номер телефона успешно изменен");
+          }
+        })
+        .catch((err) => {
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Ошибка при при смене номера телефона"
+          );
+        });
+    },
+    [form]
+  );
+
   return (
-    <section className='mb-3 mb-sm-5'>
-      <ReturnTitle link={'/account/profile'} title={'Подтверждение номера телефона'}/>
-      <h2 className='d-none d-lg-block'>Подтверждение номера телефона</h2>
+    <section className="mb-3 mb-sm-5">
+      <ReturnTitle link="/account/profile" title="Изменение номера телефона" />
+      <h2 className="d-none d-lg-block">Изменение номера телефона</h2>
+      {form?.phone?.length > 0 ? (
+        <>
+          <Row
+            className={
+              "g-3 mb-3 " +
+              (!form?.step || form?.step === 0 ? "d-flex" : "d-none")
+            }
+          >
+            <Col md={8}>
+              <Input
+                mask="7(999)999-99-99"
+                label="Новый номер телефона"
+                name="phone"
+                errors={errors}
+                defaultValue={form?.phone}
+                register={register}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col md={4}>
+              <Button
+                variant="primary"
+                onClick={handleSubmit(onSubmit)}
+                className="h-100 w-100"
+                disabled={!isValid || form?.count > 0}
+              >
+                Отправить
+              </Button>
+            </Col>
+          </Row>
 
-      <div className='row'>
-        <form className='col-12 col-lg-10 col-xl-8 col-xxl-6' action="">
-          <div className='row g-4 mb-5'>
-            <div className="col-12 col-sm-8">
-              <LabeledInput type={"tel"} label={"Номер телефона"}/>
-            </div>
-            <div className="col-12 col-sm-4">
-              <button type='button' className='btn-1 h-100 w-100' disabled>Подтвердить</button>
-            </div>
-            <div className="col-12">
-              <p className='black mt-4'>Введите код, отправленный на указанный номер</p>
-            </div>
-            <div className="col-12 col-sm-3">
-              <input className='code' type="number" placeholder='0000'/>
-            </div>
-          </div>
+          <Row
+            className={"g-3 mb-3 " + (form?.step === 1 ? "d-flex" : "d-none")}
+          >
+            <Col md={8}>
+              <Input
+                className="code"
+                type="number"
+                placeholder="0000"
+                name="key"
+                minLength={4}
+                maxLength={4}
+                errors={errors}
+                defaultValue={form?.key}
+                register={register}
+              />
+            </Col>
+            <Col md={4}>
+              <Button
+                variant="primary"
+                onClick={handleSubmit(onSubmit)}
+                className="h-100 w-100"
+                disabled={!isValid}
+              >
+                Подтвердить
+              </Button>
+            </Col>
+          </Row>
+          {form?.step == 2 ? (
+            <p>Номер телефона успешно изменен</p>
+          ) : (
+            <>
+              <button
+                type="button"
+                onClick={handleSubmit(onSubmit)}
+                disabled={!form?.count || form?.count === 0 || form?.count > 1}
+                className="mt-4 total-black"
+              >
+                Отправить код повторно
+              </button>
 
-          <button type='button' className='mt-5 total-black text-decoration-underline'>Отправить код повторно</button>
-
-          <Link to="/" className='d-block link-2 mt-3'>Возникли проблемы?</Link>
-        </form>
-      </div>
+              <Link to="/" className="d-block link-2 mt-3">
+                Возникли проблемы?
+              </Link>
+            </>
+          )}
+        </>
+      ) : (
+        <p>Нет данных для отправки сообщения</p>
+      )}
     </section>
   );
 };

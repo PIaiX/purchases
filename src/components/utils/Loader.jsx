@@ -10,7 +10,7 @@ const Loader = memo(
           width={size}
           height={size}
           viewBox="0 0 38 38"
-          stroke={color ? color : "#00ab55"}
+          stroke={color ? color : "#4a83dc"}
         >
           <g fill="none" fillRule="evenodd">
             <g transform="translate(1 1)" strokeWidth="2">

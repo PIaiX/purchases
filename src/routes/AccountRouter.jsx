@@ -24,7 +24,6 @@ import Settings from '../pages/account/Settings'
 const AccountRouter = () => {
   const isMobileLG = useIsMobile('1109px')
   const isMobileXL = useIsMobile('1289px')
-  console.log('isMobileXL ='+isMobileXL)
 
   return (
     <Routes>

@@ -45,8 +45,13 @@ const authActivate = async (key) => {
   return data;
 };
 
-const authActivatePhone = async (params) => {
-  const data = await $authApi.post(apiRoutes.AUTH_ACTIVATE_PHONE, params);
+const authActivateEmail = async (key) => {
+  const data = await $api.post(apiRoutes.AUTH_ACTIVATE_EMAIL, { key });
+  return data;
+};
+
+const authEditPhone = async (params) => {
+  const data = await $authApi.post(apiRoutes.AUTH_EDIT_PHONE, params);
   return data;
 };
 
@@ -72,10 +77,11 @@ const authEditEmail = async (params) => {
 
 export {
   authActivate,
+  authActivateEmail,
   authEditEmail,
   authNewKeyActivate,
   authEditPassword,
-  authActivatePhone,
+  authEditPhone,
   authPasswordRecovery,
   authRegister,
   checkAuth,

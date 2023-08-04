@@ -1,24 +1,29 @@
 import React, { useCallback } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import LabeledInput from "../../components/utils/LabeledInput";
-import StarRating from "../../components/utils/StarRating";
-import Joystick from "../../components/svg/Joystick";
-import { TbHeartHandshake } from "react-icons/tb";
-import { FiMessageCircle, FiEdit, FiShare } from "react-icons/fi";
-import { Link } from "react-router-dom";
-import ReturnTitle from "../../components/utils/ReturnTitle";
-import { useSelector } from "react-redux";
-import QRCode from "react-qr-code";
-import { useForm, useWatch } from "react-hook-form";
-import { NotificationManager } from "react-notifications";
-import Meta from "../../components/Meta";
 import { Button } from "react-bootstrap";
+import Col from "react-bootstrap/Col";
+import Row from "react-bootstrap/Row";
+import { useForm, useWatch } from "react-hook-form";
+import { FiEdit, FiMessageCircle, FiShare } from "react-icons/fi";
+import { TbHeartHandshake } from "react-icons/tb";
+import { NotificationManager } from "react-notifications";
+import QRCode from "react-qr-code";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import Meta from "../../components/Meta";
+import Joystick from "../../components/svg/Joystick";
+import Input from "../../components/utils/Input";
+import ReturnTitle from "../../components/utils/ReturnTitle";
+import StarRating from "../../components/utils/StarRating";
+import Textarea from "../../components/utils/Textarea";
 import { editAccount } from "../../services/account";
-import { authActivatePhone, authEditPassword } from "../../services/auth";
+import { authEditPassword, authEditPhone } from "../../services/auth";
+import { setUser } from "../../store/reducers/authSlice";
 
 const Profile = () => {
   const { isAuth, user } = useSelector((state) => state.auth);
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const {
     control,
     register,
@@ -51,24 +56,37 @@ const Profile = () => {
   const form = useWatch({ control });
 
   const onSubmit = useCallback((data) => {
-    setLoading(true);
     editAccount(data)
       .then(() => {
-        dispatch(setUser(data));
-        NotificationManager.success("Данные успешно обновлены");
+        dispatch(
+          setUser({ ...user, firstName: data.firstName, about: data.about })
+        );
+
+        if (data.email != user.email || !user.email) {
+          navigate("email", { state: { email: data.email } });
+        } else {
+          NotificationManager.success("Данные успешно обновлены");
+        }
       })
-      .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
-      .finally(() => setLoading(false));
+      .catch((err) => {
+        NotificationManager.error("Ошибка при сохранении");
+      });
   }, []);
 
   const onSubmitPhone = useCallback((data) => {
-    setLoading(true);
-    authActivatePhone(data)
+    if (data.email == user.email) {
+      return NotificationManager.error(
+        "Нельзя сменить номер телефона на существующий"
+      );
+    }
+    authEditPhone(data)
       .then(() => {
-        NotificationManager.success("Данные успешно обновлены");
+        NotificationManager.success("Код отправлен на указанный номер");
+        navigate("phone", { state: { phone: data.phone } });
       })
-      .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
-      .finally(() => setLoading(false));
+      .catch(
+        (err) => err && NotificationManager.error("Ошибка при сохранении")
+      );
   }, []);
 
   const onSubmitPassword = useCallback((data) => {
@@ -131,84 +149,91 @@ const Profile = () => {
             viewBox={`0 0 256 256`}
           />
         </div>
-
         <button type="button" className="share-btn ms-2 ms-xl-4">
           <FiShare />
         </button>
       </div>
-      <Row className="mb-md-4">
-        <Col xs={12} xxl={10}>
-          <h3 className="mb-3 mb-sm-4">Основное</h3>
+      <h3 className="mb-3 mb-sm-4">Основное</h3>
+      <Row className="g-3 gy-xl-4 mb-md-4">
+        <Col xs={6} xxl={6}>
           <Row className="g-3 gy-xl-4">
-            <Col md={6} xl={4}>
-              <LabeledInput
+            <Col md={12} xl={12}>
+              <Input
                 type="text"
                 label="Имя/Ник"
                 name="firstName"
                 errors={errors}
                 defaultValue={form?.firstName}
                 register={register}
-                validation={{ required: "Обязательное поле" }}
               />
             </Col>
-            <Col md={6} xl={4}>
-              <LabeledInput
+            <Col md={12} xl={12}>
+              <Textarea
+                label="О себе"
+                name="about"
+                errors={errors}
+                defaultValue={form?.about}
+                register={register}
+              />
+            </Col>
+            <Col md={12} xl={12}>
+              <Input
                 type="email"
                 label="Email"
                 name="email"
                 errors={errors}
                 defaultValue={form?.email}
                 register={register}
-                validation={{ required: "Обязательное поле" }}
               />
             </Col>
-            <Col md={6} xl={4}>
+            <Col md={12} xl={12}>
               <Button
-                type="submit"
                 variant="primary"
                 disabled={!isValid}
-                onSubmit={handleSubmit(onSubmit)}
-                className="btn-1 mb-4"
+                onClick={handleSubmit(onSubmit)}
+                className="mb-4"
               >
                 Сохранить изменения
               </Button>
             </Col>
           </Row>
         </Col>
-      </Row>
-      <Row className="g-3 gy-xl-4">
-        <Col md={6}>
-          <LabeledInput
-            type="tel"
-            label="Номер телефона"
-            name="phone"
-            errors={errorsPhone}
-            defaultValue={form?.phone}
-            register={registerPhone}
-            validation={{ required: "Обязательное поле" }}
-          />
+        <Col xs={6} xxl={6}>
+          <Row className="g-3 gy-xl-4">
+            <Col md={12}>
+              <Input
+                type="tel"
+                mask="7(999)999-99-99"
+                label="Номер телефона"
+                name="phone"
+                errors={errorsPhone}
+                defaultValue={form?.phone}
+                register={registerPhone}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col md={12}>
+              <p className="rose fs-09 mt-1">
+                Только верифицированные пользовтаели могут публиковать
+                объявления на бирже Game.
+              </p>
+            </Col>
+            <Col md={12}>
+              <Button
+                variant="danger"
+                disabled={!isValidPhone}
+                onClick={handleSubmitPhone(onSubmitPhone)}
+              >
+                Пройти верификацию
+              </Button>
+            </Col>
+          </Row>
         </Col>
-        <Col md={6}>
-          <p className="rose fs-09">
-            Только верифицированные пользовтаели могут публиковать объявления на
-            бирже Game.
-          </p>
-        </Col>
-        <Col md={6}>
-          <Button
-            variant="primary"
-            disabled={!isValidPhone}
-            onSubmit={handleSubmitPhone(onSubmitPhone)}
-            className="btn-3 mb-4"
-          >
-            Пройти верификацию
-          </Button>
-        </Col>
-        <Col xs={12} xxl={10}>
+        <Col md={12}>
           <h3 className="mb-3 mb-sm-4">Изменить пароль</h3>
-          <Row xs={1} md={2} xl={3} className="g-4">
-            <Col>
-              <LabeledInput
+          <Row className="g-4">
+            <Col md={4}>
+              <Input
                 type="password"
                 name="lastPassword"
                 label="Старый пароль"
@@ -217,8 +242,8 @@ const Profile = () => {
                 validation={{ required: "Обязательное поле" }}
               />
             </Col>
-            <Col>
-              <LabeledInput
+            <Col md={4}>
+              <Input
                 type="password"
                 name="newPassword"
                 label="Новый пароль"
@@ -227,8 +252,8 @@ const Profile = () => {
                 validation={{ required: "Обязательное поле" }}
               />
             </Col>
-            <Col>
-              <LabeledInput
+            <Col md={4}>
+              <Input
                 type="password"
                 name="confirmNewPassword"
                 errors={errorsPassword}
@@ -240,12 +265,11 @@ const Profile = () => {
           </Row>
           <Button
             variant="primary"
-            type="submit"
             disabled={!isValidPassword}
-            onSubmit={handleSubmitPassword(onSubmitPassword)}
-            className="btn-1 mt-4"
+            onClick={handleSubmitPassword(onSubmitPassword)}
+            className="mt-4"
           >
-            Изменить
+            Изменить пароль
           </Button>
         </Col>
       </Row>

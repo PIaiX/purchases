@@ -1,19 +1,10 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $authApi } from ".";
 import { apiRoutes } from "../config/api";
-import { setUser } from "../store/reducers/authSlice";
 
-const editAccount = createAsyncThunk(
-  "user/edit",
-  async (payloads, thunkAPI) => {
-    try {
-      const response = await $authApi.post(apiRoutes.ACCOUNT_EDIT, payloads);
-      if (response && response.status === 200 && response.data.user) {
-        thunkAPI.dispatch(setUser(response.data.user));
-      }
-    } catch (err) {}
-  }
-);
+const editAccount = async (payloads) => {
+  const response = await $authApi.post(apiRoutes.ACCOUNT_EDIT, payloads);
+  return response?.data;
+};
 
 const getOrders = async (page, limit) => {
   const response = await $authApi.get(apiRoutes.ACCOUNT_ORDERS_GET, {
@@ -76,5 +67,6 @@ export {
   getNotifications,
   getOrder,
   getOrders,
-  savePushToken,
+  savePushToken
 };
+

@@ -25,6 +25,7 @@ import Feedback from "../pages/Feedback";
 import Trader from "../pages/Trader";
 import LotPage from "../pages/LotPage";
 import AuthRoute from "../layouts/AuthRoute";
+import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -46,6 +47,7 @@ const router = createBrowserRouter(
           </AuthRoute>
         }
       />
+      <Route path="activate-email/:key" element={<ActivateEditEmail />} />
       <Route path="activate/:key" element={<Activate />} />
       <Route path="help" element={<FAQ />} />
       <Route path="help/:id" element={<QuestionPage />} />

@@ -39,7 +39,7 @@ const Activate = () => {
     <main>
       <Meta title="Подтверждение почты" />
       <Container>
-        <section className="sec-login mb-6 d-flex flex-column align-items-center justify-content-center">
+        <section className="hv-100 sec-login d-flex flex-column align-items-center justify-content-center">
           <h1 className="h2 text-center">
             {status
               ? "Вы успешно подтвердили почту"

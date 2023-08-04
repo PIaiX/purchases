@@ -7,7 +7,7 @@ import { PiCaretLeftLight, PiWarningLight } from "react-icons/pi";
 import ReviewCard from '../components/ReviewCard';
 import StarIcon from '../components/svg/StarIcon';
 import { FiMessageCircle, FiEdit, FiShare, FiAlertTriangle, FiChevronDown } from "react-icons/fi";
-import LabeledInput from '../components/utils/LabeledInput';
+import Input from '../components/utils/Input';
 import Chat from '../components/chat/Chat';
 
 const LotPage = () => {
@@ -53,7 +53,7 @@ const LotPage = () => {
                             </div>
 
                             <div className="payment">
-                                <LabeledInput 
+                                <Input 
                                     className={"min-250 me-md-4"}
                                     type={"select"} 
                                     label={"Выберите способ оплаты"} 

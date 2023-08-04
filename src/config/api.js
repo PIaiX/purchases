@@ -5,15 +5,19 @@ const apiRoutes = {
   // Auth
   AUTH_REGISTRATION: BASE_URL + "/auth/registration",
   AUTH_ACTIVATE: BASE_URL + "/auth/activate",
-  AUTH_ACTIVATE_PHONE: BASE_URL + "/auth/activatePhone",
-  AUTH_EDIT_PASSWORD: BASE_URL + "/auth/editPassword",
+  AUTH_ACTIVATE_EMAIL: BASE_URL + "/auth/activateEmail",
+  AUTH_EDIT_PASSWORD: BASE_URL + "/user/editPassword",
   AUTH_NEW_KEY_ACTIVATE: BASE_URL + "/auth/newActivate",
   AUTH_RECOVERY: BASE_URL + "/auth/recovery",
-  AUTH_EDIT_EMAIL: BASE_URL + "/auth/editEmail",
+  AUTH_EDIT_EMAIL: BASE_URL + "/user/editEmail",
+  AUTH_EDIT_PHONE: BASE_URL + "/user/editPhone",
   AUTH_LOGIN: BASE_URL + "/auth/login",
   AUTH_CHECK: BASE_URL + "/auth/check",
   AUTH_REFRESH: BASE_URL + "/auth/refresh",
   AUTH_LOGOUT: BASE_URL + "/auth/logout",
+
+  // Account
+  ACCOUNT_EDIT: BASE_URL + "/user/edit",
 
   // Order
   ORDERS_GET: BASE_URL + "/order",

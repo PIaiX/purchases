@@ -6,7 +6,7 @@ import Row from "react-bootstrap/Row";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Meta from "../../components/Meta";
-import LabeledInput from "../../components/utils/LabeledInput";
+import Input from "../../components/utils/Input";
 import { authRegister } from "../../services/auth";
 import { useForm } from "react-hook-form";
 
@@ -47,7 +47,7 @@ const Registration = () => {
               <form className="midi" onSubmit={handleSubmit(onSubmit)}>
                 <Row className="g-4">
                   <Col md={12}>
-                    <LabeledInput
+                    <Input
                       autoFocus
                       type="text"
                       label="Имя/Ник"
@@ -65,7 +65,7 @@ const Registration = () => {
                     />
                   </Col>
                   <Col md={12}>
-                    <LabeledInput
+                    <Input
                       type="email"
                       label="Email"
                       placeholder="Введите Email"
@@ -82,7 +82,7 @@ const Registration = () => {
                     />
                   </Col>
                   <Col md={6}>
-                    <LabeledInput
+                    <Input
                       type="password"
                       label="Пароль"
                       placeholder="Придумайте пароль"
@@ -100,7 +100,7 @@ const Registration = () => {
                     />
                   </Col>
                   <Col md={6}>
-                    <LabeledInput
+                    <Input
                       type="password"
                       label="Подтверждение пароля"
                       placeholder="Повторите пароль"

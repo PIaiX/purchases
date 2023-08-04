@@ -5,7 +5,7 @@ import Row from "react-bootstrap/Row";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import LabeledInput from "../../components/utils/LabeledInput";
+import Input from "../../components/utils/Input";
 import { login } from "../../services/auth";
 import Meta from "../../components/Meta";
 import { Button } from "react-bootstrap";
@@ -46,7 +46,7 @@ const Login = () => {
                     Введите данные учётной записи
                   </p>
                   <div className="mb-4">
-                    <LabeledInput
+                    <Input
                       type="email"
                       label="Email"
                       name="email"
@@ -63,7 +63,7 @@ const Login = () => {
                     />
                   </div>
 
-                  <LabeledInput
+                  <Input
                     className="mb-2"
                     label="Пароль"
                     type="password"

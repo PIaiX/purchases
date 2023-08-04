@@ -1,5 +1,5 @@
-@import 'bootstrapCustom';
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap');
+@import "bootstrapCustom";
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
 
 // "homepage": "https://ngf93.github.io/purchases",
 
@@ -17,29 +17,37 @@
 
 $main-font: "Open Sans";
 $title-font: "Bebas";
-$pale-blue: #9DC4EF;
-$blue: #4A83DC;
-$light-blue: #66C6E4;
-$dark-blue: #0D59AB;
-$gradient-1: linear-gradient(120.98deg, $blue 48.77%, #3266B8 85.89%);
-$gradient-2: linear-gradient(120.98deg, rgba(72, 216, 104, 0.8) 48.77%, rgba(120, 216, 72, 0.8) 85.89%);
-$glass: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.3);
-$dark-green: #005A47;
-$green: #48D868;
-$pale-green: #94E5A6;
+$pale-blue: #9dc4ef;
+$blue: #4a83dc;
+$light-blue: #66c6e4;
+$dark-blue: #0d59ab;
+$gradient-1: linear-gradient(120.98deg, $blue 48.77%, #3266b8 85.89%);
+$gradient-2: linear-gradient(
+  120.98deg,
+  rgba(72, 216, 104, 0.8) 48.77%,
+  rgba(120, 216, 72, 0.8) 85.89%
+);
+$glass: linear-gradient(
+    92.32deg,
+    rgba(255, 255, 255, 0) 16.31%,
+    rgba(245, 251, 255, 0.3) 97.01%
+  ),
+  rgba(255, 255, 255, 0.3);
+$dark-green: #005a47;
+$green: #48d868;
+$pale-green: #94e5a6;
 $aqua: rgba(67, 185, 198, 0.26);
-$rose: #FF5630;
+$rose: #ff5630;
 
-$white: #FFFFFF;
-$extrapale-gray: #ECF4FC;
-$pale-gray: #D9D9D9;
-$light-gray:#C1C1C1;
-$gray: #8F8F8F;
-$black: #1B1B1C;
+$white: #ffffff;
+$extrapale-gray: #ecf4fc;
+$pale-gray: #d9d9d9;
+$light-gray: #c1c1c1;
+$gray: #8f8f8f;
+$black: #1b1b1c;
 $total-black: #000;
 $transition: 300ms ease-in-out;
-$radius: .67em;
-
+$radius: 0.67em;
 
 /* mixins */
 @mixin flex($dir: row, $x: center, $y: center, $wrap: nowrap) {
@@ -87,7 +95,8 @@ $radius: .67em;
   padding-left: 0px;
 }
 @mixin shadow {
-  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 4px 15px rgba(100, 100, 100, 0.08);
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
+    0px 4px 15px rgba(100, 100, 100, 0.08);
   backdrop-filter: blur(4px);
 }
 @mixin boxShadow($size: 15px) {
@@ -97,29 +106,38 @@ $radius: .67em;
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
 @mixin shadowMobile {
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5), 1px 1px 10px rgba(100, 100, 100, 0.15);
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5),
+    1px 1px 10px rgba(100, 100, 100, 0.15);
   backdrop-filter: blur(2.5px);
 }
 @mixin blob {
   box-shadow: inset 0px 1px 3px rgba(245, 201, 249, 0.47);
-  filter: drop-shadow(0px 1px 3px rgba(70,67,118,.2));
+  filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
 }
 @mixin btnStyle {
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3),
+    0px 3px 10px rgba(156, 156, 156, 0.2);
 }
 @mixin blurShadow {
-  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 0px 5px 25px rgba(95, 95, 95, 0.08);
+  box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
+    0px 5px 25px rgba(95, 95, 95, 0.08);
   backdrop-filter: blur(5px);
 }
-@mixin bgTextureGradient($grad: linear-gradient(109.93deg, #3399AB 26.37%, #78D848 59.52%, #91EE8F 91.99%)) {
+@mixin bgTextureGradient(
+  $grad:
+    linear-gradient(109.93deg, #3399ab 26.37%, #78d848 59.52%, #91ee8f 91.99%)
+) {
   background: url(imgs/bg/texture.png), $grad;
   background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
 }
-@mixin placeholder($color, $fw: 400){
-  &:-moz-placeholder, &::-moz-placeholder,
-  &::-webkit-input-placeholder, &:-ms-input-placeholder, &::-ms-input-placeholder {
+@mixin placeholder($color, $fw: 400) {
+  &:-moz-placeholder,
+  &::-moz-placeholder,
+  &::-webkit-input-placeholder,
+  &:-ms-input-placeholder,
+  &::-ms-input-placeholder {
     color: $color;
     font-weight: $fw;
   }
@@ -134,7 +152,7 @@ $radius: .67em;
   border-radius: 50%;
   object-fit: cover;
 }
-@mixin roundedImg($w, $rad:50%, $fit:cover) {
+@mixin roundedImg($w, $rad: 50%, $fit: cover) {
   width: $w;
   height: $w;
   border-radius: $rad;
@@ -160,7 +178,7 @@ html {
   @include shadow();
   &:hover,
   &:active {
-    background: rgba($color: $pale-blue, $alpha: .2);
+    background: rgba($color: $pale-blue, $alpha: 0.2);
   }
 }
 ::-webkit-scrollbar-thumb {
@@ -181,26 +199,57 @@ html {
   display: none;
 }
 
-
 /* Typography */
-a, a:hover, a:focus, a:active {
+a,
+a:hover,
+a:focus,
+a:active {
   color: inherit;
   outline: none;
   text-decoration: none;
   cursor: pointer;
 }
-h1, h2, h3, h4, h5, h6, p, label, span, a, button, form, fieldset, legend, select, input, textarea, button, div, blockquote, cite, figure, figcaption, table, ul, ol, dl, li, address {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+label,
+span,
+a,
+button,
+form,
+fieldset,
+legend,
+select,
+input,
+textarea,
+button,
+div,
+blockquote,
+cite,
+figure,
+figcaption,
+table,
+ul,
+ol,
+dl,
+li,
+address {
   line-height: 135%;
   margin-bottom: 0px;
 }
 
-h1, .h1 {
+h1,
+.h1 {
   font-family: $title-font;
   font-size: 3.6em;
   font-weight: normal;
   text-align: left;
   line-height: 120%;
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
   @include media-breakpoint-down(xl) {
     font-size: 3.5em;
   }
@@ -214,25 +263,26 @@ h1, .h1 {
     font-size: 2.3em;
   }
 }
-h2, .h2 {
+h2,
+.h2 {
   font-family: $title-font;
   font-size: 3em;
   font-weight: normal;
   text-align: left;
-  margin-bottom: .67em;
+  margin-bottom: 0.67em;
   @include media-breakpoint-down(md) {
     font-size: 2.75em;
   }
   @include media-breakpoint-down(sm) {
     font-size: 2.3em;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
   }
 }
 h3 {
   font-size: 1.6em;
   font-weight: 400;
   text-align: left;
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
   @include media-breakpoint-down(lg) {
     font-size: 1.4em;
   }
@@ -241,7 +291,7 @@ h4 {
   font-size: 1.3em;
   font-weight: 600;
   text-align: left;
-  margin-bottom: .2em;
+  margin-bottom: 0.2em;
   @include media-breakpoint-down(lg) {
     font-size: 1.2em;
   }
@@ -272,47 +322,121 @@ h6 {
   color: $white;
   padding: 1em 2em;
   border-radius: $radius;
-  h1, h2, a {line-height: 100%;}
+  h1,
+  h2,
+  a {
+    line-height: 100%;
+  }
 }
 .fs {
-  &-08 {font-size: 0.8em;}
-  &-09 {font-size: 0.9em;}
-  &-10 {font-size: 1em;}
-  &-11 {font-size: 1.1em;}
-  &-12 {font-size: 1.2em;}
-  &-13 {font-size: 1.3em;}
-  &-14 {font-size: 1.4em;}
-  &-15 {font-size: 1.5em;}
-  &-16 {font-size: 1.6em;}
-  &-17 {font-size: 1.7em;}
-  &-18 {font-size: 1.8em;}
-  &-19 {font-size: 1.9em;}
-  &-20 {font-size: 2em;}
-  &-25 {font-size: 2.5em;}
-  &-30 {font-size: 3em;}
-  &-35 {font-size: 3.5em;}
-  &-40 {font-size: 4em;}
+  &-08 {
+    font-size: 0.8em;
+  }
+  &-09 {
+    font-size: 0.9em;
+  }
+  &-10 {
+    font-size: 1em;
+  }
+  &-11 {
+    font-size: 1.1em;
+  }
+  &-12 {
+    font-size: 1.2em;
+  }
+  &-13 {
+    font-size: 1.3em;
+  }
+  &-14 {
+    font-size: 1.4em;
+  }
+  &-15 {
+    font-size: 1.5em;
+  }
+  &-16 {
+    font-size: 1.6em;
+  }
+  &-17 {
+    font-size: 1.7em;
+  }
+  &-18 {
+    font-size: 1.8em;
+  }
+  &-19 {
+    font-size: 1.9em;
+  }
+  &-20 {
+    font-size: 2em;
+  }
+  &-25 {
+    font-size: 2.5em;
+  }
+  &-30 {
+    font-size: 3em;
+  }
+  &-35 {
+    font-size: 3.5em;
+  }
+  &-40 {
+    font-size: 4em;
+  }
 }
 .fw {
-  &-3 {font-weight: 300;}
-  &-4 {font-weight: 400;}
-  &-5 {font-weight: 500;}
-  &-6 {font-weight: 600;}
-  &-7 {font-weight: 700;}
-  &-8 {font-weight: 800;}
-  &-9 {font-weight: 900;}
+  &-3 {
+    font-weight: 300;
+  }
+  &-4 {
+    font-weight: 400;
+  }
+  &-5 {
+    font-weight: 500;
+  }
+  &-6 {
+    font-weight: 600;
+  }
+  &-7 {
+    font-weight: 700;
+  }
+  &-8 {
+    font-weight: 800;
+  }
+  &-9 {
+    font-weight: 900;
+  }
 }
-.green {color: $green;}
-.white {color: $white;}
-.light-gray {color: $light-gray;}
-.gray {color: $gray;}
-.pale-blue {color: $pale-blue;}
-.blue {color: $blue;}
-.dark-blue {color: $dark-blue;}
-.rose {color: $rose;}
-.black {color: $black;}
-.total-black {color: $total-black;}
-.title-font {font-family: $title-font;}
+.green {
+  color: $green;
+}
+.white {
+  color: $white;
+}
+.light-gray {
+  color: $light-gray;
+}
+.gray {
+  color: $gray;
+}
+.pale-blue {
+  color: $pale-blue;
+}
+.blue {
+  color: $blue;
+}
+.dark-blue {
+  color: $dark-blue;
+}
+.rose {
+  color: $rose;
+}
+.black {
+  color: $black;
+}
+.total-black {
+  color: $total-black;
+}
+.title-font {
+  font-family: $title-font;
+}
 .bg-blue {
   background-color: $blue;
 }
@@ -322,11 +446,14 @@ h6 {
   border-radius: 50%;
   border: 1px solid $white;
 }
-.lh-n {line-height: normal;}
+.lh-n {
+  line-height: normal;
+}
 
 /* Form elements */
-input, textarea {
-  background-color: rgba($white, $alpha: .8);
+input,
+textarea {
+  background-color: rgba($white, $alpha: 0.8);
   border: 1px solid $light-gray;
   border-radius: $radius;
   padding: 0.725em 1.65em;
@@ -339,12 +466,15 @@ input, textarea {
     border: 1px solid $pale-blue;
     @include placeholder($pale-blue, 400);
   }
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     border: 1px solid $blue;
   }
 }
 input {
-  &[type='checkbox'], &[type='radio']{
+  &[type="checkbox"],
+  &[type="radio"] {
     @include no-appearance;
     width: 20px;
     height: 20px;
@@ -357,7 +487,7 @@ input {
     transition: $transition;
     position: relative;
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 4px;
       left: 4px;
@@ -380,7 +510,7 @@ input {
     border-radius: 10px;
     background-color: $light-gray;
     &::before {
-      content: '';
+      content: "";
       position: absolute;
       top: 2px;
       left: 3px;
@@ -398,13 +528,14 @@ input {
       }
     }
   }
-  &[type='search'] {
+  &[type="search"] {
     padding-right: 2.5em;
-    background: url(imgs/SearchIcon.svg) no-repeat calc(100% - .67em) 50% rgba($white, $alpha: .85);
+    background: url(imgs/SearchIcon.svg) no-repeat calc(100% - 0.67em) 50%
+      rgba($white, $alpha: 0.85);
     background-size: 1.6em;
   }
   &.code {
-    font-family: 'Bebas';
+    font-family: "Bebas";
     font-size: 2.3em;
     padding: 0px 10px;
     text-align: center;
@@ -415,11 +546,15 @@ label {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  span {flex:1;}
+  span {
+    flex: 1;
+  }
 }
 
 .input-rating {
-  input {display: none;}
+  input {
+    display: none;
+  }
   .stars {
     display: flex;
     flex-direction: row-reverse;
@@ -440,11 +575,13 @@ label {
       }
       &:hover,
       &.active,
-      &.active~button,
+      &.active ~ button,
       &:hover,
-      &:hover~button {
+      &:hover ~ button {
         svg {
-          path {fill: $blue;}
+          path {
+            fill: $blue;
+          }
         }
       }
     }
@@ -470,7 +607,9 @@ label {
     font-size: 1.6em;
     @include flex();
     svg {
-      path {stroke-width: 1.25px;}
+      path {
+        stroke-width: 1.25px;
+      }
     }
   }
 }
@@ -487,8 +626,9 @@ select {
   background-position: calc(100% - 0.67em) 50%, 50% 50%;
   background-size: 1.6em, cover;
   transition: $transition;
-  &:hover, &:focus {
-    background-color: rgba($pale-blue, .1);
+  &:hover,
+  &:focus {
+    background-color: rgba($pale-blue, 0.1);
   }
   @include media-breakpoint-down(md) {
     min-width: 200px;
@@ -505,13 +645,15 @@ select {
     width: fit-content;
     background-color: $white;
     color: $gray;
-    padding: 0 .67em;
+    padding: 0 0.67em;
   }
   input {
     position: relative;
     z-index: 1;
     border-radius: $radius;
-    &:hover + label, &:focus + label, &:active + label {
+    &:hover + label,
+    &:focus + label,
+    &:active + label {
       color: $blue;
     }
   }
@@ -525,7 +667,9 @@ select {
     background-position: calc(100% - 0.67em) 50%;
     background-size: 1.6em;
     min-width: 150px;
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       background: url(imgs/chevron-down.svg) transparent;
       background-repeat: no-repeat;
       background-position: calc(100% - 0.67em) 50%;
@@ -533,8 +677,12 @@ select {
       border: 1px solid $blue;
     }
   }
-  &:hover, &:focus, &:active {
-    label {color: $blue;}
+  &:hover,
+  &:focus,
+  &:active {
+    label {
+      color: $blue;
+    }
   }
 }
 .files {
@@ -567,15 +715,15 @@ select {
         stroke-width: 1.25px;
       }
     }
-    
+
     .ind {
       position: absolute;
-      bottom: -.25em;
+      bottom: -0.25em;
       right: 0px;
       color: $blue;
       font-weight: 600;
       line-height: 1em;
-      font-size: .9em;
+      font-size: 0.9em;
       &:empty {
         display: none;
       }
@@ -591,8 +739,9 @@ select {
     }
   }
 }
-
-
+.hv-100 {
+  min-height: calc(100vh - var(--h-height) - var(--f-height) - 4em);
+}
 button {
   background: none;
   border: none;
@@ -601,76 +750,106 @@ button {
   font-family: inherit;
   outline: none;
   color: inherit;
+  &[disabled]:not(.btn) {
+    opacity: 0.5 !important;
+  }
 }
 .btn {
   @include flex(row, center, center, nowrap);
-  padding: .8em 1.6em;
+  padding: 0.8em 1.6em;
   text-align: center;
   transition: $transition;
   width: fit-content;
   border-radius: $radius;
   //голубая градиентная кнопка
-  &-1, &-primary {
+  &-1,
+  &-primary {
     @extend .btn;
     color: $white !important;
     background-color: $blue !important;
-    background-image: linear-gradient(150deg, $blue 25%, #3266B8 50%, $blue 75%) !important;
+    background-image: linear-gradient(
+      150deg,
+      $blue 25%,
+      #3266b8 50%,
+      $blue 75%
+    ) !important;
     background-size: 200% 100% !important;
     background-position: left center !important;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $white;
       background-position: right center;
     }
-    &:active, &.active {
+    &:active,
+    &.active {
       color: $white !important;
       background-position: center center;
     }
-    &[disabled]{
+    &[disabled] {
       background: $light-gray !important;
     }
   }
   //белая кнопка
-  &-2 {
+  &-2,
+  &-light {
     @extend .btn;
-    background: #FFFFFF;
+    background: #ffffff;
     color: $black;
     @include blurShadow();
     border-radius: $radius;
-    &:hover, &:focus, &:active, &.active {
+    &:hover,
+    &:focus,
+    &:active,
+    &.active {
       color: $black;
       background: mix($pale-blue, $white, 20%);
     }
+    &[disabled] {
+      background: $light-gray !important;
+    }
   }
   //розовая кнопка
-  &-3 {
+  &-3,
+  &-danger {
     @extend .btn;
     background: $rose;
     color: $white;
     @include blurShadow();
     border-radius: $radius;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       background: $rose;
       color: $white;
     }
-    &:active, &.active {
+    &:active,
+    &.active {
       background: $rose;
       color: $white;
+    }
+    &[disabled] {
+      background: $light-gray !important;
     }
   }
   //черная кнопка
-  &-4 {
+  &-4,
+  &-dark {
     @extend .btn;
     background: $total-black;
     color: $white;
     @include blurShadow();
     border-radius: $radius;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $white;
       background: $dark-blue;
     }
-    &:active, &.active {
+    &:active,
+    &.active {
       color: $white;
       background: $dark-green;
+    }
+    &[disabled] {
+      background: $light-gray !important;
     }
   }
   //голубая кнопка
@@ -680,32 +859,43 @@ button {
     color: $white;
     @include blurShadow();
     border-radius: $radius;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $white;
       background: $dark-blue;
     }
-    &:active, &.active {
+    &:active,
+    &.active {
       color: $white;
       background: $dark-green;
     }
+    &[disabled] {
+      background: $light-gray !important;
+    }
   }
   //зеленая кнопка
-  &-6 {
+  &-6,
+  &-success {
     @extend .btn;
     background: $green;
     color: $white;
     @include blurShadow();
     border-radius: $radius;
-    &:hover, &:focus {
+    &:hover,
+    &:focus {
       color: $white;
       background: $light-blue;
     }
-    &:active, &.active {
+    &:active,
+    &.active {
       color: $white;
       background: $dark-green;
     }
+    &[disabled] {
+      background: $light-gray !important;
+    }
   }
-  &[disabled]{
+  &[disabled] {
     background: $light-gray;
   }
 }
@@ -751,7 +941,7 @@ button {
     right: -0.75em;
     color: $white;
     line-height: 1em;
-    font-size: .75em;
+    font-size: 0.75em;
     background: $blue;
     width: 1.3em;
     height: 1.3em;
@@ -768,7 +958,7 @@ button {
   button {
     width: 100%;
     font-size: 1em;
-    padding: .1em .2em;
+    padding: 0.1em 0.2em;
     @include flex(row, space-between, center, nowrap);
     color: $gray;
   }
@@ -778,7 +968,7 @@ button {
     object-fit: cover;
     border-radius: 50%;
     @include shadow();
-    margin-right: .5em;
+    margin-right: 0.5em;
   }
   ul {
     @include list();
@@ -795,7 +985,7 @@ button {
     }
   }
   // &.opened {
-    
+
   // }
 }
 .star-rating {
@@ -817,7 +1007,9 @@ button {
   color: $pale-blue;
   text-decoration: underline;
   transition: $transition;
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     color: $dark-blue;
     text-decoration: underline;
   }
@@ -825,7 +1017,9 @@ button {
     color: $blue;
     text-decoration: none;
     transition: $transition;
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       color: $light-blue;
       text-decoration: none;
     }
@@ -843,11 +1037,17 @@ button {
   }
 }
 
-.min-250 {min-width: 250px;}
-@include media-breakpoint-down(sm) {
-  .w-xs-100 {width: 100%;}
+.min-250 {
+  min-width: 250px;
 }
-.flex-1 {flex: 1;}
+@include media-breakpoint-down(sm) {
+  .w-xs-100 {
+    width: 100%;
+  }
+}
+.flex-1 {
+  flex: 1;
+}
 .mb-6 {
   margin-bottom: 6em;
   @include media-breakpoint-down(md) {
@@ -879,12 +1079,12 @@ button {
           font-size: 1em;
         }
       }
-      &:not(:first-child){
+      &:not(:first-child) {
         margin-left: 1em;
         padding-left: 1.4em;
         position: relative;
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           left: 0px;
           display: block;
@@ -892,7 +1092,7 @@ button {
           width: 8px;
           background: url(imgs/arrow-mini.svg) no-repeat center;
           background-size: contain;
-          @include media-breakpoint-down(lg){
+          @include media-breakpoint-down(lg) {
             width: 7px;
           }
           @include media-breakpoint-down(md) {
@@ -910,7 +1110,9 @@ nav.pagination {
     @include list();
     @include flex();
     li {
-      &:not(:first-child){margin-left: 1.3em;}
+      &:not(:first-child) {
+        margin-left: 1.3em;
+      }
       a {
         width: 2em;
         height: 2em;
@@ -919,12 +1121,16 @@ nav.pagination {
         color: $blue;
         @include flex();
         transition: $transition;
-        svg {font-size: 1.2em;}
-        &:hover, &:focus {
-          background-color: rgba($pale-blue, .15);
+        svg {
+          font-size: 1.2em;
         }
-        &:active, &.active {
-          background-color: rgba($pale-blue, .3);
+        &:hover,
+        &:focus {
+          background-color: rgba($pale-blue, 0.15);
+        }
+        &:active,
+        &.active {
+          background-color: rgba($pale-blue, 0.3);
           @include lightShadow();
         }
       }
@@ -933,12 +1139,12 @@ nav.pagination {
 }
 
 .accordion {
-  --bs-accordion-color: #1B1B1C;
-  --bs-accordion-btn-color: #4A83DC;
-  --bs-accordion-active-color: #4A83DC;
+  --bs-accordion-color: #1b1b1c;
+  --bs-accordion-btn-color: #4a83dc;
+  --bs-accordion-active-color: #4a83dc;
   --bs-accordion-btn-bg: transparent;
   --bs-accordion-active-bg: transparent;
-  --bs-accordion-btn-padding-y: .5em;
+  --bs-accordion-btn-padding-y: 0.5em;
   --bs-accordion-btn-padding-x: 0px;
   --bs-accordion-body-padding-x: 0px;
   --bs-accordion-border-color: rgba(157, 196, 239, 0.3);
@@ -960,17 +1166,17 @@ nav.pagination {
   &-menu {
     --bs-dropdown-spacer: 0.125rem;
     --bs-dropdown-font-size: 1em;
-    --bs-dropdown-color: #1C1C1C;
+    --bs-dropdown-color: #1c1c1c;
     --bs-dropdown-bg: #fff;
-    --bs-dropdown-border-color: #F4F6F8;
+    --bs-dropdown-border-color: #f4f6f8;
     --bs-dropdown-border-radius: 10px;
     --bs-dropdown-border-width: 0px;
     --bs-dropdown-inner-border-radius: 9px;
-    --bs-dropdown-link-color: #1C1C1C;
-    --bs-dropdown-link-hover-color: #1C1C1C;
-    --bs-dropdown-link-hover-bg: #F4F6F8;
+    --bs-dropdown-link-color: #1c1c1c;
+    --bs-dropdown-link-hover-color: #1c1c1c;
+    --bs-dropdown-link-hover-bg: #f4f6f8;
     --bs-dropdown-link-active-color: #fff;
-    --bs-dropdown-link-active-bg: #4A83DC;
+    --bs-dropdown-link-active-bg: #4a83dc;
     --bs-dropdown-item-padding-x: 1em;
     --bs-dropdown-item-padding-y: 0.5em;
     --bs-dropdown-box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
@@ -983,12 +1189,14 @@ nav.pagination {
     padding: 0px;
     a {
       display: block;
-      padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+      padding: var(--bs-dropdown-item-padding-y)
+        var(--bs-dropdown-item-padding-x);
       text-align: left;
       width: 100%;
       justify-content: flex-start !important;
       transition: $transition;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         color: var(--bs-dropdown-link-hover-color) !important;
         background-color: var(--bs-dropdown-link-hover-bg);
       }
@@ -1023,7 +1231,7 @@ nav.pagination {
     ul {
       @include list();
       @include flex();
-      padding: .25em 1em;
+      padding: 0.25em 1em;
       font-weight: 700;
       font-size: 1.2em;
       &.line-2 {
@@ -1034,7 +1242,9 @@ nav.pagination {
           width: 100px;
           text-align: right;
         }
-        .btns {width: 60px;}
+        .btns {
+          width: 60px;
+        }
       }
       &.line-3 {
         display: grid;
@@ -1113,7 +1323,7 @@ nav.pagination {
     ul {
       @include list();
       li {
-        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .2);
+        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.2);
         @include media-breakpoint-down(xl) {
           border-bottom: none;
         }
@@ -1130,7 +1340,7 @@ nav.pagination {
 
 body {
   margin: 0;
-  font-family: $main-font, 'Arial', 'Tahoma', 'Verdana';
+  font-family: $main-font, "Arial", "Tahoma", "Verdana";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-size: 15px;
@@ -1142,26 +1352,24 @@ body {
   }
 }
 
-
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
   padding: 2em 0;
-  @include media-breakpoint-down(lg){
+  @include media-breakpoint-down(lg) {
     min-height: calc(100vh - var(--f-height));
     padding-bottom: var(--f-height);
   }
-  @include media-breakpoint-down(sm){
+  @include media-breakpoint-down(sm) {
     padding: 1em 0;
   }
 }
-
 
 header {
   background-color: $white;
   position: relative;
   z-index: 1042;
   height: var(--h-height);
-  @include media-breakpoint-down(lg){
+  @include media-breakpoint-down(lg) {
     display: none;
   }
   input {
@@ -1172,15 +1380,14 @@ header {
     @include flex();
     img {
       @include rounedImg(30px);
-      margin-right: .5em;
+      margin-right: 0.5em;
     }
   }
 }
 
-
 /* Slider */
 .main-slider {
-  @include media-breakpoint-down(lg){
+  @include media-breakpoint-down(lg) {
     overflow: hidden;
     position: relative;
     padding-bottom: 2em;
@@ -1233,7 +1440,7 @@ header {
     .svg-mobile {
       width: 100%;
       height: 552px;
-      @include media-breakpoint-down(md){
+      @include media-breakpoint-down(md) {
         height: 410px;
       }
       @include media-breakpoint-down(sm) {
@@ -1310,12 +1517,12 @@ header {
       right: -6%;
       @include flex(column, center, center, nowrap);
       color: $white;
-      font-size: .75em;
+      font-size: 0.75em;
       @include media-breakpoint-down(xxl) {
-        font-size: .6em;
+        font-size: 0.6em;
       }
       @include media-breakpoint-down(xl) {
-        font-size: .55em;
+        font-size: 0.55em;
       }
       .num {
         font-size: 1.1em;
@@ -1383,12 +1590,12 @@ header {
         left: 6.25%;
         bottom: unset;
         right: unset;
-        font-size: .9em;
+        font-size: 0.9em;
         @include media-breakpoint-down(xxl) {
-          font-size: .8em;
+          font-size: 0.8em;
         }
         @include media-breakpoint-down(xl) {
-          font-size: .7em;
+          font-size: 0.7em;
           top: -1.65em;
         }
         @include media-breakpoint-down(lg) {
@@ -1415,7 +1622,8 @@ header {
       }
     }
   }
-  &-prev, &-next {
+  &-prev,
+  &-next {
     display: flex;
     position: absolute;
     top: 67.5%;
@@ -1428,8 +1636,12 @@ header {
       font-size: 1.25em;
     }
   }
-  &-prev {left: 0px;}
-  &-next {right: 0px;}
+  &-prev {
+    left: 0px;
+  }
+  &-next {
+    right: 0px;
+  }
   &-indicators {
     position: absolute;
     bottom: 0px;
@@ -1439,21 +1651,22 @@ header {
     @include flex();
     li {
       flex-grow: 1;
-      height: .6em;
-      background-color: rgba($color: $black, $alpha: .15);
-      border-radius: .3em;
+      height: 0.6em;
+      background-color: rgba($color: $black, $alpha: 0.15);
+      border-radius: 0.3em;
       transition: $transition;
       @include media-breakpoint-down(sm) {
-        height: .4em;
+        height: 0.4em;
       }
-      &:not(:first-child){margin-left: 2em;}
+      &:not(:first-child) {
+        margin-left: 2em;
+      }
       &.active {
         background-color: rgba($color: $black, $alpha: 1);
       }
     }
   }
 }
-
 
 /* Catalog */
 .sec-catalog {
@@ -1488,12 +1701,12 @@ header {
       @include blurShadow();
       border-radius: $radius;
       position: sticky;
-      top: .5em;
+      top: 0.5em;
       left: 0;
       width: 100%;
       height: fit-content;
       max-height: calc(100vh - 2em);
-      padding: .5em;
+      padding: 0.5em;
       transition: $transition;
       @include media-breakpoint-down(lg) {
         float: right;
@@ -1505,14 +1718,16 @@ header {
         position: relative;
         border: 1px solid transparent;
         border-radius: $radius;
-        margin-bottom: .25em;
+        margin-bottom: 0.25em;
         @include flex();
         transition: $transition;
         button {
           @include absBG(2);
           width: 3em;
           color: $pale-blue;
-          svg {font-size: 1.6em;}
+          svg {
+            font-size: 1.6em;
+          }
         }
         input {
           width: 100%;
@@ -1535,7 +1750,7 @@ header {
           grid-row: span 1;
           font-size: 1.3em;
           text-align: center;
-          padding: .4em;
+          padding: 0.4em;
           a {
             @include flex();
             color: $black;
@@ -1547,10 +1762,10 @@ header {
             border-radius: 50%;
             white-space: nowrap;
             &:hover {
-              background-color: rgba($color: $pale-blue, $alpha: .25);
+              background-color: rgba($color: $pale-blue, $alpha: 0.25);
             }
             &.ss-active {
-              background-color: rgba($color: $pale-blue, $alpha: .5);
+              background-color: rgba($color: $pale-blue, $alpha: 0.5);
             }
           }
         }
@@ -1559,7 +1774,7 @@ header {
         font-size: 1.3em;
         position: absolute;
         top: 0px;
-        right: -.5em;
+        right: -0.5em;
         width: 1em;
         height: 1em;
         transition: $transition;
@@ -1569,21 +1784,21 @@ header {
         overflow: hidden;
         @include media-breakpoint-down(lg) {
           right: unset;
-          left: -.5em;
+          left: -0.5em;
         }
         img {
           width: 100%;
           height: 100%;
           transition: $transition;
           @include media-breakpoint-down(lg) {
-            transform:rotate(-180deg);
+            transform: rotate(-180deg);
           }
         }
         &.opened {
           img {
-            transform:rotate(-180deg);
+            transform: rotate(-180deg);
             @include media-breakpoint-down(lg) {
-              transform:rotate(0deg);
+              transform: rotate(0deg);
             }
           }
         }
@@ -1602,13 +1817,17 @@ header {
       }
     }
   }
-  &-box {flex: 1;}
+  &-box {
+    flex: 1;
+  }
   &-part {
     padding: 1em 1.5em;
     background: $glass;
     @include blurShadow();
     border-radius: 10px;
-    &:not(:last-child){margin-bottom: 3.33em;}
+    &:not(:last-child) {
+      margin-bottom: 3.33em;
+    }
     @include media-breakpoint-down(sm) {
       padding: 1em;
     }
@@ -1630,21 +1849,23 @@ header {
     height: 50px;
     object-fit: cover;
     border-radius: 50%;
-    margin-right: .5em;
+    margin-right: 0.5em;
   }
   h4 {
-    padding: 0 0 .6em .65em;
+    padding: 0 0 0.6em 0.65em;
   }
   .categories {
     @include list();
     @include flex(row, flex-start, center, wrap);
-    padding: .85em .5em .5em;
+    padding: 0.85em 0.5em 0.5em;
     @include media-breakpoint-down(xxl) {
-      padding: .75em 0em 0;
+      padding: 0.75em 0em 0;
     }
-    li { 
-      margin-bottom: .67em;
-      &:not(:last-child){margin-right: 1em;}
+    li {
+      margin-bottom: 0.67em;
+      &:not(:last-child) {
+        margin-right: 1em;
+      }
     }
   }
   &-mini {
@@ -1654,14 +1875,14 @@ header {
     @include lightShadow();
     padding: 1.6em 1.2em;
     @include media-breakpoint-down(sm) {
-      padding: 1em .75em;
+      padding: 1em 0.75em;
     }
     .img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      margin-right: .5em;
+      margin-right: 0.5em;
       @include media-breakpoint-down(sm) {
         width: 30px;
         height: 30px;
@@ -1676,24 +1897,24 @@ header {
   position: relative;
   @include list();
   @include flex(row, flex-start, center, nowrap);
-  background: rgba($color: $green, $alpha: .8);
+  background: rgba($color: $green, $alpha: 0.8);
   @include btnStyle();
   width: fit-content;
   border-radius: $radius;
-  padding: 0 .5em;
+  padding: 0 0.5em;
   li {
     position: relative;
     color: $white;
     width: fit-content;
     text-transform: uppercase;
-    padding: .6em .5em;
+    padding: 0.6em 0.5em;
     transition: $transition;
     cursor: pointer;
     &.indicator {
       transform: translateY(-50%) translateX(-50%);
       padding: 0px;
       position: absolute;
-      left: .5em;
+      left: 0.5em;
       top: -1px;
       width: 20px;
       height: 14px;
@@ -1703,10 +1924,12 @@ header {
       img {
         width: 8px;
         height: 8px;
-        filter: drop-shadow(0px 1px 3px rgba(70,67,118,.2));
+        filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
       }
     }
-    &.active {color: $dark-green;}
+    &.active {
+      color: $dark-green;
+    }
   }
 }
 .sec-promo {
@@ -1822,29 +2045,35 @@ header {
         margin-right: 1.1em;
         margin-bottom: 1.1em;
         @include media-breakpoint-down(xl) {
-          margin-bottom: .6em;
+          margin-bottom: 0.6em;
           position: relative;
           z-index: 10;
         }
         @include media-breakpoint-down(md) {
           font-size: 1em;
         }
-        button, a {
+        button,
+        a {
           background-color: rgba($pale-blue, 0.2);
-          padding: .55em;
+          padding: 0.55em;
           @include boxShadow();
-          border-radius: $radius*0.5;
+          border-radius: $radius * 0.5;
           transition: $transition;
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             background-color: rgba($pale-blue, 0.6);
           }
-          &:active, &.active {
+          &:active,
+          &.active {
             background-color: rgba($pale-blue, 1);
             color: $white;
           }
           @include media-breakpoint-down(xl) {
             background-color: rgba($pale-blue, 0.85);
-            &:hover, &:focus, &:active, &.active {
+            &:hover,
+            &:focus,
+            &:active,
+            &.active {
               background-color: $blue;
               color: $white;
             }
@@ -1861,14 +2090,16 @@ header {
           margin-top: 1em;
         }
         @include media-breakpoint-down(sm) {
-          &>* {width: 100% !important;}
+          & > * {
+            width: 100% !important;
+          }
         }
       }
       input:not([type="checkbox"]) {
         border-color: $pale-blue;
         @include placeholder($pale-blue);
       }
-      input[type="search"]{
+      input[type="search"] {
         width: 340px;
         @include media-breakpoint-down(xxl) {
           width: 270px;
@@ -1877,13 +2108,13 @@ header {
           width: 200px;
         }
       }
-      input[type="number"]{
+      input[type="number"] {
         width: 70px;
         padding: 0.7em 0.75em;
         text-align: center;
       }
       @include media-breakpoint-down(xl) {
-        background: rgba($white, $alpha: .75);
+        background: rgba($white, $alpha: 0.75);
         padding: 1em;
         border-radius: $radius;
         @include shadow();
@@ -1906,7 +2137,7 @@ header {
       --pad: 0px 1em;
     }
     @include media-breakpoint-down(md) {
-      --pad: 0px .5em;
+      --pad: 0px 0.5em;
       --price: 90px;
     }
     .top {
@@ -1914,10 +2145,11 @@ header {
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
-      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(
+          --price
+        );
       grid-template-rows: 1fr;
-      grid-template-areas: 
-      "serv descr seller availability price";
+      grid-template-areas: "serv descr seller availability price";
       @include media-breakpoint-down(xl) {
         display: none;
       }
@@ -1925,9 +2157,15 @@ header {
         font-size: 1.2em;
         font-weight: 600;
         padding: var(--pad);
-        &.serv {grid-area: serv;}
-        &.descr {grid-area: descr;}
-        &.seller {grid-area: seller;}
+        &.serv {
+          grid-area: serv;
+        }
+        &.descr {
+          grid-area: descr;
+        }
+        &.seller {
+          grid-area: seller;
+        }
         &.availability {
           grid-area: availability;
           text-align: center;
@@ -1949,27 +2187,28 @@ header {
 }
 .offer-line {
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(
+      --price
+    );
   grid-template-rows: 1fr;
-  grid-template-areas: 
-  "serv descr seller availability price";
+  grid-template-areas: "serv descr seller availability price";
   background-color: $white;
   @include boxShadow();
   border-radius: $radius;
   @include media-breakpoint-down(xl) {
-    grid-template-columns:auto var(--price);
+    grid-template-columns: auto var(--price);
     grid-template-rows: 2em auto 3em;
-    grid-template-areas: 
-    "serv price"
-    "descr descr"
-    "seller availability";
+    grid-template-areas:
+      "serv price"
+      "descr descr"
+      "seller availability";
     gap: 10px 0px;
     padding: 1em 0;
   }
   @include media-breakpoint-down(md) {
-    padding: .5em 0;
+    padding: 0.5em 0;
   }
-  &>div {
+  & > div {
     grid-column: span 1;
     grid-row: span 1;
     padding: var(--pad);
@@ -1991,14 +2230,14 @@ header {
     grid-area: seller;
     @include flex(row, flex-start);
     @include media-breakpoint-between(sm, xl) {
-      font-size: .8em;
+      font-size: 0.8em;
     }
     img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      margin-right: .75em;
+      margin-right: 0.75em;
       @include media-breakpoint-down(xl) {
         width: 40px;
         height: 40px;
@@ -2029,8 +2268,7 @@ header {
   display: grid;
   grid-template-columns: 160px auto 120px;
   grid-template-rows: 1fr;
-  grid-template-areas: 
-  "serv descr price";
+  grid-template-areas: "serv descr price";
   background-color: $white;
   @include boxShadow();
   border-radius: $radius;
@@ -2038,14 +2276,14 @@ header {
   // @include media-breakpoint-down(xl) {
   //   grid-template-columns:auto var(--price);
   //   grid-template-rows: 2em auto 3em;
-  //   grid-template-areas: 
+  //   grid-template-areas:
   //   "serv price"
   //   "descr descr"
   //   "seller availability";
   //   gap: 10px 0px;
   //   padding: 1em 0;
   // }
-  &>div {
+  & > div {
     grid-column: span 1;
     grid-row: span 1;
     padding: 1em;
@@ -2078,21 +2316,21 @@ header {
 .lot-page {
   .specifications {
     @include list();
-    font-size: .9em;
+    font-size: 0.9em;
     li {
       @include flex(row, space-between, center, nowrap);
       position: relative;
       &::after {
-        content: '';
+        content: "";
         position: absolute;
-        bottom: .2em;
+        bottom: 0.2em;
         left: 0em;
         width: 100%;
         height: 1px;
-        background-color: rgba($color: $pale-blue, $alpha: .25);
+        background-color: rgba($color: $pale-blue, $alpha: 0.25);
       }
-      &:not(:first-child){
-        margin-top: .5em;
+      &:not(:first-child) {
+        margin-top: 0.5em;
       }
       span {
         position: relative;
@@ -2116,10 +2354,10 @@ header {
     }
   }
   &-box {
-    border: 1px solid rgba($color: $pale-blue, $alpha: .25);
+    border: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
     border-radius: $radius;
     hr {
-      background-color: rgba($color: $pale-blue, $alpha: .25);
+      background-color: rgba($color: $pale-blue, $alpha: 0.25);
       width: 100%;
       height: 1px;
       border: none;
@@ -2151,25 +2389,25 @@ header {
     grid-template-columns: 120px 4fr 5fr;
     grid-template-rows: 35px 40px 30px 85px 70px;
     gap: 0px 0px;
-    grid-template-areas: 
-    "game . date"
-    "game info info"
-    "game title title"
-    "payment payment payment"
-    "text text specifications";
+    grid-template-areas:
+      "game . date"
+      "game info info"
+      "game title title"
+      "payment payment payment"
+      "text text specifications";
     @include media-breakpoint-down(xl) {
       grid-template-columns: 120px 3fr 5fr;
     }
     @include media-breakpoint-down(md) {
       grid-template-columns: 120px auto;
       grid-template-rows: auto;
-      grid-template-areas: 
-      "game date"
-      "game info"
-      "title title"
-      "text text"
-      "specifications specifications"
-      "payment payment";
+      grid-template-areas:
+        "game date"
+        "game info"
+        "title title"
+        "text text"
+        "specifications specifications"
+        "payment payment";
     }
     @include media-breakpoint-down(sm) {
       grid-template-columns: 100px auto;
@@ -2193,7 +2431,9 @@ header {
       @include media-breakpoint-down(sm) {
         align-items: center;
       }
-      time {font-size: .8em;}
+      time {
+        font-size: 0.8em;
+      }
     }
     .info {
       grid-area: info;
@@ -2203,14 +2443,14 @@ header {
       }
       .tag-gray {
         background-color: $extrapale-gray;
-        padding: .25em .5em;
-        border-radius: .5em;
+        padding: 0.25em 0.5em;
+        border-radius: 0.5em;
       }
       .tag-green {
         background-color: $green;
         color: $white;
-        padding: .25em .5em;
-        border-radius: .5em;
+        padding: 0.25em 0.5em;
+        border-radius: 0.5em;
       }
     }
     .title {
@@ -2230,13 +2470,13 @@ header {
       grid-area: payment;
       @include flex(row, flex-start, flex-end, nowrap);
       padding: 1em;
-      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
+      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
       @include media-breakpoint-down(md) {
         @include flex(column, center, stretch, nowrap);
         border-bottom: none;
         button {
           width: 100%;
-          margin-top: .5em;
+          margin-top: 0.5em;
         }
       }
     }
@@ -2246,29 +2486,29 @@ header {
       @include flex(row, flex-start, center, nowrap);
       @include media-breakpoint-down(md) {
         padding-top: 0px;
-        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: .25);
+        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
       }
     }
     .specifications {
       grid-area: specifications;
       padding: 1em;
       @include media-breakpoint-down(xxl) {
-        font-size: .8em;
+        font-size: 0.8em;
       }
       @include media-breakpoint-down(md) {
         font-size: 1em;
       }
       @include media-breakpoint-down(sm) {
-        font-size: .9em;
+        font-size: 0.9em;
       }
     }
   }
 }
 .review-card {
-  border: 1px solid rgba($color: $pale-blue, $alpha: .25);
-  background-color: rgba($color: $pale-blue, $alpha: .1);
+  border: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
+  background-color: rgba($color: $pale-blue, $alpha: 0.1);
   border-radius: $radius;
-  padding: .75em;
+  padding: 0.75em;
   .user {
     @include flex(row, flex-start, center, nowrap);
     @include media-breakpoint-down(xxl) {
@@ -2277,11 +2517,11 @@ header {
     &-photo {
       @include roundedImg(30px, 50%, cover);
       border: none;
-      margin-right: .5em;
+      margin-right: 0.5em;
     }
   }
   time {
-    font-size: .8em;
+    font-size: 0.8em;
     color: $pale-blue;
   }
   .rating {
@@ -2327,7 +2567,9 @@ header {
           border-radius: $radius;
           margin-right: 1em;
         }
-        h5 {flex:1;}
+        h5 {
+          flex: 1;
+        }
       }
     }
   }
@@ -2336,7 +2578,8 @@ header {
   flex: 1;
   @include flex(row, flex-end, center, nowrap);
   background-color: $black;
-  background-image: linear-gradient(to right, transparent, $black), url(imgs/bg/cogito.jpg);
+  background-image: linear-gradient(to right, transparent, $black),
+    url(imgs/bg/cogito.jpg);
   background-repeat: no-repeat;
   background-size: 50% 100%, 75% auto;
   background-position: 60% 50%, -10% 50%;
@@ -2346,7 +2589,9 @@ header {
   text-align: right;
   border-radius: $radius;
   transition: $transition;
-  &:hover, &:focus, &:active {
+  &:hover,
+  &:focus,
+  &:active {
     color: $light-blue;
   }
 }
@@ -2378,23 +2623,25 @@ header {
       background-color: $white;
       border-radius: 0 0 $radius $radius;
       @include lightShadow();
-      padding: 1.5em 1.5em .6em;
+      padding: 1.5em 1.5em 0.6em;
       @include media-breakpoint-down(xl) {
-        padding: 1em 1.25em .6em;
+        padding: 1em 1.25em 0.6em;
       }
       @include media-breakpoint-down(sm) {
-        padding: .6em 1em;
+        padding: 0.6em 1em;
       }
       h5 {
         font-weight: 600;
         color: $total-black;
         @include clamp(2, 1.2em, true);
-        a {line-height: 1.2em;}
+        a {
+          line-height: 1.2em;
+        }
       }
       time {
         display: block;
         text-align: right;
-        margin-top: .5em;
+        margin-top: 0.5em;
         color: $pale-blue;
         font-weight: 500;
         font-size: 1.2em;
@@ -2450,11 +2697,13 @@ header {
       padding: 1em;
     }
     @include media-breakpoint-down(sm) {
-      padding: 1em .5em;
+      padding: 1em 0.5em;
     }
     &-message {
       @include flex(row, flex-start, flex-start);
-      &:not(:first-child){margin-top: 1.5em;}
+      &:not(:first-child) {
+        margin-top: 1.5em;
+      }
       img {
         width: 3.34em;
         height: 3.34em;
@@ -2474,7 +2723,7 @@ header {
           border-radius: $radius;
           padding: 1em;
           font-weight: 400;
-          font-size: .9em;
+          font-size: 0.9em;
           text-align: left;
         }
       }
@@ -2496,7 +2745,7 @@ header {
   }
   &-form {
     @include flex(row, flex-start, center, nowrap);
-    border-top: 1px solid rgba($pale-blue, .3);
+    border-top: 1px solid rgba($pale-blue, 0.3);
     padding: 0.5em;
     input {
       border: none;
@@ -2519,23 +2768,26 @@ header {
   .offers-slider {
     height: 860px;
     padding: 0 1.5em 0 1em;
-    margin-right: -.5em;
+    margin-right: -0.5em;
     .swiper-scrollbar {
-      right: .5em;
+      right: 0.5em;
       background-color: #fff;
-      box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8), 1px 3px 20px rgba(100, 100, 100, 0.15);
+      box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
+        1px 3px 20px rgba(100, 100, 100, 0.15);
       backdrop-filter: blur(4px);
       width: 5px;
       &-drag {
         background-color: $pale-blue;
       }
     }
-    .swiper-slide {height: fit-content;}
+    .swiper-slide {
+      height: fit-content;
+    }
     .offer-card {
       background: $glass;
       @include blurShadow();
       border-radius: $radius;
-      padding: 1.6em 1.6em .7em 1.6em;
+      padding: 1.6em 1.6em 0.7em 1.6em;
       &-top {
         @include flex(row, space-between, center, nowrap);
         h5 {
@@ -2626,7 +2878,7 @@ header {
   //   @include media-breakpoint-down(sm) {
   //     padding: 1.5em;
   //   }
-    
+
   // }
   form {
     &.midi {
@@ -2664,7 +2916,9 @@ header {
   }
   .cover {
     border-radius: $radius;
-    @include bgTextureGradient(linear-gradient(115deg, $black 0%, $blue 55%, $total-black 100%));
+    @include bgTextureGradient(
+      linear-gradient(115deg, $black 0%, $blue 55%, $total-black 100%)
+    );
     color: $white;
     height: 395px;
     padding: 0 5em;
@@ -2732,10 +2986,10 @@ header {
     @include flex(row, flex-start, center, nowrap);
     background-color: $white;
     @include lightShadow();
-    padding: .65em 1.3em;
+    padding: 0.65em 1.3em;
     border-radius: $radius;
     @include media-breakpoint-down(xxl) {
-      padding: .5em 1em;
+      padding: 0.5em 1em;
     }
     img {
       @include rounedImg(50px);
@@ -2802,7 +3056,7 @@ ACCOUNT
         span {
           font-family: $title-font;
           font-size: 2em;
-          margin-right: .34em;
+          margin-right: 0.34em;
           line-height: 90%;
         }
         svg {
@@ -2816,37 +3070,40 @@ ACCOUNT
     ul {
       @include list();
       li {
-        &:not(:first-child){
+        &:not(:first-child) {
           margin-top: 1em;
           @include media-breakpoint-down(lg) {
-            margin-top: .5em;
+            margin-top: 0.5em;
           }
         }
         a {
           color: $gray;
           @include flex(row, flex-start, center, nowrap);
-          padding: .67em 1em;
+          padding: 0.67em 1em;
           border-radius: $radius;
           transition: $transition;
           @include media-breakpoint-down(lg) {
             font-size: 1.2em;
           }
-          svg {font-size: 1.6em;}
+          svg {
+            font-size: 1.6em;
+          }
           div {
-            margin-left: .5em;
+            margin-left: 0.5em;
             flex: 1;
           }
           .badge {
-            background-color: rgba($pale-blue, .2);
-            padding: .34em;
+            background-color: rgba($pale-blue, 0.2);
+            padding: 0.34em;
             border-radius: $radius;
             color: $total-black;
           }
-          &:hover, &:focus {
+          &:hover,
+          &:focus {
             color: $blue;
           }
           &.active {
-            background-color: rgba($pale-blue, .2);
+            background-color: rgba($pale-blue, 0.2);
             color: $blue;
           }
         }
@@ -2867,18 +3124,18 @@ ACCOUNT
   }
   .post {
     display: block;
-    background-color: rgba($pale-blue, .2);
+    background-color: rgba($pale-blue, 0.2);
     border-radius: $radius;
     color: $total-black;
     text-align: center;
     width: 124px;
-    padding-bottom: .2em;
+    padding-bottom: 0.2em;
     max-width: 100%;
     @include media-breakpoint-down(xxl) {
       @include flex(row, flex-start, center, nowrap);
       width: 100%;
       text-align: left;
-      padding: .3em .6em;
+      padding: 0.3em 0.6em;
     }
     img {
       width: 110%;
@@ -2886,19 +3143,21 @@ ACCOUNT
       @include media-breakpoint-down(xxl) {
         width: 3em;
         margin-top: unset;
-        margin-right: .5em;
+        margin-right: 0.5em;
       }
     }
   }
   .btn-add-offer {
-    background-color: rgba($color: $pale-blue, $alpha: .2);
+    background-color: rgba($color: $pale-blue, $alpha: 0.2);
     color: $pale-blue;
     @include flex();
     font-size: 6.5em;
     border-radius: 10px;
     @include lightShadow();
     transition: $transition;
-    &:hover, &:focus, &:active {
+    &:hover,
+    &:focus,
+    &:active {
       color: $blue;
     }
     @include media-breakpoint-down(md) {
@@ -2943,7 +3202,7 @@ ACCOUNT
       background-color: $white;
       @include lightShadow();
       border-radius: $radius;
-      padding: .8em 1.3em;
+      padding: 0.8em 1.3em;
     }
     .info-list {
       @include list();
@@ -2954,7 +3213,7 @@ ACCOUNT
         border-bottom: none;
         @include media-breakpoint-down(sm) {
           margin-right: 1em;
-          margin-bottom: .75em;
+          margin-bottom: 0.75em;
         }
       }
     }
@@ -2971,7 +3230,7 @@ ACCOUNT
   .sec-messages {
     @include flex(row, flex-start, stretch, wrap);
     background-color: $white;
-    border: 1px solid rgba($pale-blue, .3);
+    border: 1px solid rgba($pale-blue, 0.3);
     box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
     backdrop-filter: blur(4px);
     border-radius: $radius;
@@ -2979,7 +3238,7 @@ ACCOUNT
     @include safariFix();
     &-list {
       width: 35%;
-      border-right: 1px solid rgba($pale-blue, .3);
+      border-right: 1px solid rgba($pale-blue, 0.3);
       @include media-breakpoint-down(xxl) {
         width: 40%;
       }
@@ -2988,7 +3247,7 @@ ACCOUNT
         border-right: none;
       }
       form {
-        border-bottom: 1px solid rgba($pale-blue, .3);
+        border-bottom: 1px solid rgba($pale-blue, 0.3);
       }
       ul {
         margin-top: 1.5em;
@@ -3051,7 +3310,7 @@ ACCOUNT
   }
   .sec-appeal {
     .top {
-      background-color: rgba($pale-blue, .2);
+      background-color: rgba($pale-blue, 0.2);
       border-radius: $radius $radius 0 0;
       @include flex(row, space-between, center, nowrap);
       padding: 1.3em 2em;
@@ -3060,11 +3319,11 @@ ACCOUNT
       }
     }
     .box {
-      background: rgba($white, .3);
+      background: rgba($white, 0.3);
       border-radius: 0 0 $radius $radius;
       @include blurShadow();
       padding: 1.5em 2em;
-      .chat-window{
+      .chat-window {
         height: 550px;
       }
     }
@@ -3115,7 +3374,7 @@ ACCOUNT
       z-index: 0;
     }
     &::after {
-      content: '';
+      content: "";
       @include absBG(1, 50%, 50%);
       background: linear-gradient(to bottom, transparent, $total-black 50%);
       background-size: cover;
@@ -3125,7 +3384,7 @@ ACCOUNT
       left: 50%;
       transform: translateX(-50%);
       z-index: 2;
-      bottom: .25em;
+      bottom: 0.25em;
       color: $white;
       font-size: 1.34em;
       transition: $transition;
@@ -3145,7 +3404,7 @@ ACCOUNT
     @include flex(column, center, flex-start, nowrap);
     @include media-breakpoint-up(md) {
       &::before {
-        content: '';
+        content: "";
         position: absolute;
         z-index: -1;
         top: 0px;
@@ -3156,7 +3415,7 @@ ACCOUNT
         border-radius: $radius 0 0 $radius;
       }
       &::after {
-        content: '';
+        content: "";
         position: absolute;
         z-index: -1;
         top: 0px;
@@ -3169,7 +3428,7 @@ ACCOUNT
       }
     }
     @include media-breakpoint-down(md) {
-      background-color: rgba($pale-blue, .2);
+      background-color: rgba($pale-blue, 0.2);
       border-radius: $radius;
       padding-left: 65px;
       height: 120px;
@@ -3193,7 +3452,7 @@ ACCOUNT
       width: 200px;
     }
     @include media-breakpoint-down(md) {
-      font-size: .9em;
+      font-size: 0.9em;
       width: 100%;
       margin-left: 0em;
       margin-top: 1em;
@@ -3203,17 +3462,21 @@ ACCOUNT
     }
     li {
       position: relative;
-      padding: .6em;
+      padding: 0.6em;
       height: 41px;
       color: $black;
       font-weight: 600;
       width: 100%;
       @include flex(row, space-between, center, nowrap);
       @include media-breakpoint-up(md) {
-        &:first-child {width: 79%;}
-        &:nth-child(2) {width: 89.5%;}
+        &:first-child {
+          width: 79%;
+        }
+        &:nth-child(2) {
+          width: 89.5%;
+        }
         &::before {
-          content: '';
+          content: "";
           position: absolute;
           z-index: -1;
           top: 0px;
@@ -3225,7 +3488,7 @@ ACCOUNT
           border-radius: $radius;
         }
         &::after {
-          content: '';
+          content: "";
           position: absolute;
           z-index: -1;
           top: 0px;
@@ -3250,7 +3513,7 @@ ACCOUNT
         }
         svg {
           font-size: 1.6em;
-          margin-right: .34em;
+          margin-right: 0.34em;
           @include media-breakpoint-down(md) {
             color: $blue;
           }
@@ -3258,11 +3521,15 @@ ACCOUNT
             stroke-width: 1.3px;
           }
           &.path {
-            path {stroke-width: 1.3px;}
+            path {
+              stroke-width: 1.3px;
+            }
           }
         }
       }
-      &:not(:first-child){margin-top: 11px;}
+      &:not(:first-child) {
+        margin-top: 11px;
+      }
     }
   }
   .qr-code {
@@ -3297,15 +3564,15 @@ ACCOUNT
   // }
   @include media-breakpoint-down(xl) {
     grid-template-columns: 1fr 1fr 80px;
-    grid-template-areas: 
-    "session system btns"
-    "browser browser browser"
-    "ip ip region";
+    grid-template-areas:
+      "session system btns"
+      "browser browser browser"
+      "ip ip region";
     border: 1px solid $pale-gray;
     border-radius: $radius;
   }
   @include media-breakpoint-down(md) {
-    font-size: .8em;
+    font-size: 0.8em;
     gap: 0.25em;
     grid-template-columns: 1fr 1fr 60px;
   }
@@ -3351,10 +3618,11 @@ ACCOUNT
       color: $blue;
       font-size: 1.35em;
       transition: $transition;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         color: $light-blue;
       }
-       &:active {
+      &:active {
         color: $dark-blue;
       }
     }
@@ -3393,10 +3661,11 @@ ACCOUNT
       color: $blue;
       font-size: 1.35em;
       transition: $transition;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         color: $light-blue;
       }
-       &:active {
+      &:active {
         color: $dark-blue;
       }
     }
@@ -3419,8 +3688,8 @@ ACCOUNT
     font-size: 14px;
     grid-template-columns: 2fr 1fr;
     grid-template-rows: auto;
-    gap: .5em;
-    grid-template-areas: 
+    gap: 0.5em;
+    grid-template-areas:
       "descr descr"
       "id id"
       "status status"
@@ -3430,7 +3699,7 @@ ACCOUNT
   @include media-breakpoint-down(md) {
     font-size: 13px;
   }
-  &>div {
+  & > div {
     @include flex(row, flex-start, center, nowrap);
   }
   .date {
@@ -3456,7 +3725,7 @@ ACCOUNT
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
-      margin-right: .75em;
+      margin-right: 0.75em;
       @include media-breakpoint-down(xl) {
         width: 40px;
         height: 40px;
@@ -3494,7 +3763,7 @@ ACCOUNT
   &-top {
     @include flex(row, space-between, center, nowrap);
     padding: 0px 1em 0px 60px;
-    margin-bottom: .5em;
+    margin-bottom: 0.5em;
     @include media-breakpoint-down(sm) {
       @include flex(column, center, flex-start, nowrap);
       padding: 0px 1em 0px 45px;
@@ -3518,13 +3787,15 @@ ACCOUNT
   background-color: $white;
   @include lightShadow();
   border-radius: $radius;
-  padding: .6em 1em;
+  padding: 0.6em 1em;
   @include media-breakpoint-down(xl) {
     @include flex(column, space-between, flex-start, nowrap);
     gap: 1em;
     padding: 1em 1.5em;
   }
-  &-text {flex: 1;}
+  &-text {
+    flex: 1;
+  }
   &-user {
     @include flex(row, flex-start, center, nowrap);
     img {
@@ -3538,13 +3809,16 @@ ACCOUNT
     button {
       display: flex;
       transition: $transition;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         transform: scale(1.3);
       }
     }
     @include media-breakpoint-down(xl) {
       width: 100%;
-      div {flex:1}
+      div {
+        flex: 1;
+      }
     }
   }
 }
@@ -3558,11 +3832,11 @@ ACCOUNT
   @include media-breakpoint-down(xl) {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
-    grid-template-areas: 
-    "date date date stat stat" 
-    "id type type sum sum";
-    gap: .5em;
-    font-size: .9em;
+    grid-template-areas:
+      "date date date stat stat"
+      "id type type sum sum";
+    gap: 0.5em;
+    font-size: 0.9em;
   }
   @include media-breakpoint-down(md) {
     gap: 1em 1em;
@@ -3574,7 +3848,7 @@ ACCOUNT
   .id {
     grid-area: id;
     @include media-breakpoint-down(xl) {
-      font-size: .9em;
+      font-size: 0.9em;
       color: $gray;
     }
   }
@@ -3607,11 +3881,11 @@ ACCOUNT
   @include media-breakpoint-down(xl) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
-    grid-template-areas: 
-    "date id" 
-    "subject subject"
-    "status btns";
-    gap: .5em;
+    grid-template-areas:
+      "date id"
+      "subject subject"
+      "status btns";
+    gap: 0.5em;
   }
   .subject {
     grid-area: subject;
@@ -3635,15 +3909,15 @@ ACCOUNT
 }
 .dialog-preview {
   @include flex(row, flex-start, center, nowrap);
-  padding: .75em 1.3em;
+  padding: 0.75em 1.3em;
   border-radius: $radius;
   position: relative;
   &.active {
-    background-color: rgba($light-gray, .2)
+    background-color: rgba($light-gray, 0.2);
   }
   img {
     @include rounedImg(3em);
-    margin-right: .5em;
+    margin-right: 0.5em;
     position: relative;
     z-index: 1;
   }
@@ -3651,8 +3925,8 @@ ACCOUNT
     position: absolute;
     bottom: 0.5em;
     left: 3.5em;
-    width: .67em;
-    height: .67em;
+    width: 0.67em;
+    height: 0.67em;
     border-radius: 50%;
     z-index: 10;
     &.green {
@@ -3667,7 +3941,7 @@ ACCOUNT
     time {
       font-weight: 300;
       color: $gray;
-      font-size: .7em;
+      font-size: 0.7em;
     }
     p {
       @include clamp(1, 1.2em, true);
@@ -3680,10 +3954,13 @@ ACCOUNT
 ACCOUNT END
 ***********/
 .privacy-policy {
-  h4, p {
+  h4,
+  p {
     margin-bottom: 1em;
   }
-  h4:not(:first-child) {margin-top: 2em;}
+  h4:not(:first-child) {
+    margin-top: 2em;
+  }
 }
 .rules {
   color: #000;
@@ -3691,8 +3968,8 @@ ACCOUNT END
     border: none;
     opacity: 1;
     height: 1px;
-    background-color: rgba($pale-blue, .3);
-    margin: .6em 0 1.2em;
+    background-color: rgba($pale-blue, 0.3);
+    margin: 0.6em 0 1.2em;
   }
 }
 .faq {
@@ -3717,20 +3994,21 @@ ACCOUNT END
     @include list();
     li {
       border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.35);
-      padding: .5em 0px;
+      padding: 0.5em 0px;
       margin-bottom: 1em;
       a {
         color: $blue;
         font-weight: 600;
         transition: $transition;
-        &:hover, &:focus, &:active {
+        &:hover,
+        &:focus,
+        &:active {
           color: $dark-blue;
         }
       }
     }
   }
 }
-
 
 /* Footer */
 footer {
@@ -3767,10 +4045,15 @@ footer {
       @include list();
       @include flex(row, space-evenly);
       flex: 1;
-      background: linear-gradient(92.32deg, rgba(255, 255, 255, 0) 16.31%, rgba(245, 251, 255, 0.3) 97.01%), rgba(255, 255, 255, 0.8);
+      background: linear-gradient(
+          92.32deg,
+          rgba(255, 255, 255, 0) 16.31%,
+          rgba(245, 251, 255, 0.3) 97.01%
+        ),
+        rgba(255, 255, 255, 0.8);
       @include shadowMobile();
       margin-left: 1.7em;
-      padding: .75em 1.5em;
+      padding: 0.75em 1.5em;
       border-radius: $radius;
       @include media-breakpoint-down(md) {
         justify-content: space-around;
@@ -3779,18 +4062,23 @@ footer {
         justify-content: space-between;
       }
       li {
-        a, button {
+        a,
+        button {
           @include flex();
           font-size: 1.85em;
           color: $gray;
           transition: $transition;
           svg {
-            path {stroke-width: 1px;}
+            path {
+              stroke-width: 1px;
+            }
           }
           &.active {
             color: $blue;
             svg {
-              path {stroke-width: 1px;}
+              path {
+                stroke-width: 1px;
+              }
             }
           }
         }
@@ -3798,7 +4086,6 @@ footer {
     }
   }
 }
-
 
 /* Modal */
 .modal {
@@ -3811,12 +4098,12 @@ footer {
     position: relative;
     height: 35px;
     padding: 0px;
-    background-color: rgba($pale-blue, .2);
+    background-color: rgba($pale-blue, 0.2);
     border: none;
     .warning {
       position: absolute;
       right: 2em;
-      bottom: .25em;
+      bottom: 0.25em;
       @include media-breakpoint-down(lg) {
         width: 20%;
       }
@@ -3834,10 +4121,11 @@ footer {
       @include safariFix();
       transition: $transition;
       position: absolute;
-      top: .5em;
-      right: .5em;
+      top: 0.5em;
+      right: 0.5em;
       z-index: 1;
-      &:hover, &:focus {
+      &:hover,
+      &:focus {
         background-color: $dark-blue;
       }
     }
@@ -3863,11 +4151,11 @@ footer {
       li {
         a {
           display: block;
-          padding: .75em 0;
+          padding: 0.75em 0;
           color: $total-black;
         }
-        &:not(:first-child){
-          border-top: 1px solid #F3F3F3;
+        &:not(:first-child) {
+          border-top: 1px solid #f3f3f3;
         }
       }
     }
@@ -3891,8 +4179,10 @@ footer {
       @include flex();
       color: $gray;
       transition: $transition;
-      padding: .5em;
-      &:hover, &:focus, &:active {
+      padding: 0.5em;
+      &:hover,
+      &:focus,
+      &:active {
         color: $black;
       }
     }
@@ -3908,7 +4198,81 @@ footer {
   }
 }
 
-
 .fav-modal {
   z-index: 1041;
+}
+
+.notification-container {
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 999999;
+  width: 320px;
+  top: 65px;
+  padding: 0px 15px;
+  max-height: calc(100% - 30px);
+}
+
+.notification {
+  box-sizing: border-box;
+  padding: 13px 20px;
+  box-shadow: 0px 0px 2px #919eab1f, 0px 8px 24px -4px #919eab33 !important;
+  border-radius: 12px;
+  color: #000;
+  background-color: #fff;
+  cursor: pointer;
+  font-size: 0.9em;
+  position: relative;
+  margin-bottom: 15px;
+}
+
+.notification .title {
+  font-size: 1em;
+  line-height: 1.2em;
+  font-weight: bold;
+  margin: 0 0 5px 0;
+}
+
+.notification:hover,
+.notification:focus {
+  opacity: 1;
+}
+
+.notification-enter {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+}
+
+.notification-enter.notification-enter-active {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+  transition: all 0.4s;
+}
+
+.notification-exit {
+  visibility: visible;
+  transform: translate3d(0, 0, 0);
+}
+
+.notification-exit.notification-exit-active {
+  visibility: hidden;
+  transform: translate3d(100%, 0, 0);
+  transition: all 0.4s;
+}
+
+.notification-info {
+  color: #2f96b4;
+}
+
+.notification-success {
+  color: #36b37e;
+}
+
+.notification-warning {
+  color: #f89406;
+}
+
+.notification-error {
+  color: #bd362f;
 }

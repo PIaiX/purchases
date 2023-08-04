@@ -1,35 +1,96 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
-import LabeledInput from '../../components/utils/LabeledInput';
-import ReturnTitle from '../../components/utils/ReturnTitle';
+import React, { useCallback, useEffect } from "react";
+import { Button, Col, Row } from "react-bootstrap";
+import { useForm, useWatch } from "react-hook-form";
+import { NotificationManager } from "react-notifications";
+import { Link, useLocation } from "react-router-dom";
+import Input from "../../components/utils/Input";
+import ReturnTitle from "../../components/utils/ReturnTitle";
+import { authEditEmail } from "../../services/auth";
+
 const EmailVerification = () => {
+  const { state } = useLocation();
+
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    setValue,
+    reset,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
+
+  const form = useWatch({ control });
+
+  useEffect(() => state && reset(state), [state]);
+
+  const onSubmit = useCallback(
+    (data) => {
+      authEditEmail(data)
+        .then(() => {
+          setValue("count", form?.count ? form.count + 1 : 1);
+          NotificationManager.success("Письмо отправлено на указанную почту");
+        })
+        .catch((err) => {
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Ошибка при отправке"
+          );
+        });
+    },
+    [form]
+  );
+
   return (
-    <section className='mb-3 mb-sm-5'>
-      <ReturnTitle link={'/account/profile'} title={'Подтверждение Электронной почты'}/>
-      <h2 className='d-none d-lg-block'>Подтверждение Электронной почты</h2>
+    <section className="mb-3 mb-sm-5">
+      <ReturnTitle
+        link="/account/profile"
+        title="Изменение электронной почты"
+      />
+      <h2 className="d-none d-lg-block">Изменение электронной почты</h2>
+      {form?.email?.length > 0 ? (
+        <>
+          <Row className="g-3 mb-3">
+            <Col md={8}>
+              <Input
+                type="email"
+                label="Email"
+                name="email"
+                errors={errors}
+                defaultValue={form?.email}
+                register={register}
+                validation={{ required: "Обязательное поле" }}
+              />
+            </Col>
+            <Col md={4}>
+              <Button
+                variant="primary"
+                onClick={() => handleSubmit(onSubmit)}
+                className="h-100 w-100"
+                disabled={!isValid || form?.count > 0}
+              >
+                Подтвердить
+              </Button>
+            </Col>
+          </Row>
 
-      <div className='row'>
-        <form className='col-12 col-lg-10 col-xl-8 col-xxl-6' action="">
-          <div className='row g-4 mb-5'>
-            <div className="col-12 col-sm-8">
-              <LabeledInput type={"email"} label={"E-mail"}/>
-            </div>
-            <div className="col-12 col-sm-4">
-              <button type='button' className='btn-1 h-100 w-100' disabled>Подтвердить</button>
-            </div>
-            <div className="col-12">
-              <p className='black mt-4'>Введите код, отправленный на указанную электронную почту</p>
-            </div>
-            <div className="col-12 col-sm-3">
-              <input className='code' type="number" placeholder='0000'/>
-            </div>
-          </div>
+          <button
+            type="button"
+            onClick={() => handleSubmit(onSubmit)}
+            disabled={!form?.count || form?.count === 0 || form?.count > 1}
+            className="mt-4 total-black"
+          >
+            Отправить письмо повторно
+          </button>
 
-          <button type='button' className='mt-5 total-black text-decoration-underline'>Отправить код повторно</button>
-
-          <Link to="/" className='d-block link-2 mt-3'>Возникли проблемы?</Link>
-        </form>
-      </div>
+          <Link to="/" className="d-block link-2 mt-3">
+            Возникли проблемы?
+          </Link>
+        </>
+      ) : (
+        <p>Нет данных для отправки письма</p>
+      )}
     </section>
   );
 };

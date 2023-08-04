@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import LabeledInput from '../../components/utils/LabeledInput';
+import Input from '../../components/utils/Input';
 import NavPagination from '../../components/NavPagination';
 import AppealLine from '../../components/AppealLine';
 import InputFileImg from '../../components/utils/InputFileImg';
@@ -68,21 +68,21 @@ const Callback = () => {
               <form action="">
                 <div className="row g-4 g-md-5">
                   <div className="col-md-6">
-                    <LabeledInput 
+                    <Input 
                       type={"select"} 
                       label={"Тема"} 
                       options={[{value:1, text: 'Тема 1'}, {value:2, text: 'Тема 2'}, {value:3, text: 'Тема 3'}]}
                     />
                   </div>
                   <div className="col-md-6">
-                    <LabeledInput 
+                    <Input 
                       type={"select"} 
                       label={"Подтема"} 
                       options={[{value:1, text: 'Подтема 1'}, {value:2, text: 'Подтема 2'}, {value:3, text: 'Подтема 3'}]}
                     />
                   </div>
                   <div className="col-md-12">
-                    <LabeledInput 
+                    <Input 
                       className="mb-3"
                       type={"textarea"} 
                       label={"Обращение"} 

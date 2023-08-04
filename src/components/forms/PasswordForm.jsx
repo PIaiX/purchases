@@ -1,7 +1,7 @@
 import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import LabeledInput from '../utils/LabeledInput';
+import Input from '../utils/Input';
 
 const PasswordForm = () => {
   return (
@@ -10,7 +10,7 @@ const PasswordForm = () => {
 
       <Row className='g-3 g-md-4'>
         <Col md={8}>
-          <LabeledInput type="email" placeholder='user@mail.com' label={'E-mail'}/>
+          <Input type="email" placeholder='user@mail.com' label={'E-mail'}/>
         </Col>
         <Col md={4}>
           <button type='button' className='btn-1 h-100 w-100'>Восстановить</button>
@@ -30,7 +30,7 @@ const PasswordForm = () => {
 
       <Row>
         <Col md={8}>
-          <LabeledInput className="mb-2" type="password" placeholder='Придумайте пароль' label={'Новый пароль'}/>
+          <Input className="mb-2" type="password" placeholder='Придумайте пароль' label={'Новый пароль'}/>
         </Col>
       </Row>
       <p className='rose fs-08'>Слишком короткий пароль</p>
@@ -38,7 +38,7 @@ const PasswordForm = () => {
       
       <Row className='mt-4'>
         <Col md={8}>
-          <LabeledInput className="mb-2" type="password" placeholder='Повторите пароль' label={'Подтверждение пароля'}/>
+          <Input className="mb-2" type="password" placeholder='Повторите пароль' label={'Подтверждение пароля'}/>
         </Col>
       </Row>
 

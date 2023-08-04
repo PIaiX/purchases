@@ -2,7 +2,7 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { LiaRubleSignSolid } from "react-icons/lia";
-import LabeledInput from '../../components/utils/LabeledInput';
+import Input from '../../components/utils/Input';
 import SettingsLine from '../../components/SettingsLine';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 
@@ -67,7 +67,7 @@ const Settings = () => {
           </div>
         </div>
         <div className="flex-1 d-sm-flex align-items-end ms-xxl-4 mt-4 mt-xxl-0">
-          <LabeledInput 
+          <Input 
             className="flex-1"
             type={"text"} 
             label={"Зарезервировать на балансе"} 

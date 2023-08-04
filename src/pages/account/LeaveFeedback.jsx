@@ -3,7 +3,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import {Link} from 'react-router-dom';
 import InputRating from '../../components/utils/InputRating';
-import LabeledInput from '../../components/utils/LabeledInput';
+import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 
 const LeaveFeedback = () => {
@@ -15,7 +15,7 @@ const LeaveFeedback = () => {
           <form action="">
             <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to="/">Obnyalpodnyal</Link></p>
             <InputRating className="mb-4 mb-sm-5"/>
-            <LabeledInput type={'textarea'} rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'}/>
+            <Input type={'textarea'} rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'}/>
             <button type='button' className='btn-1 mt-4'>Оценить</button>
           </form>
         </Col>
