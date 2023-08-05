@@ -6,8 +6,20 @@ const editAccount = async (payloads) => {
   return response?.data;
 };
 
+const editAvatar = async (file) => {
+  const response = await $authApi.post(apiRoutes.ACCOUNT_EDIT_AVATAR, file);
+  return response?.data;
+};
+
 const getOrders = async (page, limit) => {
-  const response = await $authApi.get(apiRoutes.ACCOUNT_ORDERS_GET, {
+  const response = await $authApi.get(apiRoutes.ORDERS_GET, {
+    params: { page, limit },
+  });
+  return response?.data;
+};
+
+const getSessions = async (page, limit) => {
+  const response = await $authApi.get(apiRoutes.SESSIONS_GET, {
     params: { page, limit },
   });
   return response?.data;
@@ -17,16 +29,14 @@ const getOrder = async (orderId) => {
   if (!orderId) {
     return false;
   }
-  const response = await $authApi.get(apiRoutes.ACCOUNT_ORDER_GET, {
+  const response = await $authApi.get(apiRoutes.ORDER_GET, {
     params: { orderId },
   });
-  if (response) {
-    return response.data;
-  }
+  return response?.data;
 };
 
 const getNotifications = async (page, limit) => {
-  const response = await $authApi.get(apiRoutes.ACCOUNT_NOTIFICATIONS_GET, {
+  const response = await $authApi.get(apiRoutes.NOTIFICATIONS_GET, {
     params: { page, limit },
   });
   if (response) {
@@ -52,21 +62,20 @@ const deleteAccount = async (data) => {
 };
 
 const savePushToken = async (token) => {
-  const response = await $authApi.post(apiRoutes.ACCOUNT_SAVE_PUSHTOKEN, {
+  const response = await $authApi.post(apiRoutes.SAVE_PUSHTOKEN, {
     token,
   });
-  if (response) {
-    return response.data;
-  }
+  return response?.data;
 };
 
 export {
   deleteAccount,
   deleteNotification,
+  editAvatar,
   editAccount,
   getNotifications,
   getOrder,
   getOrders,
-  savePushToken
+  getSessions,
+  savePushToken,
 };
-

@@ -69,7 +69,7 @@ $authApi.interceptors.response.use(
         .dispatch(refreshAuth())
         .then(() => $authApi(originalRequest));
     }
-    return error;
+    return Promise.reject(error);
   }
 );
 

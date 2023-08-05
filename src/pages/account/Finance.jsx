@@ -1,13 +1,23 @@
-import React, {useState} from 'react';
-import NavPagination from '../../components/NavPagination';
-import Operation from '../../components/Operation';
-import ReturnTitle from '../../components/utils/ReturnTitle';
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import NavPagination from "../../components/NavPagination";
+import Operation from "../../components/Operation";
+import ReturnTitle from "../../components/utils/ReturnTitle";
+import { customPrice } from "../../helpers/all";
+import Meta from "../../components/Meta";
 
 const Finance = () => {
+  const { user } = useSelector((state) => state.auth);
+  const [transactions, setTransactions] = useState({
+    items: [],
+    loading: true,
+  });
+
   const [balanceSection, setBalanceSection] = useState(2);
   return (
-    <section className='sec-finance mb-6'>
-      <ReturnTitle link={'/account'} title={'Финансы'}/>
+    <section className="sec-finance mb-6">
+      <Meta title="Финансы" />
+      <ReturnTitle link="/account" title="Финансы" />
 
       {/* <div className="list-wrapping mb-4 mb-sm-5">
         <div className="list-wrapping-top">
@@ -25,70 +35,81 @@ const Finance = () => {
       </div> */}
 
       <div className="d-xl-flex mb-4 mb-sm-5">
-        <div className='balance me-xl-3 me-xxl-5 mb-4 mb-xl-0'>
+        <div className="balance me-xl-3 me-xxl-5 mb-4 mb-xl-0">
           <span className="fw-6 me-2 me-xxl-3">Баланс</span>
-          <span className="title-font fs-20 me-1">14 856,78</span>
-          <div className='rouble'>₽</div>
+          <span className="title-font fs-20 me-1">
+            {customPrice(user.cash)}
+          </span>
         </div>
-        <ul className='list-unstyled d-flex justify-content-between justify-content-sm-start'>
-          <li className='me-1 me-sm-3 me-xxl-5'>
-            <button 
-            type='button' 
-            className={(balanceSection === 1) ? 'btn-2 active h-100 px-2 px-sm-4' : 'btn-2 h-100 px-2 px-sm-4'}
-            onClick={()=>setBalanceSection(2)}
-            >Пополнить баланс</button>
+        <ul className="list-unstyled d-flex justify-content-between justify-content-sm-start">
+          <li className="me-1 me-sm-3 me-xxl-5">
+            <button
+              type="button"
+              className={
+                balanceSection === 1
+                  ? "btn-2 active h-100 px-2 px-sm-4"
+                  : "btn-2 h-100 px-2 px-sm-4"
+              }
+              onClick={() => setBalanceSection(2)}
+            >
+              Пополнить баланс
+            </button>
           </li>
-          <li className='me-1 me-sm-3 me-xxl-5'>
-            <button 
-            type='button' 
-            className={(balanceSection === 2) ? 'btn-2 active h-100 px-2 px-sm-4' : 'btn-2 h-100 px-2 px-sm-4'}
-            onClick={()=>setBalanceSection(2)}
-            >История операций</button>
+          <li className="me-1 me-sm-3 me-xxl-5">
+            <button
+              type="button"
+              className={
+                balanceSection === 2
+                  ? "btn-2 active h-100 px-2 px-sm-4"
+                  : "btn-2 h-100 px-2 px-sm-4"
+              }
+              onClick={() => setBalanceSection(2)}
+            >
+              История операций
+            </button>
           </li>
           <li>
-            <div className='btn-2 h-100 px-2 px-sm-4'>Вывести средства</div>
+            <div className="btn-2 h-100 px-2 px-sm-4">Вывести средства</div>
           </li>
         </ul>
       </div>
 
-      {
-        (balanceSection === 1) &&
+      {balanceSection === 1 && (
         <section>
-          <h3 className='mb-4'>Выберите способ оплаты</h3>
-          <ul className='list-unstyled row row-cols-4'>
+          <h3 className="mb-4">Выберите способ оплаты</h3>
+          <ul className="list-unstyled row row-cols-4">
             <li>
               <label>
-                <input type="radio" name='payment-method'/>
+                <input type="radio" name="payment-method" />
                 <span>Банковская карта</span>
               </label>
             </li>
             <li>
               <label>
-                <input type="radio" name='payment-method'/>
+                <input type="radio" name="payment-method" />
                 <span>Банковская карта</span>
               </label>
             </li>
             <li>
               <label>
-                <input type="radio" name='payment-method'/>
+                <input type="radio" name="payment-method" />
                 <span>Банковская карта</span>
               </label>
             </li>
             <li>
               <label>
-                <input type="radio" name='payment-method'/>
+                <input type="radio" name="payment-method" />
                 <span>Банковская карта</span>
               </label>
             </li>
           </ul>
         </section>
-      }
+      )}
 
-      {
-        (balanceSection === 2) &&
+      {balanceSection === 2 && (
         <div className="list-wrapping">
           <div className="list-wrapping-top">
-            <ul className='line-operation'>
+            <ul className="line-operation">
               <li className="date">Дата</li>
               <li className="id">ID операции</li>
               <li className="type">Тип</li>
@@ -97,42 +118,41 @@ const Finance = () => {
             </ul>
           </div>
           <div className="list-wrapping-main">
-            <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0'>
+            <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
               <li>
-                <Operation/>
+                <Operation />
               </li>
             </ul>
           </div>
           <div className="list-wrapping-bottom">
-            <NavPagination/>
+            <NavPagination />
           </div>
         </div>
-      }
-      
+      )}
     </section>
   );
 };

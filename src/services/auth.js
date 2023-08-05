@@ -23,7 +23,7 @@ const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
 
 const checkAuth = async () => {
   const response = await $authApi.post(apiRoutes.AUTH_CHECK);
-  return response.data;
+  return response?.data;
 };
 
 const refreshAuth = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
@@ -36,43 +36,43 @@ const refreshAuth = createAsyncThunk("auth/refresh", async (_, thunkAPI) => {
 });
 
 const authRegister = async (params) => {
-  const data = await $api.post(apiRoutes.AUTH_REGISTRATION, params);
-  return data;
+  const response = await $api.post(apiRoutes.AUTH_REGISTRATION, params);
+  return response?.data;
 };
 
 const authActivate = async (key) => {
-  const data = await $api.post(apiRoutes.AUTH_ACTIVATE, { key });
-  return data;
+  const response = await $api.post(apiRoutes.AUTH_ACTIVATE, { key });
+  return response?.data;
 };
 
 const authActivateEmail = async (key) => {
-  const data = await $api.post(apiRoutes.AUTH_ACTIVATE_EMAIL, { key });
-  return data;
+  const response = await $api.post(apiRoutes.AUTH_ACTIVATE_EMAIL, { key });
+  return response?.data;
 };
 
-const authEditPhone = async (params) => {
-  const data = await $authApi.post(apiRoutes.AUTH_EDIT_PHONE, params);
-  return data;
+const authEditPhone = async (data) => {
+  const response = await $authApi.post(apiRoutes.AUTH_EDIT_PHONE, data);
+  return response?.data;
 };
 
 const authEditPassword = async (params) => {
-  const data = await $authApi.post(apiRoutes.AUTH_EDIT_PASSWORD, params);
-  return data;
+  const response = await $authApi.post(apiRoutes.AUTH_EDIT_PASSWORD, params);
+  return response?.data;
 };
 
 const authNewKeyActivate = async (params) => {
-  const data = await $authApi.post(apiRoutes.AUTH_NEW_KEY_ACTIVATE, params);
-  return data;
+  const response = await $authApi.post(apiRoutes.AUTH_NEW_KEY_ACTIVATE, params);
+  return response?.data;
 };
 
 const authPasswordRecovery = async (params) => {
-  const data = await $api.post(apiRoutes.AUTH_RECOVERY, params);
-  return data;
+  const response = await $api.post(apiRoutes.AUTH_RECOVERY, params);
+  return response?.data;
 };
 
-const authEditEmail = async (params) => {
-  const data = await $authApi.post(apiRoutes.AUTH_EDIT_EMAIL, params);
-  return data;
+const authEditEmail = async (data) => {
+  const response = await $authApi.post(apiRoutes.AUTH_EDIT_EMAIL, data);
+  return response?.data;
 };
 
 export {

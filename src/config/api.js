@@ -16,8 +16,11 @@ const apiRoutes = {
   AUTH_REFRESH: BASE_URL + "/auth/refresh",
   AUTH_LOGOUT: BASE_URL + "/auth/logout",
 
+  SESSIONS_GET: BASE_URL + "/user/sessions",
+
   // Account
   ACCOUNT_EDIT: BASE_URL + "/user/edit",
+  ACCOUNT_EDIT_AVATAR: BASE_URL + "/user/editAvatar",
 
   // Order
   ORDERS_GET: BASE_URL + "/order",

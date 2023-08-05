@@ -6,6 +6,7 @@ import { Link, useLocation } from "react-router-dom";
 import Input from "../../components/utils/Input";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import { authEditEmail } from "../../services/auth";
+import Meta from "../../components/Meta";
 
 const EmailVerification = () => {
   const { state } = useLocation();
@@ -44,6 +45,7 @@ const EmailVerification = () => {
 
   return (
     <section className="mb-3 mb-sm-5">
+      <Meta title="Изменение электронной почты" />
       <ReturnTitle
         link="/account/profile"
         title="Изменение электронной почты"

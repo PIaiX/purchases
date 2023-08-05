@@ -11,6 +11,7 @@ const Input = memo(
     label,
     className,
     mask = false,
+    defaultValue,
     placeholder,
     name,
     autoFocus,
@@ -27,6 +28,7 @@ const Input = memo(
           {type === "password" ? (
             <div className="password">
               <input
+                defaultValue={defaultValue}
                 autoFocus={autoFocus}
                 type={visible ? "text" : "password"}
                 autoComplete="current-password"
@@ -49,6 +51,7 @@ const Input = memo(
               mask={mask}
               type={type}
               required
+              defaultValue={defaultValue}
               placeholder={placeholder}
               onChange={(e) =>
                 onChange && !register && onChange(e.target.value)
@@ -57,6 +60,7 @@ const Input = memo(
             />
           ) : (
             <input
+              defaultValue={defaultValue}
               autoFocus={autoFocus}
               type={type}
               minLength={minLength}

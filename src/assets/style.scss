@@ -441,8 +441,6 @@ h6 {
   background-color: $blue;
 }
 .ruble {
-  width: 1.5em;
-  height: 1.5em;
   border-radius: 50%;
   border: 1px solid $white;
 }
@@ -758,9 +756,12 @@ button {
   @include flex(row, center, center, nowrap);
   padding: 0.8em 1.6em;
   text-align: center;
-  transition: $transition;
   width: fit-content;
   border-radius: $radius;
+  &:active,
+  &:hover {
+    transition: $transition;
+  }
   //голубая градиентная кнопка
   &-1,
   &-primary {
@@ -1777,7 +1778,6 @@ header {
         right: -0.5em;
         width: 1em;
         height: 1em;
-        transition: $transition;
         transform: translateY(0.25em);
         @include flex();
         border-radius: 50%;
@@ -3379,7 +3379,8 @@ ACCOUNT
       background: linear-gradient(to bottom, transparent, $total-black 50%);
       background-size: cover;
     }
-    button {
+    label {
+      cursor: pointer;
       position: absolute;
       left: 50%;
       transform: translateX(-50%);
@@ -3389,7 +3390,7 @@ ACCOUNT
       font-size: 1.34em;
       transition: $transition;
       &:hover {
-        color: $green;
+        color: $green !important;
       }
     }
   }

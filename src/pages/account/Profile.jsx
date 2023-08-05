@@ -15,12 +15,12 @@ import Input from "../../components/utils/Input";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import StarRating from "../../components/utils/StarRating";
 import Textarea from "../../components/utils/Textarea";
-import { editAccount } from "../../services/account";
+import { editAccount, editAvatar } from "../../services/account";
 import { authEditPassword, authEditPhone } from "../../services/auth";
 import { setUser } from "../../store/reducers/authSlice";
 
 const Profile = () => {
-  const { isAuth, user } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -55,26 +55,31 @@ const Profile = () => {
 
   const form = useWatch({ control });
 
-  const onSubmit = useCallback((data) => {
-    editAccount(data)
-      .then(() => {
-        dispatch(
-          setUser({ ...user, firstName: data.firstName, about: data.about })
-        );
+  const onSubmit = useCallback(
+    (data) => {
+      editAccount(data)
+        .then(() => {
+          dispatch(
+            setUser({ ...user, firstName: data.firstName, about: data.about })
+          );
 
-        if (data.email != user.email || !user.email) {
-          navigate("email", { state: { email: data.email } });
-        } else {
-          NotificationManager.success("Данные успешно обновлены");
-        }
-      })
-      .catch((err) => {
-        NotificationManager.error("Ошибка при сохранении");
-      });
-  }, []);
+          if (data.email != user.email || !user.email) {
+            navigate("email", { state: { email: data.email } });
+          } else {
+            NotificationManager.success("Данные успешно обновлены");
+          }
+        })
+        .catch((err) => {
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Ошибка при сохранении"
+          );
+        });
+    },
+    [user]
+  );
 
   const onSubmitPhone = useCallback((data) => {
-    if (data.email == user.email) {
+    if (data.phone == user.phone) {
       return NotificationManager.error(
         "Нельзя сменить номер телефона на существующий"
       );
@@ -85,31 +90,78 @@ const Profile = () => {
         navigate("phone", { state: { phone: data.phone } });
       })
       .catch(
-        (err) => err && NotificationManager.error("Ошибка при сохранении")
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Ошибка при сохранении"
+          )
       );
   }, []);
 
   const onSubmitPassword = useCallback((data) => {
-    setLoading(true);
+    if (data.passwordNew != data.passwordConfirm) {
+      return NotificationManager.error("Пароли не совпадают");
+    }
     authEditPassword(data)
       .then(() => {
-        NotificationManager.success("Данные успешно обновлены");
+        NotificationManager.success("Пароль успешно обновлен");
       })
-      .catch((err) => err && NotificationManager.error("Ошибка при сохранении"))
-      .finally(() => setLoading(false));
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Ошибка при сохранении"
+          )
+      );
   }, []);
+
+  const onUploadAvatar = useCallback(
+    (e) => {
+      e.preventDefault();
+      if (e.target.files && e.target.files[0]) {
+        const formData = new FormData();
+        const reader = new FileReader();
+
+        reader.readAsDataURL(e.target.files[0]);
+
+        reader.onload = (readerEvent) => {
+          formData.append("image", readerEvent.target.result);
+        };
+
+        editAvatar(formData)
+          .then((res) => {
+            NotificationManager.success("Аватвар успешно изменен");
+            res?.media && dispatch(setUser({ ...user, media: res.media }));
+          })
+          .catch(
+            (err) =>
+              err &&
+              NotificationManager.error(
+                err?.response?.data?.error ?? "Ошибка при сохранении"
+              )
+          );
+      }
+    },
+    [user]
+  );
 
   return (
     <section className="sec-profile mb-6">
       <Meta title="Профиль" />
-      <ReturnTitle link={"/account"} title={"Профиль"} />
+      <ReturnTitle link="/account" title="Профиль" />
       <div className="d-flex align-items-start mb-5">
         <div className="user flex-1">
           <div className="user-photo">
             <img src="/imgs/user2.jpg" alt="userphoto" />
-            <button type="button">
+            <label htmlFor="input-file-upload">
+              <input
+                type="file"
+                id="input-file-upload"
+                className="d-none"
+                onChange={onUploadAvatar}
+              />
               <FiEdit />
-            </button>
+            </label>
           </div>
           <div className="user-main">
             <div className="title">{user?.firstName ?? "Никнейм"}</div>
@@ -125,21 +177,21 @@ const Profile = () => {
                 <TbHeartHandshake className="svg" />
                 <span>Сделок:</span>
               </div>
-              <span>0</span>
+              <span>{user?.order ?? 0}</span>
             </li>
             <li>
               <div>
                 <Joystick className="path" />
                 <span>Лотов:</span>
               </div>
-              <span>0</span>
+              <span>{0}</span>
             </li>
             <li>
               <div>
                 <FiMessageCircle className="svg" />
                 <span>Отзывов:</span>
               </div>
-              <span>0</span>
+              <span>{user?.review ?? 0}</span>
             </li>
           </ul>
           <QRCode
@@ -202,7 +254,6 @@ const Profile = () => {
           <Row className="g-3 gy-xl-4">
             <Col md={12}>
               <Input
-                type="tel"
                 mask="7(999)999-99-99"
                 label="Номер телефона"
                 name="phone"
@@ -212,21 +263,35 @@ const Profile = () => {
                 validation={{ required: "Обязательное поле" }}
               />
             </Col>
-            <Col md={12}>
-              <p className="rose fs-09 mt-1">
-                Только верифицированные пользовтаели могут публиковать
-                объявления на бирже Game.
-              </p>
-            </Col>
-            <Col md={12}>
-              <Button
-                variant="danger"
-                disabled={!isValidPhone}
-                onClick={handleSubmitPhone(onSubmitPhone)}
-              >
-                Пройти верификацию
-              </Button>
-            </Col>
+            {!user?.phone ? (
+              <>
+                <Col md={12}>
+                  <p className="rose fs-09 mt-1">
+                    Только верифицированные пользовтаели могут публиковать
+                    объявления на бирже Game.
+                  </p>
+                </Col>
+                <Col md={12}>
+                  <Button
+                    variant="danger"
+                    disabled={!isValidPhone}
+                    onClick={handleSubmitPhone(onSubmitPhone)}
+                  >
+                    Пройти верификацию
+                  </Button>
+                </Col>
+              </>
+            ) : (
+              <Col md={12}>
+                <Button
+                  variant="primary"
+                  disabled={!isValidPhone}
+                  onClick={handleSubmitPhone(onSubmitPhone)}
+                >
+                  Изменить номер телефона
+                </Button>
+              </Col>
+            )}
           </Row>
         </Col>
         <Col md={12}>
@@ -235,7 +300,7 @@ const Profile = () => {
             <Col md={4}>
               <Input
                 type="password"
-                name="lastPassword"
+                name="passwordOld"
                 label="Старый пароль"
                 errors={errorsPassword}
                 register={registerPassword}
@@ -245,7 +310,7 @@ const Profile = () => {
             <Col md={4}>
               <Input
                 type="password"
-                name="newPassword"
+                name="passwordNew"
                 label="Новый пароль"
                 errors={errorsPassword}
                 register={registerPassword}
@@ -255,7 +320,7 @@ const Profile = () => {
             <Col md={4}>
               <Input
                 type="password"
-                name="confirmNewPassword"
+                name="passwordConfirm"
                 errors={errorsPassword}
                 label="Подтверждение пароля"
                 register={registerPassword}

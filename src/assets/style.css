@@ -8321,8 +8321,6 @@ h6, .h6 {
 }
 
 .ruble {
-  width: 1.5em;
-  height: 1.5em;
   border-radius: 50%;
   border: 1px solid #ffffff;
 }
@@ -8674,10 +8672,12 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   flex-wrap: nowrap;
   padding: 0.8em 1.6em;
   text-align: center;
-  transition: 300ms ease-in-out;
   width: -moz-fit-content;
   width: fit-content;
   border-radius: 0.67em;
+}
+.btn:active, .btn-6:active, .btn-success:active, .btn-5:active, .btn-4:active, .btn-dark:active, .btn-3:active, .btn-danger:active, .btn-2:active, .btn-light:active, .btn-1:active, .btn-primary:active, .btn:hover, .btn-6:hover, .btn-success:hover, .btn-5:hover, .btn-4:hover, .btn-dark:hover, .btn-3:hover, .btn-danger:hover, .btn-2:hover, .btn-light:hover, .btn-1:hover, .btn-primary:hover {
+  transition: 300ms ease-in-out;
 }
 .btn-1, .btn-primary {
   color: #ffffff !important;
@@ -9881,7 +9881,6 @@ header .profile-link img {
   right: -0.5em;
   width: 1em;
   height: 1em;
-  transition: 300ms ease-in-out;
   transform: translateY(0.25em);
   display: flex;
   flex-direction: row;
@@ -11936,7 +11935,8 @@ ACCOUNT
   background: linear-gradient(to bottom, transparent, #000 50%);
   background-size: cover;
 }
-.user-photo button {
+.user-photo label {
+  cursor: pointer;
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
@@ -11946,8 +11946,8 @@ ACCOUNT
   font-size: 1.34em;
   transition: 300ms ease-in-out;
 }
-.user-photo button:hover {
-  color: #48d868;
+.user-photo label:hover {
+  color: #48d868 !important;
 }
 .user-main {
   position: relative;

@@ -6,17 +6,21 @@ import { Link, useLocation } from "react-router-dom";
 import Input from "../../components/utils/Input";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import { authEditPhone } from "../../services/auth";
+import { setUser } from "../../store/reducers/authSlice";
+import { useSelector } from "react-redux";
+import Meta from "../../components/Meta";
 
 const PhoneVerification = () => {
   const { state } = useLocation();
+  const { user } = useSelector((items) => items.auth);
 
   const {
     control,
     register,
     formState: { errors, isValid },
     handleSubmit,
-    setValue,
     reset,
+    setValue,
   } = useForm({
     mode: "onChange",
     reValidateMode: "onSubmit",
@@ -30,18 +34,11 @@ const PhoneVerification = () => {
 
   const onSubmit = useCallback(
     (data) => {
-      authEditPhone(data)
+      authEditPhone({ ...data, step: 2 })
         .then(() => {
-          setValue("count", form?.count ? form.count + 1 : 1);
-          setValue("step", form?.step ? form.step + 1 : 1);
-          if (!form?.step || form?.step === 1) {
-            NotificationManager.success(
-              "Код подтверждения отправлен на указанный номер телефона"
-            );
-          } else {
-            reset({ step: 2 });
-            NotificationManager.success("Номер телефона успешно изменен");
-          }
+          setValue("step", 3);
+          setUser({ ...user, phone: data.phone });
+          NotificationManager.success("Номер телефона успешно изменен");
         })
         .catch((err) => {
           NotificationManager.error(
@@ -54,6 +51,7 @@ const PhoneVerification = () => {
 
   return (
     <section className="mb-3 mb-sm-5">
+      <Meta title="Изменение номера телефона" />
       <ReturnTitle link="/account/profile" title="Изменение номера телефона" />
       <h2 className="d-none d-lg-block">Изменение номера телефона</h2>
       {form?.phone?.length > 0 ? (
@@ -61,39 +59,13 @@ const PhoneVerification = () => {
           <Row
             className={
               "g-3 mb-3 " +
-              (!form?.step || form?.step === 0 ? "d-flex" : "d-none")
+              (!form?.step || form?.step === 1 ? "d-flex" : "d-none")
             }
           >
             <Col md={8}>
               <Input
-                mask="7(999)999-99-99"
-                label="Новый номер телефона"
-                name="phone"
-                errors={errors}
-                defaultValue={form?.phone}
-                register={register}
-                validation={{ required: "Обязательное поле" }}
-              />
-            </Col>
-            <Col md={4}>
-              <Button
-                variant="primary"
-                onClick={handleSubmit(onSubmit)}
-                className="h-100 w-100"
-                disabled={!isValid || form?.count > 0}
-              >
-                Отправить
-              </Button>
-            </Col>
-          </Row>
-
-          <Row
-            className={"g-3 mb-3 " + (form?.step === 1 ? "d-flex" : "d-none")}
-          >
-            <Col md={8}>
-              <Input
                 className="code"
-                type="number"
+                mask="9999"
                 placeholder="0000"
                 name="key"
                 minLength={4}
@@ -114,18 +86,18 @@ const PhoneVerification = () => {
               </Button>
             </Col>
           </Row>
-          {form?.step == 2 ? (
+          {form?.step == 3 ? (
             <p>Номер телефона успешно изменен</p>
           ) : (
             <>
-              <button
+              {/* <button
                 type="button"
                 onClick={handleSubmit(onSubmit)}
                 disabled={!form?.count || form?.count === 0 || form?.count > 1}
                 className="mt-4 total-black"
               >
                 Отправить код повторно
-              </button>
+              </button> */}
 
               <Link to="/" className="d-block link-2 mt-3">
                 Возникли проблемы?
