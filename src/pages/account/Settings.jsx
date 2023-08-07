@@ -18,6 +18,8 @@ import { editAccount, getSessions } from "../../services/account";
 import { setUser } from "../../store/reducers/authSlice";
 import { customPrice } from "../../helpers/all";
 import Meta from "../../components/Meta";
+import { deleteSession } from "../../services/user";
+import { logout } from "../../services/auth";
 
 const Settings = () => {
   const { user } = useSelector((state) => state.auth);
@@ -45,6 +47,8 @@ const Settings = () => {
       .then((res) => res && setSessions({ items: res, loading: false }))
       .catch(() => setSessions((data) => ({ ...data, loading: false })));
   }, []);
+
+  const onDeleteSession = useCallback((data) => deleteSession(data), []);
 
   const onEditAccount = useCallback((data) => {
     editAccount(data)
@@ -98,7 +102,13 @@ const Settings = () => {
                     <div className="ip">{item.ip}</div>
                     <div className="region">Казань</div>
                     <div className="btns">
-                      <button type="button">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          onDeleteSession(item)
+                          window.location.reload()
+                        }}
+                      >
                         <GoSignOut />
                       </button>
                     </div>

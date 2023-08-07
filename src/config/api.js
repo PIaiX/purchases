@@ -109,6 +109,7 @@ const apiRoutes = {
   USER: BASE_URL + "/user",
   USER_ONE: BASE_URL + "/user/one",
   USER_CREATE: BASE_URL + "/user/create",
+  USER_DELETE_SESSION:  BASE_URL + "/user/deleteSession",
 
   // Options
   OPTIONS: BASE_URL + "/option/",

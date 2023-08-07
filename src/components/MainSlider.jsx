@@ -57,7 +57,7 @@ const MainSlider = () => {
         <MainSlide
           isActive={activeSlide === 2}
           title={"wOw"}
-          imgFull={"/imgs/slider/gif.gif"}
+          imgFull={"/imgs/slider/wow.webp"}
           imgMini={"/imgs/slider/slide-cover-1.jpg"}
           onClick={() => handleClick(2)}
         />

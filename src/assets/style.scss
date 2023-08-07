@@ -2683,6 +2683,9 @@ header {
     margin-bottom: 0.1em;
   }
 }
+.sec-messages-chat {
+  box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
+}
 .chat {
   position: relative;
   &-window {

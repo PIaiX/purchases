@@ -1,5 +1,6 @@
 // value - цена, currency - выводить валюту (true|false))
 import { LiaRubleSignSolid } from "react-icons/lia";
+import { FILE_URL } from "../config/api";
 
 const customPrice = (value, currency = true) => {
   if (!value) {
@@ -17,4 +18,16 @@ const customPrice = (value, currency = true) => {
   return value;
 };
 
-export { customPrice };
+const getImageURL = ({ path = "", size = "mini", type = "product" }) => {
+  if (path && path.length > 0) {
+    if (size == "mini") {
+      return FILE_URL + "/" + type + "/mini/" + path[0].media;
+    } else {
+      return FILE_URL + "/" + type + "/" + path[0].media;
+    }
+  } else {
+    return "/imgs/user2.jpg";
+  }
+};
+
+export { customPrice, getImageURL };

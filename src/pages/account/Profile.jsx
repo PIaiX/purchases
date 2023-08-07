@@ -1,5 +1,5 @@
-import React, { useCallback } from "react";
-import { Button } from "react-bootstrap";
+import React, { useCallback, useState } from "react";
+import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useForm, useWatch } from "react-hook-form";
@@ -18,12 +18,14 @@ import Textarea from "../../components/utils/Textarea";
 import { editAccount, editAvatar } from "../../services/account";
 import { authEditPassword, authEditPhone } from "../../services/auth";
 import { setUser } from "../../store/reducers/authSlice";
+import { getImageURL } from "../../helpers/all";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-
+  const [showShare, setShowShare] = useState(false);
+  const [avatar, setAvatar] = useState(false);
   const {
     control,
     register,
@@ -57,6 +59,8 @@ const Profile = () => {
 
   const onSubmit = useCallback(
     (data) => {
+      console.log(data);
+      return false;
       editAccount(data)
         .then(() => {
           dispatch(
@@ -119,19 +123,18 @@ const Profile = () => {
     (e) => {
       e.preventDefault();
       if (e.target.files && e.target.files[0]) {
-        const formData = new FormData();
         const reader = new FileReader();
 
         reader.readAsDataURL(e.target.files[0]);
 
         reader.onload = (readerEvent) => {
-          formData.append("image", readerEvent.target.result);
+          setAvatar(readerEvent.target.result);
         };
 
-        editAvatar(formData)
+        editAvatar({ file: e.target.files })
           .then((res) => {
             NotificationManager.success("Аватвар успешно изменен");
-            res?.media && dispatch(setUser({ ...user, media: res.media }));
+            res && dispatch(setUser({ ...user, media: res }));
           })
           .catch(
             (err) =>
@@ -152,12 +155,24 @@ const Profile = () => {
       <div className="d-flex align-items-start mb-5">
         <div className="user flex-1">
           <div className="user-photo">
-            <img src="/imgs/user2.jpg" alt="userphoto" />
+            <img
+              src={
+                avatar
+                  ? avatar
+                  : getImageURL({
+                      path: user?.media,
+                      size: "mini",
+                      type: "user",
+                    })
+              }
+              alt="userphoto"
+            />
             <label htmlFor="input-file-upload">
               <input
                 type="file"
                 id="input-file-upload"
                 className="d-none"
+                name="file"
                 onChange={onUploadAvatar}
               />
               <FiEdit />
@@ -197,11 +212,15 @@ const Profile = () => {
           <QRCode
             className="qr-code ms-3 ms-xl-5"
             size={100}
-            value={`http://rush-2play.online/account/${user.id}`}
+            value={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
             viewBox={`0 0 256 256`}
           />
         </div>
-        <button type="button" className="share-btn ms-2 ms-xl-4">
+        <button
+          type="button"
+          onClick={setShowShare}
+          className="share-btn ms-2 ms-xl-4"
+        >
           <FiShare />
         </button>
       </div>
@@ -338,6 +357,17 @@ const Profile = () => {
           </Button>
         </Col>
       </Row>
+      <Modal show={showShare} onHide={setShowShare} centered>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <h4 className="mb-3">Поделитесь профилем</h4>
+          <Input
+            onClick={(e) => e.target.select()}
+            readOnly
+            defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
+          />
+        </Modal.Body>
+      </Modal>
     </section>
   );
 };

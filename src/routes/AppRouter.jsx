@@ -22,7 +22,7 @@ import Rules from "../pages/Rules";
 import Cookie from "../pages/Cookie";
 import QuestionPage from "../pages/QuestionPage";
 import Feedback from "../pages/Feedback";
-import Trader from "../pages/Trader";
+import Profile from "../pages/Profile";
 import LotPage from "../pages/LotPage";
 import AuthRoute from "../layouts/AuthRoute";
 import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
@@ -33,7 +33,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="game" element={<Game />} />
       <Route path="game/lot" element={<LotPage />} />
-      <Route path="trader" element={<Trader />} />
+      <Route path="profile/:userId" element={<Profile />} />
       <Route path="blog" element={<Blog />} />
       <Route path="blog/:id" element={<Article />} />
       <Route path="registration" element={<Registration />} />

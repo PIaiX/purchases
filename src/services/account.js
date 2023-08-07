@@ -6,8 +6,8 @@ const editAccount = async (payloads) => {
   return response?.data;
 };
 
-const editAvatar = async (file) => {
-  const response = await $authApi.post(apiRoutes.ACCOUNT_EDIT_AVATAR, file);
+const editAvatar = async (data) => {
+  const response = await $authApi.postForm(apiRoutes.ACCOUNT_EDIT_AVATAR, data);
   return response?.data;
 };
 
