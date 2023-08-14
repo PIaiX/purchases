@@ -9,12 +9,11 @@ import Meta from "../../components/Meta";
 import Input from "../../components/utils/Input";
 import { authRegister } from "../../services/auth";
 import { useForm } from "react-hook-form";
+import { NotificationManager } from "react-notifications";
 
 const Registration = () => {
   const { isAuth } = useSelector((state) => state?.auth);
   const navigate = useNavigate();
-
-  const [show, setShow] = useState(false);
 
   useLayoutEffect(() => {
     if (isAuth) {
@@ -28,13 +27,20 @@ const Registration = () => {
     handleSubmit,
   } = useForm({ mode: "all", reValidateMode: "onSubmit" });
 
-  const onSubmit = useCallback(
-    (data) => {
-      authRegister(data);
-      setShow(!show);
-    },
-    [show]
-  );
+  const onSubmit = useCallback((data) => {
+    authRegister(data)
+      .then(() => {
+        NotificationManager.success("Завершите регистрацию, подтвердив почту");
+        navigate("/");
+      })
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Неизвестная ошибка при регистрации"
+          )
+      );
+  }, []);
 
   return (
     <main>

@@ -59,13 +59,9 @@ const Profile = () => {
 
   const onSubmit = useCallback(
     (data) => {
-      console.log(data);
-      return false;
       editAccount(data)
         .then(() => {
-          dispatch(
-            setUser({ ...user, firstName: data.firstName, about: data.about })
-          );
+          dispatch(setUser({ ...user, about: data.about }));
 
           if (data.email != user.email || !user.email) {
             navigate("email", { state: { email: data.email } });
@@ -228,7 +224,7 @@ const Profile = () => {
       <Row className="g-3 gy-xl-4 mb-md-4">
         <Col xs={6} xxl={6}>
           <Row className="g-3 gy-xl-4">
-            <Col md={12} xl={12}>
+            {/* <Col md={12} xl={12}>
               <Input
                 type="text"
                 label="Имя/Ник"
@@ -237,7 +233,7 @@ const Profile = () => {
                 defaultValue={form?.firstName}
                 register={register}
               />
-            </Col>
+            </Col> */}
             <Col md={12} xl={12}>
               <Textarea
                 label="О себе"
@@ -247,7 +243,7 @@ const Profile = () => {
                 register={register}
               />
             </Col>
-            <Col md={12} xl={12}>
+            {/* <Col md={12} xl={12}>
               <Input
                 type="email"
                 label="Email"
@@ -256,7 +252,7 @@ const Profile = () => {
                 defaultValue={form?.email}
                 register={register}
               />
-            </Col>
+            </Col> */}
             <Col md={12} xl={12}>
               <Button
                 variant="primary"
