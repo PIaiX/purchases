@@ -8370,7 +8370,38 @@ textarea:active {
   border: 1px solid #4a83dc;
 }
 
-input[type=checkbox], input[type=radio] {
+input[type=checkbox] {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  outline: none;
+  width: 20px;
+  height: 20px;
+  border: 1px solid #48d868;
+  border-radius: 4px;
+  box-shadow: none;
+  padding: 0px;
+  margin: 0px;
+  position: relative;
+}
+input[type=checkbox]::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 70%;
+  height: 40%;
+  border-color: transparent;
+  border-width: 0px 0px 3px 3px;
+  border-style: solid;
+  transform: translate(-50%, -65%) rotate(-45deg);
+  transition: border-color 300ms ease-in-out;
+}
+input[type=checkbox]:checked::before {
+  border-color: #48d868;
+}
+input[type=radio] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -8387,7 +8418,7 @@ input[type=checkbox], input[type=radio] {
   transition: 300ms ease-in-out;
   position: relative;
 }
-input[type=checkbox]::before, input[type=radio]::before {
+input[type=radio]::before {
   content: "";
   position: absolute;
   top: 4px;
@@ -8399,7 +8430,7 @@ input[type=checkbox]::before, input[type=radio]::before {
   transition: 300ms ease-in-out;
   opacity: 0;
 }
-input[type=checkbox]:checked::before, input[type=radio]:checked::before {
+input[type=radio]:checked::before {
   opacity: 1;
 }
 input.switch {

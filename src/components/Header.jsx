@@ -85,7 +85,7 @@ const Header = () => {
                     // onClick={handleShowAdvice}
                   >
                     <img src="/imgs/user.jpg" alt="user" />
-                    <span>{user?.firstName}</span>
+                    <span>{user?.nickname}</span>
                   </Link>
                   <button
                     type="button"

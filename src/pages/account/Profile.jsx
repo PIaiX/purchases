@@ -175,7 +175,7 @@ const Profile = () => {
             </label>
           </div>
           <div className="user-main">
-            <div className="title">{user?.firstName ?? "Никнейм"}</div>
+            <div className="title">{user?.nickname ?? "Никнейм"}</div>
             <div className="d-flex align-items-center">
               <StarRating rate={5} />
               <span className="fs-13 fw-7 ms-2">5</span>
@@ -228,9 +228,9 @@ const Profile = () => {
               <Input
                 type="text"
                 label="Имя/Ник"
-                name="firstName"
+                name="nickname"
                 errors={errors}
-                defaultValue={form?.firstName}
+                defaultValue={form?.nickname}
                 register={register}
               />
             </Col> */}

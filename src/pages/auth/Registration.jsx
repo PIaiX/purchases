@@ -209,13 +209,13 @@ const Registration = () => {
                     <Input
                       autoFocus
                       type="text"
-                      label="Никнейм"
-                      placeholder="Введите никнейм"
+                      label="Имя пользователя"
+                      placeholder="Введите имя пользователя"
                       name="nickname"
                       errors={errors}
                       register={register}
                       validation={{
-                        required: "Введите никнейм",
+                        required: "Введите имя пользователя",
                         minLength: {
                           value: 3,
                           message: "Минимально 3 символа",
@@ -275,8 +275,7 @@ const Registration = () => {
                           message: "Максимальное кол-во символов 250",
                         },
                         pattern: {
-                          value:
-                            /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,
+                          value: /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,
                           message:
                             "Пароль должен содержать не менее 6 символов латинского алфавита и цифры",
                         },
@@ -302,8 +301,7 @@ const Registration = () => {
                           message: "Максимальное кол-во символов 250",
                         },
                         pattern: {
-                          value:
-                            /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,
+                          value: /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,
                           message:
                             "Пароль должен содержать не менее 6 символов латинского алфавита и цифры",
                         },
@@ -313,13 +311,15 @@ const Registration = () => {
                   <label className="pale-blue mb-3">
                     <input
                       type="checkbox"
-                      className="switch me-3"
+                      className="checkbox me-3"
                       {...register("accept", {
                         required:
                           "Примите условия пользовательского соглашения",
                       })}
                     />
-                    <span className="fs-09">Принять условия Пользовательского соглашения</span>
+                    <span className="fs-09">
+                      Принять условия Пользовательского соглашения
+                    </span>
                   </label>
 
                   <Button

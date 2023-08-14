@@ -48,13 +48,13 @@ const Login = () => {
                   <div className="mb-4">
                     <Input
                       type="login"
-                      label="Никнейм или Email"
+                      label="Имя пользователя или Email"
                       name="login"
-                      placeholder="Введите никнейм или email"
+                      placeholder="Введите имя пользователя или email"
                       errors={errors}
                       register={register}
                       validation={{
-                        required: "Введите никнейм или email",
+                        required: "Введите имя пользователя или email",
                         maxLength: {
                           value: 250,
                           message: "Максимально 250 символов",

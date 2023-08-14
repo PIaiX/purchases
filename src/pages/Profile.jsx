@@ -45,7 +45,7 @@ const Profile = () => {
 
   return (
     <main>
-      <Meta title={user.data.firstName ?? "Профиль"} />
+      <Meta title={user.data.nickname ?? "Профиль"} />
       <section className="mb-6">
         <Container>
           <Row>
@@ -60,7 +60,7 @@ const Profile = () => {
                   </div>
                   <div className="user-main">
                     <div className="title">
-                      {user.data.firstName ?? "Никнейм"}
+                      {user.data.nickname ?? "Никнейм"}
                     </div>
                     <div className="d-flex align-items-center">
                       <StarRating rate={5} />
