@@ -47,14 +47,14 @@ const Login = () => {
                   </p>
                   <div className="mb-4">
                     <Input
-                      type="email"
-                      label="Email"
-                      name="email"
-                      placeholder="user@mail.com"
+                      type="login"
+                      label="Никнейм или Email"
+                      name="login"
+                      placeholder="Введите никнейм или email"
                       errors={errors}
                       register={register}
                       validation={{
-                        required: "Введите email",
+                        required: "Введите никнейм или email",
                         maxLength: {
                           value: 250,
                           message: "Максимально 250 символов",
@@ -62,7 +62,6 @@ const Login = () => {
                       }}
                     />
                   </div>
-
                   <Input
                     className="mb-2"
                     label="Пароль"

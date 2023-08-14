@@ -89,7 +89,7 @@ const Input = memo(
             <span>{label}</span>
           </label>
         </div>
-        {errors && errors[name]?.type === "required" && (
+        {errors && (
           <p className="rose fs-08">{errors[name]?.message}</p>
         )}
       </>
