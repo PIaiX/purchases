@@ -8,11 +8,12 @@ import {Link} from 'react-router-dom';
 import SecFavorites from './SecFavorites';
 import Logo from './svg/Logo';
 import { RxChevronDown } from "react-icons/rx";
+import ThemeToggler from './utils/ThemeToggler';
 
 const Header = () => {
   const [showAdvice, setShowAdvice] = useState(false);
   const handleCloseAdvice = () => setShowAdvice(false);
-  const handleShowAdvice = () => setShowAdvice(true);
+  // const handleShowAdvice = () => setShowAdvice(true);
 
   const [showFav, setShowFav] = useState(false);
   const handleCloseFav = () => setShowFav(false);
@@ -57,7 +58,8 @@ const Header = () => {
           <div className='d-none d-lg-flex align-items-center'>
             <input type="search" className='d-none d-lg-flex ms-4 ms-xxl-5' placeholder='Поиск по описанию'/>
             <Link to='/registration' className='ms-4'>Регистрация</Link>
-            <Link to='/login' className='btn-1 ms-4'>Войти</Link>
+            <Link to='/login' className='btn-1 mx-4'>Войти</Link>
+            <ThemeToggler />
             {/* <LanguageSwitcher/> */}
             {/* <button className='profile-link ms-4 ms-xxl-5' onClick={handleShowAdvice}>
               <img src="imgs/user.jpg" alt="user" />
