@@ -15,8 +15,12 @@ function App() {
     if (localStorage.getItem("token")) {
       checkAuth()
         .then((data) => {
-          data && dispatch(setUser(data));
-          data && dispatch(setAuth(true));
+          if (data && data.status === 0) {
+            dispatch(logout());
+          } else {
+            data && dispatch(setUser(data));
+            data && dispatch(setAuth(true));
+          }
         })
         .catch(() => dispatch(logout()))
         .finally(() => setLoading(false));

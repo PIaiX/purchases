@@ -45,7 +45,7 @@ const MainSlider = () => {
           title={"Genshin Impact"}
           imgFull={"/imgs/slider/960x0.jpg"}
           imgMini={"/imgs/slider/slide-cover-2.jpg"}
-          onClick={() => handleClick(1)}
+          onClick={() => handleClick(0)}
         />
         <MainSlide
           isActive={activeSlide === 1}

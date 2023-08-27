@@ -43,6 +43,27 @@ const Profile = () => {
     return <Loader full />;
   }
 
+  if (user?.loading) {
+    return <Loader full />;
+  }
+
+  if (user && user.data.status === 0) {
+    return (
+      <main className="d-flex justify-content-center flex-column align-items-center">
+        <Container>
+          <section className="sec-registration d-flex justify-content-center flex-column align-items-center mb-6">
+            <img src="/imgs/icons/warning.png" className="mb-4" />
+            <h1 className="h2 text-center mb-3">Пользователь заблокирован</h1>
+            <p className="text-muted">
+              Пользователь заблокирован или удален по причине нарушения правил
+              сайта
+            </p>
+          </section>
+        </Container>
+      </main>
+    );
+  }
+
   return (
     <main>
       <Meta title={user.data.nickname ?? "Профиль"} />
@@ -63,8 +84,10 @@ const Profile = () => {
                       {user.data.nickname ?? "Никнейм"}
                     </div>
                     <div className="d-flex align-items-center">
-                      <StarRating rate={5} />
-                      <span className="fs-13 fw-7 ms-2">5</span>
+                      <StarRating rate={user?.data?.options?.rating ?? 0} />
+                      <span className="fs-13 fw-7 ms-2">
+                        {user?.data?.options?.rating ?? 0}
+                      </span>
                     </div>
                     <p className="mt-2">
                       {user.data.about ?? "Ничего не написано"}

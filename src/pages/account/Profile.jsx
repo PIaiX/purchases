@@ -177,8 +177,8 @@ const Profile = () => {
           <div className="user-main">
             <div className="title">{user?.nickname ?? "Никнейм"}</div>
             <div className="d-flex align-items-center">
-              <StarRating rate={5} />
-              <span className="fs-13 fw-7 ms-2">5</span>
+              <StarRating rate={user?.data?.options?.rating ?? 0} />
+              <span className="fs-13 fw-7 ms-2">{user?.data?.options?.rating ?? 0}</span>
             </div>
             <p className="mt-2">{user?.about ?? "Напишите о себе"}</p>
           </div>
