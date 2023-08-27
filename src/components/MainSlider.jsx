@@ -3,14 +3,11 @@ import MainSlide from "./MainSlide";
 import useIsMobile from "../hooks/isMobile";
 import NextIcon from "./svg/NextIcon";
 import PrevIcon from "./svg/PrevIcon";
+import { getImageURL } from "../helpers/all";
 
-const MainSlider = () => {
+const MainSlider = ({ data }) => {
   const [activeSlide, setActiveSlide] = useState(0);
   const isMobileLG = useIsMobile("1109px");
-
-  const handleClick = (num) => {
-    setActiveSlide(num);
-  };
 
   const handleNext = () => {
     const nextSlide = activeSlide + 1;
@@ -31,36 +28,21 @@ const MainSlider = () => {
 
   return (
     <div className="main-slider">
-      <div
-        className={
-          activeSlide === 0
-            ? "main-slider-box pos-1"
-            : activeSlide === 1
-            ? "main-slider-box pos-2"
-            : "main-slider-box pos-3"
-        }
-      >
-        <MainSlide
-          isActive={activeSlide === 0}
-          title={"Genshin Impact"}
-          imgFull={"/imgs/slider/960x0.jpg"}
-          imgMini={"/imgs/slider/slide-cover-2.jpg"}
-          onClick={() => handleClick(0)}
-        />
-        <MainSlide
-          isActive={activeSlide === 1}
-          title={"Atomic Heart"}
-          imgFull={"/imgs/slider/atomic.jpg"}
-          imgMini={"/imgs/slider/slide-cover-3.jpg"}
-          onClick={() => handleClick(1)}
-        />
-        <MainSlide
-          isActive={activeSlide === 2}
-          title={"wOw"}
-          imgFull={"/imgs/slider/wow.webp"}
-          imgMini={"/imgs/slider/slide-cover-1.jpg"}
-          onClick={() => handleClick(2)}
-        />
+      <div className={"main-slider-box pos-" + (activeSlide + 1)}>
+        {data.map((e, index) => (
+          <MainSlide
+            isActive={activeSlide === index}
+            title={e.title ? e.title : "Название"}
+            imgFull={getImageURL({
+              path: e.media,
+              type: "sale",
+              size: "full",
+            })}
+            btn={e.btn}
+            imgMini={getImageURL({ path: e.mediaMini, type: "sale" })}
+            onClick={() => setActiveSlide(index)}
+          />
+        ))}
       </div>
       {isMobileLG && (
         <>
@@ -74,7 +56,7 @@ const MainSlider = () => {
           <button
             type="button"
             className="main-slider-next"
-            onClick={handlePrev}
+            onClick={handleNext}
           >
             <NextIcon />
           </button>
@@ -82,9 +64,9 @@ const MainSlider = () => {
       )}
       {isMobileLG && (
         <ul className="main-slider-indicators">
-          <li className={activeSlide === 0 ? "active" : ""}></li>
-          <li className={activeSlide === 1 ? "active" : ""}></li>
-          <li className={activeSlide === 2 ? "active" : ""}></li>
+          {data.map((e, index) => (
+            <li className={activeSlide === index ? "active" : ""}></li>
+          ))}
         </ul>
       )}
     </div>
