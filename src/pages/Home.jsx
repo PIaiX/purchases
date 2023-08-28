@@ -35,7 +35,7 @@ const Home = () => {
   }
 
   return (
-    <>
+    <main>
       <Container>
         <section className="mb-6">
           <MainSlider data={sales.home.items} />
@@ -47,7 +47,7 @@ const Home = () => {
       <Container>
         <BlogSection />
       </Container>
-    </>
+    </main>
   );
 };
 

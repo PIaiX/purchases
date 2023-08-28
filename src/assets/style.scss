@@ -14,6 +14,40 @@
     --f-height: 64px;
   }
 }
+:root[data-theme='light'] {
+  --body-bg: #fff;
+  --second-bg: #E3E3E3;
+  --gray-bg: #C1C1C1;
+  --font-color: #191F2D;
+  --switcher: #F4F4F4;
+  --glass: linear-gradient(
+    92.32deg,
+    rgba(255, 255, 255, 0) 16.31%,
+    rgba(245, 251, 255, 0.3) 97.01%
+  ),
+  rgba(255, 255, 255, 0.3);
+  --shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
+  0px 5px 25px rgba(95, 95, 95, 0.08);
+  --shadowMobile: 0px 1px 0px rgba(255, 255, 255, 0.5),
+  1px 1px 10px rgba(100, 100, 100, 0.15);
+  --subtract: url(imgs/Subtract.svg);
+}
+:root[data-theme='dark'] {
+  --body-bg: #191F2D;
+  --second-bg: #232B42;
+  --gray-bg: #7D8999;
+  --font-color: rgb(255 255 255 / 95%);
+  --switcher: #262F45;
+  --glass: linear-gradient(
+    137deg, 
+    rgba(35, 43, 66, 0.09) 15.10%, 
+    rgba(22, 30, 49, 0.30) 100%
+  ), 
+  rgba(50, 62, 94);
+  --shadow: 0px 2px 0px 0px #38435C, 0px 4px 10px 0px rgba(48, 57, 79, 0.50);
+  --shadowMobile: 0px 1px 0px 0px rgba(56, 67, 92, .75), 1px 1px 5px 0px rgba(48, 57, 79, 0.25);
+  --subtract: url(imgs/SubtractDark.svg);
+}
 
 $main-font: "Open Sans";
 $title-font: "Bebas";
@@ -319,13 +353,14 @@ h6 {
 }
 .topic {
   background-color: $blue;
-  color: $white;
+  color: $white !important;
   padding: 1em 2em;
   border-radius: $radius;
   h1,
   h2,
   a {
     line-height: 100%;
+    color: inherit !important;
   }
 }
 .fs {
@@ -451,7 +486,7 @@ h6 {
 /* Form elements */
 input,
 textarea {
-  background-color: rgba($white, $alpha: 0.8);
+  background: var(--glass);
   border: 1px solid $light-gray;
   border-radius: $radius;
   padding: 0.725em 1.65em;
@@ -558,8 +593,9 @@ input {
   }
   &[type="search"] {
     padding-right: 2.5em;
-    background: url(imgs/SearchIcon.svg) no-repeat calc(100% - 0.67em) 50%
-      rgba($white, $alpha: 0.85);
+    background-image: url(imgs/SearchIcon.svg);
+    background-repeat: no-repeat;
+    background-position: calc(100% - 0.67em) 50%;
     background-size: 1.6em;
   }
   &.code {
@@ -649,7 +685,7 @@ select {
   padding: 0.75em 1.65em;
   border: none;
   @include boxShadow(12px);
-  background: url(imgs/chevron-down.svg), $glass;
+  background: url(imgs/chevron-down.svg), var(--glass);
   background-repeat: no-repeat;
   background-position: calc(100% - 0.67em) 50%, 50% 50%;
   background-size: 1.6em, cover;
@@ -824,19 +860,20 @@ button {
   &-2,
   &-light {
     @extend .btn;
-    background: #ffffff;
-    color: $black;
-    @include blurShadow();
+    background: var(--glass);
+    color: var(--font-color);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus,
     &:active,
     &.active {
-      color: $black;
-      background: mix($pale-blue, $white, 20%);
+      color: var(--font-color);
+      background: var(--second-bg);
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: (--gray-bg) !important;
     }
   }
   //розовая кнопка
@@ -845,7 +882,8 @@ button {
     @extend .btn;
     background: $rose;
     color: $white;
-    @include blurShadow();
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
@@ -867,7 +905,8 @@ button {
     @extend .btn;
     background: $total-black;
     color: $white;
-    @include blurShadow();
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
@@ -888,7 +927,8 @@ button {
     @extend .btn;
     background: $blue;
     color: $white;
-    @include blurShadow();
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
@@ -910,7 +950,8 @@ button {
     @extend .btn;
     background: $green;
     color: $white;
-    @include blurShadow();
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
@@ -1065,6 +1106,40 @@ button {
   @include media-breakpoint-down(lg) {
     @include flex(row, flex-start, center, nowrap);
     margin-bottom: 2em;
+  }
+}
+.themes-switcher {
+  input {
+    width: 30px;
+    height: 10px;
+    background-color: var(--switcher);
+    border-radius: 5px;
+    border: none !important;
+    &::before {
+      content: '';
+      top: 0px;
+      left: 0px;
+      width: 10px;
+      height: 100%;
+      border-radius: 50%;
+      border: none !important;
+      background-image: url(imgs/icons/sun.svg);
+      background-color: transparent;
+      background-size: contain;
+      background-repeat: no-repeat;
+      background-position: 50% 50%;
+      transform: scale(2.6);
+      transition: $transition;
+      opacity: 1;
+    }
+    &:checked {
+      border: none !important;
+      &::before {
+        border: none !important;
+        left: 20px;
+        background-image: url(imgs/icons/moon.svg);
+      }
+    }
   }
 }
 
@@ -1241,8 +1316,9 @@ nav.pagination {
 
 /* Box */
 .list-wrapping {
-  background: $glass;
-  @include blurShadow();
+  background: var(--glass);
+  box-shadow: var(--shadow);
+  backdrop-filter: blur(5px);
   border-radius: $radius;
   --padX: 1.3em;
   --padY: 1em;
@@ -1369,6 +1445,7 @@ nav.pagination {
   }
 }
 
+
 body {
   margin: 0;
   font-family: $main-font, "Arial", "Tahoma", "Verdana";
@@ -1376,7 +1453,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-size: 15px;
   font-weight: 400;
-  color: $black;
+  background-color: var(--body-bg);
+  color: var(--font-color);
   overflow-x: hidden;
   @include media-breakpoint-down(sm) {
     font-size: 13px;
@@ -1391,12 +1469,11 @@ main {
     padding-bottom: var(--f-height);
   }
   @include media-breakpoint-down(sm) {
-    padding: 1em 0;
+    padding-top: 1em;
   }
 }
 
 header {
-  background-color: $white;
   position: relative;
   z-index: 1042;
   height: var(--h-height);
@@ -1700,9 +1777,11 @@ header {
 }
 
 /* Catalog */
-.sec-catalog {
+:root[data-theme='light'] .sec-catalog{
   background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
+}
+.sec-catalog {
   .container {
     position: relative;
     @include media-breakpoint-down(lg) {
@@ -1727,9 +1806,9 @@ header {
       width: 40px;
     }
     .wrap {
-      background: $glass;
-      background-color: rgba(255, 255, 255, 0.7);
-      @include blurShadow();
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
       border-radius: $radius;
       position: sticky;
       top: 0.5em;
@@ -1784,7 +1863,7 @@ header {
           padding: 0.4em;
           a {
             @include flex();
-            color: $black;
+            color: var(--font-color);
             position: relative;
             background-color: transparent;
             transition: $transition;
@@ -1852,8 +1931,9 @@ header {
   }
   &-part {
     padding: 1em 1.5em;
-    background: $glass;
-    @include blurShadow();
+    background: var(--glass);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(5px);
     border-radius: 10px;
     &:not(:last-child) {
       margin-bottom: 3.33em;
@@ -1945,15 +2025,16 @@ header {
       padding: 0px;
       position: absolute;
       left: 0.5em;
-      top: -1px;
+      top: 0px;
       width: 20px;
       height: 14px;
-      background: url(imgs/Subtract.svg) no-repeat center bottom;
+      background: var(--subtract) no-repeat center bottom;
       background-size: 100% 50%;
       @include flex();
       img {
         width: 8px;
         height: 8px;
+        border-radius: 50%;
         filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
       }
     }
@@ -1965,7 +2046,8 @@ header {
 .sec-promo {
   position: relative;
   @include bgTextureGradient();
-  @include blurShadow();
+  box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
   border-radius: $radius;
   padding: 0 10% 0 4em;
   color: $white;
@@ -2152,8 +2234,9 @@ header {
     }
   }
   &-offers {
-    background: $glass;
-    @include blurShadow();
+    background: var(--glass);
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     border-radius: $radius;
     --pad: 15px 20px;
     --serv: 220px;
@@ -2817,8 +2900,9 @@ header {
       height: fit-content;
     }
     .offer-card {
-      background: $glass;
-      @include blurShadow();
+      background: var(--glass);
+      box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
       border-radius: $radius;
       padding: 1.6em 1.6em 0.7em 1.6em;
       &-top {
@@ -2900,8 +2984,9 @@ header {
   //   }
   // }
   // .box {
-  //   background: $glass;
-  //   @include blurShadow();
+  //   background: var(--glass);
+  //   box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
   //   border-radius: $radius;
   //   padding: 2em;
   //   @include flex(row, space-between, flex-start, nowrap);
@@ -2939,7 +3024,9 @@ header {
 /* Entering page */
 .sec-login {
   .wrap {
-    @include blurShadow();
+    background: var(--glass);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
     height: 100%;
@@ -3002,7 +3089,8 @@ header {
 /* Password restoration page */
 .sec-password {
   .wrap {
-    @include blurShadow();
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
     @include media-breakpoint-down(sm) {
@@ -3203,8 +3291,9 @@ ACCOUNT
   .add-offer {
     padding: 3em 2em;
     border-radius: $radius;
-    background: $glass;
-    @include blurShadow();
+    background: var(--glass);
+    box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
     @include media-breakpoint-down(sm) {
       padding: 1.5em;
     }
@@ -3332,9 +3421,10 @@ ACCOUNT
   }
   .sec-callback {
     .box {
-      background: $glass;
+      background: var(--glass);
       border-radius: $radius;
-      @include blurShadow();
+      box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
       padding: 3em 2em;
       @include media-breakpoint-down(sm) {
         padding: 1.5em;
@@ -3354,7 +3444,8 @@ ACCOUNT
     .box {
       background: rgba($white, 0.3);
       border-radius: 0 0 $radius $radius;
-      @include blurShadow();
+      box-shadow: var(--shadow);
+backdrop-filter: blur(5px);
       padding: 1.5em 2em;
       .chat-window {
         height: 550px;
@@ -3368,6 +3459,11 @@ ACCOUNT
     border-radius: 50%;
     border: 1px solid #fff;
     @include flex();
+  }
+}
+[data-theme='dark'] .account {
+  .account-bg {
+    display: none;
   }
 }
 .user {
@@ -3997,13 +4093,129 @@ ACCOUNT END
   }
 }
 .rules {
-  color: #000;
   hr {
     border: none;
     opacity: 1;
     height: 1px;
     background-color: rgba($pale-blue, 0.3);
     margin: 0.6em 0 1.2em;
+  }
+  .rules-wrapping {
+    background: var(--glass);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(5px);
+    border-radius: $radius;
+    --padX: 2em;
+    --padY: 1em;
+    @media (max-width: 575px) {
+      --padX: 1em;
+    }
+    &-top {
+      background-color: rgba($pale-blue, 0.2);
+      border-radius: $radius $radius 0px 0px;
+      padding: var(--padY) var(--padX);
+      ul {
+        @include list();
+        @include flex();
+        padding: 0.25em 1em;
+        font-weight: 700;
+        font-size: 1.2em;
+        &.line-2 {
+          .descr {
+            flex: 1;
+          }
+          .price {
+            width: 100px;
+            text-align: right;
+          }
+          .btns {
+            width: 60px;
+          }
+        }
+        &.line-3 {
+          display: grid;
+          grid-template-columns: 140px 110px 1fr 200px 130px 80px;
+          grid-template-rows: 1fr;
+          grid-template-areas: "date id descr seller status price";
+          @include media-breakpoint-down(xxl) {
+            grid-template-columns: 83px 90px 1fr 200px 130px 80px;
+            font-size: 1em;
+          }
+          .date {
+            grid-area: date;
+          }
+          .id {
+            grid-area: id;
+          }
+          .descr {
+            grid-area: descr;
+          }
+          .seller {
+            grid-area: seller;
+          }
+          .status {
+            grid-area: status;
+          }
+          .price {
+            grid-area: price;
+          }
+        }
+        &.line-operation {
+          display: grid;
+          grid-template-columns: 21% 21% 21% 21% 16%;
+          grid-template-rows: 1fr;
+          grid-template-areas: "date id type stat sum";
+          .date {
+            grid-area: date;
+          }
+          .id {
+            grid-area: id;
+          }
+          .type {
+            grid-area: type;
+          }
+          .stat {
+            grid-area: stat;
+          }
+          .sum {
+            grid-area: sum;
+          }
+        }
+        &.line-appeal {
+          display: grid;
+          grid-template-columns: 35% 13% 22% 20% 10%;
+          grid-template-rows: 1fr;
+          grid-template-areas: "subject id status date btns";
+          .subject {
+            grid-area: subject;
+          }
+          .id {
+            grid-area: id;
+          }
+          .status {
+            grid-area: status;
+          }
+          .date {
+            grid-area: date;
+          }
+          .btns {
+            grid-area: btns;
+          }
+        }
+      }
+    }
+    &-main {
+      padding: var(--padY) var(--padX);
+      ul {
+        @include list();
+        li {
+          border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.2);
+          @include media-breakpoint-down(xl) {
+            border-bottom: none;
+          }
+        }
+      }
+    }
   }
 }
 .faq {
@@ -4079,13 +4291,9 @@ footer {
       @include list();
       @include flex(row, space-evenly);
       flex: 1;
-      background: linear-gradient(
-          92.32deg,
-          rgba(255, 255, 255, 0) 16.31%,
-          rgba(245, 251, 255, 0.3) 97.01%
-        ),
-        rgba(255, 255, 255, 0.8);
-      @include shadowMobile();
+      background: var(--glass);
+      box-shadow: var(--shadowMobile);
+      backdrop-filter: blur(2.5px);
       margin-left: 1.7em;
       padding: 0.75em 1.5em;
       border-radius: $radius;
@@ -4173,23 +4381,26 @@ footer {
 }
 
 .offcanvas {
+  background-color: var(--body-bg);
+  color: var(--font-color);
   &-body {
     position: relative;
     ul {
       @include list();
-      background-color: $glass;
+      background: var(--glass);
       border-radius: $radius;
       padding: 0 1em;
       font-size: 1.2em;
-      @include blurShadow();
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
       li {
         a {
           display: block;
           padding: 0.75em 0;
-          color: $total-black;
+          color: inherit;
         }
         &:not(:first-child) {
-          border-top: 1px solid #f3f3f3;
+          border-top: 1px solid var(--gray-bg);
         }
       }
     }

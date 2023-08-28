@@ -11,6 +11,7 @@ import { RxChevronDown } from "react-icons/rx";
 import Exit from "./svg/Exit";
 import { logout } from "../services/auth";
 import { useDispatch, useSelector } from "react-redux";
+import ThemeToggler from "./utils/ThemeToggler";
 
 const Header = () => {
   const { isAuth, user } = useSelector((state) => state.auth);
@@ -106,6 +107,7 @@ const Header = () => {
                 </>
               )}
             </div>
+            <ThemeToggler/>
           </div>
         </header>
       </Container>

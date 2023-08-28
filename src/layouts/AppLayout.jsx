@@ -8,9 +8,7 @@ const AppLayout = () => {
     <>
       <ScrollRestoration />
       <Header />
-      <main>
-        <Outlet />
-      </main>
+      <Outlet />
       <Footer />
     </>
   );
