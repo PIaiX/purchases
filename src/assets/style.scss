@@ -16,10 +16,25 @@
 }
 :root[data-theme='light'] {
   --body-bg: #fff;
-  --second-bg: #E3E3E3;
-  --gray-bg: #C1C1C1;
+  --second-bg: #fff;
+  --footer-bg: #1B1B1C;
   --font-color: #191F2D;
   --switcher: #F4F4F4;
+  --pale-blue: #9dc4ef;
+  --blue: #4a83dc;
+  --dark-blue: #0d59ab;
+  --light-blue: #66c6e4;
+  --dark-green: #005a47;
+  --green: #48d868;
+  --pale-green: #94e5a6;
+  --white: #ffffff;
+  --extrapale-gray: #ecf4fc;
+  --pale-gray: #d9d9d9;
+  --light-gray: #c1c1c1;
+  --gray: #8f8f8f;
+  --black: #191F2D;
+  --total-black: #000;
+
   --glass: linear-gradient(
     92.32deg,
     rgba(255, 255, 255, 0) 16.31%,
@@ -35,9 +50,24 @@
 :root[data-theme='dark'] {
   --body-bg: #191F2D;
   --second-bg: #232B42;
-  --gray-bg: #7D8999;
+  --footer-bg: #232B42;
   --font-color: rgb(255 255 255 / 95%);
   --switcher: #262F45;
+  --pale-blue: #0d59ab;
+  --blue: #4a83dc;
+  --dark-blue: #9dc4ef;
+  --light-blue: #0F86AC;
+  --dark-green: #94e5a6;
+  --green: #48d868;
+  --pale-green: #005a47;
+  --white: #000;
+  --extrapale-gray: #323847;
+  --pale-gray: #4F5D70;
+  --light-gray: #7D8999;
+  --gray: #B7C0CD;
+  --black: #fff;
+  --total-black: #fff;
+
   --glass: linear-gradient(
     137deg, 
     rgba(35, 43, 66, 0.09) 15.10%, 
@@ -55,7 +85,7 @@ $pale-blue: #9dc4ef;
 $blue: #4a83dc;
 $light-blue: #66c6e4;
 $dark-blue: #0d59ab;
-$gradient-1: linear-gradient(120.98deg, $blue 48.77%, #3266b8 85.89%);
+$gradient-1: linear-gradient(120.98deg, var(--blue) 48.77%, #3266b8 85.89%);
 $gradient-2: linear-gradient(
   120.98deg,
   rgba(72, 216, 104, 0.8) 48.77%,
@@ -202,28 +232,28 @@ $radius: 0.67em;
 SCROLL STYLIZATION
 ******************/
 html {
-  scrollbar-color: $pale-blue transparent;
+  scrollbar-color: var(--pale-blue) transparent;
   scrollbar-width: thin;
 }
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
-  background-color: $white;
+  background-color: var(--white);
   @include shadow();
   &:hover,
   &:active {
-    background: rgba($color: $pale-blue, $alpha: 0.2);
+    background: rgba($color: var(--pale-blue), $alpha: 0.2);
   }
 }
 ::-webkit-scrollbar-thumb {
-  background-color: $pale-blue;
+  background-color: var(--pale-blue);
   border-radius: 5px;
   transition: 0.2s;
   &:hover {
-    background-color: $light-blue;
+    background-color: var(--light-blue);
   }
   &:active {
-    background-color: $blue;
+    background-color: var(--blue);
   }
 }
 ::-webkit-scrollbar-button:vertical:start:decrement,
@@ -352,7 +382,7 @@ h6 {
   margin-bottom: 0px;
 }
 .topic {
-  background-color: $blue;
+  background-color: var(--blue);
   color: $white !important;
   padding: 1em 2em;
   border-radius: $radius;
@@ -440,44 +470,44 @@ h6 {
   }
 }
 .green {
-  color: $green;
+  color: var(--green);
 }
 .white {
-  color: $white;
+  color: var(--white);
 }
 .light-gray {
-  color: $light-gray;
+  color: var(--light-gray);
 }
 .gray {
-  color: $gray;
+  color: var(--gray);
 }
 .pale-blue {
-  color: $pale-blue;
+  color: var(--pale-blue);
 }
 .blue {
-  color: $blue;
+  color: var(--blue);
 }
 .dark-blue {
-  color: $dark-blue;
+  color: var(--dark-blue);
 }
 .rose {
   color: $rose;
 }
 .black {
-  color: $black;
+  color: var(--black);
 }
 .total-black {
-  color: $total-black;
+  color: var(--total-black);
 }
 .title-font {
   font-family: $title-font;
 }
 .bg-blue {
-  background-color: $blue;
+  background-color: var(--blue);
 }
 .ruble {
   border-radius: 50%;
-  border: 1px solid $white;
+  border: 1px solid var(--white);
 }
 .lh-n {
   line-height: normal;
@@ -486,23 +516,32 @@ h6 {
 /* Form elements */
 input,
 textarea {
-  background: var(--glass);
-  border: 1px solid $light-gray;
+  --input-bg: var(--body-bg);
+  background: var(--input-bg);
+  color: var(--font-color);
+  border: 1px solid var(--light-gray);
   border-radius: $radius;
   padding: 0.725em 1.65em;
   width: 100%;
   outline: none;
   display: block;
   transition: $transition;
-  @include placeholder($light-gray, 400);
+  @include placeholder(var(--light-gray), 400);
   &.p-blue {
-    border: 1px solid $pale-blue;
-    @include placeholder($pale-blue, 400);
+    border: 1px solid var(--pale-blue);
+    @include placeholder(var(--pale-blue), 400);
   }
   &:hover,
   &:focus,
   &:active {
-    border: 1px solid $blue;
+    border: 1px solid var(--blue);
+  }
+  &:-webkit-autofill,
+  &:-webkit-autofill:hover, 
+  &:-webkit-autofill:focus, 
+  &:-webkit-autofill:active  {
+    -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
+    -webkit-text-fill-color: var(--font-color) !important;
   }
 }
 input {
@@ -510,7 +549,7 @@ input {
     @include no-appearance();
     width: 20px;
     height: 20px;
-    border: 1px solid $green;
+    border: 1px solid var(--green);
     border-radius: 4px;
     box-shadow: none;
     padding: 0px;
@@ -533,7 +572,7 @@ input {
 
     &:checked {
       &::before {
-        border-color: $green;
+        border-color: var(--green);
       }
     }
   }
@@ -541,7 +580,7 @@ input {
     @include no-appearance;
     width: 20px;
     height: 20px;
-    border: 1px solid $green;
+    border: 1px solid var(--green);
     background-color: transparent;
     border-radius: 50%;
     box-shadow: none;
@@ -557,7 +596,7 @@ input {
       height: 10px;
       width: 10px;
       border-radius: 50%;
-      background-color: $green;
+      background-color: var(--green);
       transition: $transition;
       opacity: 0;
     }
@@ -571,7 +610,7 @@ input {
     height: 20px;
     border: none;
     border-radius: 10px;
-    background-color: $light-gray;
+    background-color: var(--light-gray);
     &::before {
       content: "";
       position: absolute;
@@ -580,12 +619,14 @@ input {
       height: 16px;
       width: 16px;
       border-radius: 50%;
-      background-color: $white;
+      background-color: var(--white);
       transition: $transition;
       opacity: 1;
+      border: none;
+      transform: unset;
     }
     &:checked {
-      background-color: $green;
+      background-color: var(--green);
       &::before {
         left: calc(100% - 19px);
       }
@@ -625,15 +666,15 @@ label {
     width: fit-content;
     button {
       display: flex;
-      color: $blue;
+      color: var(--blue);
       font-size: 2.15em;
       &:not(:last-child) {
         margin-left: 0.2em;
       }
       svg {
         path {
-          stroke: $blue;
-          fill: $white;
+          stroke: var(--blue);
+          fill: var(--white);
           transition: $transition;
         }
       }
@@ -644,7 +685,7 @@ label {
       &:hover ~ button {
         svg {
           path {
-            fill: $blue;
+            fill: var(--blue);
           }
         }
       }
@@ -665,7 +706,7 @@ label {
     top: 0px;
     right: 0px;
     z-index: 5;
-    color: $gray;
+    color: var(--gray);
     height: 100%;
     width: 2em;
     font-size: 1.6em;
@@ -685,20 +726,22 @@ select {
   padding: 0.75em 1.65em;
   border: none;
   @include boxShadow(12px);
-  background: url(imgs/chevron-down.svg), var(--glass);
+  background: url(imgs/chevron-down.svg), var(--second-bg);
+  color: inherit;
   background-repeat: no-repeat;
   background-position: calc(100% - 0.67em) 50%, 50% 50%;
   background-size: 1.6em, cover;
   transition: $transition;
   &:hover,
   &:focus {
-    background-color: rgba($pale-blue, 0.1);
+    background-color: var(--extrapale-gray);
   }
   @include media-breakpoint-down(md) {
     min-width: 200px;
   }
 }
 .labeled-input {
+  --bg: var(--body-bg);
   position: relative;
   label {
     position: absolute;
@@ -707,24 +750,25 @@ select {
     left: 1em;
     transform: translateY(-60%);
     width: fit-content;
-    background-color: $white;
-    color: $gray;
+    background: var(--bg);
+    color: var(--gray);
     padding: 0 0.67em;
   }
-  input {
+  input, textarea {
+    --input-bg: var(--bg);
     position: relative;
     z-index: 1;
     border-radius: $radius;
     &:hover + label,
     &:focus + label,
     &:active + label {
-      color: $blue;
+      color: var(--blue);
     }
   }
   select {
     border-radius: $radius;
     width: 100%;
-    border: 1px solid $light-gray;
+    border: 1px solid var(--light-gray);
     box-shadow: none;
     background: url(imgs/chevron-down-gray.svg) transparent;
     background-repeat: no-repeat;
@@ -738,14 +782,14 @@ select {
       background-repeat: no-repeat;
       background-position: calc(100% - 0.67em) 50%;
       background-size: 1.6em;
-      border: 1px solid $blue;
+      border: 1px solid var(--blue);
     }
   }
   &:hover,
   &:focus,
   &:active {
     label {
-      color: $blue;
+      color: var(--blue);
     }
   }
 }
@@ -772,9 +816,9 @@ select {
       width: 2.5em;
       height: 2.5em;
       border-radius: 50%;
-      border: 1px solid rgba($color: $pale-blue, $alpha: 0.35);
+      border: 1px solid rgba($color: var(--pale-blue), $alpha: 0.35);
       svg {
-        color: $blue;
+        color: var(--blue);
         font-size: 1.5em;
         stroke-width: 1.25px;
       }
@@ -784,7 +828,7 @@ select {
       position: absolute;
       bottom: -0.25em;
       right: 0px;
-      color: $blue;
+      color: var(--blue);
       font-weight: 600;
       line-height: 1em;
       font-size: 0.9em;
@@ -833,27 +877,27 @@ button {
   &-primary {
     @extend .btn;
     color: $white !important;
-    background-color: $blue !important;
+    background-color: var(--blue) !important;
     background-image: linear-gradient(
       150deg,
-      $blue 25%,
+      var(--blue) 25%,
       #3266b8 50%,
-      $blue 75%
+      var(--blue) 75%
     ) !important;
     background-size: 200% 100% !important;
     background-position: left center !important;
     &:hover,
     &:focus {
-      color: $white;
+      color: var(--white);
       background-position: right center;
     }
     &:active,
     &.active {
-      color: $white !important;
+      color: var(--white) !important;
       background-position: center center;
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: var(--light-gray) !important;
     }
   }
   //белая кнопка
@@ -881,94 +925,94 @@ button {
   &-danger {
     @extend .btn;
     background: $rose;
-    color: $white;
+    color: var(--white);
     box-shadow: var(--shadow);
 backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
       background: $rose;
-      color: $white;
+      color: var(--white);
     }
     &:active,
     &.active {
       background: $rose;
-      color: $white;
+      color: var(--white);
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: var(--light-gray) !important;
     }
   }
   //черная кнопка
   &-4,
   &-dark {
     @extend .btn;
-    background: $total-black;
-    color: $white;
+    background: var(--total-black);
+    color: var(--white);
     box-shadow: var(--shadow);
 backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
-      color: $white;
-      background: $dark-blue;
+      color: var(--white);
+      background: var(--dark-blue);
     }
     &:active,
     &.active {
-      color: $white;
-      background: $dark-green;
+      color: var(--white);
+      background: var(--dark-green);
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: var(--light-gray) !important;
     }
   }
   //голубая кнопка
   &-5 {
     @extend .btn;
-    background: $blue;
-    color: $white;
+    background: var(--blue);
+    color: var(--white);
     box-shadow: var(--shadow);
 backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
-      color: $white;
-      background: $dark-blue;
+      color: var(--white);
+      background: var(--dark-blue);
     }
     &:active,
     &.active {
-      color: $white;
-      background: $dark-green;
+      color: var(--white);
+      background: var(--dark-green);
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: var(--light-gray) !important;
     }
   }
   //зеленая кнопка
   &-6,
   &-success {
     @extend .btn;
-    background: $green;
-    color: $white;
+    background: var(--green);
+    color: var(--white);
     box-shadow: var(--shadow);
 backdrop-filter: blur(5px);
     border-radius: $radius;
     &:hover,
     &:focus {
-      color: $white;
-      background: $light-blue;
+      color: var(--white);
+      background: var(--light-blue);
     }
     &:active,
     &.active {
-      color: $white;
-      background: $dark-green;
+      color: var(--white);
+      background: var(--dark-green);
     }
     &[disabled] {
-      background: $light-gray !important;
+      background: var(--light-gray) !important;
     }
   }
   &[disabled] {
-    background: $light-gray;
+    background: var(--light-gray);
   }
 }
 
@@ -987,11 +1031,11 @@ backdrop-filter: blur(5px);
 
 .input-file-simple {
   position: relative;
-  color: $gray;
+  color: var(--gray);
   transition: $transition;
   &:hover {
     cursor: pointer;
-    color: $blue;
+    color: var(--blue);
   }
   input {
     position: absolute;
@@ -1011,10 +1055,10 @@ backdrop-filter: blur(5px);
     position: absolute;
     bottom: -0.75em;
     right: -0.75em;
-    color: $white;
+    color: var(--white);
     line-height: 1em;
     font-size: 0.75em;
-    background: $blue;
+    background: var(--blue);
     width: 1.3em;
     height: 1.3em;
     border-radius: 50%;
@@ -1032,7 +1076,7 @@ backdrop-filter: blur(5px);
     font-size: 1em;
     padding: 0.1em 0.2em;
     @include flex(row, space-between, center, nowrap);
-    color: $gray;
+    color: var(--gray);
   }
   img {
     width: 1.6em;
@@ -1062,7 +1106,7 @@ backdrop-filter: blur(5px);
 }
 .star-rating {
   @include flex(row, flex-start, center, nowrap);
-  color: $blue;
+  color: var(--blue);
   font-size: 1.34em;
   svg {
     &:not(:first-child) {
@@ -1070,29 +1114,29 @@ backdrop-filter: blur(5px);
     }
     &.filled {
       path {
-        fill: $blue;
+        fill: var(--blue);
       }
     }
   }
 }
 .link {
-  color: $pale-blue;
+  color: var(--pale-blue);
   text-decoration: underline;
   transition: $transition;
   &:hover,
   &:focus,
   &:active {
-    color: $dark-blue;
+    color: var(--dark-blue);
     text-decoration: underline;
   }
   &-2 {
-    color: $blue;
+    color: var(--blue);
     text-decoration: none;
     transition: $transition;
     &:hover,
     &:focus,
     &:active {
-      color: $light-blue;
+      color: var(--light-blue);
       text-decoration: none;
     }
   }
@@ -1167,7 +1211,7 @@ backdrop-filter: blur(5px);
 /* Breadcrumbs */
 .breadcrumbs {
   margin-bottom: 2em;
-  color: $light-gray;
+  color: var(--light-gray);
   @include media-breakpoint-down(xl) {
     margin-bottom: 1.5em;
   }
@@ -1224,7 +1268,7 @@ nav.pagination {
         height: 2em;
         border-radius: 50%;
         background-color: transparent;
-        color: $blue;
+        color: var(--blue);
         @include flex();
         transition: $transition;
         svg {
@@ -1232,11 +1276,11 @@ nav.pagination {
         }
         &:hover,
         &:focus {
-          background-color: rgba($pale-blue, 0.15);
+          background-color: var(--extrapale-gray);
         }
         &:active,
         &.active {
-          background-color: rgba($pale-blue, 0.3);
+          background-color: var(--extrapale-gray);
           @include lightShadow();
         }
       }
@@ -1272,17 +1316,17 @@ nav.pagination {
   &-menu {
     --bs-dropdown-spacer: 0.125rem;
     --bs-dropdown-font-size: 1em;
-    --bs-dropdown-color: #1c1c1c;
-    --bs-dropdown-bg: #fff;
+    --bs-dropdown-color: var(--font-color);
+    --bs-dropdown-bg: var(--second-bg);
     --bs-dropdown-border-color: #f4f6f8;
     --bs-dropdown-border-radius: 10px;
     --bs-dropdown-border-width: 0px;
     --bs-dropdown-inner-border-radius: 9px;
-    --bs-dropdown-link-color: #1c1c1c;
-    --bs-dropdown-link-hover-color: #1c1c1c;
-    --bs-dropdown-link-hover-bg: #f4f6f8;
+    --bs-dropdown-link-color: var(--font-color);
+    --bs-dropdown-link-hover-color: var(--font-color);
+    --bs-dropdown-link-hover-bg: var(--pale-gray);
     --bs-dropdown-link-active-color: #fff;
-    --bs-dropdown-link-active-bg: #4a83dc;
+    --bs-dropdown-link-active-bg: var(--blue);
     --bs-dropdown-item-padding-x: 1em;
     --bs-dropdown-item-padding-y: 0.5em;
     --bs-dropdown-box-shadow: 0px 4px 20px rgba(0, 0, 0, 0.06);
@@ -1329,7 +1373,7 @@ nav.pagination {
     --padX: 0px;
   }
   &-top {
-    background-color: rgba($pale-blue, 0.2);
+    background-color: var(--extrapale-gray);
     border-radius: $radius $radius 0px 0px;
     padding: var(--padY) var(--padX);
     @include media-breakpoint-down(xl) {
@@ -1430,7 +1474,7 @@ nav.pagination {
     ul {
       @include list();
       li {
-        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.2);
+        border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.2);
         @include media-breakpoint-down(xl) {
           border-bottom: none;
         }
@@ -1481,8 +1525,8 @@ header {
     display: none;
   }
   input {
-    border-color: $pale-blue;
-    @include placeholder($pale-blue);
+    border-color: var(--pale-blue);
+    @include placeholder(var(--pale-blue));
   }
   .profile-link {
     @include flex();
@@ -1624,7 +1668,7 @@ header {
       bottom: 9%;
       right: -6%;
       @include flex(column, center, center, nowrap);
-      color: $white;
+      color: var(--white);
       font-size: 0.75em;
       @include media-breakpoint-down(xxl) {
         font-size: 0.6em;
@@ -1647,7 +1691,7 @@ header {
       bottom: 2em;
       right: 2em;
       opacity: 0;
-      color: $white;
+      color: var(--white);
       text-decoration: none;
       @include media-breakpoint-down(xl) {
         bottom: 1em;
@@ -1760,7 +1804,7 @@ header {
     li {
       flex-grow: 1;
       height: 0.6em;
-      background-color: rgba($color: $black, $alpha: 0.15);
+      background-color: rgba($color: var(--black), $alpha: 0.15);
       border-radius: 0.3em;
       transition: $transition;
       @include media-breakpoint-down(sm) {
@@ -1770,17 +1814,13 @@ header {
         margin-left: 2em;
       }
       &.active {
-        background-color: rgba($color: $black, $alpha: 1);
+        background-color: rgba($color: var(--black), $alpha: 1);
       }
     }
   }
 }
 
 /* Catalog */
-:root[data-theme='light'] .sec-catalog{
-  background: url(imgs/bg/gradient.jpg) no-repeat;
-  background-size: 100% 100%;
-}
 .sec-catalog {
   .container {
     position: relative;
@@ -1834,7 +1874,7 @@ header {
         button {
           @include absBG(2);
           width: 3em;
-          color: $pale-blue;
+          color: var(--pale-blue);
           svg {
             font-size: 1.6em;
           }
@@ -1844,7 +1884,7 @@ header {
           opacity: 0;
           position: relative;
           z-index: 1;
-          @include placeholder($pale-blue);
+          @include placeholder(var(--pale-blue));
           padding: 0.6em 0 0.6em 3em;
         }
       }
@@ -1872,10 +1912,10 @@ header {
             border-radius: 50%;
             white-space: nowrap;
             &:hover {
-              background-color: rgba($color: $pale-blue, $alpha: 0.25);
+              background-color: rgba($color: var(--pale-blue), $alpha: 0.25);
             }
             &.ss-active {
-              background-color: rgba($color: $pale-blue, $alpha: 0.5);
+              background-color: rgba($color: var(--pale-blue), $alpha: 0.5);
             }
           }
         }
@@ -1918,7 +1958,7 @@ header {
           width: 130px;
         }
         form {
-          // border: 1px solid $pale-blue;
+          // border: 1px solid var(--pale-blue);
           input {
             opacity: 1;
           }
@@ -1952,6 +1992,10 @@ header {
     }
   }
 }
+:root[data-theme='light'] .sec-catalog{
+  background: url(imgs/bg/gradient.jpg) no-repeat;
+  background-size: 100% 100%;
+}
 .game-card {
   @include flex(row, flex-start, flex-start, nowrap);
   .img {
@@ -1980,7 +2024,7 @@ header {
   }
   &-mini {
     @include flex(row, flex-start, center, nowrap);
-    background-color: $white;
+    background-color: var(--white);
     border-radius: $radius;
     @include lightShadow();
     padding: 1.6em 1.2em;
@@ -2014,7 +2058,7 @@ header {
   padding: 0 0.5em;
   li {
     position: relative;
-    color: $white;
+    color: var(--white);
     width: fit-content;
     text-transform: uppercase;
     padding: 0.6em 0.5em;
@@ -2039,7 +2083,7 @@ header {
       }
     }
     &.active {
-      color: $dark-green;
+      color: var(--dark-green);
     }
   }
 }
@@ -2050,7 +2094,7 @@ header {
 backdrop-filter: blur(5px);
   border-radius: $radius;
   padding: 0 10% 0 4em;
-  color: $white;
+  color: var(--white);
   @include flex(row, space-between, center, nowrap);
   margin-top: 10%;
   @include media-breakpoint-down(xxl) {
@@ -2089,9 +2133,9 @@ backdrop-filter: blur(5px);
     z-index: 10;
   }
 }
+
+/* Game page */
 .page-game {
-  background: url(imgs/bg/gradient.jpg) no-repeat center bottom;
-  background-size: 100% 65%;
   &-top {
     position: relative;
     .img {
@@ -2116,7 +2160,7 @@ backdrop-filter: blur(5px);
         top: 14%;
         left: 10.7%;
         text-align: center;
-        color: $white;
+        color: var(--white);
         .num {
           font-size: 1.6em;
         }
@@ -2166,28 +2210,26 @@ backdrop-filter: blur(5px);
         }
         button,
         a {
-          background-color: rgba($pale-blue, 0.2);
+          background-color: var(--extrapale-gray);
           padding: 0.55em;
           @include boxShadow();
           border-radius: $radius * 0.5;
           transition: $transition;
+          color: var(--font-color);
           &:hover,
-          &:focus {
-            background-color: rgba($pale-blue, 0.6);
-          }
+          &:focus,
           &:active,
           &.active {
-            background-color: rgba($pale-blue, 1);
-            color: $white;
+            background-color: var(--pale-blue);
+            color: var(--white);
           }
           @include media-breakpoint-down(xl) {
-            background-color: rgba($pale-blue, 0.85);
             &:hover,
             &:focus,
             &:active,
             &.active {
-              background-color: $blue;
-              color: $white;
+              background-color: var(--blue);
+              color: var(--white);
             }
           }
         }
@@ -2208,8 +2250,8 @@ backdrop-filter: blur(5px);
         }
       }
       input:not([type="checkbox"]) {
-        border-color: $pale-blue;
-        @include placeholder($pale-blue);
+        border-color: var(--pale-blue);
+        @include placeholder(var(--pale-blue));
       }
       input[type="search"] {
         width: 340px;
@@ -2226,7 +2268,7 @@ backdrop-filter: blur(5px);
         text-align: center;
       }
       @include media-breakpoint-down(xl) {
-        background: rgba($white, $alpha: 0.75);
+        background: var(--body-bg);
         padding: 1em;
         border-radius: $radius;
         @include shadow();
@@ -2236,7 +2278,7 @@ backdrop-filter: blur(5px);
   &-offers {
     background: var(--glass);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
     --pad: 15px 20px;
     --serv: 220px;
@@ -2254,7 +2296,7 @@ backdrop-filter: blur(5px);
       --price: 90px;
     }
     .top {
-      background-color: rgba($pale-blue, 0.2);
+      background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
@@ -2298,6 +2340,10 @@ backdrop-filter: blur(5px);
     }
   }
 }
+:root[data-theme='light'] .page-game {
+  background: url(imgs/bg/gradient.jpg) no-repeat center bottom;
+  background-size: 100% 65%;
+}
 .offer-line {
   display: grid;
   grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(
@@ -2305,7 +2351,7 @@ backdrop-filter: blur(5px);
     );
   grid-template-rows: 1fr;
   grid-template-areas: "serv descr seller availability price";
-  background-color: $white;
+  background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
   @include media-breakpoint-down(xl) {
@@ -2329,7 +2375,7 @@ backdrop-filter: blur(5px);
   .serv {
     grid-area: serv;
     @include media-breakpoint-down(xl) {
-      color: $blue;
+      color: var(--blue);
       @include flex(row, flex-start, center, nowrap);
     }
   }
@@ -2382,7 +2428,7 @@ backdrop-filter: blur(5px);
   grid-template-columns: 160px auto 120px;
   grid-template-rows: 1fr;
   grid-template-areas: "serv descr price";
-  background-color: $white;
+  background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
   border-bottom: none;
@@ -2404,7 +2450,7 @@ backdrop-filter: blur(5px);
   .serv {
     grid-area: serv;
     @include media-breakpoint-down(xl) {
-      color: $blue;
+      color: var(--blue);
       @include flex(row, flex-start, center, nowrap);
     }
   }
@@ -2440,7 +2486,7 @@ backdrop-filter: blur(5px);
         left: 0em;
         width: 100%;
         height: 1px;
-        background-color: rgba($color: $pale-blue, $alpha: 0.25);
+        background-color: var(--extrapale-gray);
       }
       &:not(:first-child) {
         margin-top: 0.5em;
@@ -2448,15 +2494,15 @@ backdrop-filter: blur(5px);
       span {
         position: relative;
         z-index: 2;
-        background-color: $white;
+        background-color: var(--body-bg);
         padding: 0em 0.5em;
         line-height: normal;
         @include textEllipsis();
         &:first-child {
-          color: $gray;
+          color: var(--gray);
         }
         &:last-child {
-          color: $blue;
+          color: var(--blue);
           width: 45%;
           @include media-breakpoint-down(sm) {
             width: fit-content;
@@ -2467,10 +2513,10 @@ backdrop-filter: blur(5px);
     }
   }
   &-box {
-    border: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
+    border: 1px solid var(--extrapale-gray);
     border-radius: $radius;
     hr {
-      background-color: rgba($color: $pale-blue, $alpha: 0.25);
+      background-color: var(--extrapale-gray);
       width: 100%;
       height: 1px;
       border: none;
@@ -2488,10 +2534,10 @@ backdrop-filter: blur(5px);
         font-weight: 700;
         @include flex();
         svg {
-          color: $blue;
+          color: var(--blue);
           font-size: 1.1em;
           path {
-            fill: $blue;
+            fill: var(--blue);
           }
         }
       }
@@ -2540,7 +2586,7 @@ backdrop-filter: blur(5px);
       grid-area: date;
       @include flex(row, flex-end, flex-end, nowrap);
       padding: 0px 1em;
-      color: $light-gray;
+      color: var(--light-gray);
       @include media-breakpoint-down(sm) {
         align-items: center;
       }
@@ -2555,20 +2601,20 @@ backdrop-filter: blur(5px);
         @include flex(column, space-evenly, stretch, nowrap);
       }
       .tag-gray {
-        background-color: $extrapale-gray;
+        background-color: var(--extrapale-gray);
         padding: 0.25em 0.5em;
         border-radius: 0.5em;
       }
       .tag-green {
-        background-color: $green;
-        color: $white;
+        background-color: var(--green);
+        color: var(--white);
         padding: 0.25em 0.5em;
         border-radius: 0.5em;
       }
     }
     .title {
       grid-area: title;
-      color: $blue;
+      color: var(--blue);
       @include flex(row, flex-start, flex-end, nowrap);
       @include media-breakpoint-down(md) {
         padding: 1em;
@@ -2583,7 +2629,7 @@ backdrop-filter: blur(5px);
       grid-area: payment;
       @include flex(row, flex-start, flex-end, nowrap);
       padding: 1em;
-      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
+      border-bottom: 1px solid var(--extrapale-gray);
       @include media-breakpoint-down(md) {
         @include flex(column, center, stretch, nowrap);
         border-bottom: none;
@@ -2599,7 +2645,7 @@ backdrop-filter: blur(5px);
       @include flex(row, flex-start, center, nowrap);
       @include media-breakpoint-down(md) {
         padding-top: 0px;
-        border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
+        border-bottom: 1px solid var(--extrapale-gray);
       }
     }
     .specifications {
@@ -2618,8 +2664,8 @@ backdrop-filter: blur(5px);
   }
 }
 .review-card {
-  border: 1px solid rgba($color: $pale-blue, $alpha: 0.25);
-  background-color: rgba($color: $pale-blue, $alpha: 0.1);
+  border: 1px solid var(--extrapale-gray);
+  background-color: transparent;
   border-radius: $radius;
   padding: 0.75em;
   .user {
@@ -2635,17 +2681,17 @@ backdrop-filter: blur(5px);
   }
   time {
     font-size: 0.8em;
-    color: $pale-blue;
+    color: var(--pale-blue);
   }
   .rating {
     font-size: 1.2em;
     font-weight: 700;
     @include flex();
     svg {
-      color: $blue;
+      color: var(--blue);
       font-size: 1.1em;
       path {
-        fill: $blue;
+        fill: var(--blue);
       }
     }
   }
@@ -2690,13 +2736,13 @@ backdrop-filter: blur(5px);
 .cognition {
   flex: 1;
   @include flex(row, flex-end, center, nowrap);
-  background-color: $black;
-  background-image: linear-gradient(to right, transparent, $black),
+  background-color: var(--black);
+  background-image: linear-gradient(to right, transparent, var(--black)),
     url(imgs/bg/cogito.jpg);
   background-repeat: no-repeat;
   background-size: 50% 100%, 75% auto;
   background-position: 60% 50%, -10% 50%;
-  color: $white;
+  color: var(--white);
   padding: 0em 2em;
   height: 60px;
   text-align: right;
@@ -2705,7 +2751,7 @@ backdrop-filter: blur(5px);
   &:hover,
   &:focus,
   &:active {
-    color: $light-blue;
+    color: var(--light-blue);
   }
 }
 .page-blog {
@@ -2733,7 +2779,7 @@ backdrop-filter: blur(5px);
       }
     }
     figcaption {
-      background-color: $white;
+      background-color: var(--white);
       border-radius: 0 0 $radius $radius;
       @include lightShadow();
       padding: 1.5em 1.5em 0.6em;
@@ -2745,7 +2791,7 @@ backdrop-filter: blur(5px);
       }
       h5 {
         font-weight: 600;
-        color: $total-black;
+        color: var(--total-black);
         @include clamp(2, 1.2em, true);
         a {
           line-height: 1.2em;
@@ -2755,7 +2801,7 @@ backdrop-filter: blur(5px);
         display: block;
         text-align: right;
         margin-top: 0.5em;
-        color: $pale-blue;
+        color: var(--pale-blue);
         font-weight: 500;
         font-size: 1.2em;
         @include media-breakpoint-down(lg) {
@@ -2766,7 +2812,7 @@ backdrop-filter: blur(5px);
   }
   article {
     p {
-      color: $total-black;
+      color: var(--total-black);
       margin-bottom: 2em;
       @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
@@ -2835,7 +2881,7 @@ backdrop-filter: blur(5px);
           position: relative;
           width: fit-content;
           min-width: 50%;
-          background: rgba($color: $pale-blue, $alpha: 0.2);
+          background: rgba($color: var(--pale-blue), $alpha: 0.2);
           border-radius: $radius;
           padding: 1em;
           font-weight: 400;
@@ -2852,7 +2898,7 @@ backdrop-filter: blur(5px);
         .text {
           align-items: flex-end;
           .bubble {
-            background: rgba($color: $pale-green, $alpha: 0.2);
+            background: rgba($color: var(--pale-green), $alpha: 0.2);
             text-align: right;
           }
         }
@@ -2861,7 +2907,7 @@ backdrop-filter: blur(5px);
   }
   &-form {
     @include flex(row, flex-start, center, nowrap);
-    border-top: 1px solid rgba($pale-blue, 0.3);
+    border-top: 1px solid var(--extrapale-gray);
     padding: 0.5em;
     input {
       border: none;
@@ -2893,7 +2939,7 @@ backdrop-filter: blur(5px);
       backdrop-filter: blur(4px);
       width: 5px;
       &-drag {
-        background-color: $pale-blue;
+        background-color: var(--pale-blue);
       }
     }
     .swiper-slide {
@@ -2909,7 +2955,7 @@ backdrop-filter: blur(5px);
         @include flex(row, space-between, center, nowrap);
         h5 {
           font-weight: 700;
-          color: $green;
+          color: var(--green);
           h5 {
             @include clamp(1, 1.4em, true);
           }
@@ -2943,61 +2989,6 @@ backdrop-filter: blur(5px);
   @include media-breakpoint-down(lg) {
     margin-top: 0em;
   }
-  // .title {
-  //   border-radius: $radius;
-  //   @include bgTextureGradient(linear-gradient(165deg, $black 0%, #4A83DC 55%, $total-black 100%));
-  //   color: $white;
-  //   height: 135px;
-  //   padding: 0 3em;
-  //   @include flex(row, flex-start, center, nowrap);
-  //   position: relative;
-  //   @include media-breakpoint-down(lg) {
-  //     padding-right: 25%;
-  //   }
-  //   @include media-breakpoint-down(sm) {
-  //     height: 100px;
-  //     padding: 0 1em;
-  //     padding-right: 1em;
-  //   }
-  //   h1 {
-  //     line-height: 100%;
-  //     position: relative;
-  //     z-index: 20;
-  //   }
-  //   img {
-  //     position: absolute;
-  //     right: 20%;
-  //     bottom: 0%;
-  //     height: 160%;
-  //     z-index: 10;
-  //     @include media-breakpoint-down(xxl) {
-  //       right: 10%;
-  //     }
-  //     @include media-breakpoint-down(lg) {
-  //       right: 3%;
-  //       height: unset;
-  //       width: 22%;
-  //     }
-  //     @include media-breakpoint-down(md) {
-  //       width: 28%;
-  //     }
-  //   }
-  // }
-  // .box {
-  //   background: var(--glass);
-  //   box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
-  //   border-radius: $radius;
-  //   padding: 2em;
-  //   @include flex(row, space-between, flex-start, nowrap);
-  //   @include media-breakpoint-down(lg) {
-  //     flex-direction: column;
-  //   }
-  //   @include media-breakpoint-down(sm) {
-  //     padding: 1.5em;
-  //   }
-
-  // }
   form {
     &.midi {
       width: 530px;
@@ -3024,7 +3015,7 @@ backdrop-filter: blur(5px);
 /* Entering page */
 .sec-login {
   .wrap {
-    background: var(--glass);
+    background: var(--second-bg);
     box-shadow: var(--shadow);
     backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
@@ -3033,13 +3024,16 @@ backdrop-filter: blur(5px);
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
     }
+    .labeled-input {
+      --bg: var(--second-bg);
+    }
   }
   .cover {
     border-radius: $radius;
     @include bgTextureGradient(
-      linear-gradient(115deg, $black 0%, $blue 55%, $total-black 100%)
+      linear-gradient(115deg, var(--black) 0%, var(--blue) 55%, var(--total-black) 100%)
     );
-    color: $white;
+    color: var(--white);
     height: 395px;
     padding: 0 5em;
     @include flex(row, flex-start, center, nowrap);
@@ -3089,12 +3083,16 @@ backdrop-filter: blur(5px);
 /* Password restoration page */
 .sec-password {
   .wrap {
+    background: var(--second-bg);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
+    }
+    .labeled-input {
+      --bg: var(--second-bg);
     }
   }
 }
@@ -3105,7 +3103,7 @@ backdrop-filter: blur(5px);
   }
   .fav-item {
     @include flex(row, flex-start, center, nowrap);
-    background-color: $white;
+    background-color: var(--white);
     @include lightShadow();
     padding: 0.65em 1.3em;
     border-radius: $radius;
@@ -3122,7 +3120,7 @@ backdrop-filter: blur(5px);
     }
     button {
       @include flex();
-      color: $gray;
+      color: var(--gray);
       font-size: 1.35em;
       svg {
         stroke-width: 1px;
@@ -3140,11 +3138,11 @@ ACCOUNT
   .return-icon {
     display: flex;
     font-size: 2em;
-    color: $blue;
+    color: var(--blue);
   }
   @include media-breakpoint-down(lg) {
     h1 {
-      color: $blue;
+      color: var(--blue);
       font-size: 1.5em;
     }
   }
@@ -3154,7 +3152,7 @@ ACCOUNT
     }
     .return-icon {
       font-size: 1.6em;
-      color: $blue;
+      color: var(--blue);
     }
   }
   .account-bg {
@@ -3166,8 +3164,8 @@ ACCOUNT
   }
   &-nav {
     &-balance {
-      background-color: $blue;
-      color: $white;
+      background-color: var(--blue);
+      color: var(--white);
       padding: 1em;
       border-radius: $radius;
       text-align: center;
@@ -3183,7 +3181,7 @@ ACCOUNT
         svg {
           font-size: 1.5em;
           padding: 0.1em;
-          border: 1px solid $white;
+          border: 1px solid var(--white);
           border-radius: 50%;
         }
       }
@@ -3198,7 +3196,7 @@ ACCOUNT
           }
         }
         a {
-          color: $gray;
+          color: var(--gray);
           @include flex(row, flex-start, center, nowrap);
           padding: 0.67em 1em;
           border-radius: $radius;
@@ -3214,18 +3212,18 @@ ACCOUNT
             flex: 1;
           }
           .badge {
-            background-color: rgba($pale-blue, 0.2);
+            background-color: var(--extrapale-gray);
             padding: 0.34em;
             border-radius: $radius;
-            color: $total-black;
+            color: var(--total-black);
           }
           &:hover,
           &:focus {
-            color: $blue;
+            color: var(--blue);
           }
           &.active {
-            background-color: rgba($pale-blue, 0.2);
-            color: $blue;
+            background-color: var(--extrapale-gray);
+            color: var(--blue);
           }
         }
       }
@@ -3235,7 +3233,7 @@ ACCOUNT
     position: relative;
     .share-btn {
       font-size: 1.5em;
-      color: $dark-blue;
+      color: var(--dark-blue);
       @include media-breakpoint-down(md) {
         position: absolute;
         top: 0em;
@@ -3245,9 +3243,9 @@ ACCOUNT
   }
   .post {
     display: block;
-    background-color: rgba($pale-blue, 0.2);
+    background-color: var(--extrapale-gray);
     border-radius: $radius;
-    color: $total-black;
+    color: var(--total-black);
     text-align: center;
     width: 124px;
     padding-bottom: 0.2em;
@@ -3269,8 +3267,8 @@ ACCOUNT
     }
   }
   .btn-add-offer {
-    background-color: rgba($color: $pale-blue, $alpha: 0.2);
-    color: $pale-blue;
+    background-color: rgba($color: var(--pale-blue), $alpha: 0.2);
+    color: var(--pale-blue);
     @include flex();
     font-size: 6.5em;
     border-radius: 10px;
@@ -3279,7 +3277,7 @@ ACCOUNT
     &:hover,
     &:focus,
     &:active {
-      color: $blue;
+      color: var(--blue);
     }
     @include media-breakpoint-down(md) {
       font-size: 4.5em;
@@ -3321,7 +3319,7 @@ backdrop-filter: blur(5px);
       }
     }
     .box {
-      background-color: $white;
+      background-color: var(--white);
       @include lightShadow();
       border-radius: $radius;
       padding: 0.8em 1.3em;
@@ -3342,8 +3340,8 @@ backdrop-filter: blur(5px);
   }
   .sec-finance {
     .balance {
-      background-color: $blue;
-      color: $white;
+      background-color: var(--blue);
+      color: var(--white);
       padding: 1em 1.2em;
       border-radius: $radius;
       @include flex();
@@ -3351,8 +3349,8 @@ backdrop-filter: blur(5px);
   }
   .sec-messages {
     @include flex(row, flex-start, stretch, wrap);
-    background-color: $white;
-    border: 1px solid rgba($pale-blue, 0.3);
+    background-color: var(--body-bg);
+    border: 1px solid var(--extrapale-gray);
     box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
     backdrop-filter: blur(4px);
     border-radius: $radius;
@@ -3360,7 +3358,7 @@ backdrop-filter: blur(5px);
     @include safariFix();
     &-list {
       width: 35%;
-      border-right: 1px solid rgba($pale-blue, 0.3);
+      border-right: 1px solid var(--extrapale-gray);
       @include media-breakpoint-down(xxl) {
         width: 40%;
       }
@@ -3369,7 +3367,7 @@ backdrop-filter: blur(5px);
         border-right: none;
       }
       form {
-        border-bottom: 1px solid rgba($pale-blue, 0.3);
+        border-bottom: 1px solid var(--extrapale-gray);
       }
       ul {
         margin-top: 1.5em;
@@ -3379,8 +3377,8 @@ backdrop-filter: blur(5px);
         @include flex(row, flex-start, center, nowrap);
         padding: 0.75em 1.3em;
         .count {
-          background-color: $black;
-          color: $white;
+          background-color: var(--black);
+          color: var(--white);
           @include rounedImg(4.8em);
           @include flex(column, center, center, nowrap);
           font-size: 10px;
@@ -3421,19 +3419,22 @@ backdrop-filter: blur(5px);
   }
   .sec-callback {
     .box {
-      background: var(--glass);
+      background: var(--second-bg);
       border-radius: $radius;
       box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
       padding: 3em 2em;
       @include media-breakpoint-down(sm) {
         padding: 1.5em;
+      }
+      .labeled-input {
+        --bg: var(--second-bg);
       }
     }
   }
   .sec-appeal {
     .top {
-      background-color: rgba($pale-blue, 0.2);
+      background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0 0;
       @include flex(row, space-between, center, nowrap);
       padding: 1.3em 2em;
@@ -3442,10 +3443,10 @@ backdrop-filter: blur(5px);
       }
     }
     .box {
-      background: rgba($white, 0.3);
+      background: var(--second-bg);
       border-radius: 0 0 $radius $radius;
       box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+      backdrop-filter: blur(5px);
       padding: 1.5em 2em;
       .chat-window {
         height: 550px;
@@ -3481,7 +3482,7 @@ backdrop-filter: blur(5px);
     border-radius: 100%;
     overflow: hidden;
     @include safariFix();
-    border: 5px solid $white;
+    border: 5px solid var(--white);
     box-sizing: content-box;
     @include media-breakpoint-down(xxl) {
       width: 100px;
@@ -3505,7 +3506,7 @@ backdrop-filter: blur(5px);
     &::after {
       content: "";
       @include absBG(1, 50%, 50%);
-      background: linear-gradient(to bottom, transparent, $total-black 50%);
+      background: linear-gradient(to bottom, transparent, var(--total-black) 50%);
       background-size: cover;
     }
     label {
@@ -3515,11 +3516,11 @@ backdrop-filter: blur(5px);
       transform: translateX(-50%);
       z-index: 2;
       bottom: 0.25em;
-      color: $white;
+      color: var(--white);
       font-size: 1.34em;
       transition: $transition;
       &:hover {
-        color: $green !important;
+        color: var(--green) !important;
       }
     }
   }
@@ -3558,7 +3559,7 @@ backdrop-filter: blur(5px);
       }
     }
     @include media-breakpoint-down(md) {
-      background-color: rgba($pale-blue, 0.2);
+      background-color: var(--extrapale-gray);
       border-radius: $radius;
       padding-left: 65px;
       height: 120px;
@@ -3594,7 +3595,7 @@ backdrop-filter: blur(5px);
       position: relative;
       padding: 0.6em;
       height: 41px;
-      color: $black;
+      color: var(--black);
       font-weight: 600;
       width: 100%;
       @include flex(row, space-between, center, nowrap);
@@ -3613,7 +3614,7 @@ backdrop-filter: blur(5px);
           left: 0px;
           height: 100%;
           width: 50%;
-          background-color: $white;
+          background-color: var(--white);
           transform: skewX(-25deg);
           border-radius: $radius;
         }
@@ -3625,12 +3626,12 @@ backdrop-filter: blur(5px);
           right: 0px;
           height: 100%;
           width: 70%;
-          background-color: $white;
+          background-color: var(--white);
           border-radius: 0 $radius $radius 0;
         }
       }
       @include media-breakpoint-down(md) {
-        background-color: $white;
+        background-color: var(--white);
         border-radius: $radius;
         flex-direction: column;
         height: auto;
@@ -3645,7 +3646,7 @@ backdrop-filter: blur(5px);
           font-size: 1.6em;
           margin-right: 0.34em;
           @include media-breakpoint-down(md) {
-            color: $blue;
+            color: var(--blue);
           }
           &.svg {
             stroke-width: 1.3px;
@@ -3682,7 +3683,7 @@ backdrop-filter: blur(5px);
 }
 .settings-line {
   padding: 1em;
-  color: $total-black;
+  color: var(--total-black);
   display: grid;
   grid-template-columns: 150px 110px auto 140px 120px 60px;
   grid-template-rows: auto;
@@ -3698,7 +3699,7 @@ backdrop-filter: blur(5px);
       "session system btns"
       "browser browser browser"
       "ip ip region";
-    border: 1px solid $pale-gray;
+    border: 1px solid var(--pale-gray);
     border-radius: $radius;
   }
   @include media-breakpoint-down(md) {
@@ -3745,15 +3746,15 @@ backdrop-filter: blur(5px);
     @include flex(row, flex-end, center, nowrap);
     button {
       @include flex();
-      color: $blue;
+      color: var(--blue);
       font-size: 1.35em;
       transition: $transition;
       &:hover,
       &:focus {
-        color: $light-blue;
+        color: var(--light-blue);
       }
       &:active {
-        color: $dark-blue;
+        color: var(--dark-blue);
       }
     }
   }
@@ -3761,11 +3762,11 @@ backdrop-filter: blur(5px);
 .offer-line-2 {
   @include flex(row, space-between, center, nowrap);
   padding: 1em;
-  color: $total-black;
+  color: var(--total-black);
   @include media-breakpoint-down(xl) {
     flex-direction: column;
     align-items: stretch;
-    border: 1px solid $pale-gray;
+    border: 1px solid var(--pale-gray);
     border-radius: $radius;
   }
   .descr {
@@ -3788,22 +3789,22 @@ backdrop-filter: blur(5px);
     @include flex(row, flex-end, center, nowrap);
     button {
       @include flex();
-      color: $blue;
+      color: var(--blue);
       font-size: 1.35em;
       transition: $transition;
       &:hover,
       &:focus {
-        color: $light-blue;
+        color: var(--light-blue);
       }
       &:active {
-        color: $dark-blue;
+        color: var(--dark-blue);
       }
     }
   }
 }
 .offer-line-3 {
   padding: 1em;
-  color: $total-black;
+  color: var(--total-black);
   display: grid;
   grid-template-columns: 145px 110px 1fr 200px 130px 80px;
   grid-template-rows: 1fr;
@@ -3813,7 +3814,7 @@ backdrop-filter: blur(5px);
     font-size: 13px;
   }
   @include media-breakpoint-down(xl) {
-    border: 1px solid $pale-gray;
+    border: 1px solid var(--pale-gray);
     border-radius: $radius;
     font-size: 14px;
     grid-template-columns: 2fr 1fr;
@@ -3900,7 +3901,7 @@ backdrop-filter: blur(5px);
     }
   }
   &-text {
-    background-color: $white;
+    background-color: var(--white);
     @include lightShadow();
     border-radius: $radius;
     padding: 1em 1em 1.3em 60px;
@@ -3913,8 +3914,8 @@ backdrop-filter: blur(5px);
 .purchase-line {
   @include flex(row, space-between, center, nowrap);
   gap: 2em;
-  color: $total-black;
-  background-color: $white;
+  color: var(--total-black);
+  background-color: var(--white);
   @include lightShadow();
   border-radius: $radius;
   padding: 0.6em 1em;
@@ -3954,7 +3955,7 @@ backdrop-filter: blur(5px);
 }
 .operation-line {
   padding: 1em;
-  color: $total-black;
+  color: var(--total-black);
   display: grid;
   grid-template-columns: 21% 21% 21% 21% 16%;
   grid-template-rows: 1fr;
@@ -3979,7 +3980,7 @@ backdrop-filter: blur(5px);
     grid-area: id;
     @include media-breakpoint-down(xl) {
       font-size: 0.9em;
-      color: $gray;
+      color: var(--gray);
     }
   }
   .type {
@@ -3999,11 +4000,11 @@ backdrop-filter: blur(5px);
   }
 }
 .appeal-line {
-  background-color: $white;
+  background-color: var(--white);
   border-radius: $radius;
   @include lightShadow();
   padding: 1em;
-  color: $total-black;
+  color: var(--total-black);
   display: grid;
   grid-template-columns: 35% 13% 22% 20% 10%;
   grid-template-rows: 1fr;
@@ -4043,7 +4044,7 @@ backdrop-filter: blur(5px);
   border-radius: $radius;
   position: relative;
   &.active {
-    background-color: rgba($light-gray, 0.2);
+    background-color: var(--extrapale-gray);
   }
   img {
     @include rounedImg(3em);
@@ -4060,7 +4061,7 @@ backdrop-filter: blur(5px);
     border-radius: 50%;
     z-index: 10;
     &.green {
-      background-color: $green;
+      background-color: var(--green);
     }
   }
   .text {
@@ -4070,13 +4071,13 @@ backdrop-filter: blur(5px);
     }
     time {
       font-weight: 300;
-      color: $gray;
+      color: var(--gray);
       font-size: 0.7em;
     }
     p {
       @include clamp(1, 1.2em, true);
       font-weight: 300;
-      color: $gray;
+      color: var(--gray);
     }
   }
 }
@@ -4097,7 +4098,7 @@ ACCOUNT END
     border: none;
     opacity: 1;
     height: 1px;
-    background-color: rgba($pale-blue, 0.3);
+    background-color: var(--extrapale-gray);
     margin: 0.6em 0 1.2em;
   }
   .rules-wrapping {
@@ -4111,7 +4112,7 @@ ACCOUNT END
       --padX: 1em;
     }
     &-top {
-      background-color: rgba($pale-blue, 0.2);
+      background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0px 0px;
       padding: var(--padY) var(--padX);
       ul {
@@ -4209,7 +4210,7 @@ ACCOUNT END
       ul {
         @include list();
         li {
-          border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.2);
+          border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.2);
           @include media-breakpoint-down(xl) {
             border-bottom: none;
           }
@@ -4220,8 +4221,8 @@ ACCOUNT END
 }
 .faq {
   .box {
-    background-color: $total-black;
-    color: $white;
+    background-color: var(--total-black);
+    color: var(--white);
     border-radius: $radius;
     position: relative;
     padding: 3em 40% 3em 2em;
@@ -4239,17 +4240,17 @@ ACCOUNT END
   ul {
     @include list();
     li {
-      border-bottom: 1px solid rgba($color: $pale-blue, $alpha: 0.35);
+      border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.35);
       padding: 0.5em 0px;
       margin-bottom: 1em;
       a {
-        color: $blue;
+        color: var(--blue);
         font-weight: 600;
         transition: $transition;
         &:hover,
         &:focus,
         &:active {
-          color: $dark-blue;
+          color: var(--dark-blue);
         }
       }
     }
@@ -4259,11 +4260,11 @@ ACCOUNT END
 /* Footer */
 footer {
   height: var(--f-height);
-  background-color: $black;
+  background-color: var(--footer-bg);
   color: $white;
   @include media-breakpoint-down(lg) {
     background-color: transparent;
-    color: $black;
+    color: var(--black);
     position: fixed;
     bottom: 0px;
     left: 0px;
@@ -4308,7 +4309,7 @@ footer {
         button {
           @include flex();
           font-size: 1.85em;
-          color: $gray;
+          color: var(--gray);
           transition: $transition;
           svg {
             path {
@@ -4316,7 +4317,7 @@ footer {
             }
           }
           &.active {
-            color: $blue;
+            color: var(--blue);
             svg {
               path {
                 stroke-width: 1px;
@@ -4332,7 +4333,7 @@ footer {
 /* Modal */
 .modal {
   &-content {
-    background-color: $white;
+    background-color: var(--white);
     border: none;
     border-radius: $radius;
   }
@@ -4340,7 +4341,7 @@ footer {
     position: relative;
     height: 35px;
     padding: 0px;
-    background-color: rgba($pale-blue, 0.2);
+    background-color: var(--extrapale-gray);
     border: none;
     .warning {
       position: absolute;
@@ -4353,7 +4354,7 @@ footer {
     .btn-close {
       background: url(imgs/close.svg) no-repeat center;
       background-size: contain;
-      background-color: $white;
+      background-color: var(--white);
       width: 1.34em;
       height: 1.34em;
       padding: 0px;
@@ -4368,7 +4369,7 @@ footer {
       z-index: 1;
       &:hover,
       &:focus {
-        background-color: $dark-blue;
+        background-color: var(--dark-blue);
       }
     }
   }
@@ -4400,7 +4401,7 @@ footer {
           color: inherit;
         }
         &:not(:first-child) {
-          border-top: 1px solid var(--gray-bg);
+          border-top: 1px solid var(--light-gray);
         }
       }
     }
@@ -4422,13 +4423,13 @@ footer {
       right: 0px;
       font-size: 1.5em;
       @include flex();
-      color: $gray;
+      color: var(--gray);
       transition: $transition;
       padding: 0.5em;
       &:hover,
       &:focus,
       &:active {
-        color: $black;
+        color: var(--black);
       }
     }
   }
@@ -4437,7 +4438,7 @@ footer {
     height: fit-content !important;
     .offcanvas-body {
       padding: calc(var(--h-height) + 1em) 1em 2em 1em;
-      background-color: $white;
+      background-color: var(--white);
       border-radius: 0px 0px $radius $radius;
     }
   }
@@ -4464,8 +4465,8 @@ footer {
   padding: 13px 20px;
   box-shadow: 0px 0px 2px #919eab1f, 0px 8px 24px -4px #919eab33 !important;
   border-radius: 12px;
-  color: #000;
-  background-color: #fff;
+  color: var(--font-color);
+  background-color: var(--body-bg);
   cursor: pointer;
   font-size: 0.9em;
   position: relative;
@@ -4507,11 +4508,11 @@ footer {
 }
 
 .notification-info {
-  color: #2f96b4;
+  color: var(--light-blue);
 }
 
 .notification-success {
-  color: #36b37e;
+  color: var(--green);
 }
 
 .notification-warning {
