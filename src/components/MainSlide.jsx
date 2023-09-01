@@ -15,7 +15,7 @@ const MainSlide = (props) => {
       onMouseEnter={props.onMouseEnter}
       onClick={props.onClick}
     >
-      <div className="position-relative">
+      <div className="wrap">
         {isMobileLG ? (
           <SlideMobile img={props.imgFull} className="svg-mobile" />
         ) : props.isActive ? (

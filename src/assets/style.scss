@@ -1564,24 +1564,25 @@ header {
     }
   }
   &-item {
-    --w: 15.5%;
+    --w: 17%;
     width: var(--w);
     position: relative;
-    padding-top: 3.5em;
     transition: 400ms ease-in-out;
     @include media-breakpoint-down(xl) {
       --w: 16.5%;
-      padding-top: 2.5em;
     }
     @include media-breakpoint-down(lg) {
       --w: 100%;
-      padding-top: 0em;
+    }
+    .wrap {
+      position: relative;
+      padding-top: 3.25em;
     }
     .svg-mini {
       position: relative;
       z-index: 1;
       width: 112%;
-      height: 372px;
+      height: 303px;
       @include media-breakpoint-down(xxl) {
         height: 320px;
       }
@@ -1637,7 +1638,7 @@ header {
       }
     }
     .title-mini {
-      margin-top: 10px;
+      margin-top: 5px;
       width: 100%;
       overflow: hidden;
       opacity: 1;
@@ -1665,7 +1666,7 @@ header {
       height: fit-content;
       position: absolute;
       z-index: 10;
-      bottom: 9%;
+      bottom: 14%;
       right: -6%;
       @include flex(column, center, center, nowrap);
       color: var(--white);
@@ -1713,19 +1714,19 @@ header {
       @include media-breakpoint-down(lg) {
         --w: 100%;
       }
+      .wrap {
+        padding-top: 1em;
+      }
       .svg-full {
         position: relative;
         z-index: 1;
         width: 100%;
-        height: 458px;
-        margin-top: -3em;
+        height: 365px;
         @include media-breakpoint-down(xxl) {
           height: 400px;
-          margin-top: -2.6em;
         }
         @include media-breakpoint-down(xl) {
           height: 340px;
-          margin-top: -2em;
         }
       }
       .title-full {
@@ -1738,7 +1739,7 @@ header {
         transition: 400ms linear 0ms;
       }
       .lots {
-        top: -1.85em;
+        top: 2.6em;
         left: 6.25%;
         bottom: unset;
         right: unset;
@@ -2133,6 +2134,319 @@ backdrop-filter: blur(5px);
     z-index: 10;
   }
 }
+
+/* Blog */
+.sec-blog {
+  .blog-list {
+    @include list();
+    &-item {
+      position: relative;
+      img {
+        width: 100%;
+        height: 200px;
+        object-fit: cover;
+        border-radius: $radius;
+        margin-bottom: 1.3em;
+        @include media-breakpoint-down(xxl) {
+          height: 190px;
+        }
+      }
+      h5 {
+        @include clamp(3, 1.3em);
+      }
+      &-mobile {
+        @include flex(row, flex-start, center, nowrap);
+        position: relative;
+        img {
+          width: 100px;
+          height: 80px;
+          object-fit: cover;
+          border-radius: $radius;
+          margin-right: 1em;
+        }
+        h5 {
+          flex: 1;
+        }
+      }
+    }
+  }
+}
+.cognition {
+  flex: 1;
+  @include flex(row, flex-end, center, nowrap);
+  background-color: var(--black);
+  background-image: linear-gradient(to right, transparent, var(--black)),
+    url(imgs/bg/cogito.jpg);
+  background-repeat: no-repeat;
+  background-size: 50% 100%, 75% auto;
+  background-position: 60% 50%, -10% 50%;
+  color: var(--white);
+  padding: 0em 2em;
+  height: 60px;
+  text-align: right;
+  border-radius: $radius;
+  transition: $transition;
+  &:hover,
+  &:focus,
+  &:active {
+    color: var(--light-blue);
+  }
+}
+.page-blog {
+  .article-mini {
+    position: relative;
+    img {
+      width: 100%;
+      height: 250px;
+      object-fit: cover;
+      border-radius: $radius $radius 0 0;
+      @include media-breakpoint-down(xxl) {
+        height: 220px;
+      }
+      @include media-breakpoint-down(xl) {
+        height: 180px;
+      }
+      @include media-breakpoint-down(lg) {
+        height: 200px;
+      }
+      @include media-breakpoint-down(md) {
+        height: 155px;
+      }
+      @include media-breakpoint-down(sm) {
+        height: 33vw;
+      }
+    }
+    figcaption {
+      background-color: var(--white);
+      border-radius: 0 0 $radius $radius;
+      @include lightShadow();
+      padding: 1.5em 1.5em 0.6em;
+      @include media-breakpoint-down(xl) {
+        padding: 1em 1.25em 0.6em;
+      }
+      @include media-breakpoint-down(sm) {
+        padding: 0.6em 1em;
+      }
+      h5 {
+        font-weight: 600;
+        color: var(--total-black);
+        @include clamp(2, 1.2em, true);
+        a {
+          line-height: 1.2em;
+        }
+      }
+      time {
+        display: block;
+        text-align: right;
+        margin-top: 0.5em;
+        color: var(--pale-blue);
+        font-weight: 500;
+        font-size: 1.2em;
+        @include media-breakpoint-down(lg) {
+          font-size: 1em;
+        }
+      }
+    }
+  }
+  article {
+    p {
+      color: var(--total-black);
+      margin-bottom: 2em;
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 1em;
+      }
+    }
+    img {
+      max-width: 100%;
+      border-radius: $radius;
+      margin-bottom: 2em;
+      @include media-breakpoint-down(sm) {
+        margin-bottom: 1em;
+      }
+    }
+  }
+}
+
+/* bottom background */
+.sec-bottom {
+  background: url(imgs/bg/gradient.jpg) no-repeat center;
+  background-size: 100% 100%;
+}
+
+/* Chat */
+.chat {
+  position: relative;
+  &-window {
+    height: 698px;
+    overflow: auto;
+    padding: 1em 1.5em;
+    @include media-breakpoint-down(lg) {
+      padding: 1em 1.5em;
+      height: 500px;
+    }
+    @include media-breakpoint-down(md) {
+      padding: 1em;
+    }
+    @include media-breakpoint-down(sm) {
+      padding: 1em 0.5em;
+    }
+    &-message {
+      @include flex(row, flex-start, flex-start);
+      &:not(:first-child) {
+        margin-top: 1.5em;
+      }
+      img {
+        width: 3.34em;
+        height: 3.34em;
+        border-radius: 50%;
+        position: relative;
+        z-index: 10;
+        margin-right: 1em;
+      }
+      .text {
+        flex: 1;
+        @include flex(column, flex-start, flex-start, nowrap);
+        .bubble {
+          position: relative;
+          width: fit-content;
+          min-width: 50%;
+          background: rgba($color: var(--pale-blue), $alpha: 0.2);
+          border-radius: $radius;
+          padding: 1em;
+          font-weight: 400;
+          font-size: 0.9em;
+          text-align: left;
+        }
+      }
+      &-mine {
+        @extend .chat-window-message;
+        img {
+          margin-left: 1em;
+          margin-right: 0px;
+        }
+        .text {
+          align-items: flex-end;
+          .bubble {
+            background: rgba($color: var(--pale-green), $alpha: 0.2);
+            text-align: right;
+          }
+        }
+      }
+    }
+  }
+  &-form {
+    @include flex(row, flex-start, center, nowrap);
+    border-top: 1px solid var(--extrapale-gray);
+    padding: 0.5em;
+    input {
+      border: none;
+      background-color: transparent;
+      height: 100%;
+    }
+  }
+}
+.sec-chat {
+  position: relative;
+  h2 {
+    font-size: 2.85em;
+    margin-left: 3.5em;
+    margin-bottom: 0.1em;
+  }
+  &-count {
+    position: absolute;
+    z-index: 10;
+    top: 0px;
+    left: 2em;
+    width: 6em;
+    height: 6em;
+    border-radius: 50%;
+    background-color: var(--font-color);
+    color: var(--body-bg);
+    text-align: center;
+    @include flex(column, center, center, nowrap);
+    .num {
+      font-size: 1.34em;
+    }
+    .text {
+      font-size: .86em;
+    }
+  }
+  .chat {
+    box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
+    padding-top: 2em;
+  }
+}
+.sec-messages-chat {
+  box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
+}
+
+/* Popular products */
+.sec-popular {
+  h2 {
+    margin-bottom: 0.1em;
+    padding: 0 0.35em;
+    font-size: 2.85em;
+    @include media-breakpoint-down(xl) {
+      font-size: 2.65em;
+    }
+  }
+  .offers-slider {
+    height: 785px;
+    padding: 0 1.5em 0 1em;
+    margin-right: -0.5em;
+    .swiper-scrollbar {
+      right: 0.5em;
+      background-color: #fff;
+      box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
+        1px 3px 20px rgba(100, 100, 100, 0.15);
+      backdrop-filter: blur(4px);
+      width: 5px;
+      &-drag {
+        background-color: var(--pale-blue);
+      }
+    }
+    .swiper-slide {
+      height: fit-content;
+    }
+    .offer-card {
+      background: var(--glass);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(5px);
+      border-radius: $radius;
+      padding: 1.6em 1.6em 0.7em 1.6em;
+      &-top {
+        @include flex(row, space-between, center, nowrap);
+        h5 {
+          font-weight: 700;
+          color: var(--green);
+          h5 {
+            @include clamp(1, 1.4em, true);
+          }
+        }
+      }
+      &-main {
+        margin-top: 1em;
+        @include flex(row, space-between, flex-start, nowrap);
+        h5 {
+          @include clamp(2, 1.4em, true);
+        }
+      }
+      &-text {
+        margin-top: 1em;
+        p {
+          font-weight: 300;
+          @include clamp(2, 1.4em);
+        }
+      }
+      &-bottom {
+        margin-top: 1em;
+        @include flex(row, space-between, center, nowrap);
+      }
+    }
+  }
+}
+
+
 
 /* Game page */
 .page-game {
@@ -2692,292 +3006,6 @@ backdrop-filter: blur(5px);
       font-size: 1.1em;
       path {
         fill: var(--blue);
-      }
-    }
-  }
-}
-
-/* Blog */
-.sec-blog {
-  .blog-list {
-    @include list();
-    &-item {
-      position: relative;
-      img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-        border-radius: $radius;
-        margin-bottom: 1.3em;
-        @include media-breakpoint-down(xxl) {
-          height: 190px;
-        }
-      }
-      h5 {
-        @include clamp(3, 1.3em);
-      }
-      &-mobile {
-        @include flex(row, flex-start, center, nowrap);
-        position: relative;
-        img {
-          width: 100px;
-          height: 80px;
-          object-fit: cover;
-          border-radius: $radius;
-          margin-right: 1em;
-        }
-        h5 {
-          flex: 1;
-        }
-      }
-    }
-  }
-}
-.cognition {
-  flex: 1;
-  @include flex(row, flex-end, center, nowrap);
-  background-color: var(--black);
-  background-image: linear-gradient(to right, transparent, var(--black)),
-    url(imgs/bg/cogito.jpg);
-  background-repeat: no-repeat;
-  background-size: 50% 100%, 75% auto;
-  background-position: 60% 50%, -10% 50%;
-  color: var(--white);
-  padding: 0em 2em;
-  height: 60px;
-  text-align: right;
-  border-radius: $radius;
-  transition: $transition;
-  &:hover,
-  &:focus,
-  &:active {
-    color: var(--light-blue);
-  }
-}
-.page-blog {
-  .article-mini {
-    position: relative;
-    img {
-      width: 100%;
-      height: 250px;
-      object-fit: cover;
-      border-radius: $radius $radius 0 0;
-      @include media-breakpoint-down(xxl) {
-        height: 220px;
-      }
-      @include media-breakpoint-down(xl) {
-        height: 180px;
-      }
-      @include media-breakpoint-down(lg) {
-        height: 200px;
-      }
-      @include media-breakpoint-down(md) {
-        height: 155px;
-      }
-      @include media-breakpoint-down(sm) {
-        height: 33vw;
-      }
-    }
-    figcaption {
-      background-color: var(--white);
-      border-radius: 0 0 $radius $radius;
-      @include lightShadow();
-      padding: 1.5em 1.5em 0.6em;
-      @include media-breakpoint-down(xl) {
-        padding: 1em 1.25em 0.6em;
-      }
-      @include media-breakpoint-down(sm) {
-        padding: 0.6em 1em;
-      }
-      h5 {
-        font-weight: 600;
-        color: var(--total-black);
-        @include clamp(2, 1.2em, true);
-        a {
-          line-height: 1.2em;
-        }
-      }
-      time {
-        display: block;
-        text-align: right;
-        margin-top: 0.5em;
-        color: var(--pale-blue);
-        font-weight: 500;
-        font-size: 1.2em;
-        @include media-breakpoint-down(lg) {
-          font-size: 1em;
-        }
-      }
-    }
-  }
-  article {
-    p {
-      color: var(--total-black);
-      margin-bottom: 2em;
-      @include media-breakpoint-down(sm) {
-        margin-bottom: 1em;
-      }
-    }
-    img {
-      max-width: 100%;
-      border-radius: $radius;
-      margin-bottom: 2em;
-      @include media-breakpoint-down(sm) {
-        margin-bottom: 1em;
-      }
-    }
-  }
-}
-
-/* bottom background */
-.sec-bottom {
-  background: url(imgs/bg/gradient.jpg) no-repeat center;
-  background-size: 100% 100%;
-}
-
-/* Chat */
-.sec-chat {
-  h2 {
-    margin-left: 3.5em;
-    margin-bottom: 0.1em;
-  }
-}
-.sec-messages-chat {
-  box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
-}
-.chat {
-  position: relative;
-  &-window {
-    height: 698px;
-    overflow: auto;
-    padding: 1em 1.5em;
-    @include media-breakpoint-down(lg) {
-      padding: 1em 1.5em;
-      height: 500px;
-    }
-    @include media-breakpoint-down(md) {
-      padding: 1em;
-    }
-    @include media-breakpoint-down(sm) {
-      padding: 1em 0.5em;
-    }
-    &-message {
-      @include flex(row, flex-start, flex-start);
-      &:not(:first-child) {
-        margin-top: 1.5em;
-      }
-      img {
-        width: 3.34em;
-        height: 3.34em;
-        border-radius: 50%;
-        position: relative;
-        z-index: 10;
-        margin-right: 1em;
-      }
-      .text {
-        flex: 1;
-        @include flex(column, flex-start, flex-start, nowrap);
-        .bubble {
-          position: relative;
-          width: fit-content;
-          min-width: 50%;
-          background: rgba($color: var(--pale-blue), $alpha: 0.2);
-          border-radius: $radius;
-          padding: 1em;
-          font-weight: 400;
-          font-size: 0.9em;
-          text-align: left;
-        }
-      }
-      &-mine {
-        @extend .chat-window-message;
-        img {
-          margin-left: 1em;
-          margin-right: 0px;
-        }
-        .text {
-          align-items: flex-end;
-          .bubble {
-            background: rgba($color: var(--pale-green), $alpha: 0.2);
-            text-align: right;
-          }
-        }
-      }
-    }
-  }
-  &-form {
-    @include flex(row, flex-start, center, nowrap);
-    border-top: 1px solid var(--extrapale-gray);
-    padding: 0.5em;
-    input {
-      border: none;
-      background-color: transparent;
-      height: 100%;
-    }
-  }
-}
-
-/* Popular products */
-.sec-popular {
-  h2 {
-    margin-bottom: 0.1em;
-    padding: 0 0.35em;
-    font-size: 2.85em;
-    @include media-breakpoint-down(xl) {
-      font-size: 2.65em;
-    }
-  }
-  .offers-slider {
-    height: 860px;
-    padding: 0 1.5em 0 1em;
-    margin-right: -0.5em;
-    .swiper-scrollbar {
-      right: 0.5em;
-      background-color: #fff;
-      box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
-        1px 3px 20px rgba(100, 100, 100, 0.15);
-      backdrop-filter: blur(4px);
-      width: 5px;
-      &-drag {
-        background-color: var(--pale-blue);
-      }
-    }
-    .swiper-slide {
-      height: fit-content;
-    }
-    .offer-card {
-      background: var(--glass);
-      box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
-      border-radius: $radius;
-      padding: 1.6em 1.6em 0.7em 1.6em;
-      &-top {
-        @include flex(row, space-between, center, nowrap);
-        h5 {
-          font-weight: 700;
-          color: var(--green);
-          h5 {
-            @include clamp(1, 1.4em, true);
-          }
-        }
-      }
-      &-main {
-        margin-top: 1em;
-        @include flex(row, space-between, flex-start, nowrap);
-        h5 {
-          @include clamp(2, 1.4em, true);
-        }
-      }
-      &-text {
-        margin-top: 1em;
-        p {
-          font-weight: 300;
-          @include clamp(2, 1.4em);
-        }
-      }
-      &-bottom {
-        margin-top: 1em;
-        @include flex(row, space-between, center, nowrap);
       }
     }
   }

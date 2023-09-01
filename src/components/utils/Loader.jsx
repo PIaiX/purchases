@@ -4,7 +4,7 @@ const Loader = memo(
   ({ className, full = false, size = 35, color, speed = "1s" }) => {
     const Icon = () => {
       return (
-        <main>
+        <main className="d-flex align-items-center justify-content-center">
           <svg
             className={className}
             xmlns="http://www.w3.org/2000/svg"
@@ -34,12 +34,14 @@ const Loader = memo(
     };
     if (full) {
       return (
-        <div className="loader">
-          <Icon />
-        </div>
+        <main className="d-flex align-items-center justify-content-center">
+          <div className="loader">
+            <Icon />
+          </div>
+        </main>
       );
     }
-    return <Icon />;
+    return <main className="d-flex align-items-center justify-content-center"><Icon /></main>;
   }
 );
 
