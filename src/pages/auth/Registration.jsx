@@ -10,9 +10,11 @@ import Input from "../../components/utils/Input";
 import { authRegister } from "../../services/auth";
 import { useForm } from "react-hook-form";
 import { NotificationManager } from "react-notifications";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Registration = () => {
   const { isAuth } = useSelector((state) => state?.auth);
+  const [captcha, setCaptcha] = useState(false);
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -321,11 +323,15 @@ const Registration = () => {
                       Принять условия Пользовательского соглашения
                     </span>
                   </label>
-
+                  <ReCAPTCHA
+                    className="mt-4 d-flex justify-content-center w-100"
+                    sitekey={process.env.REACT_APP_CAPTCHA}
+                    onChange={(e) => setCaptcha(e)}
+                  />
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={!isValid}
+                    disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Зарегистрироваться

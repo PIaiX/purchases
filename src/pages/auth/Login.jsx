@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect } from "react";
+import React, { useCallback, useLayoutEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -9,9 +9,11 @@ import Input from "../../components/utils/Input";
 import { login } from "../../services/auth";
 import Meta from "../../components/Meta";
 import { Button } from "react-bootstrap";
+import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const auth = useSelector((state) => state?.auth);
+  const [captcha, setCaptcha] = useState(false);
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -80,10 +82,16 @@ const Login = () => {
                     }}
                   />
 
+                  <ReCAPTCHA
+                    className="mt-4 d-flex justify-content-center w-100"
+                    sitekey={process.env.REACT_APP_CAPTCHA}
+                    onChange={(e) => setCaptcha(e)}
+                  />
+
                   <Button
                     type="submit"
                     variant="primary"
-                    disabled={!isValid}
+                    disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Войти
