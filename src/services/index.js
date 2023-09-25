@@ -23,7 +23,9 @@ const DEVICE = JSON.stringify({
 $api.interceptors.request.use(
   async (config) => {
     // config.headers["Content-Type"] = "application/json";
+    const state = store.getState();
     config.headers.device = DEVICE;
+    config.headers.ip = state?.settings?.ip ?? "0.0.0.0";
     return config;
   },
   (error) => Promise.reject(error)
@@ -41,7 +43,9 @@ $authApi.interceptors.request.use(
     if (token) {
       config.headers.authorization = `Bearer ${token}`;
     }
+    const state = store.getState();
     config.headers.device = DEVICE;
+    config.headers.ip = state?.settings?.ip ?? "0.0.0.0";
     return config;
   },
   (error) => Promise.reject(error)

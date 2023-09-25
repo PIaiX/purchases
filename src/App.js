@@ -6,12 +6,21 @@ import Loader from "./components/utils/Loader";
 import AppRouter from "./routes/AppRouter";
 import { checkAuth, logout } from "./services/auth";
 import { setAuth, setUser } from "./store/reducers/authSlice";
+import { setSettings } from "./store/reducers/settingsSlice";
+import axios from "axios";
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
 
   useLayoutEffect(() => {
+    (async () =>
+      await axios
+        .get("https://ip.yooapp.ru")
+        .then(
+          ({ data }) => data?.ip && dispatch(setSettings({ ip: data.ip }))
+        ))();
+
     if (localStorage.getItem("token")) {
       checkAuth()
         .then((data) => {
