@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import SearchIcon from './svg/SearchIcon';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
@@ -11,9 +11,10 @@ const CatalogSection = () => {
   const cut = useRef(null);
 
   const onScroll = (id) => {
-    const link = document.querySelector('[data-to-scrollspy-id="'+ id +'"]');
-    cut.current.style.top = link.offsetTop+'px';
+    const link = document.querySelector('[data-to-scrollspy-id="' + id + '"]');
+    cut.current.style.top = link.offsetTop + 'px';
   }
+  const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
   return (
     <section className='sec-catalog mb-6'>
@@ -27,70 +28,41 @@ const CatalogSection = () => {
             updateHistoryStack={false}
             onUpdateCallback={(id) => onScroll(id)}
           >
-            <div id="letter-A" className='sec-catalog-part'>
-              <div className="letter">A</div>
-              <ul className='list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5'>
-                <li>
-                  <GameCard />
-                </li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-              </ul>
-            </div>
+            <div>
+              {alphabet.map((letter, index) => (
+                <div id={`letter-${letter}`} className="sec-catalog-part">
 
-            <div id="letter-B" className='sec-catalog-part'>
-              <div className="letter">B</div>
-              <ul className='list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5'>
-                <li>
-                  <GameCard />
-                </li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-              </ul>
-            </div>
+                  <div className="letter">{letter}</div>
+                  <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
+                    <GameCard prop={letter} />
 
-            <div className='sec-promo mb-5'>
-              <div className='text'>
-                <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none'/>удовольствие</h1>
-                <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
-              </div>
-              <img src="/imgs/head.png" alt="head" />
-              <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
-            </div>
-
-            <div id="letter-C" className='sec-catalog-part'>
-              <div className="letter">C</div>
-              <ul className='list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5'>
-                <li>
-                  <GameCard />
-                </li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-                <li><GameCard /></li>
-              </ul>
+                  </ul>
+                  {index % 2 != 0 &&
+                    <div className='sec-promo mb-5'>
+                      <div className='text'>
+                        <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
+                        <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
+                      </div>
+                      <img src="/imgs/head.png" alt="head" />
+                      <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
+                    </div>}
+                </div>
+              ))}
             </div>
           </ScrollSpy>
         </div>
 
         <nav className='sec-catalog-nav'>
-          <div 
-            onMouseEnter={()=>setFull(true)} 
-            onMouseLeave={()=>setFull(false)}
+          <div
+            onMouseEnter={() => setFull(true)}
+            onMouseLeave={() => setFull(false)}
             className={(full) ? 'wrap full' : 'wrap'}
           >
             <form action="">
               <button type='submit'>
                 <SearchIcon />
               </button>
-              <input type="text" placeholder='Поиск' className='p-blue'/>
+              <input type="text" placeholder='Поиск' className='p-blue' />
             </form>
             <ul>
               <li><Link to="/#letter-A" data-to-scrollspy-id="letter-A">A</Link></li>
@@ -121,7 +93,7 @@ const CatalogSection = () => {
               <li><Link to="/#letter-Z" data-to-scrollspy-id="letter-Z">Z</Link></li>
               <li><Link to="/#letter-ru" data-to-scrollspy-id="letter-ru">А-Я</Link></li>
             </ul>
-            <div ref={cut} id="cut" className={(full)?'opened':''}><img src={Arrow} alt="arrow" /></div>
+            <div ref={cut} id="cut" className={(full) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
           </div>
         </nav>
       </Container>

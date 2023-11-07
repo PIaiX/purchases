@@ -64,7 +64,7 @@ const Home = () => {
               <Col xs={12} md={8}>
                 <section className="sec-chat">
                   <h2>Общий чат</h2>
-                  <Chat/>
+                  <Chat />
                   <div className="sec-chat-count">
                     <div className="num">102</div>
                     <div className="text">участника online</div>
@@ -81,19 +81,19 @@ const Home = () => {
                     slidesPerView={'auto'}
                     direction={'vertical'}
                     scrollbar={{ draggable: true }}
-                    mousewheel={{releaseOnEdges: true}}
+                    mousewheel={{ releaseOnEdges: true }}
                   >
                     <SwiperSlide>
-                      <OfferCard/>
+                      <OfferCard />
                     </SwiperSlide>
                     <SwiperSlide>
-                      <OfferCard/>
+                      <OfferCard />
                     </SwiperSlide>
                     <SwiperSlide>
-                      <OfferCard/>
+                      <OfferCard />
                     </SwiperSlide>
                     <SwiperSlide>
-                      <OfferCard/>
+                      <OfferCard />
                     </SwiperSlide>
                   </Swiper>
                 </section>
