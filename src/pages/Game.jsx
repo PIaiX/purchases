@@ -10,7 +10,7 @@ import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
 import GameDate from '../components/GameDate';
 import { useLocation } from 'react-router-dom';
-
+import Pagination from '../components/Pagination';
 
 const Game = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -130,6 +130,7 @@ const Game = () => {
                 <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"/imgs/user.jpg"} count={2} price={186.97} />
               </li>
             </ul>
+            <Pagination />
           </div>
         </Container>
       </section>
