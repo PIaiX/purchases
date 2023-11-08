@@ -11,6 +11,7 @@ import FilterIcon from '../components/svg/FilterIcon'
 import GameDate from '../components/GameDate';
 import { useLocation } from 'react-router-dom';
 import Pagination from '../components/Pagination';
+import TableDate from '../components/TableDate';
 
 const Game = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -18,6 +19,7 @@ const Game = () => {
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
   const gameItems = GameDate;
+  const tableItems = TableDate;
   const data = searchParams.get('data');
   const catId = searchParams.get('catId');
   const filteredGames = gameItems.filter(game => game.title === data);
@@ -106,31 +108,14 @@ const Game = () => {
             </div>
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
               <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"/imgs/user.jpg"} count={1} price={186.97} />
+                {tableItems.map(item => (
+
+                  <OfferLine serv={item.serv} descr={item.descr} seller={item.seller} sellerRating={item.sellerRating} sellerImg={item.sellerImg} count={item.count} price={item.price} />
+                ))}
               </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"/imgs/user.jpg"} count={2} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"/imgs/user.jpg"} count={1} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"/imgs/user.jpg"} count={2} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"/imgs/user.jpg"} count={1} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"/imgs/user.jpg"} count={2} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R'} seller={'Weatherwax'} sellerRating={4.8} sellerImg={"/imgs/user.jpg"} count={1} price={186.97} />
-              </li>
-              <li>
-                <OfferLine serv={'Airin + Blackbird'} descr={'Повелитель Бури СХ 109 и 50%/ДУАЛ АРХИМАГ 105, 109 уровень, Тёмные эльфы, Одетый (подробности в описании)'} seller={'User8name'} sellerRating={4.1} sellerImg={"/imgs/user.jpg"} count={2} price={186.97} />
-              </li>
+
             </ul>
-            <Pagination />
+
           </div>
         </Container>
       </section>
