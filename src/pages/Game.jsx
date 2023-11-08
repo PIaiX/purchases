@@ -8,11 +8,20 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
+import GameDate from '../components/GameDate';
+import { useLocation } from 'react-router-dom';
+
 
 const Game = () => {
   const isMobileLG = useIsMobile('1109px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
-
+  const location = useLocation();
+  const searchParams = new URLSearchParams(location.search);
+  const gameItems = GameDate;
+  const data = searchParams.get('data');
+  const catId = searchParams.get('catId');
+  const filteredGames = gameItems.filter(game => game.title === data);
+  const game = filteredGames[0];
   return (
     <main>
       <Container>
@@ -22,21 +31,14 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container className='mb-lg-5'>
           <div className="page-game-top">
-            <h1 className='mb-4 mb-xxxl-5'>Lineage 2</h1>
+            <h1 className='mb-4 mb-xxxl-5'>{game.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                <ServerSwitcher serversArr={[
-                  { id: 'server-1', title: 'RU/EU' },
-                  { id: 'server-2', title: 'FREE' },
-                ]} />
+                <ServerSwitcher serversArr={game.server} />
                 <ul className='categories'>
-                  <li><button type='button' className='active'>Предметы</button></li>
-                  <li><button type='button'>Аккаунты</button></li>
-                  <li><button type='button'>Голда</button></li>
-                  <li><button type='button'>Прочее</button></li>
-                  <li><button type='button'>Арена</button></li>
-                  <li><button type='button'>Предметы</button></li>
-                  <li><button type='button'>Монеты</button></li>
+                  {game.params.map((param) => (
+                    <li key={param.id}><button type='button' className={param.title === catId ? 'active' : ''}>{param.title}</button></li>
+                  ))}
                   <div className="img">
                     <GameСover />
                     <div className="img-lots">
@@ -74,8 +76,8 @@ const Game = () => {
                       </select>
                       <div className='d-flex align-items-baseline me-sm-4 me-md-5 mb-3'>
                         <span>Уровень</span>
-                        <input type="number" placeholder='от' className='ms-2' />
-                        <input type="number" placeholder='до' className='ms-1' />
+                        <input type="number" min={1} placeholder='от' className='ms-2' />
+                        <input type="number" min={1} placeholder='до' className='ms-1' />
                       </div>
                       <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
                         <option disabled value="0">Ранг</option>
