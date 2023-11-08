@@ -5,16 +5,16 @@ import SearchIcon from './svg/SearchIcon';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import ScrollSpy from "react-ui-scrollspy";
+import SortDate from './SortDate';
 
 const CatalogSection = () => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
-
+  const alphabet = SortDate();
   const onScroll = (id) => {
     const link = document.querySelector('[data-to-scrollspy-id="' + id + '"]');
     cut.current.style.top = link.offsetTop + 'px';
   }
-  const alphabet = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
 
   return (
     <section className='sec-catalog mb-6'>
@@ -29,7 +29,7 @@ const CatalogSection = () => {
             onUpdateCallback={(id) => onScroll(id)}
           >
             <div>
-              {alphabet.map((letter, index) => (
+              {alphabet.map((letter) => (
                 <div id={`letter-${letter}`} className="sec-catalog-part">
 
                   <div className="letter">{letter}</div>
@@ -37,17 +37,17 @@ const CatalogSection = () => {
                     <GameCard prop={letter} />
 
                   </ul>
-                  {index % 2 != 0 &&
-                    <div className='sec-promo mb-5'>
-                      <div className='text'>
-                        <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
-                        <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
-                      </div>
-                      <img src="/imgs/head.png" alt="head" />
-                      <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
-                    </div>}
+
                 </div>
               ))}
+              <div className='sec-promo mb-5'>
+                <div className='text'>
+                  <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
+                  <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
+                </div>
+                <img src="/imgs/head.png" alt="head" />
+                <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
+              </div>
             </div>
           </ScrollSpy>
         </div>
