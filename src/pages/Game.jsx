@@ -8,10 +8,10 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import GameDate from '../components/GameDate';
 import { useLocation } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import TableDate from '../components/TableDate';
+import axios from 'axios';
 
 const Game = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -28,7 +28,6 @@ const Game = () => {
   const productsPerPage = 3;
   const totalProducts = TableDate.length;
   const totalPages = Math.ceil(totalProducts / productsPerPage);
-
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);

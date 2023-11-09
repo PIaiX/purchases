@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { memo, useEffect, useState } from "react";
 import ServerSwitcher from './utils/ServerSwitcher';
-import GameDate from './GameDate';
 import {
   Link,
   useNavigate,
@@ -8,16 +7,16 @@ import {
 } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 
-const GameCard = ({ prop }) => {
+const GameCard = memo(({ param1, param2 }) => {
   let data, catId;
-  const gameItems = GameDate;
-  const filteredGames = gameItems.filter(game => game.title.toUpperCase().startsWith(prop));
+  const filteredGames = param2.filter(game => game.title.toUpperCase().startsWith(param1));
   return filteredGames.map(el => (
     <div className="game-card">
       <Link to='/game'><img src="/imgs/archeage.jpg" alt="ArcheAge" className='img' /></Link>
       <div>
         <h4><Link to={`/game/?data=${data = el.title}`}>{el.title}</Link></h4>
-        <ServerSwitcher serversArr={el.server} />
+
+        {/* <ServerSwitcher serversArr={el.regions} /> */}
 
         <ul className='categories'>
           {el.params.map((param) => (
@@ -27,6 +26,6 @@ const GameCard = ({ prop }) => {
       </div>
     </div>
   ));
-};
+});
 
 export default GameCard;

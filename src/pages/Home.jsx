@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useEffect, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -14,9 +14,24 @@ import { Scrollbar, Mousewheel } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import useIsMobile from '../hooks/isMobile';
+import axios from 'axios';
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
+  const [Games, setGames] = useState([]);
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      try {
+        const response = await axios.get('https://api.rush-2play.online/category/all');
+        setGames(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchGames();
+  }, []);
 
   const [sales, setSales] = useState({
     loading: true,

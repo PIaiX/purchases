@@ -1,20 +1,47 @@
-import React, { useState, useRef } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
 import SearchIcon from './svg/SearchIcon';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import ScrollSpy from "react-ui-scrollspy";
-import SortDate from './SortDate';
+import axios from 'axios';
 
 const CatalogSection = () => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
-  const alphabet = SortDate();
   const onScroll = (id) => {
     const link = document.querySelector('[data-to-scrollspy-id="' + id + '"]');
     cut.current.style.top = link.offsetTop + 'px';
   }
+  const [games, setGames] = useState({ items: [], data: [], loading: true });
+
+  useEffect(() => {
+    const fetchGames = async () => {
+      const response = await axios.get('https://api.rush-2play.online/category/all');
+      if (response.data) {
+        var uniqueLetters = new Set();
+
+        response.data.forEach(word => {
+          let firstLetter = word.title.charAt(0).toUpperCase();
+
+          if (!uniqueLetters.has(firstLetter)) {
+            uniqueLetters.add(firstLetter);
+          }
+        });
+
+        const alphabet = Array.from(uniqueLetters).sort();
+
+        setGames(prev => ({ ...prev, items: response.data, data: alphabet, loading: false }));
+      }
+    };
+
+    fetchGames();
+  }, []);
+
+
+
+
 
   return (
     <section className='sec-catalog mb-6'>
@@ -29,12 +56,12 @@ const CatalogSection = () => {
             onUpdateCallback={(id) => onScroll(id)}
           >
             <div>
-              {alphabet.map((letter) => (
+              {games.data && games.items && games.data.map((letter) => (
                 <div id={`letter-${letter}`} className="sec-catalog-part">
 
                   <div className="letter">{letter}</div>
                   <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
-                    <GameCard prop={letter} />
+                    <GameCard param1={letter} param2={games.items} />
 
                   </ul>
 
