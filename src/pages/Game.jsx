@@ -24,6 +24,18 @@ const Game = () => {
   const catId = searchParams.get('catId');
   const filteredGames = gameItems.filter(game => game.title === data);
   const game = filteredGames[0];
+  const [currentPage, setCurrentPage] = useState(1);
+  const productsPerPage = 3;
+  const totalProducts = TableDate.length;
+  const totalPages = Math.ceil(totalProducts / productsPerPage);
+
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
+
+  const onPageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
   return (
     <main>
       <Container>
@@ -107,19 +119,21 @@ const Game = () => {
               <div className='price'>Цена</div>
             </div>
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-              <li>
-                {tableItems.map(item => (
-
+              {currentProducts.map((item) => (
+                <li>
                   <OfferLine serv={item.serv} descr={item.descr} seller={item.seller} sellerRating={item.sellerRating} sellerImg={item.sellerImg} count={item.count} price={item.price} />
-                ))}
-              </li>
-
+                </li>
+              ))}
             </ul>
-
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={onPageChange}
+            />
           </div>
         </Container>
       </section>
-    </main>
+    </main >
   );
 };
 
