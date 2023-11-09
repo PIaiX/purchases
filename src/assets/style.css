@@ -10842,7 +10842,8 @@ nav.pagination ul li:not(:first-child) {
   margin-left: 1.3em;
 }
 
-nav.pagination ul li a {
+nav.pagination ul li a,
+nav.pagination ul li button {
   width: 2em;
   height: 2em;
   border-radius: 50%;
