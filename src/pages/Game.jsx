@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -18,12 +18,9 @@ const Game = () => {
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const location = useLocation();
   const searchParams = new URLSearchParams(location.search);
-  const gameItems = GameDate;
   const tableItems = TableDate;
-  const data = searchParams.get('data');
+  const dataItem = searchParams.get('data');
   const catId = searchParams.get('catId');
-  const filteredGames = gameItems.filter(game => game.title === data);
-  const game = filteredGames[0];
   const [currentPage, setCurrentPage] = useState(1);
   const productsPerPage = 3;
   const totalProducts = TableDate.length;
@@ -31,6 +28,18 @@ const Game = () => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
+  const [games, setGames] = useState({ items: [], data: [], loading: true });
+  useEffect(() => {
+    const fetchGames = async () => {
+      const response = await axios.get('https://api.rush-2play.online/category/all');
+      if (response.data) {
+        let filteredGames = response.data.filter(game => game.title === dataItem);
+        setGames(prev => ({ ...prev, items: response.data, data: filteredGames, loading: false }));
+      }
+    };
+
+    fetchGames();
+  }, []);
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -44,14 +53,14 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container className='mb-lg-5'>
           <div className="page-game-top">
-            <h1 className='mb-4 mb-xxxl-5'>{game.title}</h1>
+            <h1 className='mb-4 mb-xxxl-5'>{games.data.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                <ServerSwitcher serversArr={game.server} />
+                {/* <ServerSwitcher serversArr={game.server} /> */}
                 <ul className='categories'>
-                  {game.params.map((param) => (
+                  {/* {games.data.params.map((param) => (
                     <li key={param.id}><button type='button' className={param.title === catId ? 'active' : ''}>{param.title}</button></li>
-                  ))}
+                  ))} */}
                   <div className="img">
                     <GameСover />
                     <div className="img-lots">
