@@ -33,14 +33,13 @@ const Game = () => {
     const fetchGames = async () => {
       const response = await axios.get('https://api.rush-2play.online/category/all');
       if (response.data) {
-        let filteredGames = response.data.filter(game => game.title === dataItem);
+        let filteredGames = response.data.filter(item => item.title === dataItem);
         setGames(prev => ({ ...prev, items: response.data, data: filteredGames, loading: false }));
       }
     };
 
     fetchGames();
   }, []);
-
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -53,14 +52,14 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container className='mb-lg-5'>
           <div className="page-game-top">
-            <h1 className='mb-4 mb-xxxl-5'>{games.data.title}</h1>
+            <h1 className='mb-4 mb-xxxl-5'>{games.data[0]?.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                {/* <ServerSwitcher serversArr={game.server} /> */}
+                {/* <ServerSwitcher serversArr={games.data.regions} /> */}
                 <ul className='categories'>
-                  {/* {games.data.params.map((param) => (
-                    <li key={param.id}><button type='button' className={param.title === catId ? 'active' : ''}>{param.title}</button></li>
-                  ))} */}
+                {games.data[0]?.params.map((param) => ( 
+                  <li key={param.id}><button type='button' className={param.title === catId ? 'active' : ''}>{param.title}</button></li> 
+                ))}
                   <div className="img">
                     <GameСover />
                     <div className="img-lots">
