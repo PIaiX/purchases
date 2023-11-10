@@ -43,6 +43,11 @@ const Game = () => {
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
+  const [activeParam, setActiveParam] = useState(catId);
+
+  const handleParamClick = (paramId) => {
+    setActiveParam(paramId);
+  };
   return (
     <main>
       <Container>
@@ -55,11 +60,13 @@ const Game = () => {
             <h1 className='mb-4 mb-xxxl-5'>{games.data[0]?.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                {/* <ServerSwitcher serversArr={games.data.regions} /> */}
+                {games.data[0]?.regions && games.data[0]?.regions.length > 0 && (
+                  <ServerSwitcher serversArr={games.data[0]?.regions} />
+                )}
                 <ul className='categories'>
-                {games.data[0]?.params.map((param) => ( 
-                  <li key={param.id}><button type='button' className={param.title === catId ? 'active' : ''}>{param.title}</button></li> 
-                ))}
+                  {games.data[0]?.params.map((param) => (
+                    <li key={param.id}><button type='button' className={param.id === activeParam ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
+                  ))}
                   <div className="img">
                     <GameСover />
                     <div className="img-lots">
@@ -86,31 +93,14 @@ const Game = () => {
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
                       <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
-                        <option disabled value="0">Экипировка</option>
-                        <option value="1">Экипировка 1</option>
-                        <option value="2">Экипировка 2</option>
-                      </select>
-                      <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
-                        <option disabled value="0">Раса</option>
-                        <option value="1">Раса 1</option>
-                        <option value="2">Раса 2</option>
-                      </select>
-                      <div className='d-flex align-items-baseline me-sm-4 me-md-5 mb-3'>
-                        <span>Уровень</span>
-                        <input type="number" min={1} placeholder='от' className='ms-2' />
-                        <input type="number" min={1} placeholder='до' className='ms-1' />
-                      </div>
-                      <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
-                        <option disabled value="0">Ранг</option>
-                        <option value="1">Ранг 1</option>
-                        <option value="2">Ранг 2</option>
-                      </select>
-                      <select defaultValue={0} className='mb-3'>
-                        <option disabled value="0">Тип</option>
-                        <option value="1">Тип 1</option>
-                        <option value="2">Тип 2</option>
+                        {games.data[0]?.params.map((param) => (
+                          (param.id === activeParam) && param?.options?.length > 0 && param?.options?.map(item => (
+                            <option disabled={item.parent === 0} selected={item.parent === 0 ? true : false} key={item.id - 1} value={item.id - 1}>{item.title}</option>
+                          ))
+                        ))}
                       </select>
                     </fieldset>
+
                   }
                 </form>
               </Col>
