@@ -35,6 +35,7 @@ const apiRoutes = {
   // Category
   CATEGORIES: BASE_URL + "/category",
   CATEGORY: BASE_URL + "/category/one",
+  CATEGORY_ALL: BASE_URL + "/category/all",
   CATEGORY_CREATE: BASE_URL + "/category/create",
 
   // Member
@@ -109,7 +110,7 @@ const apiRoutes = {
   USER: BASE_URL + "/user",
   USER_ONE: BASE_URL + "/user/one",
   USER_CREATE: BASE_URL + "/user/create",
-  USER_DELETE_SESSION:  BASE_URL + "/user/deleteSession",
+  USER_DELETE_SESSION: BASE_URL + "/user/deleteSession",
 
   // Options
   OPTIONS: BASE_URL + "/option/",

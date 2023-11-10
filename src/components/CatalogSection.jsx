@@ -6,6 +6,7 @@ import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import ScrollSpy from "react-ui-scrollspy";
 import axios from 'axios';
+import { getGames } from '../services/game';
 
 const CatalogSection = () => {
   const [full, setFull] = useState(false);
@@ -18,11 +19,11 @@ const CatalogSection = () => {
 
   useEffect(() => {
     const fetchGames = async () => {
-      const response = await axios.get('https://api.rush-2play.online/category/all');
-      if (response.data) {
+      const gamesData = await getGames();
+      if (gamesData) {
         var uniqueLetters = new Set();
 
-        response.data.forEach(word => {
+        gamesData.forEach(word => {
           let firstLetter = word.title.charAt(0).toUpperCase();
 
           if (!uniqueLetters.has(firstLetter)) {
@@ -32,7 +33,7 @@ const CatalogSection = () => {
 
         const alphabet = Array.from(uniqueLetters).sort();
 
-        setGames(prev => ({ ...prev, items: response.data, data: alphabet, loading: false }));
+        setGames(prev => ({ ...prev, items: gamesData, data: alphabet, loading: false }));
       }
     };
 

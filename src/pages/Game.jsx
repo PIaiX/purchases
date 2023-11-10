@@ -12,6 +12,7 @@ import { useLocation } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import TableDate from '../components/TableDate';
 import axios from 'axios';
+import { getGames } from '../services/game';
 
 const Game = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -31,10 +32,10 @@ const Game = () => {
   const [games, setGames] = useState({ items: [], data: [], loading: true });
   useEffect(() => {
     const fetchGames = async () => {
-      const response = await axios.get('https://api.rush-2play.online/category/all');
-      if (response.data) {
-        let filteredGames = response.data.filter(item => item.title === dataItem);
-        setGames(prev => ({ ...prev, items: response.data, data: filteredGames, loading: false }));
+      const gamesData = await getGames();
+      if (gamesData) {
+        let filteredGames = gamesData.filter(item => item.title === dataItem);
+        setGames(prev => ({ ...prev, items: gamesData, data: filteredGames, loading: false }));
       }
     };
 
@@ -43,7 +44,7 @@ const Game = () => {
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  const [activeParam, setActiveParam] = useState(catId);
+  const [activeParam, setActiveParam] = useState(catId || 0);
 
   const handleParamClick = (paramId) => {
     setActiveParam(paramId);
@@ -92,13 +93,17 @@ const Game = () => {
                         <input type="checkbox" />
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
-                      <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
-                        {games.data[0]?.params.map((param) => (
-                          (param.id === activeParam) && param?.options?.length > 0 && param?.options?.map(item => (
+
+                      {games.data[0]?.params.map((param) => (
+                        (param.id === activeParam && param.options != '') &&
+                        <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
+                          {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (
                             <option disabled={item.parent === 0} selected={item.parent === 0 ? true : false} key={item.id - 1} value={item.id - 1}>{item.title}</option>
                           ))
-                        ))}
-                      </select>
+                          }
+                        </select>
+
+                      ))}
                     </fieldset>
 
                   }
