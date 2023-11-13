@@ -25,6 +25,7 @@ const Game = () => {
   const navigate = useNavigate();
   const [filters, setFilters] = useState({});
   const [catId, setCatId] = useState(searchParams.get('catId'));
+  const [regId, setRegId] = useState(searchParams.get('regId'));
 
   const productsPerPage = 3;
   const totalProducts = TableDate.length;
@@ -37,12 +38,14 @@ const Game = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const searchParams = new URLSearchParams(location.search);
-      searchParams.set('catId', catId)
+      searchParams.set('catId', catId);
+      searchParams.set('regId', regId);
       searchParams.set('currentPage', currentPage);
       Object.keys(filters).forEach(key => {
         searchParams.set(key, filters[key]);
       });
-      navigate({ search: searchParams.toString() });
+      const newUrl = `${location.pathname}?${searchParams}`;
+      navigate(newUrl);
       const gamesData = await getGames();
       if (gamesData) {
         let filteredGames = gamesData.filter(item => item.title === dataItem);
@@ -51,7 +54,7 @@ const Game = () => {
     };
 
     fetchGames();
-  }, [catId, currentPage, filters, location.search, navigate]);
+  }, [regId, catId, currentPage, filters, location.search, navigate]);
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
@@ -60,11 +63,15 @@ const Game = () => {
     setCatId(paramId);
   };
 
+  const handleServerChange = (regionId) => {
+    setRegId(regionId);
+  };
+
   const handleFilterChange = (event) => {
-    const { title } = event.target;
+    const { name, value } = event.target;
     setFilters(prevFilters => ({
       ...prevFilters,
-      title
+      [name]: value
     }));
   };
 
@@ -81,7 +88,7 @@ const Game = () => {
             <Row>
               <Col xs={12} xl={7}>
                 {games.data[0]?.regions && games.data[0]?.regions.length > 0 && (
-                  <ServerSwitcher serversArr={games.data[0]?.regions} />
+                  <ServerSwitcher serversArr={games.data[0]?.regions} onChange={handleServerChange} active={regId} />
                 )}
                 <ul className='categories'>
                   {games.data[0]?.params.map((param) => (
@@ -115,9 +122,9 @@ const Game = () => {
 
                       {games.data[0]?.params.map((param) => (
                         (param.id === catId && param.options != '') &&
-                        <select defaultValue={0} className='me-sm-4 me-md-5 mb-3' onChange={(e) => handleFilterChange(e.target.selectedOptions[0].text)} >
+                        <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
                           {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (
-                            <option disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>
+                            <option onChange={(e) => handleFilterChange(e.target.selectedOptions[0].value)} disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>
                           ))
                           }
                         </select>

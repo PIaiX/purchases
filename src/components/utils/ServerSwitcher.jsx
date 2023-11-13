@@ -1,14 +1,15 @@
-import React, {useState, useRef, useEffect} from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import BeadIcon from '../../assets/imgs/bead.svg';
 
 const ServerSwitcher = (props) => {
+  const { serversArr, onChange, active } = props;
   const Servers = props.serversArr;
-  const [server, setServer] = useState(Servers[0].id);
+  const [server, setServer] = useState(active || Servers[0].id);
   const cut2 = useRef();
 
   useEffect(() => {
     const servLi = document.getElementById(server);
-    cut2.current.style.left = Math.round(servLi.offsetLeft + servLi.offsetWidth/2)+'px';
+    cut2.current.style.left = Math.round(servLi.offsetLeft + servLi.offsetWidth / 2) + 'px';
   });
 
   return (
@@ -18,7 +19,10 @@ const ServerSwitcher = (props) => {
       </li>
       {
         Servers.map((obj, index) => {
-          return <li key={index} id={obj.id} className={(server===obj.id) ? 'active' : ''} onClick={()=>setServer(obj.id)}>{obj.title}</li>
+          return <li key={index} id={obj.id} className={(server === obj.id) ? 'active' : ''} onClick={() => {
+            setServer(obj.id);
+            onChange(obj.id);
+          }}>{obj.title}</li>
         })
       }
     </ul>
