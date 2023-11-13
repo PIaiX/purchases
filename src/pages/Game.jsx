@@ -21,10 +21,10 @@ const Game = () => {
   const searchParams = new URLSearchParams(location.search);
   const tableItems = TableDate;
   const dataItem = searchParams.get('data');
-  const catId = searchParams.get('catId');
   const [currentPage, setCurrentPage] = useState(1);
   const navigate = useNavigate();
   const [filters, setFilters] = useState({});
+  const [catId, setCatId] = useState(searchParams.get('catId'));
 
   const productsPerPage = 3;
   const totalProducts = TableDate.length;
@@ -37,6 +37,7 @@ const Game = () => {
   useEffect(() => {
     const fetchGames = async () => {
       const searchParams = new URLSearchParams(location.search);
+      searchParams.set('catId', catId)
       searchParams.set('currentPage', currentPage);
       Object.keys(filters).forEach(key => {
         searchParams.set(key, filters[key]);
@@ -50,14 +51,13 @@ const Game = () => {
     };
 
     fetchGames();
-  }, [currentPage, filters, location.search, navigate]);
+  }, [catId, currentPage, filters, location.search, navigate]);
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };
-  const [activeParam, setActiveParam] = useState(catId || 0);
 
   const handleParamClick = (paramId) => {
-    setActiveParam(paramId);
+    setCatId(paramId);
   };
 
   const handleFilterChange = (event) => {
@@ -85,7 +85,7 @@ const Game = () => {
                 )}
                 <ul className='categories'>
                   {games.data[0]?.params.map((param) => (
-                    <li key={param.id}><button type='button' className={param.id === activeParam ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
+                    <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
                   ))}
                   <div className="img">
                     <GameСover />
@@ -114,7 +114,7 @@ const Game = () => {
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
 
                       {games.data[0]?.params.map((param) => (
-                        (param.id === activeParam && param.options != '') &&
+                        (param.id === catId && param.options != '') &&
                         <select defaultValue={0} className='me-sm-4 me-md-5 mb-3' onChange={(e) => handleFilterChange(e.target.selectedOptions[0].text)} >
                           {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (
                             <option disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>

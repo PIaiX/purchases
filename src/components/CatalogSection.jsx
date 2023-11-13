@@ -5,7 +5,6 @@ import SearchIcon from './svg/SearchIcon';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import ScrollSpy from "react-ui-scrollspy";
-import axios from 'axios';
 import { getGames } from '../services/game';
 
 const CatalogSection = () => {

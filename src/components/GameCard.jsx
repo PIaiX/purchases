@@ -23,7 +23,7 @@ const GameCard = memo(({ param1, param2 }) => {
 
         <ul className='categories'>
           {el.params.map((param) => (
-            <li key={param.id}><Link to={`/game/?data=${data}&catId=${param.title}`}>{param.title}</Link></li>
+            <li key={param.id}><Link to={`/game/?data=${data}&catId=${param.id}`}>{param.title}</Link></li>
           ))}
         </ul>
       </div>
