@@ -3,12 +3,12 @@ import StarRating from './utils/StarRating';
 import { Link } from 'react-router-dom';
 
 const OfferLine = (props) => {
-  const propsLot = props;
-  console.log(propsLot);
+  const lotId = props.id;
+
   return (
     <div className='offer-line'>
       <div className="serv">{props.serv}</div>
-      <div className="descr"><Link to={`/game/lot/?data=${propsLot}`}>{props.descr}</Link></div>
+      <div className="descr"><Link to={`/game/lot/?lotId=${lotId}`}>{props.descr}</Link></div>
       <div className="seller">
         <Link to='/trader'><img src={props.sellerImg} alt={props.seller} /></Link>
         <div>

@@ -22,7 +22,7 @@ const Pagination = (props) => {
     <nav className="pagination">
       <ul>
         <li>
-          <button disabled={current === 1} onClick={goToPreviousPage}><RxChevronLeft /></button>
+          <button disabled={current === 1} onClick={() => { goToPreviousPage; onPageChange }} ><RxChevronLeft /></button>
         </li>
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">

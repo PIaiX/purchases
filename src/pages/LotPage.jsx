@@ -10,16 +10,15 @@ import { FiMessageCircle, FiEdit, FiShare, FiAlertTriangle, FiChevronDown } from
 import Input from '../components/utils/Input';
 import Chat from '../components/chat/Chat';
 import { useLocation, useNavigate } from 'react-router-dom';
+import TableDate from '../components/TableDate';
 
 const LotPage = () => {
     const location = useLocation();
     const searchParams = new URLSearchParams(window.location.search);
-    const { dataItem } = searchParams.get('data');
-    // Object.keys(dataItem).forEach(key => {
-    //     searchParams.get('data');
-    // });
-    // const dataItem = searchParams.get(['data']);
-    console.log({ dataItem });
+    const lotId = searchParams.get('lotId');
+    const tableItems = TableDate;
+    const filteredLot = tableItems.filter(item => item.id == lotId);
+    console.log(filteredLot[0].serv);
     return (
         <main>
             <section className='lot-page mb-6'>
@@ -45,11 +44,11 @@ const LotPage = () => {
                                     <div className='d-flex align-items-center'>
                                         <span>Сервер</span>
                                         <span className='fs-09 pale-blue mx-2'>●</span>
-                                        <span>{dataItem.serv}</span>
+                                        <span>{filteredLot[0].serv}</span>
                                     </div>
                                 </div>
 
-                                <div className='title'>{dataItem.descr} </div>
+                                <div className='title'>{filteredLot[0].descr} </div>
 
                                 <div className='date'>
                                     <time>14:51</time>
@@ -66,7 +65,7 @@ const LotPage = () => {
                                         label={"Выберите способ оплаты"}
                                         options={[{ value: 1, text: 'Банковская карта' }, { value: 2, text: 'СБП' }, { value: 3, text: 'MIR PAY' }]}
                                     />
-                                    <button type='button' className='btn-1'>Оплатить 186,97 ₽</button>
+                                    <button type='button' className='btn-1'>Оплатить {filteredLot[0].price} ₽</button>
                                 </div>
 
                                 <div className='text fs-09'>
@@ -89,10 +88,10 @@ const LotPage = () => {
                                 <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                     <div className="seller w-xs-100">
                                         <img src="/imgs/user.jpg" alt="Weatherwax" />
-                                        <h3 className='title-font lh-n mb-0'>Weatherwax</h3>
+                                        <h3 className='title-font lh-n mb-0'>{filteredLot[0].seller}</h3>
                                         <div className='rating ms-3'>
                                             <StarIcon />
-                                            <span>4,5</span>
+                                            <span>{filteredLot[0].sellerRating}</span>
                                         </div>
                                     </div>
                                     <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
