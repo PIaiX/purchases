@@ -9,25 +9,17 @@ const Pagination = (props) => {
   for (let i = 1; i <= totalPages; i++) {
     pageNumbers.push(i);
   }
-  const goToPreviousPage = () => {
-    setCurrentPage(current - 1);
-    console.log(current);
-  };
 
-  const goToNextPage = () => {
-    setCurrentPage(current + 1);
-    console.log(current);
-  };
   return (
     <nav className="pagination">
       <ul>
         <li>
-          <button disabled={current === 1} onClick={() => { goToPreviousPage; onPageChange }} ><RxChevronLeft /></button>
+          <button disabled={current === 1} onClick={() => { setCurrentPage(current - 1); onPageChange(current - 1); }} ><RxChevronLeft /></button>
         </li>
         {pageNumbers.map((number) => (
           <li key={number} className="page-item">
             <a
-              onClick={() => onPageChange(number)}
+              onClick={() => { setCurrentPage(number); onPageChange(number); }}
               className={current === number ? 'active' : ''}
             >
               {number}
@@ -35,7 +27,7 @@ const Pagination = (props) => {
           </li>
         ))}
         <li>
-          <button disabled={current === totalPages} onClick={goToNextPage}><RxChevronRight /></button>
+          <button disabled={current === totalPages} onClick={() => { setCurrentPage(current + 1); onPageChange(current + 1); }}><RxChevronRight /></button>
         </li>
       </ul>
     </nav>
