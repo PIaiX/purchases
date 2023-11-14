@@ -18,7 +18,7 @@ const Game = () => {
   const isMobileLG = useIsMobile('1109px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
+  const searchParams = new URLSearchParams(window.location.search);
   const tableItems = TableDate;
   const dataItem = searchParams.get('data');
   const [currentPage, setCurrentPage] = useState(1);
@@ -37,7 +37,7 @@ const Game = () => {
   const [games, setGames] = useState({ items: [], data: [], loading: true });
   useEffect(() => {
     const fetchGames = async () => {
-      const searchParams = new URLSearchParams(location.search);
+      const searchParams = new URLSearchParams(window.location.search);
       searchParams.set('catId', catId);
       searchParams.set('regId', regId);
       searchParams.set('currentPage', currentPage);
@@ -124,7 +124,7 @@ const Game = () => {
                         (param.id === catId && param.options != '') &&
                         <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
                           {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (
-                            <option onChange={(e) => handleFilterChange(e.target.selectedOptions[0].value)} disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>
+                            <option onClick={(e) => handleFilterChange(item.paramId, e.target.value)} disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>
                           ))
                           }
                         </select>
