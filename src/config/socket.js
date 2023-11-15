@@ -1,3 +1,4 @@
 import { io } from "socket.io-client";
-const socket = io("https://api.yooapp.ru:4000", { autoConnect: false });
+import { BASE_URL } from './api'
+const socket = io(BASE_URL, { autoConnect: false });
 export default socket;
