@@ -1,7 +1,16 @@
-import React from "react";
+import React, { useState, useEffect } from 'react';
 import { ThemeContext, themes } from "../../contexts/ThemeContext";
 
 function ThemeToggler() {
+  const [theme, setTheme] = useState('light'); // Устанавливаем начальное состояние темы
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme; // Применяем тему к документу при обновлении
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(currentTheme => (currentTheme === 'light' ? 'dark' : 'light')); // Инвертируем текущую тему при нажатии
+  };
   return (
     <ThemeContext.Consumer>
       {({ theme, setTheme }) => (
@@ -9,16 +18,7 @@ function ThemeToggler() {
           <input
             type="checkbox"
             id="theme-switch"
-            onChange={() => {
-              if (theme === themes.light) {
-                setTheme(themes.dark);
-              }
-              if (theme === themes.dark) {
-                setTheme(themes.light);
-              }
-            }}
-            value={theme === themes.dark}
-            checked={theme === themes.dark}
+            onClick={toggleTheme}
           />
         </label>
       )}
