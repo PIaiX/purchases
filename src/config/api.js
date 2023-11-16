@@ -1,4 +1,5 @@
 const BASE_URL = process.env.REACT_APP_BASE_URL;
+const BASE_URL_FOR_SOCKET = process.env.REACT_APP_BASE_URL_FOR_SOCKET;
 const FILE_URL = process.env.REACT_APP_BASE_URL + "/file";
 
 const apiRoutes = {
@@ -37,6 +38,9 @@ const apiRoutes = {
   CATEGORY: BASE_URL + "/category/one",
   CATEGORY_ALL: BASE_URL + "/category/all",
   CATEGORY_CREATE: BASE_URL + "/category/create",
+
+  // MESSAGES
+  MESSAGES: BASE_URL + "/message",
 
   // Member
   MEMBERS_GET: BASE_URL + "/member",
@@ -173,6 +177,7 @@ const apiErrors = {
 
 export {
   BASE_URL,
+  BASE_URL_FOR_SOCKET,
   FILE_URL,
   apiRoutes,
   apiResponseMessages,
