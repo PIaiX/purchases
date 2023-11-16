@@ -1,5 +1,6 @@
 import React from 'react';
 import moment from "moment";
+import WarningIcon from '../svg/WarningIcon';
 
 
 const Message = ({ my, time, text, name }) => {
@@ -18,7 +19,7 @@ const Message = ({ my, time, text, name }) => {
           <p>{text}</p>
         </div>
       </div>
-      <img src="/imgs/user.jpg" alt={props.name} />
+      <img src="/imgs/user.jpg" alt={name} />
     </div>
 
   ) : (

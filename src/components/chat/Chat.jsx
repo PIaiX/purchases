@@ -1,6 +1,5 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-import MyMessage from './MyMessage';
-import UserMessage from './UserMessage';
+import Message from './Message';
 import SimpleInputFile from '../utils/SimpleInputFile';
 import ChatData from './ChatData'
 import { useSelector } from "react-redux";
@@ -33,12 +32,13 @@ const Chat = () => {
     <div className="chat">
       <div className="chat-window">
         {sortData.map((item) => (
-          (myName === item?.name) && (
-            <MyMessage name={item.name} time={item.time} text={item.text} />
-          ) ||
-          (myName != item?.name) && (
-            <UserMessage name={item.name} time={item.time} text={item.text} />
-          )
+          <Message
+            my={item.name === myName}
+            name={item.name}
+            time={item.time}
+            text={item.text}
+          />
+
         ))}
       </div>
       <form action="" className='chat-form'>
