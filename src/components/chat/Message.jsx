@@ -4,9 +4,6 @@ import WarningIcon from '../svg/WarningIcon';
 
 
 const Message = ({ my, time, text, name }) => {
-  time = time
-    ? moment(time).format("DD MMMM YYYY kk:mm")
-    : moment().format("DD MMMM YYYY kk:mm");
 
   return my ? (
     <div className="chat-window-message-mine">
