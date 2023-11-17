@@ -16,7 +16,7 @@ const getMessages = async (data) => {
 };
 
 const getMessage = async (id) => {
-  const response = await $authApi.get(apiRoutes.MESSAGE, {
+  const response = await $authApi.get(apiRoutes.MESSAGES, {
     params: { id },
   });
 
@@ -29,7 +29,7 @@ const createMessage = async (data) => {
 };
 
 const viewMessages = async (data) => {
-  const response = await $authApi.put(apiRoutes.MESSAGES_VIEW, data);
+  const response = await $authApi.put(apiRoutes.MESSAGES, data);
   return response?.data;
 };
 

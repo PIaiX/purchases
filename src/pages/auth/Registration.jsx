@@ -331,7 +331,7 @@ const Registration = () => {
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={!isValid || !captcha}
+                    // disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Зарегистрироваться

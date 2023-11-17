@@ -13,7 +13,7 @@ import ReCAPTCHA from "react-google-recaptcha";
 
 const Login = () => {
   const auth = useSelector((state) => state?.auth);
-  const [captcha, setCaptcha] = useState(false);
+  // const [captcha, setCaptcha] = useState(false);
   const navigate = useNavigate();
 
   useLayoutEffect(() => {
@@ -91,7 +91,7 @@ const Login = () => {
                   <Button
                     type="submit"
                     variant="primary"
-                    disabled={!isValid || !captcha}
+                    // disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Войти
