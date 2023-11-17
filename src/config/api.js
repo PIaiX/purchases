@@ -52,8 +52,7 @@ const apiRoutes = {
   INVOICE: BASE_URL + "/invoice/one",
 
   // Product
-  PRODUCTS: BASE_URL + "/product",
-  PRODUCT: BASE_URL + "/product/one",
+  PRODUCTS: BASE_URL + "/category/product",
   PRODUCT_CREATE: BASE_URL + "/product/create",
 
   // Sale

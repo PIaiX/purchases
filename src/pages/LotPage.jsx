@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { PiCaretLeftLight, PiWarningLight } from "react-icons/pi";
 import ReviewCard from '../components/ReviewCard';
 import StarIcon from '../components/svg/StarIcon';
@@ -11,14 +11,29 @@ import Input from '../components/utils/Input';
 import Chat from '../components/chat/Chat';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TableDate from '../components/TableDate';
+import { getProduct } from '../services/product';
 
 const LotPage = () => {
-    const location = useLocation();
+    const { lotId } = useParams()
     const searchParams = new URLSearchParams(window.location.search);
-    const lotId = searchParams.get('lotId');
+    const [products, setProducts] = useState();
+    useEffect(() => {
+        getProduct({ id: lotId })
+            .then((res) => {
+                console.log(res)
+                setProducts((prev) => ({
+                    ...prev,
+                    loading: false,
+                    ...res,
+                }))
+            }
+            )
+            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    }, []);
+
     const tableItems = TableDate;
     const filteredLot = tableItems.filter(item => item.id == lotId);
-    console.log(filteredLot[0].serv);
+    console.log(products);
     return (
         <main>
             <section className='lot-page mb-6'>
@@ -117,7 +132,7 @@ const LotPage = () => {
                                 </div>
                                 <hr />
                                 <div className="p-0">
-                                    <Chat />
+                                    <Chat lotUserId={products.userId} />
                                 </div>
                             </div>
                         </Col>

@@ -6,14 +6,17 @@
 :root {
   --h-height: 85px;
   --f-height: 80px;
+
   @include media-breakpoint-down(md) {
     --h-height: 70px;
   }
+
   @include media-breakpoint-down(sm) {
     --h-height: 55px;
     --f-height: 64px;
   }
 }
+
 :root[data-theme='light'] {
   --body-bg: #fff;
   --second-bg: #fff;
@@ -35,18 +38,17 @@
   --black: #191F2D;
   --total-black: #000;
 
-  --glass: linear-gradient(
-    92.32deg,
-    rgba(255, 255, 255, 0) 16.31%,
-    rgba(245, 251, 255, 0.3) 97.01%
-  ),
-  rgba(255, 255, 255, 0.3);
+  --glass: linear-gradient(92.32deg,
+      rgba(255, 255, 255, 0) 16.31%,
+      rgba(245, 251, 255, 0.3) 97.01%),
+    rgba(255, 255, 255, 0.3);
   --shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
-  0px 5px 25px rgba(95, 95, 95, 0.08);
+    0px 5px 25px rgba(95, 95, 95, 0.08);
   --shadowMobile: 0px 1px 0px rgba(255, 255, 255, 0.5),
-  1px 1px 10px rgba(100, 100, 100, 0.15);
+    1px 1px 10px rgba(100, 100, 100, 0.15);
   --subtract: url(imgs/Subtract.svg);
 }
+
 :root[data-theme='dark'] {
   --body-bg: #191F2D;
   --second-bg: #232B42;
@@ -68,12 +70,10 @@
   --black: #fff;
   --total-black: #fff;
 
-  --glass: linear-gradient(
-    137deg, 
-    rgba(35, 43, 66, 0.09) 15.10%, 
-    rgba(22, 30, 49, 0.30) 100%
-  ), 
-  rgba(50, 62, 94);
+  --glass: linear-gradient(137deg,
+      rgba(35, 43, 66, 0.09) 15.10%,
+      rgba(22, 30, 49, 0.30) 100%),
+    rgba(50, 62, 94);
   --shadow: 0px 2px 0px 0px #38435C, 0px 4px 10px 0px rgba(48, 57, 79, 0.50);
   --shadowMobile: 0px 1px 0px 0px rgba(56, 67, 92, .75), 1px 1px 5px 0px rgba(48, 57, 79, 0.25);
   --subtract: url(imgs/SubtractDark.svg);
@@ -86,16 +86,12 @@ $blue: #4a83dc;
 $light-blue: #66c6e4;
 $dark-blue: #0d59ab;
 $gradient-1: linear-gradient(120.98deg, var(--blue) 48.77%, #3266b8 85.89%);
-$gradient-2: linear-gradient(
-  120.98deg,
-  rgba(72, 216, 104, 0.8) 48.77%,
-  rgba(120, 216, 72, 0.8) 85.89%
-);
-$glass: linear-gradient(
-    92.32deg,
+$gradient-2: linear-gradient(120.98deg,
+    rgba(72, 216, 104, 0.8) 48.77%,
+    rgba(120, 216, 72, 0.8) 85.89%);
+$glass: linear-gradient(92.32deg,
     rgba(255, 255, 255, 0) 16.31%,
-    rgba(245, 251, 255, 0.3) 97.01%
-  ),
+    rgba(245, 251, 255, 0.3) 97.01%),
   rgba(255, 255, 255, 0.3);
 $dark-green: #005a47;
 $green: #48d868;
@@ -121,6 +117,7 @@ $radius: 0.67em;
   align-items: $y;
   flex-wrap: $wrap;
 }
+
 @mixin no-appearance {
   appearance: none;
   -webkit-appearance: none;
@@ -128,12 +125,14 @@ $radius: 0.67em;
   -ms-appearance: none;
   outline: none;
 }
+
 @mixin safariFix {
   -webkit-backface-visibility: hidden;
   -webkit-transform: translate3d(0, 0, 0);
   isolation: isolate;
   transform: translateZ(0);
 }
+
 @mixin absBG($z: 1, $top: 0%, $h: 100%) {
   position: absolute;
   top: $top;
@@ -142,61 +141,73 @@ $radius: 0.67em;
   height: $h;
   z-index: $z;
 }
+
 @mixin clamp($count, $line, $strict: false) {
   display: -webkit-box;
   -webkit-line-clamp: $count;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: $line;
+
   @if $strict {
     height: $line * $count;
-  } @else {
+  }
+
+  @else {
     max-height: $line * $count;
   }
 }
+
 @mixin list {
   list-style: none;
   padding-left: 0px;
 }
+
 @mixin shadow {
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
     0px 4px 15px rgba(100, 100, 100, 0.08);
   backdrop-filter: blur(4px);
 }
+
 @mixin boxShadow($size: 15px) {
   box-shadow: 0px 4px $size rgba(100, 100, 100, 0.08);
 }
+
 @mixin lightShadow {
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
 }
+
 @mixin shadowMobile {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.5),
     1px 1px 10px rgba(100, 100, 100, 0.15);
   backdrop-filter: blur(2.5px);
 }
+
 @mixin blob {
   box-shadow: inset 0px 1px 3px rgba(245, 201, 249, 0.47);
   filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
 }
+
 @mixin btnStyle {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3),
     0px 3px 10px rgba(156, 156, 156, 0.2);
 }
+
 @mixin blurShadow {
   box-shadow: 0px 2px 0px rgba(255, 255, 255, 0.8),
     0px 5px 25px rgba(95, 95, 95, 0.08);
   backdrop-filter: blur(5px);
 }
-@mixin bgTextureGradient(
-  $grad:
-    linear-gradient(109.93deg, #3399ab 26.37%, #78d848 59.52%, #91ee8f 91.99%)
-) {
+
+@mixin bgTextureGradient($grad: linear-gradient(109.93deg, #3399ab 26.37%, #78d848 59.52%, #91ee8f 91.99%)) {
   background: url(imgs/bg/texture.png), $grad;
   background-size: cover, 100% 100%;
   background-repeat: no-repeat;
   background-blend-mode: overlay, normal;
 }
+
 @mixin placeholder($color, $fw: 400) {
+
   &:-moz-placeholder,
   &::-moz-placeholder,
   &::-webkit-input-placeholder,
@@ -205,23 +216,27 @@ $radius: 0.67em;
     color: $color;
     font-weight: $fw;
   }
+
   &::placeholder {
     color: $color;
     font-weight: $fw;
   }
 }
+
 @mixin rounedImg($w) {
   width: $w;
   height: $w;
   border-radius: 50%;
   object-fit: cover;
 }
+
 @mixin roundedImg($w, $rad: 50%, $fit: cover) {
   width: $w;
   height: $w;
   border-radius: $rad;
   object-fit: $fit;
 }
+
 @mixin textEllipsis {
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -235,27 +250,33 @@ html {
   scrollbar-color: var(--pale-blue) transparent;
   scrollbar-width: thin;
 }
+
 ::-webkit-scrollbar {
   width: 5px;
   height: 5px;
   background-color: var(--white);
   @include shadow();
+
   &:hover,
   &:active {
     background: rgba($color: var(--pale-blue), $alpha: 0.2);
   }
 }
+
 ::-webkit-scrollbar-thumb {
   background-color: var(--pale-blue);
   border-radius: 5px;
   transition: 0.2s;
+
   &:hover {
     background-color: var(--light-blue);
   }
+
   &:active {
     background-color: var(--blue);
   }
 }
+
 ::-webkit-scrollbar-button:vertical:start:decrement,
 ::-webkit-scrollbar-button:vertical:end:increment,
 ::-webkit-scrollbar-button:horizontal:start:decrement,
@@ -273,6 +294,7 @@ a:active {
   text-decoration: none;
   cursor: pointer;
 }
+
 h1,
 h2,
 h3,
@@ -314,19 +336,24 @@ h1,
   text-align: left;
   line-height: 120%;
   margin-bottom: 0.2em;
+
   @include media-breakpoint-down(xl) {
     font-size: 3.5em;
   }
+
   @include media-breakpoint-down(lg) {
     font-size: 3.2em;
   }
+
   @include media-breakpoint-down(md) {
     font-size: 2.75em;
   }
+
   @include media-breakpoint-down(sm) {
     font-size: 2.3em;
   }
 }
+
 h2,
 .h2 {
   font-family: $title-font;
@@ -334,58 +361,71 @@ h2,
   font-weight: normal;
   text-align: left;
   margin-bottom: 0.67em;
+
   @include media-breakpoint-down(md) {
     font-size: 2.75em;
   }
+
   @include media-breakpoint-down(sm) {
     font-size: 2.3em;
     margin-bottom: 0.5em;
   }
 }
+
 h3 {
   font-size: 1.6em;
   font-weight: 400;
   text-align: left;
   margin-bottom: 0.2em;
+
   @include media-breakpoint-down(lg) {
     font-size: 1.4em;
   }
 }
+
 h4 {
   font-size: 1.3em;
   font-weight: 600;
   text-align: left;
   margin-bottom: 0.2em;
+
   @include media-breakpoint-down(lg) {
     font-size: 1.2em;
   }
+
   @include media-breakpoint-down(md) {
     font-size: 1.1em;
   }
 }
+
 h5 {
   font-size: 1.2em;
   font-weight: 400;
   text-align: left;
   margin-bottom: 0px;
+
   @include media-breakpoint-down(lg) {
     font-size: 1.1em;
   }
+
   @include media-breakpoint-down(md) {
     font-size: 1em;
   }
 }
+
 h6 {
   font-size: 1em;
   font-weight: 600;
   text-align: center;
   margin-bottom: 0px;
 }
+
 .topic {
   background-color: var(--blue);
   color: $white !important;
   padding: 1em 2em;
   border-radius: $radius;
+
   h1,
   h2,
   a {
@@ -393,122 +433,160 @@ h6 {
     color: inherit !important;
   }
 }
+
 .fs {
   &-08 {
     font-size: 0.8em;
   }
+
   &-09 {
     font-size: 0.9em;
   }
+
   &-10 {
     font-size: 1em;
   }
+
   &-11 {
     font-size: 1.1em;
   }
+
   &-12 {
     font-size: 1.2em;
   }
+
   &-13 {
     font-size: 1.3em;
   }
+
   &-14 {
     font-size: 1.4em;
   }
+
   &-15 {
     font-size: 1.5em;
   }
+
   &-16 {
     font-size: 1.6em;
   }
+
   &-17 {
     font-size: 1.7em;
   }
+
   &-18 {
     font-size: 1.8em;
   }
+
   &-19 {
     font-size: 1.9em;
   }
+
   &-20 {
     font-size: 2em;
   }
+
   &-25 {
     font-size: 2.5em;
   }
+
   &-30 {
     font-size: 3em;
   }
+
   &-35 {
     font-size: 3.5em;
   }
+
   &-40 {
     font-size: 4em;
   }
 }
+
 .fw {
   &-3 {
     font-weight: 300;
   }
+
   &-4 {
     font-weight: 400;
   }
+
   &-5 {
     font-weight: 500;
   }
+
   &-6 {
     font-weight: 600;
   }
+
   &-7 {
     font-weight: 700;
   }
+
   &-8 {
     font-weight: 800;
   }
+
   &-9 {
     font-weight: 900;
   }
 }
+
 .green {
   color: var(--green);
 }
+
 .white {
   color: var(--white);
 }
+
 .light-gray {
   color: var(--light-gray);
 }
+
 .gray {
   color: var(--gray);
 }
+
 .pale-blue {
   color: var(--pale-blue);
 }
+
 .blue {
   color: var(--blue);
 }
+
 .dark-blue {
   color: var(--dark-blue);
 }
+
 .rose {
   color: $rose;
 }
+
 .black {
   color: var(--black);
 }
+
 .total-black {
   color: var(--total-black);
 }
+
 .title-font {
   font-family: $title-font;
 }
+
 .bg-blue {
   background-color: var(--blue);
 }
+
 .ruble {
   border-radius: 50%;
   border: 1px solid var(--white);
 }
+
 .lh-n {
   line-height: normal;
 }
@@ -527,23 +605,27 @@ textarea {
   display: block;
   transition: $transition;
   @include placeholder(var(--light-gray), 400);
+
   &.p-blue {
     border: 1px solid var(--pale-blue);
     @include placeholder(var(--pale-blue), 400);
   }
+
   &:hover,
   &:focus,
   &:active {
     border: 1px solid var(--blue);
   }
+
   &:-webkit-autofill,
-  &:-webkit-autofill:hover, 
-  &:-webkit-autofill:focus, 
-  &:-webkit-autofill:active  {
+  &:-webkit-autofill:hover,
+  &:-webkit-autofill:focus,
+  &:-webkit-autofill:active {
     -webkit-box-shadow: 0 0 0 30px var(--input-bg) inset !important;
     -webkit-text-fill-color: var(--font-color) !important;
   }
 }
+
 input {
   &[type="checkbox"] {
     @include no-appearance();
@@ -576,6 +658,7 @@ input {
       }
     }
   }
+
   &[type="radio"] {
     @include no-appearance;
     width: 20px;
@@ -588,6 +671,7 @@ input {
     margin: 0px;
     transition: $transition;
     position: relative;
+
     &::before {
       content: "";
       position: absolute;
@@ -600,10 +684,12 @@ input {
       transition: $transition;
       opacity: 0;
     }
+
     &:checked::before {
       opacity: 1;
     }
   }
+
   &.switch {
     @include no-appearance;
     width: 40px;
@@ -611,6 +697,7 @@ input {
     border: none;
     border-radius: 10px;
     background-color: var(--light-gray);
+
     &::before {
       content: "";
       position: absolute;
@@ -625,13 +712,16 @@ input {
       border: none;
       transform: unset;
     }
+
     &:checked {
       background-color: var(--green);
+
       &::before {
         left: calc(100% - 19px);
       }
     }
   }
+
   &[type="search"] {
     padding-right: 2.5em;
     background-image: url(imgs/SearchIcon.svg);
@@ -639,6 +729,7 @@ input {
     background-position: calc(100% - 0.67em) 50%;
     background-size: 1.6em;
   }
+
   &.code {
     font-family: "Bebas";
     font-size: 2.3em;
@@ -647,10 +738,12 @@ input {
     line-height: 120%;
   }
 }
+
 label {
   display: flex;
   justify-content: flex-start;
   align-items: center;
+
   span {
     flex: 1;
   }
@@ -660,17 +753,21 @@ label {
   input {
     display: none;
   }
+
   .stars {
     display: flex;
     flex-direction: row-reverse;
     width: fit-content;
+
     button {
       display: flex;
       color: var(--blue);
       font-size: 2.15em;
+
       &:not(:last-child) {
         margin-left: 0.2em;
       }
+
       svg {
         path {
           stroke: var(--blue);
@@ -678,11 +775,12 @@ label {
           transition: $transition;
         }
       }
+
       &:hover,
       &.active,
-      &.active ~ button,
+      &.active~button,
       &:hover,
-      &:hover ~ button {
+      &:hover~button {
         svg {
           path {
             fill: var(--blue);
@@ -695,12 +793,14 @@ label {
 
 .password {
   position: relative;
+
   input {
     font-size: inherit;
     font-weight: inherit;
     position: relative;
     z-index: 1;
   }
+
   button {
     position: absolute;
     top: 0px;
@@ -711,6 +811,7 @@ label {
     width: 2em;
     font-size: 1.6em;
     @include flex();
+
     svg {
       path {
         stroke-width: 1.25px;
@@ -718,6 +819,7 @@ label {
     }
   }
 }
+
 select {
   @include no-appearance();
   cursor: pointer;
@@ -732,17 +834,21 @@ select {
   background-position: calc(100% - 0.67em) 50%, 50% 50%;
   background-size: 1.6em, cover;
   transition: $transition;
+
   &:hover,
   &:focus {
     background-color: var(--extrapale-gray);
   }
+
   @include media-breakpoint-down(md) {
     min-width: 200px;
   }
 }
+
 .labeled-input {
   --bg: var(--body-bg);
   position: relative;
+
   label {
     position: absolute;
     z-index: 10;
@@ -754,17 +860,21 @@ select {
     color: var(--gray);
     padding: 0 0.67em;
   }
-  input, textarea {
+
+  input,
+  textarea {
     --input-bg: var(--bg);
     position: relative;
     z-index: 1;
     border-radius: $radius;
-    &:hover + label,
-    &:focus + label,
-    &:active + label {
+
+    &:hover+label,
+    &:focus+label,
+    &:active+label {
       color: var(--blue);
     }
   }
+
   select {
     border-radius: $radius;
     width: 100%;
@@ -775,6 +885,7 @@ select {
     background-position: calc(100% - 0.67em) 50%;
     background-size: 1.6em;
     min-width: 150px;
+
     &:hover,
     &:focus,
     &:active {
@@ -785,6 +896,7 @@ select {
       border: 1px solid var(--blue);
     }
   }
+
   &:hover,
   &:focus,
   &:active {
@@ -793,14 +905,17 @@ select {
     }
   }
 }
+
 .files {
   &-label {
     position: relative;
     @include flex();
     transition: $transition;
+
     &:hover {
       cursor: pointer;
     }
+
     input {
       position: absolute;
       z-index: -1;
@@ -811,12 +926,14 @@ select {
       left: 0px;
       padding: 0px;
     }
+
     .icon {
       @include flex();
       width: 2.5em;
       height: 2.5em;
       border-radius: 50%;
       border: 1px solid rgba($color: var(--pale-blue), $alpha: 0.35);
+
       svg {
         color: var(--blue);
         font-size: 1.5em;
@@ -832,14 +949,17 @@ select {
       font-weight: 600;
       line-height: 1em;
       font-size: 0.9em;
+
       &:empty {
         display: none;
       }
     }
   }
+
   &-list {
     @include list();
     @include flex(row, flex-start, stretch, nowrap);
+
     li {
       img {
         @include roundedImg(100px, $radius, cover);
@@ -847,9 +967,11 @@ select {
     }
   }
 }
+
 .hv-100 {
   min-height: calc(100vh - var(--h-height) - var(--f-height) - 4em);
 }
+
 button {
   background: none;
   border: none;
@@ -858,48 +980,54 @@ button {
   font-family: inherit;
   outline: none;
   color: inherit;
+
   &[disabled]:not(.btn) {
     opacity: 0.5 !important;
   }
 }
+
 .btn {
   @include flex(row, center, center, nowrap);
   padding: 0.8em 1.6em;
   text-align: center;
   width: fit-content;
   border-radius: $radius;
+
   &:active,
   &:hover {
     transition: $transition;
   }
+
   //голубая градиентная кнопка
   &-1,
   &-primary {
     @extend .btn;
     color: $white !important;
     background-color: var(--blue) !important;
-    background-image: linear-gradient(
-      150deg,
-      var(--blue) 25%,
-      #3266b8 50%,
-      var(--blue) 75%
-    ) !important;
+    background-image: linear-gradient(150deg,
+        var(--blue) 25%,
+        #3266b8 50%,
+        var(--blue) 75%) !important;
     background-size: 200% 100% !important;
     background-position: left center !important;
+
     &:hover,
     &:focus {
       color: var(--white);
       background-position: right center;
     }
+
     &:active,
     &.active {
       color: var(--white) !important;
       background-position: center center;
     }
+
     &[disabled] {
       background: var(--light-gray) !important;
     }
   }
+
   //белая кнопка
   &-2,
   &-light {
@@ -909,6 +1037,7 @@ button {
     box-shadow: var(--shadow);
     backdrop-filter: blur(5px);
     border-radius: $radius;
+
     &:hover,
     &:focus,
     &:active,
@@ -916,10 +1045,12 @@ button {
       color: var(--font-color);
       background: var(--second-bg);
     }
+
     &[disabled] {
       background: (--gray-bg) !important;
     }
   }
+
   //розовая кнопка
   &-3,
   &-danger {
@@ -927,22 +1058,26 @@ button {
     background: $rose;
     color: var(--white);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
+
     &:hover,
     &:focus {
       background: $rose;
       color: var(--white);
     }
+
     &:active,
     &.active {
       background: $rose;
       color: var(--white);
     }
+
     &[disabled] {
       background: var(--light-gray) !important;
     }
   }
+
   //черная кнопка
   &-4,
   &-dark {
@@ -950,44 +1085,52 @@ backdrop-filter: blur(5px);
     background: var(--total-black);
     color: var(--white);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
+
     &:hover,
     &:focus {
       color: var(--white);
       background: var(--dark-blue);
     }
+
     &:active,
     &.active {
       color: var(--white);
       background: var(--dark-green);
     }
+
     &[disabled] {
       background: var(--light-gray) !important;
     }
   }
+
   //голубая кнопка
   &-5 {
     @extend .btn;
     background: var(--blue);
     color: var(--white);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
+
     &:hover,
     &:focus {
       color: var(--white);
       background: var(--dark-blue);
     }
+
     &:active,
     &.active {
       color: var(--white);
       background: var(--dark-green);
     }
+
     &[disabled] {
       background: var(--light-gray) !important;
     }
   }
+
   //зеленая кнопка
   &-6,
   &-success {
@@ -995,22 +1138,26 @@ backdrop-filter: blur(5px);
     background: var(--green);
     color: var(--white);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
     border-radius: $radius;
+
     &:hover,
     &:focus {
       color: var(--white);
       background: var(--light-blue);
     }
+
     &:active,
     &.active {
       color: var(--white);
       background: var(--dark-green);
     }
+
     &[disabled] {
       background: var(--light-gray) !important;
     }
   }
+
   &[disabled] {
     background: var(--light-gray);
   }
@@ -1033,10 +1180,12 @@ backdrop-filter: blur(5px);
   position: relative;
   color: var(--gray);
   transition: $transition;
+
   &:hover {
     cursor: pointer;
     color: var(--blue);
   }
+
   input {
     position: absolute;
     z-index: -1;
@@ -1047,10 +1196,12 @@ backdrop-filter: blur(5px);
     left: 0px;
     padding: 0px;
   }
+
   svg {
     color: currentColor;
     font-size: 1.25em;
   }
+
   .ind {
     position: absolute;
     bottom: -0.75em;
@@ -1063,6 +1214,7 @@ backdrop-filter: blur(5px);
     height: 1.3em;
     border-radius: 50%;
     @include flex();
+
     &:empty {
       display: none;
     }
@@ -1071,6 +1223,7 @@ backdrop-filter: blur(5px);
 
 .lang-switcher {
   position: relative;
+
   button {
     width: 100%;
     font-size: 1em;
@@ -1078,6 +1231,7 @@ backdrop-filter: blur(5px);
     @include flex(row, space-between, center, nowrap);
     color: var(--gray);
   }
+
   img {
     width: 1.6em;
     height: 1.6em;
@@ -1086,6 +1240,7 @@ backdrop-filter: blur(5px);
     @include shadow();
     margin-right: 0.5em;
   }
+
   ul {
     @include list();
     position: absolute;
@@ -1095,23 +1250,28 @@ backdrop-filter: blur(5px);
     width: 100%;
     height: auto;
     @include flex(column, flex-start, stretch, nowrap);
+
     li {
       width: 100%;
       margin: 0px !important;
     }
   }
+
   // &.opened {
 
   // }
 }
+
 .star-rating {
   @include flex(row, flex-start, center, nowrap);
   color: var(--blue);
   font-size: 1.34em;
+
   svg {
     &:not(:first-child) {
       margin-left: 3px;
     }
+
     &.filled {
       path {
         fill: var(--blue);
@@ -1119,20 +1279,24 @@ backdrop-filter: blur(5px);
     }
   }
 }
+
 .link {
   color: var(--pale-blue);
   text-decoration: underline;
   transition: $transition;
+
   &:hover,
   &:focus,
   &:active {
     color: var(--dark-blue);
     text-decoration: underline;
   }
+
   &-2 {
     color: var(--blue);
     text-decoration: none;
     transition: $transition;
+
     &:hover,
     &:focus,
     &:active {
@@ -1141,17 +1305,21 @@ backdrop-filter: blur(5px);
     }
   }
 }
+
 .return-link {
   @include flex();
   font-size: 2em;
 }
+
 .return-title {
   display: none;
+
   @include media-breakpoint-down(lg) {
     @include flex(row, flex-start, center, nowrap);
     margin-bottom: 2em;
   }
 }
+
 .themes-switcher {
   input {
     width: 30px;
@@ -1159,6 +1327,7 @@ backdrop-filter: blur(5px);
     background-color: var(--switcher);
     border-radius: 5px;
     border: none !important;
+
     &::before {
       content: '';
       top: 0px;
@@ -1176,8 +1345,10 @@ backdrop-filter: blur(5px);
       transition: $transition;
       opacity: 1;
     }
+
     &:checked {
       border: none !important;
+
       &::before {
         border: none !important;
         left: 20px;
@@ -1190,19 +1361,24 @@ backdrop-filter: blur(5px);
 .min-250 {
   min-width: 250px;
 }
+
 @include media-breakpoint-down(sm) {
   .w-xs-100 {
     width: 100%;
   }
 }
+
 .flex-1 {
   flex: 1;
 }
+
 .mb-6 {
   margin-bottom: 6em;
+
   @include media-breakpoint-down(md) {
     margin-bottom: 5em;
   }
+
   @include media-breakpoint-down(sm) {
     margin-bottom: 4em;
   }
@@ -1212,27 +1388,34 @@ backdrop-filter: blur(5px);
 .breadcrumbs {
   margin-bottom: 2em;
   color: var(--light-gray);
+
   @include media-breakpoint-down(xl) {
     margin-bottom: 1.5em;
   }
+
   ul {
     @include list();
     @include flex(row, flex-start, center, wrap);
+
     li {
       a {
         font-size: 1.2em;
         font-weight: 500;
+
         @include media-breakpoint-down(lg) {
           font-size: 1.1em;
         }
+
         @include media-breakpoint-down(md) {
           font-size: 1em;
         }
       }
+
       &:not(:first-child) {
         margin-left: 1em;
         padding-left: 1.4em;
         position: relative;
+
         &::before {
           content: "";
           position: absolute;
@@ -1242,9 +1425,11 @@ backdrop-filter: blur(5px);
           width: 8px;
           background: url(imgs/arrow-mini.svg) no-repeat center;
           background-size: contain;
+
           @include media-breakpoint-down(lg) {
             width: 7px;
           }
+
           @include media-breakpoint-down(md) {
             width: 6px;
           }
@@ -1259,10 +1444,12 @@ nav.pagination {
   ul {
     @include list();
     @include flex();
+
     li {
       &:not(:first-child) {
         margin-left: 1.3em;
       }
+
       a {
         width: 2em;
         height: 2em;
@@ -1271,13 +1458,16 @@ nav.pagination {
         color: var(--blue);
         @include flex();
         transition: $transition;
+
         svg {
           font-size: 1.2em;
         }
+
         &:hover,
         &:focus {
           background-color: var(--extrapale-gray);
         }
+
         &:active,
         &.active {
           background-color: var(--extrapale-gray);
@@ -1301,18 +1491,22 @@ nav.pagination {
   --bs-accordion-btn-icon-width: 2em;
   --bs-accordion-btn-icon: url(imgs/chevron-down-blue.svg);
   --bs-accordion-btn-active-icon: url(imgs/chevron-down-blue.svg);
+
   &-button {
     box-shadow: unset;
     font-weight: 600;
   }
 }
+
 .dropdown {
   &-toggle {
     @include flex();
+
     &::after {
       display: none;
     }
   }
+
   &-menu {
     --bs-dropdown-spacer: 0.125rem;
     --bs-dropdown-font-size: 1em;
@@ -1335,21 +1529,24 @@ nav.pagination {
     overflow: hidden;
     @include safariFix();
   }
+
   &-item {
     padding: 0px;
+
     a {
       display: block;
-      padding: var(--bs-dropdown-item-padding-y)
-        var(--bs-dropdown-item-padding-x);
+      padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
       text-align: left;
       width: 100%;
       justify-content: flex-start !important;
       transition: $transition;
+
       &:hover,
       &:focus {
         color: var(--bs-dropdown-link-hover-color) !important;
         background-color: var(--bs-dropdown-link-hover-bg);
       }
+
       &:active {
         color: var(--bs-dropdown-link-active-color) !important;
         background-color: var(--bs-dropdown-link-active-bg);
@@ -1366,123 +1563,156 @@ nav.pagination {
   border-radius: $radius;
   --padX: 1.3em;
   --padY: 1em;
+
   @include media-breakpoint-down(xl) {
     background: transparent;
     border-radius: 0px;
     box-shadow: none;
     --padX: 0px;
   }
+
   &-top {
     background-color: var(--extrapale-gray);
     border-radius: $radius $radius 0px 0px;
     padding: var(--padY) var(--padX);
+
     @include media-breakpoint-down(xl) {
       display: none;
     }
+
     ul {
       @include list();
       @include flex();
       padding: 0.25em 1em;
       font-weight: 700;
       font-size: 1.2em;
+
       &.line-2 {
         .descr {
           flex: 1;
         }
+
         .price {
           width: 100px;
           text-align: right;
         }
+
         .btns {
           width: 60px;
         }
       }
+
       &.line-3 {
         display: grid;
         grid-template-columns: 140px 110px 1fr 200px 130px 80px;
         grid-template-rows: 1fr;
         grid-template-areas: "date id descr seller status price";
+
         @include media-breakpoint-down(xxl) {
           grid-template-columns: 83px 90px 1fr 200px 130px 80px;
           font-size: 1em;
         }
+
         .date {
           grid-area: date;
         }
+
         .id {
           grid-area: id;
         }
+
         .descr {
           grid-area: descr;
         }
+
         .seller {
           grid-area: seller;
         }
+
         .status {
           grid-area: status;
         }
+
         .price {
           grid-area: price;
         }
       }
+
       &.line-operation {
         display: grid;
         grid-template-columns: 21% 21% 21% 21% 16%;
         grid-template-rows: 1fr;
         grid-template-areas: "date id type stat sum";
+
         .date {
           grid-area: date;
         }
+
         .id {
           grid-area: id;
         }
+
         .type {
           grid-area: type;
         }
+
         .stat {
           grid-area: stat;
         }
+
         .sum {
           grid-area: sum;
         }
       }
+
       &.line-appeal {
         display: grid;
         grid-template-columns: 35% 13% 22% 20% 10%;
         grid-template-rows: 1fr;
         grid-template-areas: "subject id status date btns";
+
         .subject {
           grid-area: subject;
         }
+
         .id {
           grid-area: id;
         }
+
         .status {
           grid-area: status;
         }
+
         .date {
           grid-area: date;
         }
+
         .btns {
           grid-area: btns;
         }
       }
     }
   }
+
   &-main {
     padding: 0px;
+
     ul {
       @include list();
+
       li {
         border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.2);
+
         @include media-breakpoint-down(xl) {
           border-bottom: none;
         }
       }
     }
   }
+
   &-bottom {
     padding: var(--padX) var(--padX);
+
     @include media-breakpoint-down(xl) {
       padding: var(--padY) 0 0;
     }
@@ -1500,6 +1730,7 @@ body {
   background-color: var(--body-bg);
   color: var(--font-color);
   overflow-x: hidden;
+
   @include media-breakpoint-down(sm) {
     font-size: 13px;
   }
@@ -1508,10 +1739,12 @@ body {
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
   padding: 2em 0;
+
   @include media-breakpoint-down(lg) {
     min-height: calc(100vh - var(--f-height));
     padding-bottom: var(--f-height);
   }
+
   @include media-breakpoint-down(sm) {
     padding-top: 1em;
   }
@@ -1521,15 +1754,19 @@ header {
   position: relative;
   z-index: 1042;
   height: var(--h-height);
+
   @include media-breakpoint-down(lg) {
     display: none;
   }
+
   input {
     border-color: var(--pale-blue);
     @include placeholder(var(--pale-blue));
   }
+
   .profile-link {
     @include flex();
+
     img {
       @include rounedImg(30px);
       margin-right: 0.5em;
@@ -1544,62 +1781,79 @@ header {
     position: relative;
     padding-bottom: 2em;
   }
+
   @include media-breakpoint-down(sm) {
     padding-bottom: 1.5em;
   }
+
   &-box {
     @include flex(row, space-between, flex-start, nowrap);
+
     @include media-breakpoint-down(lg) {
       width: 300%;
       transition: 400ms ease-in-out;
+
       &.pos-1 {
         transform: translateX(0%);
       }
+
       &.pos-2 {
         transform: translateX(calc(100% / 3 * -1));
       }
+
       &.pos-3 {
         transform: translateX(calc(100% / 3 * 2 * -1));
       }
     }
   }
+
   &-item {
     --w: 17%;
     width: var(--w);
     position: relative;
     transition: 400ms ease-in-out;
+
     @include media-breakpoint-down(xl) {
       --w: 16.5%;
     }
+
     @include media-breakpoint-down(lg) {
       --w: 100%;
     }
+
     .wrap {
       position: relative;
       padding-top: 3.25em;
     }
+
     .svg-mini {
       position: relative;
       z-index: 1;
       width: 112%;
       height: 303px;
+
       @include media-breakpoint-down(xxl) {
         height: 320px;
       }
+
       @include media-breakpoint-down(xl) {
         height: 284px;
       }
     }
+
     .svg-mobile {
       width: 100%;
       height: 552px;
+
       @include media-breakpoint-down(md) {
         height: 410px;
       }
+
       @include media-breakpoint-down(sm) {
         height: 73vw;
       }
     }
+
     .title-full {
       position: absolute;
       z-index: 10;
@@ -1609,46 +1863,57 @@ header {
       overflow: hidden;
       opacity: 0;
       transition: 400ms linear 0ms;
+
       @include media-breakpoint-down(lg) {
         top: 5%;
         left: 30%;
         width: 70%;
       }
+
       @include media-breakpoint-down(md) {
         top: 3%;
       }
+
       h2 {
         line-height: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 0px;
+
         @include media-breakpoint-down(xl) {
           font-size: 2.5em;
         }
+
         @include media-breakpoint-down(lg) {
           font-size: 3em;
         }
+
         @include media-breakpoint-down(md) {
           font-size: 2.5em;
         }
+
         @include media-breakpoint-down(sm) {
           font-size: 2.3em;
         }
       }
     }
+
     .title-mini {
       margin-top: 5px;
       width: 100%;
       overflow: hidden;
       opacity: 1;
       transition: 400ms linear 400ms;
+
       @include media-breakpoint-down(xl) {
         margin-top: 0px;
       }
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
+
       h2 {
         line-height: 100%;
         white-space: nowrap;
@@ -1656,11 +1921,13 @@ header {
         text-overflow: ellipsis;
         margin-bottom: 0px;
         font-size: 2.5em;
+
         @include media-breakpoint-down(xxl) {
           font-size: 2em;
         }
       }
     }
+
     .lots {
       width: fit-content;
       height: fit-content;
@@ -1671,21 +1938,26 @@ header {
       @include flex(column, center, center, nowrap);
       color: var(--white);
       font-size: 0.75em;
+
       @include media-breakpoint-down(xxl) {
         font-size: 0.6em;
       }
+
       @include media-breakpoint-down(xl) {
         font-size: 0.55em;
       }
+
       .num {
         font-size: 1.1em;
         line-height: 140%;
         font-weight: 600;
+
         @include media-breakpoint-down(xxl) {
           font-size: 1.25em;
         }
       }
     }
+
     .link {
       position: absolute;
       z-index: 10;
@@ -1694,107 +1966,133 @@ header {
       opacity: 0;
       color: var(--white);
       text-decoration: none;
+
       @include media-breakpoint-down(xl) {
         bottom: 1em;
         right: 1em;
       }
+
       @include media-breakpoint-down(lg) {
         display: none;
       }
     }
+
     &-active {
       @extend .main-slider-item;
       --w: 60.6%;
+
       @include media-breakpoint-down(xxl) {
         --w: 61%;
       }
+
       @include media-breakpoint-down(xl) {
         --w: 62%;
       }
+
       @include media-breakpoint-down(lg) {
         --w: 100%;
       }
+
       .wrap {
         padding-top: 1em;
       }
+
       .svg-full {
         position: relative;
         z-index: 1;
         width: 100%;
         height: 365px;
+
         @include media-breakpoint-down(xxl) {
           height: 400px;
         }
+
         @include media-breakpoint-down(xl) {
           height: 340px;
         }
       }
+
       .title-full {
         opacity: 1;
         transition: 400ms linear 400ms;
       }
+
       .title-mini {
         height: 0px;
         opacity: 0;
         transition: 400ms linear 0ms;
       }
+
       .lots {
         top: 2.6em;
         left: 6.25%;
         bottom: unset;
         right: unset;
         font-size: 0.9em;
+
         @include media-breakpoint-down(xxl) {
           font-size: 0.8em;
         }
+
         @include media-breakpoint-down(xl) {
           font-size: 0.7em;
           top: -1.65em;
         }
+
         @include media-breakpoint-down(lg) {
           font-size: 1.3em;
           top: 7%;
           left: 12.5%;
         }
+
         @include media-breakpoint-down(md) {
           font-size: 1em;
         }
+
         @include media-breakpoint-down(sm) {
           font-size: 3vw;
           left: 12%;
         }
+
         .num {
           line-height: 120%;
           font-size: 1.6em;
           font-weight: 400;
         }
       }
+
       .link {
         opacity: 1;
         transition: 200ms ease-in-out 800ms;
       }
     }
   }
+
   &-prev,
   &-next {
     display: flex;
     position: absolute;
     top: 67.5%;
     font-size: 2em;
+
     @include media-breakpoint-down(md) {
       top: 66.5%;
       font-size: 1.5em;
     }
+
     @include media-breakpoint-down(sm) {
       font-size: 1.25em;
     }
   }
+
   &-prev {
     left: 0px;
   }
+
   &-next {
     right: 0px;
   }
+
   &-indicators {
     position: absolute;
     bottom: 0px;
@@ -1802,18 +2100,22 @@ header {
     width: 100%;
     @include list();
     @include flex();
+
     li {
       flex-grow: 1;
       height: 0.6em;
       background-color: rgba($color: var(--black), $alpha: 0.15);
       border-radius: 0.3em;
       transition: $transition;
+
       @include media-breakpoint-down(sm) {
         height: 0.4em;
       }
+
       &:not(:first-child) {
         margin-left: 2em;
       }
+
       &.active {
         background-color: rgba($color: var(--black), $alpha: 1);
       }
@@ -1825,10 +2127,12 @@ header {
 .sec-catalog {
   .container {
     position: relative;
+
     @include media-breakpoint-down(lg) {
       @include flex(row, flex-start, stretch, nowrap);
     }
   }
+
   &-nav {
     position: absolute;
     z-index: 10;
@@ -1836,6 +2140,7 @@ header {
     right: calc(100% + 12px);
     width: 60px;
     height: 100%;
+
     @include media-breakpoint-down(lg) {
       position: relative;
       top: unset;
@@ -1843,9 +2148,11 @@ header {
       height: auto;
       margin-left: 1em;
     }
+
     @include media-breakpoint-down(sm) {
       width: 40px;
     }
+
     .wrap {
       background: var(--glass);
       box-shadow: var(--shadow);
@@ -1859,12 +2166,15 @@ header {
       max-height: calc(100vh - 2em);
       padding: 0.5em;
       transition: $transition;
+
       @include media-breakpoint-down(lg) {
         float: right;
       }
+
       @include media-breakpoint-down(sm) {
         padding: 0;
       }
+
       form {
         position: relative;
         border: 1px solid transparent;
@@ -1872,14 +2182,17 @@ header {
         margin-bottom: 0.25em;
         @include flex();
         transition: $transition;
+
         button {
           @include absBG(2);
           width: 3em;
           color: var(--pale-blue);
+
           svg {
             font-size: 1.6em;
           }
         }
+
         input {
           width: 100%;
           opacity: 0;
@@ -1889,6 +2202,7 @@ header {
           padding: 0.6em 0 0.6em 3em;
         }
       }
+
       ul {
         @include list();
         overflow: hidden;
@@ -1896,12 +2210,14 @@ header {
         grid-template-columns: repeat(3, 1fr);
         grid-template-rows: repeat(9, 1fr);
         grid-auto-flow: column;
+
         li {
           grid-column: span 1;
           grid-row: span 1;
           font-size: 1.3em;
           text-align: center;
           padding: 0.4em;
+
           a {
             @include flex();
             color: var(--font-color);
@@ -1912,15 +2228,18 @@ header {
             height: 1.5em;
             border-radius: 50%;
             white-space: nowrap;
+
             &:hover {
               background-color: rgba($color: var(--pale-blue), $alpha: 0.25);
             }
+
             &.ss-active {
               background-color: rgba($color: var(--pale-blue), $alpha: 0.5);
             }
           }
         }
       }
+
       #cut {
         font-size: 1.3em;
         position: absolute;
@@ -1932,33 +2251,42 @@ header {
         @include flex();
         border-radius: 50%;
         overflow: hidden;
+
         @include media-breakpoint-down(lg) {
           right: unset;
           left: -0.5em;
         }
+
         img {
           width: 100%;
           height: 100%;
           transition: $transition;
+
           @include media-breakpoint-down(lg) {
             transform: rotate(-180deg);
           }
         }
+
         &.opened {
           img {
             transform: rotate(-180deg);
+
             @include media-breakpoint-down(lg) {
               transform: rotate(0deg);
             }
           }
         }
       }
+
       &.full {
         width: 180px;
+
         @include media-breakpoint-down(sm) {
           width: 130px;
         }
+
         form {
+
           // border: 1px solid var(--pale-blue);
           input {
             opacity: 1;
@@ -1967,38 +2295,47 @@ header {
       }
     }
   }
+
   &-box {
     flex: 1;
   }
+
   &-part {
     padding: 1em 1.5em;
     background: var(--glass);
     box-shadow: var(--shadow);
     backdrop-filter: blur(5px);
     border-radius: 10px;
+
     &:not(:last-child) {
       margin-bottom: 3.33em;
     }
+
     @include media-breakpoint-down(sm) {
       padding: 1em;
     }
   }
+
   .letter {
     font-size: 3.33em;
     font-weight: 700;
     color: rgba(67, 185, 198, 0.26);
     margin-bottom: 1rem;
+
     @include media-breakpoint-down(sm) {
       line-height: 100%;
     }
   }
 }
-:root[data-theme='light'] .sec-catalog{
+
+:root[data-theme='light'] .sec-catalog {
   background: url(imgs/bg/gradient.jpg) no-repeat;
   background-size: 100% 100%;
 }
+
 .game-card {
   @include flex(row, flex-start, flex-start, nowrap);
+
   .img {
     width: 50px;
     height: 50px;
@@ -2006,48 +2343,59 @@ header {
     border-radius: 50%;
     margin-right: 0.5em;
   }
+
   h4 {
     padding: 0 0 0.6em 0.65em;
   }
+
   .categories {
     @include list();
     @include flex(row, flex-start, center, wrap);
     padding: 0.85em 0.5em 0.5em;
+
     @include media-breakpoint-down(xxl) {
       padding: 0.75em 0em 0;
     }
+
     li {
       margin-bottom: 0.67em;
+
       &:not(:last-child) {
         margin-right: 1em;
       }
     }
   }
+
   &-mini {
     @include flex(row, flex-start, center, nowrap);
     background-color: var(--white);
     border-radius: $radius;
     @include lightShadow();
     padding: 1.6em 1.2em;
+
     @include media-breakpoint-down(sm) {
       padding: 1em 0.75em;
     }
+
     .img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 0.5em;
+
       @include media-breakpoint-down(sm) {
         width: 30px;
         height: 30px;
       }
     }
+
     h6 {
       font-size: 1.1em;
     }
   }
 }
+
 .servers {
   position: relative;
   @include list();
@@ -2057,6 +2405,7 @@ header {
   width: fit-content;
   border-radius: $radius;
   padding: 0 0.5em;
+
   li {
     position: relative;
     color: var(--white);
@@ -2065,6 +2414,7 @@ header {
     padding: 0.6em 0.5em;
     transition: $transition;
     cursor: pointer;
+
     &.indicator {
       transform: translateY(-50%) translateX(-50%);
       padding: 0px;
@@ -2076,6 +2426,7 @@ header {
       background: var(--subtract) no-repeat center bottom;
       background-size: 100% 50%;
       @include flex();
+
       img {
         width: 8px;
         height: 8px;
@@ -2083,45 +2434,55 @@ header {
         filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
       }
     }
+
     &.active {
       color: var(--dark-green);
     }
   }
 }
+
 .sec-promo {
   position: relative;
   @include bgTextureGradient();
   box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
   border-radius: $radius;
   padding: 0 10% 0 4em;
   color: var(--white);
   @include flex(row, space-between, center, nowrap);
   margin-top: 10%;
+
   @include media-breakpoint-down(xxl) {
     padding: 0 3em;
   }
+
   @include media-breakpoint-down(xl) {
     padding: 0 2em;
   }
+
   @include media-breakpoint-down(lg) {
     margin-top: 15%;
   }
+
   @include media-breakpoint-down(sm) {
     padding: 1em;
     height: 85px;
   }
+
   img {
     width: 25%;
     margin-top: -11%;
+
     @include media-breakpoint-down(xl) {
       width: 22%;
       margin-top: -7%;
     }
+
     @include media-breakpoint-down(lg) {
       width: 50%;
       margin-top: -15%;
     }
+
     @include media-breakpoint-down(sm) {
       position: absolute;
       bottom: 0px;
@@ -2129,6 +2490,7 @@ backdrop-filter: blur(5px);
       width: 55%;
     }
   }
+
   .text {
     position: relative;
     z-index: 10;
@@ -2139,24 +2501,30 @@ backdrop-filter: blur(5px);
 .sec-blog {
   .blog-list {
     @include list();
+
     &-item {
       position: relative;
+
       img {
         width: 100%;
         height: 200px;
         object-fit: cover;
         border-radius: $radius;
         margin-bottom: 1.3em;
+
         @include media-breakpoint-down(xxl) {
           height: 190px;
         }
       }
+
       h5 {
         @include clamp(3, 1.3em);
       }
+
       &-mobile {
         @include flex(row, flex-start, center, nowrap);
         position: relative;
+
         img {
           width: 100px;
           height: 80px;
@@ -2164,6 +2532,7 @@ backdrop-filter: blur(5px);
           border-radius: $radius;
           margin-right: 1em;
         }
+
         h5 {
           flex: 1;
         }
@@ -2171,6 +2540,7 @@ backdrop-filter: blur(5px);
     }
   }
 }
+
 .cognition {
   flex: 1;
   @include flex(row, flex-end, center, nowrap);
@@ -2186,55 +2556,69 @@ backdrop-filter: blur(5px);
   text-align: right;
   border-radius: $radius;
   transition: $transition;
+
   &:hover,
   &:focus,
   &:active {
     color: var(--light-blue);
   }
 }
+
 .page-blog {
   .article-mini {
     position: relative;
+
     img {
       width: 100%;
       height: 250px;
       object-fit: cover;
       border-radius: $radius $radius 0 0;
+
       @include media-breakpoint-down(xxl) {
         height: 220px;
       }
+
       @include media-breakpoint-down(xl) {
         height: 180px;
       }
+
       @include media-breakpoint-down(lg) {
         height: 200px;
       }
+
       @include media-breakpoint-down(md) {
         height: 155px;
       }
+
       @include media-breakpoint-down(sm) {
         height: 33vw;
       }
     }
+
     figcaption {
       background-color: var(--white);
       border-radius: 0 0 $radius $radius;
       @include lightShadow();
       padding: 1.5em 1.5em 0.6em;
+
       @include media-breakpoint-down(xl) {
         padding: 1em 1.25em 0.6em;
       }
+
       @include media-breakpoint-down(sm) {
         padding: 0.6em 1em;
       }
+
       h5 {
         font-weight: 600;
         color: var(--total-black);
         @include clamp(2, 1.2em, true);
+
         a {
           line-height: 1.2em;
         }
       }
+
       time {
         display: block;
         text-align: right;
@@ -2242,24 +2626,29 @@ backdrop-filter: blur(5px);
         color: var(--pale-blue);
         font-weight: 500;
         font-size: 1.2em;
+
         @include media-breakpoint-down(lg) {
           font-size: 1em;
         }
       }
     }
   }
+
   article {
     p {
       color: var(--total-black);
       margin-bottom: 2em;
+
       @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
       }
     }
+
     img {
       max-width: 100%;
       border-radius: $radius;
       margin-bottom: 2em;
+
       @include media-breakpoint-down(sm) {
         margin-bottom: 1em;
       }
@@ -2276,25 +2665,34 @@ backdrop-filter: blur(5px);
 /* Chat */
 .chat {
   position: relative;
+
   &-window {
+    display: flex;
+    flex-direction: column-reverse;
     height: 698px;
     overflow: auto;
     padding: 1em 1.5em;
+
     @include media-breakpoint-down(lg) {
       padding: 1em 1.5em;
       height: 500px;
     }
+
     @include media-breakpoint-down(md) {
       padding: 1em;
     }
+
     @include media-breakpoint-down(sm) {
       padding: 1em 0.5em;
     }
+
     &-message {
       @include flex(row, flex-start, flex-start);
+
       &:not(:first-child) {
         margin-top: 1.5em;
       }
+
       img {
         width: 3.34em;
         height: 3.34em;
@@ -2303,9 +2701,11 @@ backdrop-filter: blur(5px);
         z-index: 10;
         margin-right: 1em;
       }
+
       .text {
         flex: 1;
         @include flex(column, flex-start, flex-start, nowrap);
+
         .bubble {
           position: relative;
           width: fit-content;
@@ -2318,14 +2718,18 @@ backdrop-filter: blur(5px);
           text-align: left;
         }
       }
+
       &-mine {
         @extend .chat-window-message;
+
         img {
           margin-left: 1em;
           margin-right: 0px;
         }
+
         .text {
           align-items: flex-end;
+
           .bubble {
             background: rgba($color: var(--pale-green), $alpha: 0.2);
             text-align: right;
@@ -2334,10 +2738,12 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   &-form {
     @include flex(row, flex-start, center, nowrap);
     border-top: 1px solid var(--extrapale-gray);
     padding: 0.5em;
+
     input {
       border: none;
       background-color: transparent;
@@ -2345,13 +2751,16 @@ backdrop-filter: blur(5px);
     }
   }
 }
+
 .sec-chat {
   position: relative;
+
   h2 {
     font-size: 2.85em;
     margin-left: 3.5em;
     margin-bottom: 0.1em;
   }
+
   &-count {
     position: absolute;
     z-index: 10;
@@ -2364,18 +2773,22 @@ backdrop-filter: blur(5px);
     color: var(--body-bg);
     text-align: center;
     @include flex(column, center, center, nowrap);
+
     .num {
       font-size: 1.34em;
     }
+
     .text {
       font-size: .86em;
     }
   }
+
   .chat {
     box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
     padding-top: 2em;
   }
 }
+
 .sec-messages-chat {
   box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
 }
@@ -2386,14 +2799,17 @@ backdrop-filter: blur(5px);
     margin-bottom: 0.1em;
     padding: 0 0.35em;
     font-size: 2.85em;
+
     @include media-breakpoint-down(xl) {
       font-size: 2.65em;
     }
   }
+
   .offers-slider {
     height: 785px;
     padding: 0 1.5em 0 1em;
     margin-right: -0.5em;
+
     .swiper-scrollbar {
       right: 0.5em;
       background-color: #fff;
@@ -2401,43 +2817,54 @@ backdrop-filter: blur(5px);
         1px 3px 20px rgba(100, 100, 100, 0.15);
       backdrop-filter: blur(4px);
       width: 5px;
+
       &-drag {
         background-color: var(--pale-blue);
       }
     }
+
     .swiper-slide {
       height: fit-content;
     }
+
     .offer-card {
       background: var(--glass);
       box-shadow: var(--shadow);
       backdrop-filter: blur(5px);
       border-radius: $radius;
       padding: 1.6em 1.6em 0.7em 1.6em;
+
       &-top {
         @include flex(row, space-between, center, nowrap);
+
         h5 {
           font-weight: 700;
           color: var(--green);
+
           h5 {
             @include clamp(1, 1.4em, true);
           }
         }
       }
+
       &-main {
         margin-top: 1em;
         @include flex(row, space-between, flex-start, nowrap);
+
         h5 {
           @include clamp(2, 1.4em, true);
         }
       }
+
       &-text {
         margin-top: 1em;
+
         p {
           font-weight: 300;
           @include clamp(2, 1.4em);
         }
       }
+
       &-bottom {
         margin-top: 1em;
         @include flex(row, space-between, center, nowrap);
@@ -2452,6 +2879,7 @@ backdrop-filter: blur(5px);
 .page-game {
   &-top {
     position: relative;
+
     .img {
       position: absolute;
       bottom: 0px;
@@ -2459,39 +2887,48 @@ backdrop-filter: blur(5px);
       width: 45%;
       height: auto;
       z-index: 1;
+
       @include media-breakpoint-down(xxl) {
         width: 50%;
       }
+
       @include media-breakpoint-down(xl) {
         width: 100%;
       }
+
       svg {
         width: 100%;
         height: auto;
       }
+
       &-lots {
         position: absolute;
         top: 14%;
         left: 10.7%;
         text-align: center;
         color: var(--white);
+
         .num {
           font-size: 1.6em;
         }
+
         @include media-breakpoint-down(sm) {
           font-size: 2.5vw;
         }
       }
     }
+
     .categories {
       position: unset;
       @include list();
       @include flex(row, flex-start, center, wrap);
       margin-top: 1em;
       margin-bottom: 2em;
+
       @include media-breakpoint-down(xxl) {
         margin-bottom: 1em;
       }
+
       @include media-breakpoint-down(xl) {
         position: relative;
         width: 60%;
@@ -2500,28 +2937,35 @@ backdrop-filter: blur(5px);
         justify-content: center;
         margin-bottom: 0em;
       }
+
       @include media-breakpoint-down(lg) {
         width: 80%;
       }
+
       @include media-breakpoint-down(md) {
         width: 100%;
         height: 430px;
       }
+
       @include media-breakpoint-down(sm) {
         height: calc(85vw - 24px);
       }
+
       li {
         font-size: 1.2em;
         margin-right: 1.1em;
         margin-bottom: 1.1em;
+
         @include media-breakpoint-down(xl) {
           margin-bottom: 0.6em;
           position: relative;
           z-index: 10;
         }
+
         @include media-breakpoint-down(md) {
           font-size: 1em;
         }
+
         button,
         a {
           background-color: var(--extrapale-gray);
@@ -2530,6 +2974,7 @@ backdrop-filter: blur(5px);
           border-radius: $radius * 0.5;
           transition: $transition;
           color: var(--font-color);
+
           &:hover,
           &:focus,
           &:active,
@@ -2537,7 +2982,9 @@ backdrop-filter: blur(5px);
             background-color: var(--pale-blue);
             color: var(--white);
           }
+
           @include media-breakpoint-down(xl) {
+
             &:hover,
             &:focus,
             &:active,
@@ -2549,38 +2996,48 @@ backdrop-filter: blur(5px);
         }
       }
     }
+
     .filter {
       position: relative;
       z-index: 10;
+
       fieldset {
         @include flex(row, flex-start, center, wrap);
+
         @include media-breakpoint-down(lg) {
           margin-top: 1em;
         }
+
         @include media-breakpoint-down(sm) {
-          & > * {
+          &>* {
             width: 100% !important;
           }
         }
       }
+
       input:not([type="checkbox"]) {
         border-color: var(--pale-blue);
         @include placeholder(var(--pale-blue));
       }
+
       input[type="search"] {
         width: 340px;
+
         @include media-breakpoint-down(xxl) {
           width: 270px;
         }
+
         @include media-breakpoint-down(md) {
           width: 200px;
         }
       }
+
       input[type="number"] {
         width: 70px;
         padding: 0.7em 0.75em;
         text-align: center;
       }
+
       @include media-breakpoint-down(xl) {
         background: var(--body-bg);
         padding: 1em;
@@ -2589,6 +3046,7 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   &-offers {
     background: var(--glass);
     box-shadow: var(--shadow);
@@ -2599,75 +3057,86 @@ backdrop-filter: blur(5px);
     --seller: 220px;
     --availability: 165px;
     --price: 120px;
+
     @include media-breakpoint-down(xl) {
       background: transparent;
       border-radius: 0px;
       box-shadow: none;
       --pad: 0px 1em;
     }
+
     @include media-breakpoint-down(md) {
       --pad: 0px 0.5em;
       --price: 90px;
     }
+
     .top {
       background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
-      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(
-          --price
-        );
+      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
       grid-template-rows: 1fr;
       grid-template-areas: "serv descr seller availability price";
+
       @include media-breakpoint-down(xl) {
         display: none;
       }
+
       div {
         font-size: 1.2em;
         font-weight: 600;
         padding: var(--pad);
+
         &.serv {
           grid-area: serv;
         }
+
         &.descr {
           grid-area: descr;
         }
+
         &.seller {
           grid-area: seller;
         }
+
         &.availability {
           grid-area: availability;
           text-align: center;
         }
+
         &.price {
           grid-area: price;
           text-align: center;
         }
       }
     }
+
     ul {
       @include list();
       padding: 2em;
+
       @include media-breakpoint-down(xl) {
         padding: 0px;
       }
     }
   }
 }
+
 :root[data-theme='light'] .page-game {
   background: url(imgs/bg/gradient.jpg) no-repeat center bottom;
   background-size: 100% 65%;
 }
+
 .offer-line {
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(
-      --price
-    );
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
   grid-template-areas: "serv descr seller availability price";
   background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
+
   @include media-breakpoint-down(xl) {
     grid-template-columns: auto var(--price);
     grid-template-rows: 2em auto 3em;
@@ -2678,56 +3147,70 @@ backdrop-filter: blur(5px);
     gap: 10px 0px;
     padding: 1em 0;
   }
+
   @include media-breakpoint-down(md) {
     padding: 0.5em 0;
   }
-  & > div {
+
+  &>div {
     grid-column: span 1;
     grid-row: span 1;
     padding: var(--pad);
   }
+
   .serv {
     grid-area: serv;
+
     @include media-breakpoint-down(xl) {
       color: var(--blue);
       @include flex(row, flex-start, center, nowrap);
     }
   }
+
   .descr {
     grid-area: descr;
+
     @include media-breakpoint-down(xl) {
       @include clamp(3, 1.2em, true);
     }
   }
+
   .seller {
     grid-area: seller;
     @include flex(row, flex-start);
+
     @include media-breakpoint-between(sm, xl) {
       font-size: 0.8em;
     }
+
     img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 0.75em;
+
       @include media-breakpoint-down(xl) {
         width: 40px;
         height: 40px;
       }
     }
   }
+
   .availability {
     grid-area: availability;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       @include flex(row, flex-end, center, nowrap);
       text-align: right;
     }
   }
+
   .price {
     grid-area: price;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       @include flex(row, flex-end, center, nowrap);
       text-align: right;
@@ -2746,6 +3229,7 @@ backdrop-filter: blur(5px);
   @include boxShadow();
   border-radius: $radius;
   border-bottom: none;
+
   // @include media-breakpoint-down(xl) {
   //   grid-template-columns:auto var(--price);
   //   grid-template-rows: 2em auto 3em;
@@ -2756,27 +3240,33 @@ backdrop-filter: blur(5px);
   //   gap: 10px 0px;
   //   padding: 1em 0;
   // }
-  & > div {
+  &>div {
     grid-column: span 1;
     grid-row: span 1;
     padding: 1em;
   }
+
   .serv {
     grid-area: serv;
+
     @include media-breakpoint-down(xl) {
       color: var(--blue);
       @include flex(row, flex-start, center, nowrap);
     }
   }
+
   .descr {
     grid-area: descr;
+
     @include media-breakpoint-down(xl) {
       @include clamp(3, 1.2em, true);
     }
   }
+
   .price {
     grid-area: price;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       @include flex(row, flex-end, center, nowrap);
       text-align: right;
@@ -2790,9 +3280,11 @@ backdrop-filter: blur(5px);
   .specifications {
     @include list();
     font-size: 0.9em;
+
     li {
       @include flex(row, space-between, center, nowrap);
       position: relative;
+
       &::after {
         content: "";
         position: absolute;
@@ -2802,9 +3294,11 @@ backdrop-filter: blur(5px);
         height: 1px;
         background-color: var(--extrapale-gray);
       }
+
       &:not(:first-child) {
         margin-top: 0.5em;
       }
+
       span {
         position: relative;
         z-index: 2;
@@ -2812,12 +3306,15 @@ backdrop-filter: blur(5px);
         padding: 0em 0.5em;
         line-height: normal;
         @include textEllipsis();
+
         &:first-child {
           color: var(--gray);
         }
+
         &:last-child {
           color: var(--blue);
           width: 45%;
+
           @include media-breakpoint-down(sm) {
             width: fit-content;
             margin-left: 1em;
@@ -2826,9 +3323,11 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   &-box {
     border: 1px solid var(--extrapale-gray);
     border-radius: $radius;
+
     hr {
       background-color: var(--extrapale-gray);
       width: 100%;
@@ -2837,19 +3336,24 @@ backdrop-filter: blur(5px);
       margin: 0px;
       opacity: 1;
     }
+
     .seller {
       @include flex(row, flex-start, center, nowrap);
+
       img {
         @include roundedImg(70px, 50%, cover);
         margin-right: 1em;
       }
+
       .rating {
         font-size: 1.2em;
         font-weight: 700;
         @include flex();
+
         svg {
           color: var(--blue);
           font-size: 1.1em;
+
           path {
             fill: var(--blue);
           }
@@ -2857,6 +3361,7 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   &-grid {
     display: grid;
     grid-template-columns: 120px 4fr 5fr;
@@ -2868,9 +3373,11 @@ backdrop-filter: blur(5px);
       "game title title"
       "payment payment payment"
       "text text specifications";
+
     @include media-breakpoint-down(xl) {
       grid-template-columns: 120px 3fr 5fr;
     }
+
     @include media-breakpoint-down(md) {
       grid-template-columns: 120px auto;
       grid-template-rows: auto;
@@ -2882,43 +3389,54 @@ backdrop-filter: blur(5px);
         "specifications specifications"
         "payment payment";
     }
+
     @include media-breakpoint-down(sm) {
       grid-template-columns: 100px auto;
     }
+
     .game {
       grid-area: game;
       width: 100%;
       @include flex(column, flex-end, center, nowrap);
+
       @include media-breakpoint-down(md) {
         padding: 1em;
       }
+
       img {
         @include roundedImg(50px, 50%, cover);
       }
     }
+
     .date {
       grid-area: date;
       @include flex(row, flex-end, flex-end, nowrap);
       padding: 0px 1em;
       color: var(--light-gray);
+
       @include media-breakpoint-down(sm) {
         align-items: center;
       }
+
       time {
         font-size: 0.8em;
       }
     }
+
     .info {
       grid-area: info;
       @include flex(row, flex-start, center, nowrap);
+
       @include media-breakpoint-down(sm) {
         @include flex(column, space-evenly, stretch, nowrap);
       }
+
       .tag-gray {
         background-color: var(--extrapale-gray);
         padding: 0.25em 0.5em;
         border-radius: 0.5em;
       }
+
       .tag-green {
         background-color: var(--green);
         color: var(--white);
@@ -2926,84 +3444,104 @@ backdrop-filter: blur(5px);
         border-radius: 0.5em;
       }
     }
+
     .title {
       grid-area: title;
       color: var(--blue);
       @include flex(row, flex-start, flex-end, nowrap);
+
       @include media-breakpoint-down(md) {
         padding: 1em;
       }
+
       p {
         @include media-breakpoint-up(md) {
           @include textEllipsis();
         }
       }
     }
+
     .payment {
       grid-area: payment;
       @include flex(row, flex-start, flex-end, nowrap);
       padding: 1em;
       border-bottom: 1px solid var(--extrapale-gray);
+
       @include media-breakpoint-down(md) {
         @include flex(column, center, stretch, nowrap);
         border-bottom: none;
+
         button {
           width: 100%;
           margin-top: 0.5em;
         }
       }
     }
+
     .text {
       grid-area: text;
       padding: 1em;
       @include flex(row, flex-start, center, nowrap);
+
       @include media-breakpoint-down(md) {
         padding-top: 0px;
         border-bottom: 1px solid var(--extrapale-gray);
       }
     }
+
     .specifications {
       grid-area: specifications;
       padding: 1em;
+
       @include media-breakpoint-down(xxl) {
         font-size: 0.8em;
       }
+
       @include media-breakpoint-down(md) {
         font-size: 1em;
       }
+
       @include media-breakpoint-down(sm) {
         font-size: 0.9em;
       }
     }
   }
 }
+
 .review-card {
   border: 1px solid var(--extrapale-gray);
   background-color: transparent;
   border-radius: $radius;
   padding: 0.75em;
+
   .user {
     @include flex(row, flex-start, center, nowrap);
+
     @include media-breakpoint-down(xxl) {
       flex: 1;
     }
+
     &-photo {
       @include roundedImg(30px, 50%, cover);
       border: none;
       margin-right: 0.5em;
     }
   }
+
   time {
     font-size: 0.8em;
     color: var(--pale-blue);
   }
+
   .rating {
     font-size: 1.2em;
     font-weight: 700;
     @include flex();
+
     svg {
       color: var(--blue);
       font-size: 1.1em;
+
       path {
         fill: var(--blue);
       }
@@ -3014,24 +3552,31 @@ backdrop-filter: blur(5px);
 /* Registration page */
 .sec-registration {
   margin-top: 4em;
+
   @include media-breakpoint-down(lg) {
     margin-top: 0em;
   }
+
   form {
     &.midi {
       width: 530px;
+
       @include media-breakpoint-down(xxl) {
         width: 480px;
       }
+
       @include media-breakpoint-down(lg) {
         width: 100%;
       }
     }
+
     &.mini {
       width: 440px;
+
       @include media-breakpoint-down(xxl) {
         width: 330px;
       }
+
       @include media-breakpoint-down(lg) {
         width: 100%;
         margin-top: 4em;
@@ -3049,18 +3594,19 @@ backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
     height: 100%;
+
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
     }
+
     .labeled-input {
       --bg: var(--second-bg);
     }
   }
+
   .cover {
     border-radius: $radius;
-    @include bgTextureGradient(
-      linear-gradient(115deg, var(--black) 0%, var(--blue) 55%, var(--total-black) 100%)
-    );
+    @include bgTextureGradient(linear-gradient(115deg, var(--black) 0%, var(--blue) 55%, var(--total-black) 100%));
     color: var(--white);
     height: 395px;
     padding: 0 5em;
@@ -3068,39 +3614,48 @@ backdrop-filter: blur(5px);
     position: relative;
     overflow: hidden;
     @include safariFix();
+
     @include media-breakpoint-down(xxl) {
       height: 412px;
       padding: 0 3em;
     }
+
     @include media-breakpoint-down(lg) {
       height: 150px;
       overflow: visible;
       margin-bottom: 2em;
     }
+
     @include media-breakpoint-down(sm) {
       height: 100px;
       padding: 0 1em;
       margin-bottom: 1em;
     }
+
     h2 {
       line-height: 100%;
     }
+
     img {
       position: absolute;
       right: 0%;
       bottom: 0%;
       height: 85%;
       z-index: 10;
+
       @include media-breakpoint-down(xxl) {
         height: 70%;
       }
+
       @include media-breakpoint-down(lg) {
         height: 110%;
         right: 15%;
       }
+
       @include media-breakpoint-down(md) {
         right: 5%;
       }
+
       @include media-breakpoint-down(sm) {
         height: 100%;
       }
@@ -3116,9 +3671,11 @@ backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
     padding: 2em 2em 1.5em 2em;
     border-radius: $radius;
+
     @include media-breakpoint-down(sm) {
       padding: 1.5em 1.5em 1em 1.5em;
     }
+
     .labeled-input {
       --bg: var(--second-bg);
     }
@@ -3129,27 +3686,33 @@ backdrop-filter: blur(5px);
   ul {
     @include list();
   }
+
   .fav-item {
     @include flex(row, flex-start, center, nowrap);
     background-color: var(--white);
     @include lightShadow();
     padding: 0.65em 1.3em;
     border-radius: $radius;
+
     @include media-breakpoint-down(xxl) {
       padding: 0.5em 1em;
     }
+
     img {
       @include rounedImg(50px);
       margin-right: 1em;
     }
+
     h5 {
       flex: 1;
       @include clamp(2, 1.2em, false);
     }
+
     button {
       @include flex();
       color: var(--gray);
       font-size: 1.35em;
+
       svg {
         stroke-width: 1px;
       }
@@ -3163,33 +3726,40 @@ ACCOUNT
 .account {
   position: relative;
   overflow: hidden;
+
   .return-icon {
     display: flex;
     font-size: 2em;
     color: var(--blue);
   }
+
   @include media-breakpoint-down(lg) {
     h1 {
       color: var(--blue);
       font-size: 1.5em;
     }
   }
+
   @include media-breakpoint-down(sm) {
     h1 {
       font-size: 1.25em;
     }
+
     .return-icon {
       font-size: 1.6em;
       color: var(--blue);
     }
   }
+
   .account-bg {
     @include absBG(1, 60%, auto);
   }
+
   .container {
     position: relative;
     z-index: 2;
   }
+
   &-nav {
     &-balance {
       background-color: var(--blue);
@@ -3198,14 +3768,17 @@ ACCOUNT
       border-radius: $radius;
       text-align: center;
       margin-bottom: 1em;
+
       div {
         @include flex();
+
         span {
           font-family: $title-font;
           font-size: 2em;
           margin-right: 0.34em;
           line-height: 90%;
         }
+
         svg {
           font-size: 1.5em;
           padding: 0.1em;
@@ -3214,41 +3787,51 @@ ACCOUNT
         }
       }
     }
+
     ul {
       @include list();
+
       li {
         &:not(:first-child) {
           margin-top: 1em;
+
           @include media-breakpoint-down(lg) {
             margin-top: 0.5em;
           }
         }
+
         a {
           color: var(--gray);
           @include flex(row, flex-start, center, nowrap);
           padding: 0.67em 1em;
           border-radius: $radius;
           transition: $transition;
+
           @include media-breakpoint-down(lg) {
             font-size: 1.2em;
           }
+
           svg {
             font-size: 1.6em;
           }
+
           div {
             margin-left: 0.5em;
             flex: 1;
           }
+
           .badge {
             background-color: var(--extrapale-gray);
             padding: 0.34em;
             border-radius: $radius;
             color: var(--total-black);
           }
+
           &:hover,
           &:focus {
             color: var(--blue);
           }
+
           &.active {
             background-color: var(--extrapale-gray);
             color: var(--blue);
@@ -3257,11 +3840,14 @@ ACCOUNT
       }
     }
   }
+
   .sec-profile {
     position: relative;
+
     .share-btn {
       font-size: 1.5em;
       color: var(--dark-blue);
+
       @include media-breakpoint-down(md) {
         position: absolute;
         top: 0em;
@@ -3269,6 +3855,7 @@ ACCOUNT
       }
     }
   }
+
   .post {
     display: block;
     background-color: var(--extrapale-gray);
@@ -3278,15 +3865,18 @@ ACCOUNT
     width: 124px;
     padding-bottom: 0.2em;
     max-width: 100%;
+
     @include media-breakpoint-down(xxl) {
       @include flex(row, flex-start, center, nowrap);
       width: 100%;
       text-align: left;
       padding: 0.3em 0.6em;
     }
+
     img {
       width: 110%;
       margin-top: -25%;
+
       @include media-breakpoint-down(xxl) {
         width: 3em;
         margin-top: unset;
@@ -3294,6 +3884,7 @@ ACCOUNT
       }
     }
   }
+
   .btn-add-offer {
     background-color: rgba($color: var(--pale-blue), $alpha: 0.2);
     color: var(--pale-blue);
@@ -3302,63 +3893,78 @@ ACCOUNT
     border-radius: 10px;
     @include lightShadow();
     transition: $transition;
+
     &:hover,
     &:focus,
     &:active {
       color: var(--blue);
     }
+
     @include media-breakpoint-down(md) {
       font-size: 4.5em;
     }
+
     @include media-breakpoint-down(sm) {
       font-size: 3em;
     }
   }
+
   .add-offer {
     padding: 3em 2em;
     border-radius: $radius;
     background: var(--glass);
     box-shadow: var(--shadow);
-backdrop-filter: blur(5px);
+    backdrop-filter: blur(5px);
+
     @include media-breakpoint-down(sm) {
       padding: 1.5em;
     }
   }
+
   .sec-feedback {
     .user {
       width: 50%;
+
       @include media-breakpoint-down(xl) {
         width: 75%;
       }
+
       @include media-breakpoint-down(md) {
         width: 100%;
       }
+
       &-photo {
         width: 60px;
         height: 60px;
       }
+
       &-main {
         height: 72px;
         margin-left: -20px;
         padding-left: 30px;
+
         .title {
           @include clamp(1, 1em, true);
         }
       }
     }
+
     .box {
       background-color: var(--white);
       @include lightShadow();
       border-radius: $radius;
       padding: 0.8em 1.3em;
     }
+
     .info-list {
       @include list();
       @include flex(row, flex-start, center, wrap);
+
       li {
         margin-right: 1.5em;
         margin-bottom: 1em;
         border-bottom: none;
+
         @include media-breakpoint-down(sm) {
           margin-right: 1em;
           margin-bottom: 0.75em;
@@ -3366,6 +3972,7 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   .sec-finance {
     .balance {
       background-color: var(--blue);
@@ -3375,6 +3982,7 @@ backdrop-filter: blur(5px);
       @include flex();
     }
   }
+
   .sec-messages {
     @include flex(row, flex-start, stretch, wrap);
     background-color: var(--body-bg);
@@ -3384,26 +3992,33 @@ backdrop-filter: blur(5px);
     border-radius: $radius;
     overflow: hidden;
     @include safariFix();
+
     &-list {
       width: 35%;
       border-right: 1px solid var(--extrapale-gray);
+
       @include media-breakpoint-down(xxl) {
         width: 40%;
       }
+
       @include media-breakpoint-down(xl) {
         width: 100%;
         border-right: none;
       }
+
       form {
         border-bottom: 1px solid var(--extrapale-gray);
       }
+
       ul {
         margin-top: 1.5em;
         @include list();
       }
+
       .general-chat {
         @include flex(row, flex-start, center, nowrap);
         padding: 0.75em 1.3em;
+
         .count {
           background-color: var(--black);
           color: var(--white);
@@ -3413,6 +4028,7 @@ backdrop-filter: blur(5px);
           text-align: center;
           line-height: 100%;
         }
+
         h6 {
           margin-left: 0.5em;
           flex: 1;
@@ -3420,24 +4036,31 @@ backdrop-filter: blur(5px);
         }
       }
     }
+
     &-chat {
       width: 65%;
       position: relative;
+
       @include media-breakpoint-down(xxl) {
         width: 60%;
       }
+
       @include media-breakpoint-down(xl) {
         width: 100%;
       }
+
       .chat-window {
         height: 600px;
+
         @include media-breakpoint-down(xxl) {
           padding: 1.5em;
         }
+
         @include media-breakpoint-down(ыь) {
           height: 400px;
         }
       }
+
       .chat-form {
         @include media-breakpoint-down(xxl) {
           padding: 0 1.5em;
@@ -3445,6 +4068,7 @@ backdrop-filter: blur(5px);
       }
     }
   }
+
   .sec-callback {
     .box {
       background: var(--second-bg);
@@ -3452,35 +4076,42 @@ backdrop-filter: blur(5px);
       box-shadow: var(--shadow);
       backdrop-filter: blur(5px);
       padding: 3em 2em;
+
       @include media-breakpoint-down(sm) {
         padding: 1.5em;
       }
+
       .labeled-input {
         --bg: var(--second-bg);
       }
     }
   }
+
   .sec-appeal {
     .top {
       background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0 0;
       @include flex(row, space-between, center, nowrap);
       padding: 1.3em 2em;
+
       @include media-breakpoint-down(sm) {
         padding: 1em 1.5em;
       }
     }
+
     .box {
       background: var(--second-bg);
       border-radius: 0 0 $radius $radius;
       box-shadow: var(--shadow);
       backdrop-filter: blur(5px);
       padding: 1.5em 2em;
+
       .chat-window {
         height: 550px;
       }
     }
   }
+
   .rouble {
     font-size: 1em;
     width: 1.5em;
@@ -3490,18 +4121,22 @@ backdrop-filter: blur(5px);
     @include flex();
   }
 }
+
 [data-theme='dark'] .account {
   .account-bg {
     display: none;
   }
 }
+
 .user {
   position: relative;
   @include flex(row, flex-start, center, nowrap);
   @include lightShadow();
+
   @include media-breakpoint-down(md) {
     flex-wrap: wrap;
   }
+
   &-photo {
     position: relative;
     z-index: 2;
@@ -3512,18 +4147,22 @@ backdrop-filter: blur(5px);
     @include safariFix();
     border: 5px solid var(--white);
     box-sizing: content-box;
+
     @include media-breakpoint-down(xxl) {
       width: 100px;
       height: 100px;
     }
+
     @include media-breakpoint-down(md) {
       width: 90px;
       height: 90px;
     }
+
     @include media-breakpoint-down(sm) {
       width: 70px;
       height: 70px;
     }
+
     img {
       width: 100%;
       height: 100%;
@@ -3531,12 +4170,14 @@ backdrop-filter: blur(5px);
       position: relative;
       z-index: 0;
     }
+
     &::after {
       content: "";
       @include absBG(1, 50%, 50%);
       background: linear-gradient(to bottom, transparent, var(--total-black) 50%);
       background-size: cover;
     }
+
     label {
       cursor: pointer;
       position: absolute;
@@ -3547,11 +4188,13 @@ backdrop-filter: blur(5px);
       color: var(--white);
       font-size: 1.34em;
       transition: $transition;
+
       &:hover {
         color: var(--green) !important;
       }
     }
   }
+
   &-main {
     position: relative;
     z-index: 1;
@@ -3561,6 +4204,7 @@ backdrop-filter: blur(5px);
     margin-left: -60px;
     padding-left: 72px;
     @include flex(column, center, flex-start, nowrap);
+
     @include media-breakpoint-up(md) {
       &::before {
         content: "";
@@ -3573,6 +4217,7 @@ backdrop-filter: blur(5px);
         background-color: #ebf3fc;
         border-radius: $radius 0 0 $radius;
       }
+
       &::after {
         content: "";
         position: absolute;
@@ -3586,15 +4231,18 @@ backdrop-filter: blur(5px);
         border-radius: $radius;
       }
     }
+
     @include media-breakpoint-down(md) {
       background-color: var(--extrapale-gray);
       border-radius: $radius;
       padding-left: 65px;
       height: 120px;
     }
+
     @include media-breakpoint-down(sm) {
       height: 100px;
     }
+
     .title {
       font-family: $title-font;
       font-size: 2em;
@@ -3602,14 +4250,17 @@ backdrop-filter: blur(5px);
       @include clamp(2, 1em);
     }
   }
+
   &-info {
     @include list();
     @include flex(column, flex-start, flex-end, nowrap);
     margin-left: -1em;
     width: 215px;
+
     @include media-breakpoint-down(xxl) {
       width: 200px;
     }
+
     @include media-breakpoint-down(md) {
       font-size: 0.9em;
       width: 100%;
@@ -3619,6 +4270,7 @@ backdrop-filter: blur(5px);
       justify-content: center;
       gap: 1em;
     }
+
     li {
       position: relative;
       padding: 0.6em;
@@ -3627,13 +4279,16 @@ backdrop-filter: blur(5px);
       font-weight: 600;
       width: 100%;
       @include flex(row, space-between, center, nowrap);
+
       @include media-breakpoint-up(md) {
         &:first-child {
           width: 79%;
         }
+
         &:nth-child(2) {
           width: 89.5%;
         }
+
         &::before {
           content: "";
           position: absolute;
@@ -3646,6 +4301,7 @@ backdrop-filter: blur(5px);
           transform: skewX(-25deg);
           border-radius: $radius;
         }
+
         &::after {
           content: "";
           position: absolute;
@@ -3658,6 +4314,7 @@ backdrop-filter: blur(5px);
           border-radius: 0 $radius $radius 0;
         }
       }
+
       @include media-breakpoint-down(md) {
         background-color: var(--white);
         border-radius: $radius;
@@ -3665,20 +4322,26 @@ backdrop-filter: blur(5px);
         height: auto;
         width: 23%;
       }
+
       div {
         @include flex();
+
         @include media-breakpoint-down(md) {
           flex-direction: column;
         }
+
         svg {
           font-size: 1.6em;
           margin-right: 0.34em;
+
           @include media-breakpoint-down(md) {
             color: var(--blue);
           }
+
           &.svg {
             stroke-width: 1.3px;
           }
+
           &.path {
             path {
               stroke-width: 1.3px;
@@ -3686,29 +4349,35 @@ backdrop-filter: blur(5px);
           }
         }
       }
+
       &:not(:first-child) {
         margin-top: 11px;
       }
     }
   }
+
   .qr-code {
     display: block;
     width: 100px;
     align-self: flex-start;
+
     @include media-breakpoint-down(xl) {
       width: 80px;
     }
+
     @include media-breakpoint-down(md) {
       position: absolute;
       top: 1em;
       right: 1em;
       z-index: 10;
     }
+
     @include media-breakpoint-down(sm) {
       width: 50px;
     }
   }
 }
+
 .settings-line {
   padding: 1em;
   color: var(--total-black);
@@ -3717,6 +4386,7 @@ backdrop-filter: blur(5px);
   grid-template-rows: auto;
   grid-template-areas: "session system browser ip region btns";
   gap: 0.5em;
+
   // @include media-breakpoint-down(xl) {
   //   flex-direction: column;
   //   align-items: stretch;
@@ -3730,106 +4400,132 @@ backdrop-filter: blur(5px);
     border: 1px solid var(--pale-gray);
     border-radius: $radius;
   }
+
   @include media-breakpoint-down(md) {
     font-size: 0.8em;
     gap: 0.25em;
     grid-template-columns: 1fr 1fr 60px;
   }
+
   @include media-breakpoint-down(sm) {
     font-size: 1em;
   }
+
   .session {
     grid-area: session;
   }
+
   .system {
     grid-area: system;
     text-align: left;
+
     @include media-breakpoint-down(xl) {
       text-align: right;
     }
   }
+
   .browser {
     grid-area: browser;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       text-align: left;
     }
   }
+
   .ip {
     grid-area: ip;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       text-align: left;
     }
   }
+
   .region {
     grid-area: region;
     text-align: center;
+
     @include media-breakpoint-down(xl) {
       text-align: right;
     }
   }
+
   .btns {
     grid-area: btns;
     @include flex(row, flex-end, center, nowrap);
+
     button {
       @include flex();
       color: var(--blue);
       font-size: 1.35em;
       transition: $transition;
+
       &:hover,
       &:focus {
         color: var(--light-blue);
       }
+
       &:active {
         color: var(--dark-blue);
       }
     }
   }
 }
+
 .offer-line-2 {
   @include flex(row, space-between, center, nowrap);
   padding: 1em;
   color: var(--total-black);
+
   @include media-breakpoint-down(xl) {
     flex-direction: column;
     align-items: stretch;
     border: 1px solid var(--pale-gray);
     border-radius: $radius;
   }
+
   .descr {
     flex: 1;
     @include clamp(2, 1.2em);
+
     @include media-breakpoint-down(xl) {
       margin-bottom: 1em;
       @include clamp(4, 1.2em);
     }
   }
+
   .price {
     width: 100px;
     text-align: right;
+
     @include media-breakpoint-down(xl) {
       flex: 1;
     }
   }
+
   .btns {
     width: 60px;
     @include flex(row, flex-end, center, nowrap);
+
     button {
       @include flex();
       color: var(--blue);
       font-size: 1.35em;
       transition: $transition;
+
       &:hover,
       &:focus {
         color: var(--light-blue);
       }
+
       &:active {
         color: var(--dark-blue);
       }
     }
   }
 }
+
 .offer-line-3 {
   padding: 1em;
   color: var(--total-black);
@@ -3837,10 +4533,12 @@ backdrop-filter: blur(5px);
   grid-template-columns: 145px 110px 1fr 200px 130px 80px;
   grid-template-rows: 1fr;
   grid-template-areas: "date id descr seller status price";
+
   @include media-breakpoint-down(xxl) {
     grid-template-columns: 85px 90px 1fr 200px 130px 80px;
     font-size: 13px;
   }
+
   @include media-breakpoint-down(xl) {
     border: 1px solid var(--pale-gray);
     border-radius: $radius;
@@ -3855,55 +4553,70 @@ backdrop-filter: blur(5px);
       "seller date"
       "seller price";
   }
+
   @include media-breakpoint-down(md) {
     font-size: 13px;
   }
-  & > div {
+
+  &>div {
     @include flex(row, flex-start, center, nowrap);
   }
+
   .date {
     grid-area: date;
+
     @include media-breakpoint-down(xxl) {
       @include flex(column, center, flex-start, nowrap);
     }
+
     @include media-breakpoint-down(xl) {
       align-items: flex-end;
     }
   }
+
   .id {
     grid-area: id;
   }
+
   .descr {
     grid-area: descr;
   }
+
   .seller {
     grid-area: seller;
     @include flex(row, flex-start);
+
     img {
       width: 50px;
       height: 50px;
       object-fit: cover;
       border-radius: 50%;
       margin-right: 0.75em;
+
       @include media-breakpoint-down(xl) {
         width: 40px;
         height: 40px;
       }
     }
   }
+
   .status {
     grid-area: status;
   }
+
   .price {
     grid-area: price;
+
     @include media-breakpoint-down(xl) {
       justify-content: flex-end;
     }
   }
 }
+
 .feedback-line {
   position: relative;
   @include flex(row, flex-start, flex-start, nowrap);
+
   img {
     --w: 50px;
     @include rounedImg(var(--w));
@@ -3913,32 +4626,38 @@ backdrop-filter: blur(5px);
     z-index: 2;
     margin-top: 0.25em;
   }
+
   &-main {
     position: relative;
     z-index: 1;
     flex: 1;
     margin-left: -40px;
   }
+
   &-top {
     @include flex(row, space-between, center, nowrap);
     padding: 0px 1em 0px 60px;
     margin-bottom: 0.5em;
+
     @include media-breakpoint-down(sm) {
       @include flex(column, center, flex-start, nowrap);
       padding: 0px 1em 0px 45px;
     }
   }
+
   &-text {
     background-color: var(--white);
     @include lightShadow();
     border-radius: $radius;
     padding: 1em 1em 1.3em 60px;
     font-weight: 300;
+
     @include media-breakpoint-down(sm) {
       padding: 1em 1em 1.3em 45px;
     }
   }
 }
+
 .purchase-line {
   @include flex(row, space-between, center, nowrap);
   gap: 2em;
@@ -3947,40 +4666,50 @@ backdrop-filter: blur(5px);
   @include lightShadow();
   border-radius: $radius;
   padding: 0.6em 1em;
+
   @include media-breakpoint-down(xl) {
     @include flex(column, space-between, flex-start, nowrap);
     gap: 1em;
     padding: 1em 1.5em;
   }
+
   &-text {
     flex: 1;
   }
+
   &-user {
     @include flex(row, flex-start, center, nowrap);
+
     img {
       @include rounedImg(50px);
     }
+
     h6 {
       font-size: 1.067em;
       font-weight: 500;
       text-align: left;
     }
+
     button {
       display: flex;
       transition: $transition;
+
       &:hover,
       &:focus {
         transform: scale(1.3);
       }
     }
+
     @include media-breakpoint-down(xl) {
       width: 100%;
+
       div {
         flex: 1;
       }
     }
   }
 }
+
 .operation-line {
   padding: 1em;
   color: var(--total-black);
@@ -3988,6 +4717,7 @@ backdrop-filter: blur(5px);
   grid-template-columns: 21% 21% 21% 21% 16%;
   grid-template-rows: 1fr;
   grid-template-areas: "date id type stat sum";
+
   @include media-breakpoint-down(xl) {
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(2, 1fr);
@@ -3997,36 +4727,46 @@ backdrop-filter: blur(5px);
     gap: 0.5em;
     font-size: 0.9em;
   }
+
   @include media-breakpoint-down(md) {
     gap: 1em 1em;
     font-size: 1em;
   }
+
   .date {
     grid-area: date;
   }
+
   .id {
     grid-area: id;
+
     @include media-breakpoint-down(xl) {
       font-size: 0.9em;
       color: var(--gray);
     }
   }
+
   .type {
     grid-area: type;
   }
+
   .stat {
     grid-area: stat;
+
     @include media-breakpoint-down(xl) {
       text-align: right;
     }
   }
+
   .sum {
     grid-area: sum;
+
     @include media-breakpoint-down(xl) {
       text-align: right;
     }
   }
 }
+
 .appeal-line {
   background-color: var(--white);
   border-radius: $radius;
@@ -4037,6 +4777,7 @@ backdrop-filter: blur(5px);
   grid-template-columns: 35% 13% 22% 20% 10%;
   grid-template-rows: 1fr;
   grid-template-areas: "subject id status time btns";
+
   @include media-breakpoint-down(xl) {
     grid-template-columns: repeat(2, 1fr);
     grid-template-rows: repeat(3, 1fr);
@@ -4046,40 +4787,50 @@ backdrop-filter: blur(5px);
       "status btns";
     gap: 0.5em;
   }
+
   .subject {
     grid-area: subject;
   }
+
   .id {
     grid-area: id;
+
     @include media-breakpoint-down(xl) {
       text-align: right;
     }
   }
+
   .status {
     grid-area: status;
   }
+
   time {
     grid-area: time;
   }
+
   .btns {
     grid-area: btns;
     @include flex(row, flex-end, center, nowrap);
   }
 }
+
 .dialog-preview {
   @include flex(row, flex-start, center, nowrap);
   padding: 0.75em 1.3em;
   border-radius: $radius;
   position: relative;
+
   &.active {
     background-color: var(--extrapale-gray);
   }
+
   img {
     @include rounedImg(3em);
     margin-right: 0.5em;
     position: relative;
     z-index: 1;
   }
+
   .indicator {
     position: absolute;
     bottom: 0.5em;
@@ -4088,20 +4839,25 @@ backdrop-filter: blur(5px);
     height: 0.67em;
     border-radius: 50%;
     z-index: 10;
+
     &.green {
       background-color: var(--green);
     }
   }
+
   .text {
     flex: 1;
+
     h6 {
       @include clamp(1, 1.2em, true);
     }
+
     time {
       font-weight: 300;
       color: var(--gray);
       font-size: 0.7em;
     }
+
     p {
       @include clamp(1, 1.2em, true);
       font-weight: 300;
@@ -4109,18 +4865,22 @@ backdrop-filter: blur(5px);
     }
   }
 }
+
 /***********
 ACCOUNT END
 ***********/
 .privacy-policy {
+
   h4,
   p {
     margin-bottom: 1em;
   }
+
   h4:not(:first-child) {
     margin-top: 2em;
   }
 }
+
 .rules {
   hr {
     border: none;
@@ -4129,6 +4889,7 @@ ACCOUNT END
     background-color: var(--extrapale-gray);
     margin: 0.6em 0 1.2em;
   }
+
   .rules-wrapping {
     background: var(--glass);
     box-shadow: var(--shadow);
@@ -4136,109 +4897,139 @@ ACCOUNT END
     border-radius: $radius;
     --padX: 2em;
     --padY: 1em;
+
     @media (max-width: 575px) {
       --padX: 1em;
     }
+
     &-top {
       background-color: var(--extrapale-gray);
       border-radius: $radius $radius 0px 0px;
       padding: var(--padY) var(--padX);
+
       ul {
         @include list();
         @include flex();
         padding: 0.25em 1em;
         font-weight: 700;
         font-size: 1.2em;
+
         &.line-2 {
           .descr {
             flex: 1;
           }
+
           .price {
             width: 100px;
             text-align: right;
           }
+
           .btns {
             width: 60px;
           }
         }
+
         &.line-3 {
           display: grid;
           grid-template-columns: 140px 110px 1fr 200px 130px 80px;
           grid-template-rows: 1fr;
           grid-template-areas: "date id descr seller status price";
+
           @include media-breakpoint-down(xxl) {
             grid-template-columns: 83px 90px 1fr 200px 130px 80px;
             font-size: 1em;
           }
+
           .date {
             grid-area: date;
           }
+
           .id {
             grid-area: id;
           }
+
           .descr {
             grid-area: descr;
           }
+
           .seller {
             grid-area: seller;
           }
+
           .status {
             grid-area: status;
           }
+
           .price {
             grid-area: price;
           }
         }
+
         &.line-operation {
           display: grid;
           grid-template-columns: 21% 21% 21% 21% 16%;
           grid-template-rows: 1fr;
           grid-template-areas: "date id type stat sum";
+
           .date {
             grid-area: date;
           }
+
           .id {
             grid-area: id;
           }
+
           .type {
             grid-area: type;
           }
+
           .stat {
             grid-area: stat;
           }
+
           .sum {
             grid-area: sum;
           }
         }
+
         &.line-appeal {
           display: grid;
           grid-template-columns: 35% 13% 22% 20% 10%;
           grid-template-rows: 1fr;
           grid-template-areas: "subject id status date btns";
+
           .subject {
             grid-area: subject;
           }
+
           .id {
             grid-area: id;
           }
+
           .status {
             grid-area: status;
           }
+
           .date {
             grid-area: date;
           }
+
           .btns {
             grid-area: btns;
           }
         }
       }
     }
+
     &-main {
       padding: var(--padY) var(--padX);
+
       ul {
         @include list();
+
         li {
           border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.2);
+
           @include media-breakpoint-down(xl) {
             border-bottom: none;
           }
@@ -4247,6 +5038,7 @@ ACCOUNT END
     }
   }
 }
+
 .faq {
   .box {
     background-color: var(--total-black);
@@ -4254,6 +5046,7 @@ ACCOUNT END
     border-radius: $radius;
     position: relative;
     padding: 3em 40% 3em 2em;
+
     img {
       position: absolute;
       bottom: 0px;
@@ -4265,16 +5058,20 @@ ACCOUNT END
       z-index: 0;
     }
   }
+
   ul {
     @include list();
+
     li {
       border-bottom: 1px solid rgba($color: var(--pale-blue), $alpha: 0.35);
       padding: 0.5em 0px;
       margin-bottom: 1em;
+
       a {
         color: var(--blue);
         font-weight: 600;
         transition: $transition;
+
         &:hover,
         &:focus,
         &:active {
@@ -4290,6 +5087,7 @@ footer {
   height: var(--f-height);
   background-color: var(--footer-bg);
   color: $white;
+
   @include media-breakpoint-down(lg) {
     background-color: transparent;
     color: var(--black);
@@ -4299,23 +5097,29 @@ footer {
     width: 100%;
     z-index: 10000;
   }
+
   .dev-link {
     width: fit-content;
     @include flex(row, center, center, nowrap);
     font-size: 16px;
+
     svg {
       margin-left: 0.3em;
       font-size: 1.2em;
     }
   }
+
   .nav-mobile {
     @include flex();
+
     .logo {
       padding: 0px;
+
       img {
         width: 70px;
       }
     }
+
     ul {
       @include list();
       @include flex(row, space-evenly);
@@ -4326,26 +5130,33 @@ footer {
       margin-left: 1.7em;
       padding: 0.75em 1.5em;
       border-radius: $radius;
+
       @include media-breakpoint-down(md) {
         justify-content: space-around;
       }
+
       @include media-breakpoint-down(sm) {
         justify-content: space-between;
       }
+
       li {
+
         a,
         button {
           @include flex();
           font-size: 1.85em;
           color: var(--gray);
           transition: $transition;
+
           svg {
             path {
               stroke-width: 1px;
             }
           }
+
           &.active {
             color: var(--blue);
+
             svg {
               path {
                 stroke-width: 1px;
@@ -4365,20 +5176,24 @@ footer {
     border: none;
     border-radius: $radius;
   }
+
   &-header {
     position: relative;
     height: 35px;
     padding: 0px;
     background-color: var(--extrapale-gray);
     border: none;
+
     .warning {
       position: absolute;
       right: 2em;
       bottom: 0.25em;
+
       @include media-breakpoint-down(lg) {
         width: 20%;
       }
     }
+
     .btn-close {
       background: url(imgs/close.svg) no-repeat center;
       background-size: contain;
@@ -4395,14 +5210,17 @@ footer {
       top: 0.5em;
       right: 0.5em;
       z-index: 1;
+
       &:hover,
       &:focus {
         background-color: var(--dark-blue);
       }
     }
   }
+
   &-body {
     padding: 1.34em 2.68em;
+
     @include media-breakpoint-down(sm) {
       padding: 1.34em;
     }
@@ -4412,8 +5230,10 @@ footer {
 .offcanvas {
   background-color: var(--body-bg);
   color: var(--font-color);
+
   &-body {
     position: relative;
+
     ul {
       @include list();
       background: var(--glass);
@@ -4422,29 +5242,35 @@ footer {
       font-size: 1.2em;
       box-shadow: var(--shadow);
       backdrop-filter: blur(5px);
+
       li {
         a {
           display: block;
           padding: 0.75em 0;
           color: inherit;
         }
+
         &:not(:first-child) {
           border-top: 1px solid var(--light-gray);
         }
       }
     }
+
     .sec-promo {
       h1 {
         font-size: 2.2em;
       }
+
       img {
         width: 40%;
         margin-top: -10%;
       }
     }
+
     .dev-link {
       @include flex();
     }
+
     .close {
       position: absolute;
       top: 0px;
@@ -4454,6 +5280,7 @@ footer {
       color: var(--gray);
       transition: $transition;
       padding: 0.5em;
+
       &:hover,
       &:focus,
       &:active {
@@ -4461,9 +5288,11 @@ footer {
       }
     }
   }
+
   &-top {
     background-color: transparent;
     height: fit-content !important;
+
     .offcanvas-body {
       padding: calc(var(--h-height) + 1em) 1em 2em 1em;
       background-color: var(--white);

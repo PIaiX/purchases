@@ -1,13 +1,13 @@
-import {apiRoutes} from '../config/api'
-import {$api, $authApi} from './index'
+import { apiRoutes } from '../config/api'
+import { $api, $authApi } from './index'
 
 const getProduct = async (payloads = {}) => {
-    const response = await $api.get(apiRoutes.PRODUCT_ONE, {
+    const response = await $api.get(apiRoutes.PRODUCTS, {
         params: payloads,
     })
-    if (response) {
-        return response.data
-    }
+
+    return response?.data
+
 }
 
 const getProductRecommendations = async (payloads = {}) => {
@@ -39,4 +39,4 @@ const getFree = async () => {
     }
 }
 
-export {getProduct, getGifts, getFree, getCartProducts, getProductRecommendations}
+export { getProduct, getGifts, getFree, getCartProducts, getProductRecommendations }

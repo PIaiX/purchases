@@ -13,12 +13,12 @@ import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
 
 
-const Chat = () => {
+const Chat = (props) => {
 
 
   const userId = useSelector(state => state.auth.user.id);
 
-  const toId = 2;
+  const toId = props.lotUserId;
   const { state } = useLocation();
   const timer = useRef(0);
   const [messages, setMessages] = useState({
@@ -54,22 +54,21 @@ const Chat = () => {
   useEffect(() => {
     if (data?.userId) {
       socket.on("message", (data) => {
-        console.log(data.userId)
-        if (data) {
-          setPrint(false);
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-
-          }));
-        }
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: [
+            data,
+            ...prev.items,
+          ],
+        }));
       });
 
       return () => {
         socket.off("message");
       };
     }
-  }, [data, data?.userId]);
+  }, [data?.userId]);
 
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
@@ -105,8 +104,6 @@ const Chat = () => {
     }
   }, [text, onNewMessage]);
 
-  console.log(messages)
-
   return (
     <div className="chat">
 
@@ -118,12 +115,14 @@ const Chat = () => {
         ) : messages.items.length > 0 ? (
           <div className="chat-window">
             {messages.items.map((item) => (
+
               <Message
-                my={item.memberId === auth.user.id}
+                my={item.userId === auth.user.id}
                 name="Альберт"
                 time={item.createdAt}
                 text={item.text}
               />
+
             ))}
           </div>
 
