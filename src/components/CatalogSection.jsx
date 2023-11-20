@@ -16,13 +16,14 @@ const CatalogSection = () => {
   }
   const [games, setGames] = useState({ items: [], data: [], loading: true });
 
+
   useEffect(() => {
-    const fetchGames = async () => {
-      const gamesData = await getGames();
-      if (gamesData) {
+    getGames()
+      .then((res) => {
+        console.log(res)
         var uniqueLetters = new Set();
 
-        gamesData.forEach(word => {
+        res.forEach(word => {
           let firstLetter = word.title.charAt(0).toUpperCase();
 
           if (!uniqueLetters.has(firstLetter)) {
@@ -31,12 +32,9 @@ const CatalogSection = () => {
         });
 
         const alphabet = Array.from(uniqueLetters).sort();
-
-        setGames(prev => ({ ...prev, items: gamesData, data: alphabet, loading: false }));
+        setGames(prev => ({ ...prev, items: res, data: alphabet, loading: false }));
       }
-    };
-
-    fetchGames();
+      )
   }, []);
 
 

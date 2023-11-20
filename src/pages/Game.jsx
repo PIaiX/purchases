@@ -36,25 +36,24 @@ const Game = () => {
 
   const [games, setGames] = useState({ items: [], data: [], loading: true });
   useEffect(() => {
-    const fetchGames = async () => {
-      const searchParams = new URLSearchParams(window.location.search);
-      searchParams.set('catId', catId);
-      searchParams.set('regId', regId);
-      searchParams.set('currentPage', currentPage);
-      Object.keys(filters).forEach(key => {
-        searchParams.set(key, filters[key]);
-      });
-      const newUrl = `${location.pathname}?${searchParams}`;
-      navigate(newUrl);
-      const gamesData = await getGames();
-      if (gamesData) {
-        let filteredGames = gamesData.filter(item => item.title === dataItem);
-        setGames(prev => ({ ...prev, items: gamesData, data: filteredGames, loading: false }));
+    const searchParams = new URLSearchParams(window.location.search);
+    searchParams.set('catId', catId);
+    searchParams.set('regId', regId);
+    searchParams.set('currentPage', currentPage);
+    Object.keys(filters).forEach(key => {
+      searchParams.set(key, filters[key]);
+    });
+    const newUrl = `${location.pathname}?${searchParams}`;
+    navigate(newUrl);
+    getGames()
+      .then((res) => {
+        console.log(res)
+        let filteredGames = res.filter(item => item.title === dataItem);
+        setGames(prev => ({ ...prev, items: res, data: filteredGames, loading: false }));
       }
-    };
-
-    fetchGames();
+      )
   }, [regId, catId, currentPage, filters, location.search, navigate]);
+
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
   };

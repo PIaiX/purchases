@@ -15,7 +15,6 @@ import { getProduct } from '../services/product';
 
 const LotPage = () => {
     const { lotId } = useParams()
-    const searchParams = new URLSearchParams(window.location.search);
     const [products, setProducts] = useState();
     useEffect(() => {
         getProduct({ id: lotId })
@@ -28,7 +27,6 @@ const LotPage = () => {
                 }))
             }
             )
-            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
     }, []);
 
     const tableItems = TableDate;
@@ -132,7 +130,7 @@ const LotPage = () => {
                                 </div>
                                 <hr />
                                 <div className="p-0">
-                                    <Chat lotUserId={products.userId} />
+                                    {/* <Chat lotUserId={products.userId} /> */}
                                 </div>
                             </div>
                         </Col>

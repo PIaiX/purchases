@@ -8,7 +8,7 @@ const OfferLine = (props) => {
   return (
     <div className='offer-line'>
       <div className="serv">{props.serv}</div>
-      <div className="descr"><Link to={`/game/lot/?lotId=${lotId}`}>{props.descr}</Link></div>
+      <div className="descr"><Link to={`/game/lot/${lotId}`}>{props.descr}</Link></div>
       <div className="seller">
         <Link to='/trader'><img src={props.sellerImg} alt={props.seller} /></Link>
         <div>
