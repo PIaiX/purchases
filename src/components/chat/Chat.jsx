@@ -1,7 +1,6 @@
 import React, { memo, useCallback, useEffect, useRef, useState } from "react";
 import Message from './Message';
 import SimpleInputFile from '../utils/SimpleInputFile';
-import ChatData from './ChatData'
 import { useSelector } from "react-redux";
 import socket from "../../config/socket";
 import {
@@ -13,12 +12,12 @@ import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
 
 
-const Chat = (props) => {
+const Chat = () => {
 
 
   const userId = useSelector(state => state.auth.user.id);
 
-  const toId = props.lotUserId;
+  const toId = 2;
   const { state } = useLocation();
   const timer = useRef(0);
   const [messages, setMessages] = useState({

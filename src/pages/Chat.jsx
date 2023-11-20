@@ -5,11 +5,8 @@ import { useForm, useWatch } from "react-hook-form";
 import { IoChevronForwardOutline, IoEllipsisVertical } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Chat from "../../components/chat";
-import Meta from "../../components/Meta";
-import Loader from "../../components/UI/Loader";
-import socket from "../../config/socket";
-import { deliveryData, paymentData } from "../../helpers/order";
+import Chat from "../components/chat/Chat";
+import socket from "../config/socket";
 import {
   createMessage,
   getDialogs,
@@ -37,10 +34,10 @@ const DialogItem = memo(({ item, active }) => {
                 {item?.user?.firstName?.length > 0
                   ? item.user.firstName
                   : item?.user?.email?.length > 0
-                  ? item.user.email
-                  : item?.user?.phone?.length > 0
-                  ? item.user.phone
-                  : "Клиент"}
+                    ? item.user.email
+                    : item?.user?.phone?.length > 0
+                      ? item.user.phone
+                      : "Клиент"}
                 {item?.user?.online?.status && (
                   <div className="online ms-2 mt-1 align-self-center" />
                 )}

@@ -12,8 +12,10 @@ import Chat from '../components/chat/Chat';
 import { useLocation, useNavigate } from 'react-router-dom';
 import TableDate from '../components/TableDate';
 import { getProduct } from '../services/product';
+import { useSelector } from "react-redux";
 
 const LotPage = () => {
+    const userId = useSelector(state => state.auth.user.id);
     const { lotId } = useParams()
     const [products, setProducts] = useState();
     useEffect(() => {
@@ -130,7 +132,7 @@ const LotPage = () => {
                                 </div>
                                 <hr />
                                 <div className="p-0">
-                                    {/* <Chat lotUserId={products.userId} /> */}
+                                    <Chat />
                                 </div>
                             </div>
                         </Col>
