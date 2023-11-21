@@ -12,6 +12,7 @@ const getMessages = async (data) => {
   const response = await $authApi.get(apiRoutes.MESSAGES, {
     params: data,
   });
+
   return response?.data;
 };
 

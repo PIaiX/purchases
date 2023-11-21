@@ -16,7 +16,7 @@ const Chat = () => {
 
 
   const userId = useSelector(state => state.auth.user.id);
-
+  const { dialogId } = useParams();
   const toId = 2;
   const { state } = useLocation();
   const timer = useRef(0);
@@ -33,22 +33,20 @@ const Chat = () => {
   });
   const data = useWatch({ control });
   useEffect(() => {
-    if (data?.userId) {
-      socket.io.opts.query = { userId }
-      socket.connect();
-      socket.emit('createRoom', 'message/' + userId);
-      viewMessages(data);
-      getMessages(data)
+    if (dialogId) {
+      socket.emit('createRoom', 'message/' + dialogId);
+      getMessages({ id: dialogId })
         .then((res) =>
           setMessages((prev) => ({
             ...prev,
             loading: false,
             ...res,
           }))
+
         )
         .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
     }
-  }, [data?.userId]);
+  }, [dialogId]);
 
   useEffect(() => {
     if (data?.userId) {
@@ -81,12 +79,11 @@ const Chat = () => {
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, id: toId, text });
+      createMessage({ ...data, id: dialogId, text });
       reset({ userId: data.userId });
     },
-    [data, state, userId, toId]
+    [data, state, userId, dialogId]
   );
-  // ({ data, className, onSubmit, onChange })
   const emptyText = "Нет сообщений";
   const auth = useSelector((state) => state.auth);
   const [text, setText] = useState("");
@@ -102,7 +99,7 @@ const Chat = () => {
       setText("");
     }
   }, [text, onNewMessage]);
-
+  console.log(messages.items)
   return (
     <div className="chat">
 

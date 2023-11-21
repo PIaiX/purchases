@@ -45,10 +45,10 @@ const AccountRouter = () => {
           {
             (isMobileXL)
               ? <Route index element={<MessagesList />} />
-              : <Route index element={<Navigate to=":id" replace={true} />} />
+              : <Route index element={<Navigate to=":dialogId" replace={true} />} />
           }
           <Route path="general" element={<MessagesChat />} />
-          <Route path=":id" element={<MessagesChat />} />
+          <Route path=":dialogId" element={<MessagesChat />} />
         </Route>
         <Route path="feedback" element={<Feedback />} />
         <Route path="feedback/add" element={<LeaveFeedback />} />

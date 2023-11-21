@@ -8,10 +8,17 @@ import { checkAuth, logout } from "./services/auth";
 import { setAuth, setUser } from "./store/reducers/authSlice";
 import { setSettings } from "./store/reducers/settingsSlice";
 import axios from "axios";
+import socket from "./config/socket";
+import { useSelector } from "react-redux";
+import { useEffect } from "react";
 
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const userId = useSelector(state => state.auth.user.id);
+  if (userId) {
+    socket.connect();
+  }
 
   useLayoutEffect(() => {
     (async () =>
@@ -29,6 +36,8 @@ function App() {
           } else {
             data && dispatch(setUser(data));
             data && dispatch(setAuth(true));
+            socket.io.opts.query = { userId: data.id }
+            socket.connect();
           }
         })
         .catch(() => dispatch(logout()))

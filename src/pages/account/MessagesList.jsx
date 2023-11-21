@@ -11,6 +11,8 @@ import {
 import socket from "../../config/socket";
 
 const MessagesList = () => {
+
+  const userId = useSelector(state => state.auth.user.id);
   const [dialogs, setDialogs] = useState({
     loading: true,
     items: [],
@@ -26,15 +28,8 @@ const MessagesList = () => {
         }))
       })
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
-    socket.on('dialogsUpdated', updatedDialogs => {
-      setDialogs(updatedDialogs);
-    });
 
-    return () => {
-      socket.on('dialogsUpdated');
-    }
   }, []);
-  console.log(dialogs.items)
 
   return (
     <div className='sec-messages-list'>
