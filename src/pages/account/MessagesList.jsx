@@ -11,38 +11,31 @@ import {
 import socket from "../../config/socket";
 
 const MessagesList = () => {
-  const fromId = useSelector(state => state.auth.user.id);
-
   const [dialogs, setDialogs] = useState({
     loading: true,
     items: [],
   });
-  const [selectedDialog, setSelectedDialog] = useState(null);
 
   useEffect(() => {
-    // Получение списка диалогов
-    socket.emit('getDialogs', { fromId });
-
-    // Обработка получения списка диалогов с сервера
-    socket.on('dialogsList', (dialogsList) => {
-      getDialogs(data)
-        .then((res) =>
-          setDialogs((prev) => ({
-            ...prev,
-            loading: false,
-            ...res,
-          }))
-        )
-        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-
+    getDialogs()
+      .then((res) => {
+        setDialogs((prev) => ({
+          ...prev,
+          loading: false,
+          items: [...res],
+        }))
+      })
+      .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
+    socket.on('dialogsUpdated', updatedDialogs => {
+      setDialogs(updatedDialogs);
     });
-  }, []);
 
-  const handleDialogSelect = (dialog) => {
-    setSelectedDialog(dialog);
-    // Отправка запроса на сервер для открытия выбранного диалога
-    socket.emit('openDialog', dialog.id);
-  };
+    return () => {
+      socket.on('dialogsUpdated');
+    }
+  }, []);
+  console.log(dialogs.items)
+
   return (
     <div className='sec-messages-list'>
       <form action="" className='p-2 p-sm-3'>
@@ -61,7 +54,12 @@ const MessagesList = () => {
         {dialogs.items ? (
           dialogs.items.map((dialog) => (
             <li>
-              <DialogPreview link={'1'} />
+              <DialogPreview
+                link={dialog.id}
+                nickname={dialog.to.nickname}
+                text={dialog.message.text}
+                time={dialog.message.createdAt}
+              />
             </li>
           ))) : (
           <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">

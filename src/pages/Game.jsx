@@ -36,23 +36,21 @@ const Game = () => {
 
   const [games, setGames] = useState({ items: [], data: [], loading: true });
   useEffect(() => {
-    const searchParams = new URLSearchParams(window.location.search);
     searchParams.set('catId', catId);
     searchParams.set('regId', regId);
     searchParams.set('currentPage', currentPage);
     Object.keys(filters).forEach(key => {
       searchParams.set(key, filters[key]);
     });
-    const newUrl = `${location.pathname}?${searchParams}`;
-    navigate(newUrl);
-    getGames()
+
+    getGames(searchParams)
       .then((res) => {
         console.log(res)
         let filteredGames = res.filter(item => item.title === dataItem);
         setGames(prev => ({ ...prev, items: res, data: filteredGames, loading: false }));
       }
       )
-  }, [regId, catId, currentPage, filters, location.search, navigate]);
+  }, [regId, catId, currentPage, filters,]);
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);

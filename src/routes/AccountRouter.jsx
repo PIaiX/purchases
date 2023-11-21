@@ -47,8 +47,8 @@ const AccountRouter = () => {
               ? <Route index element={<MessagesList />} />
               : <Route index element={<Navigate to=":id" replace={true} />} />
           }
-          <Route path=":id" element={<MessagesChat />} />
           <Route path="general" element={<MessagesChat />} />
+          <Route path=":id" element={<MessagesChat />} />
         </Route>
         <Route path="feedback" element={<Feedback />} />
         <Route path="feedback/add" element={<LeaveFeedback />} />

@@ -10,7 +10,7 @@ const Messages = ({ isMobileXL }) => {
       <section className='sec-messages'>
         {
           (isMobileXL)
-            ? <Outlet />
+            ? <MessagesList />
             : <>
               <MessagesList />
               <Outlet />
