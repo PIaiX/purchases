@@ -17,6 +17,7 @@ const Chat = () => {
 
   const userId = useSelector(state => state.auth.user.id);
   const { dialogId } = useParams();
+  console.log(dialogId);
   const toId = 2;
   const { state } = useLocation();
   const timer = useRef(0);
@@ -33,20 +34,19 @@ const Chat = () => {
   });
   const data = useWatch({ control });
   useEffect(() => {
-    if (dialogId) {
-      socket.emit('createRoom', 'message/' + dialogId);
-      getMessages({ id: dialogId })
-        .then((res) =>
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            ...res,
-          }))
+    socket.emit('createRoom', 'message/' + dialogId);
+    getMessages({ fromId: userId, toId: toId, id: dialogId })
+      .then((res) =>
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          ...res,
+        }))
 
-        )
-        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-    }
-  }, [dialogId]);
+      )
+      .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+
+  }, [userId, toId, dialogId]);
 
   useEffect(() => {
     if (data?.userId) {
@@ -79,10 +79,10 @@ const Chat = () => {
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, id: dialogId, text });
+      createMessage({ ...data, toId: toId, id: dialogId, text });
       reset({ userId: data.userId });
     },
-    [data, state, userId, dialogId]
+    [data, state, userId, dialogId, toId]
   );
   const emptyText = "Нет сообщений";
   const auth = useSelector((state) => state.auth);
@@ -117,6 +117,7 @@ const Chat = () => {
                 name="Альберт"
                 time={item.createdAt}
                 text={item.text}
+                admin={item.memberId}
               />
 
             ))}
