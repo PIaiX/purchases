@@ -51,7 +51,6 @@ const Home = () => {
           {/* <MainSlider data={sales.home.items} /> */}
         </section>
       </Container>
-
       <CatalogSection />
 
       <Container>

@@ -1,5 +1,5 @@
 import React from 'react';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { RxChevronRight } from "react-icons/rx";
 
 const AppealLine = (props) => {
@@ -18,7 +18,7 @@ const AppealLine = (props) => {
       </div>
       <div className="btns">
         <Link to={props.id}>
-          <RxChevronRight className='fs-13 blue'/>
+          <RxChevronRight className='fs-13 blue' />
         </Link>
       </div>
     </div>

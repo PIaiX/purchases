@@ -19,7 +19,7 @@ const MessagesList = () => {
   });
 
   useEffect(() => {
-    getDialogs()
+    getDialogs({ id: 1 })
       .then((res) => {
         setDialogs((prev) => ({
           ...prev,
@@ -30,7 +30,7 @@ const MessagesList = () => {
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
 
   }, []);
-
+  console.log(dialogs)
   return (
     <div className='sec-messages-list'>
       <form action="" className='p-2 p-sm-3'>

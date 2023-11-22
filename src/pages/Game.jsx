@@ -45,7 +45,6 @@ const Game = () => {
 
     getGames(searchParams)
       .then((res) => {
-        console.log(res)
         let filteredGames = res.filter(item => item.title === dataItem);
         setGames(prev => ({ ...prev, items: res, data: filteredGames, loading: false }));
       }

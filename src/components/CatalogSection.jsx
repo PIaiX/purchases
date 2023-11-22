@@ -20,7 +20,6 @@ const CatalogSection = () => {
   useEffect(() => {
     getGames()
       .then((res) => {
-        console.log(res)
         var uniqueLetters = new Set();
 
         res.forEach(word => {

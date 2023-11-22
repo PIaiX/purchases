@@ -17,7 +17,6 @@ const Chat = () => {
 
   const userId = useSelector(state => state.auth.user.id);
   const { dialogId } = useParams();
-  console.log(dialogId);
   const toId = 2;
   const { state } = useLocation();
   const timer = useRef(0);
@@ -35,6 +34,7 @@ const Chat = () => {
   const data = useWatch({ control });
   useEffect(() => {
     socket.emit('createRoom', 'message/' + dialogId);
+    viewMessages({ fromId: userId, toId: toId, id: dialogId });
     getMessages({ fromId: userId, toId: toId, id: dialogId })
       .then((res) =>
         setMessages((prev) => ({
@@ -51,12 +51,18 @@ const Chat = () => {
   useEffect(() => {
     if (data?.userId) {
       socket.on("message", (data) => {
+
         setMessages((prev) => ({
           ...prev,
           loading: false,
           items: [
             data,
-            ...prev.items,
+            ...prev.items.map((e) => {
+              if (e?.userId) {
+                e.view = true;
+              }
+              return e;
+            }),
           ],
         }));
       });
@@ -99,9 +105,19 @@ const Chat = () => {
       setText("");
     }
   }, [text, onNewMessage]);
-  console.log(messages.items)
+
+
   return (
     <div className="chat">
+      <div className="dialog-preview">
+        <img src="/imgs/user.jpg" alt="user" />
+        <div className="text">
+          <div className='d-flex justify-content-between align-items-center mb-1'>
+            <h6>Артем</h6>
+          </div>
+          <p>status</p>
+        </div>
+      </div>
 
       {
         messages.loading ? (
@@ -112,12 +128,14 @@ const Chat = () => {
           <div className="chat-window">
             {messages.items.map((item) => (
 
-              <Message
+
+              < Message
                 my={item.userId === auth.user.id}
                 name="Альберт"
                 time={item.createdAt}
                 text={item.text}
                 admin={item.memberId}
+                view={item.view}
               />
 
             ))}

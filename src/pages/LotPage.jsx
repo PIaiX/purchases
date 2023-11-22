@@ -17,23 +17,23 @@ import { useSelector } from "react-redux";
 const LotPage = () => {
     const userId = useSelector(state => state.auth.user.id);
     const { lotId } = useParams()
-    const [products, setProducts] = useState();
+    const [products, setProducts] = useState({
+        loading: true,
+        items: [],
+    });
     useEffect(() => {
         getProduct({ id: lotId })
             .then((res) => {
-                console.log(res)
                 setProducts((prev) => ({
-                    ...prev,
+                    prev,
                     loading: false,
-                    ...res,
+                    items: res,
                 }))
-            }
-            )
-    }, []);
-
+            })
+            .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+    }, [lotId]);
     const tableItems = TableDate;
     const filteredLot = tableItems.filter(item => item.id == lotId);
-    console.log(products);
     return (
         <main>
             <section className='lot-page mb-6'>
