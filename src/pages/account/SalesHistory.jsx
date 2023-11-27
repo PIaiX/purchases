@@ -2,27 +2,30 @@ import React, { useEffect, useState } from 'react';
 import NavPagination from '../../components/NavPagination';
 import OfferLine3 from '../../components/OfferLine3';
 import ReturnTitle from '../../components/utils/ReturnTitle';
-import { useSelector } from "react-redux";
 import { getOrders } from "../../services/order"
 
 const SalesHistory = () => {
-  const userId = useSelector(state => state.auth?.user?.id);
-  const [orders, setOrders] = useState();
+  const [orders, setOrders] = useState({
+    loading: true,
+    items: [],
+  });
   useEffect(() => {
     getOrders({ authorId: true })
       .then((res) => {
         setOrders((prev) => ({
           prev,
+          loading: false,
           ...res,
         }))
       })
+      .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, []);
   return (
     <section className='mb-6'>
       <ReturnTitle link={'/account'} title={'История Продаж'} />
 
       <div className="list-wrapping">
-        <div className="list-wrapping-top">
+        <div className="list-wrapping-top px-0">
           <ul className='line-3'>
             <li className="date">Дата</li>
             <li className="id">ID заказа</li>
@@ -33,13 +36,19 @@ const SalesHistory = () => {
           </ul>
         </div>
         <div className="list-wrapping-main">
-          <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-4 g-xl-0'>
-            {orders?.items.map((item) => (
-              <li>
-                <OfferLine3 date={item.createdAt} descr={item.comment} seller={item.user.nickname} id={item.id} status={item.status} price={item.total} />
-              </li>
-            ))}
-          </ul>
+          {orders.loading ? (
+            <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+              Загрузка историй...
+            </div>
+          ) : (
+            <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-4 g-xl-0'>
+              {orders?.items.map((item) => (
+                <li>
+                  <OfferLine3 date={item.createdAt} descr={item.comment} seller={item.user.nickname} id={item.id} status={item.status} price={item.total} />
+                </li>
+              ))}
+            </ul>
+          )}
         </div>
         <div className="list-wrapping-bottom">
           <NavPagination />

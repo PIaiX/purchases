@@ -3,7 +3,7 @@ import StarRating from './utils/StarRating';
 import moment from "moment";
 
 const OfferLine3 = ({ date, descr, seller, id, status, price }) => {
-  date = moment(date).format("DD MMMM YYYY kk:mm")
+  date = date ? moment(date).format("DD MMMM YYYY kk:mm") : null
 
   return (
     <div className="offer-line-3">
@@ -18,7 +18,6 @@ const OfferLine3 = ({ date, descr, seller, id, status, price }) => {
         <img src="/imgs/user.jpg" alt="User8name" />
         <div>
           <h6 className='text-start mb-xl-1'>{seller}</h6>
-          <p className='gray fs-08'>ваша оценка</p>
           <StarRating rate={4} />
         </div>
       </div>

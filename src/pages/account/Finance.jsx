@@ -9,19 +9,22 @@ import { getTransactions } from "../../services/transaction"
 
 const Finance = () => {
   const { user } = useSelector((state) => state.auth);
-  const [transactions, setTransactions] = useState();
-  const userId = useSelector(state => state.auth?.user?.id);
-  const [orders, setOrders] = useState({});
+  const [transactions, setTransactions] = useState({
+    loading: true,
+    items: [],
+  });
   useEffect(() => {
     getTransactions()
       .then((res) => {
         setTransactions((prev) => ({
           prev,
+          loading: false,
           ...res,
         }))
       })
+      .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, []);
-  console.log(transactions);
+  console.log(transactions)
   const [balanceSection, setBalanceSection] = useState(2);
   return (
     <section className="sec-finance mb-6">
@@ -117,7 +120,7 @@ const Finance = () => {
 
       {balanceSection === 2 && (
         <div className="list-wrapping">
-          <div className="list-wrapping-top">
+          <div className="list-wrapping-top px-0">
             <ul className="line-operation">
               <li className="date">Дата</li>
               <li className="id">ID операции</li>
@@ -128,33 +131,11 @@ const Finance = () => {
           </div>
           <div className="list-wrapping-main">
             <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
-              <li>
-                <Operation />
-              </li>
+              {transactions?.items.map((item) => (
+                <li>
+                  <Operation date={item.createdAt} type={item.orderId} id={item.id} status={item.status} sum={item.price} />
+                </li>
+              ))}
             </ul>
           </div>
           <div className="list-wrapping-bottom">
