@@ -15,7 +15,7 @@ import { getProduct } from '../services/product';
 import { useSelector } from "react-redux";
 
 const LotPage = () => {
-    const userId = useSelector(state => state.auth.user.id);
+    const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
     const [products, setProducts] = useState({
         loading: true,

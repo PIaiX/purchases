@@ -1,18 +1,27 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from 'react';
 import { useSelector } from "react-redux";
 import NavPagination from "../../components/NavPagination";
 import Operation from "../../components/Operation";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import { customPrice } from "../../helpers/all";
 import Meta from "../../components/Meta";
+import { getTransactions } from "../../services/transaction"
 
 const Finance = () => {
   const { user } = useSelector((state) => state.auth);
-  const [transactions, setTransactions] = useState({
-    items: [],
-    loading: true,
-  });
-
+  const [transactions, setTransactions] = useState();
+  const userId = useSelector(state => state.auth?.user?.id);
+  const [orders, setOrders] = useState({});
+  useEffect(() => {
+    getTransactions()
+      .then((res) => {
+        setTransactions((prev) => ({
+          prev,
+          ...res,
+        }))
+      })
+  }, []);
+  console.log(transactions);
   const [balanceSection, setBalanceSection] = useState(2);
   return (
     <section className="sec-finance mb-6">

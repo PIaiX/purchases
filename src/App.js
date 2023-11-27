@@ -15,10 +15,7 @@ import { useEffect } from "react";
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
-  const userId = useSelector(state => state.auth.user.id);
-  if (userId) {
-    socket.connect();
-  }
+
 
   useLayoutEffect(() => {
     (async () =>

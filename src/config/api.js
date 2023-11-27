@@ -24,19 +24,19 @@ const apiRoutes = {
   ACCOUNT_EDIT_AVATAR: BASE_URL + "/user/editAvatar",
 
   // Order
-  ORDERS_GET: BASE_URL + "/order",
-  ORDER_GET: BASE_URL + "/order/one",
-  ORDER_CREATE: BASE_URL + "/order/create",
-  ORDER_EDIT: BASE_URL + "/order/edit",
-  ORDER_NOTE_CREATE: BASE_URL + "/order/createNote",
-  ORDER_NOTES_GET: BASE_URL + "/order/notes",
-  ORDER_EDIT_STATUS: BASE_URL + "/order/editStatus",
-  ORDER_DELETE: BASE_URL + "/order/delete",
+  ORDERS_GET_ALL: BASE_URL + "/user/order",
+  ORDER_GET_ONE: BASE_URL + "/user/order/one",
+  ORDER_CREATE: BASE_URL + "/user/order",
+  ORDER_EDIT: BASE_URL + "/user/order/edit",
+  ORDER_NOTE_CREATE: BASE_URL + "/user/order/createNote",
+  ORDER_NOTES_GET: BASE_URL + "/user/order/notes",
+  ORDER_EDIT_STATUS: BASE_URL + "/user/order/editStatus",
+  ORDER_DELETE: BASE_URL + "/user/order/delete",
 
   // Category
   CATEGORIES: BASE_URL + "/category",
   CATEGORY: BASE_URL + "/category/one",
-  CATEGORY_ALL: BASE_URL + "/category/all",
+  CATEGORY_ALL: BASE_URL + "/category/",
   CATEGORY_CREATE: BASE_URL + "/category/create",
 
   // MESSAGES
@@ -118,6 +118,10 @@ const apiRoutes = {
 
   // Options
   OPTIONS: BASE_URL + "/option/",
+
+  //transaction
+  TRANSACTION_GET_ALL: BASE_URL + "/user/transaction",
+  TRANSACTION_GET_ONE: BASE_URL + "/user/transaction/one",
 
   // Sync
   EPR_CATEGORY: BASE_URL + "/sync/category",

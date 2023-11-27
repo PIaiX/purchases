@@ -15,7 +15,7 @@ import { useForm, useWatch } from "react-hook-form";
 const Chat = () => {
 
 
-  const userId = useSelector(state => state.auth.user.id);
+  const userId = useSelector(state => state.auth?.user?.id);
   const { dialogId } = useParams();
   const toId = 2;
   const { state } = useLocation();
