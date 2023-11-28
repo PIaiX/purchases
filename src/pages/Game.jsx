@@ -30,7 +30,6 @@ const Game = () => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
-
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
     searchParams.set('catId', catId);
@@ -40,11 +39,11 @@ const Game = () => {
       searchParams.set(key, filters[key]);
     });
 
-    getGame({ data: searchParams, id })
+    getGame({ catId: catId, regId: regId, page: currentPage, filters: filters, id })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
       })
-  }, [regId, catId, currentPage, filters,]);
+  }, [regId, catId, currentPage, filters]);
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -65,6 +64,7 @@ const Game = () => {
       [name]: value
     }));
   };
+  console.log(filters)
   return (
     <main>
       <Container>
@@ -110,16 +110,25 @@ const Game = () => {
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
 
-                      {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
-                        (param.id === catId && param.options != '') &&
-                        <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
-                          {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (
-                            <option onClick={(e) => handleFilterChange(item.paramId, e.target.value)} disabled={item.parent === 0} key={item.id - 1} value={item.id - 1} >{item.title}</option>
-                          ))
-                          }
-                        </select>
 
-                      ))}
+                      {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
+
+                        (param.id === catId &&
+                          param.options.map(e => {
+                            let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
+                            console.log(options, 124124124)
+                            if (!e.parent) {
+                              return <select name={e.name} className=' me-sm-4 me-md-5 mb-3'>
+                                {
+                                  options?.length > 0 && options.map(item => (
+                                    <option onClick={(e) => handleFilterChange(item.id, e.target.value)} key={item.id - 1} value={item.id - 1} >{item.title}</option>
+                                  ))
+                                }
+                              </select>
+                            }
+
+                          }))))}
+
                     </fieldset>
 
                   }
