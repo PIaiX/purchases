@@ -1,35 +1,31 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
 import { RxChevronLeft, RxChevronRight } from "react-icons/rx";
+import ReactPaginate from 'react-paginate';
 
-const NavPagination = () => {
+const NavPagination = (props) => {
+  const onPageChange = props.onPageChange;
+  const totalPages = props?.totalPages;
   return (
-    <nav className='pagination'>
-      <ul>
-        <li>
-          <Link to="/">
-            <RxChevronLeft/>
-          </Link>
-        </li>
-        <li>
-          <Link to="/"c className='active'>1</Link>
-        </li>
-        <li>
-          <Link to="/">2</Link>
-        </li>
-        <li>
-          <Link to="/">3</Link>
-        </li>
-        <li>
-          <Link to="/">4</Link>
-        </li>
-        <li>
-          <Link to="/">
-            <RxChevronRight/>
-          </Link>
-        </li>
-      </ul>
-    </nav>
+    (totalPages > 1) && (
+      <nav className='pagination'>
+        <ul>
+          <ReactPaginate
+            pageCount={totalPages} // Общее количество страниц
+            pageRangeDisplayed={5} // Количество отображаемых страниц
+            marginPagesDisplayed={2} // Количество страниц на краях
+            previousLabel={<RxChevronLeft />}
+            nextLabel={<RxChevronRight />}
+            breakLabel={'...'}
+            onPageChange={onPageChange}
+            activeClassName={'active'}
+            containerClassName={'pagination'}
+            pageClassName={'page-item'} // Добавляем класс для стилизации цифр страниц
+            pageLinkClassName={'page-link'}
+          />
+        </ul>
+      </nav>
+
+    )
   );
 };
 

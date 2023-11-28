@@ -5,21 +5,27 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getOrders } from "../../services/order"
 
 const PurchaseHistory = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const onPageChange = (page) => {
+    setCurrentPage(page.selected + 1);
+  };
   const [orders, setOrders] = useState({
     loading: true,
     items: [],
   });
   useEffect(() => {
-    getOrders()
+    getOrders({ page: currentPage })
       .then((res) => {
         setOrders((prev) => ({
           prev,
           loading: false,
           ...res,
         }))
+        setCurrentPage(res.pagination.currentPage)
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
-  }, []);
+  }, [currentPage]);
+  console.log(currentPage)
   return (
     <section className='mb-6'>
       <ReturnTitle link={'/account'} title={'История покупок'} />
@@ -53,7 +59,7 @@ const PurchaseHistory = () => {
 
         </div>
         <div className="list-wrapping-bottom">
-          <NavPagination />
+          <NavPagination currentPage={currentPage} totalPages={orders?.pagination?.totalPages} onPageChange={onPageChange} />
         </div>
       </div>
     </section>
