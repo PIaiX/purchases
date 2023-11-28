@@ -20,7 +20,7 @@ const Game = () => {
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const searchParams = new URLSearchParams(window.location.search);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState({});
+  const [filters, setFilters] = useState();
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
 
@@ -30,15 +30,10 @@ const Game = () => {
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
-    searchParams.set('catId', catId);
-    searchParams.set('regId', regId);
-    searchParams.set('currentPage', currentPage);
-    Object.keys(filters).forEach(key => {
-      searchParams.set(key, filters[key]);
-    });
-
     getGame({ catId: catId, regId: regId, page: currentPage, filters: filters, id })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
@@ -58,11 +53,7 @@ const Game = () => {
   };
 
   const handleFilterChange = (event) => {
-    const { name, value } = event.target;
-    setFilters(prevFilters => ({
-      ...prevFilters,
-      [name]: value
-    }));
+    setFilters(event);
   };
   console.log(filters)
   return (
@@ -118,10 +109,10 @@ const Game = () => {
                             let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
                             console.log(options, 124124124)
                             if (!e.parent) {
-                              return <select name={e.name} className=' me-sm-4 me-md-5 mb-3'>
+                              return <select onChange={(event) => handleFilterChange(event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
                                 {
                                   options?.length > 0 && options.map(item => (
-                                    <option onClick={(e) => handleFilterChange(item.id, e.target.value)} key={item.id - 1} value={item.id - 1} >{item.title}</option>
+                                    <option key={item.id - 1} value={item.id - 1} >{item.title}</option>
                                   ))
                                 }
                               </select>
