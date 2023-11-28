@@ -15,10 +15,12 @@ const NavPagination = (props) => {
             marginPagesDisplayed={2} // Количество страниц на краях
             previousLabel={<RxChevronLeft />}
             nextLabel={<RxChevronRight />}
-            breakLabel={'...'}
+            breakLabel={'. . .'}
             onPageChange={onPageChange}
             activeClassName={'active'}
             containerClassName={'pagination'}
+            breakClassName={'break-item'}
+            breakLinkClassName={'break-link'}
             pageClassName={'page-item'} // Добавляем класс для стилизации цифр страниц
             pageLinkClassName={'page-link'}
           />

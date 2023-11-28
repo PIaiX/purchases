@@ -8,22 +8,27 @@ import Meta from "../../components/Meta";
 import { getTransactions } from "../../services/transaction"
 
 const Finance = () => {
+  const [currentPage, setCurrentPage] = useState(1)
+  const onPageChange = (page) => {
+    setCurrentPage(page.selected + 1);
+  };
   const { user } = useSelector((state) => state.auth);
   const [transactions, setTransactions] = useState({
     loading: true,
     items: [],
   });
   useEffect(() => {
-    getTransactions()
+    getTransactions({ page: currentPage })
       .then((res) => {
         setTransactions((prev) => ({
           prev,
           loading: false,
           ...res,
         }))
+        setCurrentPage(res.pagination.currentPage)
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
-  }, []);
+  }, [currentPage]);
   console.log(transactions)
   const [balanceSection, setBalanceSection] = useState(2);
   return (
@@ -130,16 +135,22 @@ const Finance = () => {
             </ul>
           </div>
           <div className="list-wrapping-main">
-            <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
-              {transactions?.items.map((item) => (
-                <li>
-                  <Operation date={item.createdAt} type={item.orderId} id={item.id} status={item.status} sum={item.price} />
-                </li>
-              ))}
-            </ul>
+            {transactions.loading ? (
+              <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                Загрузка операций...
+              </div>
+            ) : (
+              <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
+                {transactions?.items.map((item) => (
+                  <li>
+                    <Operation date={item.createdAt} type={item.orderId} id={item.id} status={item.status} sum={item.price} />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className="list-wrapping-bottom">
-            <NavPagination />
+            <NavPagination totalPages={transactions?.pagination?.totalPages} onPageChange={onPageChange} />
           </div>
         </div>
       )}

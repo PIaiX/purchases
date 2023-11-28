@@ -25,7 +25,6 @@ const PurchaseHistory = () => {
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
-  console.log(currentPage)
   return (
     <section className='mb-6'>
       <ReturnTitle link={'/account'} title={'История покупок'} />
@@ -59,7 +58,7 @@ const PurchaseHistory = () => {
 
         </div>
         <div className="list-wrapping-bottom">
-          <NavPagination currentPage={currentPage} totalPages={orders?.pagination?.totalPages} onPageChange={onPageChange} />
+          <NavPagination totalPages={orders?.pagination?.totalPages} onPageChange={onPageChange} />
         </div>
       </div>
     </section>

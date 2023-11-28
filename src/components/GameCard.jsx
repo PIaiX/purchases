@@ -22,7 +22,7 @@ const GameCard = memo(({ param1, param2 }) => {
     <div className="game-card">
       <Link to='/game'><img src="/imgs/archeage.jpg" alt="ArcheAge" className='img' /></Link>
       <div>
-        <h4><Link to={`/game/?data=${data = el.title}&regId=${regId}`}>{el.title}</Link></h4>
+        <h4><Link to={`/game/${el.id}/?regId=${regId}`}>{el.title}</Link></h4>
 
         {el.regions && el.regions.length > 0 && (
           <ServerSwitcher serversArr={el.regions} onChange={handleServerChange} />
@@ -30,7 +30,7 @@ const GameCard = memo(({ param1, param2 }) => {
 
         <ul className='categories'>
           {el.params.map((param) => (
-            <li key={param.id}><Link to={`/game/?data=${data}&regId=${regId}&catId=${param.id}`}>{param.title}</Link></li>
+            <li key={param.id}><Link to={`/game/${el.id}/?regId=${regId}&catId=${param.id}`}>{param.title}</Link></li>
           ))}
         </ul>
       </div>

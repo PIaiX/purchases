@@ -8,21 +8,18 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import Pagination from '../components/Pagination';
 import TableDate from '../components/TableDate';
-import { getGames } from '../services/game';
+import { getGame } from '../services/game';
 
 
 const Game = () => {
+  const { id } = useParams();
   const isMobileLG = useIsMobile('1109px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
-  const location = useLocation();
   const searchParams = new URLSearchParams(window.location.search);
-  const tableItems = TableDate;
-  const dataItem = searchParams.get('data');
   const [currentPage, setCurrentPage] = useState(1);
-  const navigate = useNavigate();
   const [filters, setFilters] = useState({});
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
@@ -34,7 +31,7 @@ const Game = () => {
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
 
-  const [games, setGames] = useState({ items: [], data: [], loading: true });
+  const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
     searchParams.set('catId', catId);
     searchParams.set('regId', regId);
@@ -43,12 +40,10 @@ const Game = () => {
       searchParams.set(key, filters[key]);
     });
 
-    getGames(searchParams)
+    getGame({ data: searchParams, id })
       .then((res) => {
-        let filteredGames = res.filter(item => item.title === dataItem);
-        setGames(prev => ({ ...prev, items: res, data: filteredGames, loading: false }));
-      }
-      )
+        setGames(prev => ({ ...prev, items: res, loading: false }));
+      })
   }, [regId, catId, currentPage, filters,]);
 
   const onPageChange = (pageNumber) => {
@@ -70,7 +65,6 @@ const Game = () => {
       [name]: value
     }));
   };
-
   return (
     <main>
       <Container>
@@ -80,14 +74,14 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container className='mb-lg-5'>
           <div className="page-game-top">
-            <h1 className='mb-4 mb-xxxl-5'>{games.data[0]?.title}</h1>
+            <h1 className='mb-4 mb-xxxl-5'>{games.items?.category?.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                {games.data[0]?.regions && games.data[0]?.regions.length > 0 && (
-                  <ServerSwitcher serversArr={games.data[0]?.regions} onChange={handleServerChange} active={regId} />
+                {games?.items?.category?.regions && games.items.category.regions.length > 0 && (
+                  <ServerSwitcher serversArr={games.items.category.regions} onChange={handleServerChange} active={regId} />
                 )}
                 <ul className='categories'>
-                  {games.data[0]?.params.map((param) => (
+                  {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
                     <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
                   ))}
                   <div className="img">
@@ -116,7 +110,7 @@ const Game = () => {
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
 
-                      {games.data[0]?.params.map((param) => (
+                      {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
                         (param.id === catId && param.options != '') &&
                         <select defaultValue={0} className='me-sm-4 me-md-5 mb-3'>
                           {param?.options?.length > 0 && [...param.options].sort((a, b) => a.id - b.id).map(item => (

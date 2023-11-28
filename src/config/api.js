@@ -33,11 +33,12 @@ const apiRoutes = {
   ORDER_EDIT_STATUS: BASE_URL + "/user/order/editStatus",
   ORDER_DELETE: BASE_URL + "/user/order/delete",
 
+  // review
+  review: BASE_URL + "/user/review",
+
   // Category
   CATEGORIES: BASE_URL + "/category",
   CATEGORY: BASE_URL + "/category/one",
-  CATEGORY_ALL: BASE_URL + "/category/",
-  CATEGORY_CREATE: BASE_URL + "/category/create",
 
   // MESSAGES
   MESSAGES: BASE_URL + "/message",
