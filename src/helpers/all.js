@@ -17,8 +17,12 @@ const customPrice = (value, currency = true) => {
   }
   return value;
 };
+const declOfNum = (number, titles) => {
+  const cases = [2, 0, 1, 1, 1, 2];
+  return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
+}
 
-const getImageURL = ({ path = "", size = "mini", type = "product" }) => {
+const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   if (path && Array.isArray(path) && path?.length > 0) {
     if (size == "mini") {
       return FILE_URL + "/" + type + "/mini/" + path[0].media;
@@ -31,11 +35,9 @@ const getImageURL = ({ path = "", size = "mini", type = "product" }) => {
     } else {
       return FILE_URL + "/" + type + "/" + path;
     }
-  } else if (!type || type == "product" || type == "sale") {
-    return "/images/empty-product-image.png";
-  } else if (type == "user") {
-    return "/images/avatar-full.png";
+  } else {
+    return "/imgs/user.jpg";
   }
 };
 
-export { customPrice, getImageURL };
+export { customPrice, getImageURL, declOfNum };

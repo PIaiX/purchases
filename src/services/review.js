@@ -8,5 +8,9 @@ const getReview = async (data) => {
     return response?.data
 
 }
+const editReview = async (data) => {
+    const response = await $authApi.post(apiRoutes.REVIEWS, data);
+    return response?.data;
+};
 
-export { getReview }
+export { getReview, editReview }

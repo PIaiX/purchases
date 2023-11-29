@@ -14,7 +14,7 @@ const SalesHistory = () => {
     items: [],
   });
   useEffect(() => {
-    getOrders({ page: currentPage, authorId: true })
+    getOrders({ page: currentPage, authorId: 1 })
       .then((res) => {
         setOrders((prev) => ({
           prev,

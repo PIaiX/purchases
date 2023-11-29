@@ -6,19 +6,20 @@ import FeedbackLine from '../../components/FeedbackLine';
 import PurchaseLine from '../../components/PurchaseLine';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getReview } from '../../services/review';
+import { declOfNum } from '../../helpers/all';
 
 const Feedback = () => {
-  const [isMyFeedback, setIsMyFeedback] = useState(false);
+  const [isMyFeedback, setIsMyFeedback] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
-  const [Review, setReview] = useState({
+  const [review, setReview] = useState({
     loading: true,
     items: [],
   });
   useEffect(() => {
-    getReview({ page: currentPage })
+    getReview({ page: currentPage, authorId: isMyFeedback })
       .then((res) => {
         setReview((prev) => ({
           prev,
@@ -27,8 +28,12 @@ const Feedback = () => {
         }))
         setCurrentPage(res.pagination.currentPage)
       })
-      .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
-  }, [currentPage]);
+      .catch(() => setReview((prev) => ({ ...prev, loading: false })));
+  }, [currentPage, isMyFeedback]);
+
+
+  const totalItems = review?.pagination?.totalItems ?? 0;
+  const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   return (
     <section className='sec-feedback mb-6'>
       <ReturnTitle link={'/account'} title={'Отзывы'} />
@@ -59,7 +64,7 @@ const Feedback = () => {
             <button
               type='button'
               className={(isMyFeedback) ? 'btn-2 h-100 active' : 'btn-2 h-100'}
-              onClick={() => setIsMyFeedback(true)}
+              onClick={() => setIsMyFeedback(1)}
             >Мои отзывы</button>
           </li>
         </ul>
@@ -74,16 +79,15 @@ const Feedback = () => {
               </div>
               <div className="list-wrapping-main p-3">
                 <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
-                  <li>
-                    <PurchaseLine />
-                  </li>
-                  <li>
-                    <PurchaseLine />
-                  </li>
-                  <li>
-                    <PurchaseLine />
-                  </li>
+                  {orders?.items.map((item) => (
+                    <li>
+                      <PurchaseLine  {...item} />
+                    </li>
+                  ))}
                 </ul>
+              </div>
+              <div className="list-wrapping-bottom">
+                <NavPagination totalPages={orders?.pagination?.totalPages} onPageChange={onPageChange1} />
               </div>
             </div>
             <div className="list-wrapping mt-5">
@@ -92,51 +96,41 @@ const Feedback = () => {
               </div>
               <div className="list-wrapping-main p-3">
                 <ul className='row row-cols-1 g-4'>
-                  <li>
-                    <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!" />
-                  </li>
-                  <li>
-                    <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!" />
-                  </li>
-                  <li>
-                    <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!" />
-                  </li>
+                  {review?.items.map((item) => (
+                    <li>
+                      <FeedbackLine  {...item} />
+                    </li>
+                  ))}
                 </ul>
               </div>
               <div className="list-wrapping-bottom">
-                <NavPagination />
+                <NavPagination totalPages={review?.pagination?.totalPages} onPageChange={onPageChange} />
               </div>
             </div>
           </>
-          : <div className="list-wrapping mt-4 mt-sm-5">
-            <div className="list-wrapping-top">
-              <h5 className='fw-6'>Всего 193 отзыва</h5>
-            </div>
-            <div className="list-wrapping-main p-sm-4">
-              <ul className='row row-cols-1 g-3'>
-                <li>
-                  <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Всё супер, продавец топ! Быстро и самая хорошая цена!" />
-                </li>
-                <li>
-                  <FeedbackLine user="Galadriel_90" rate={4.1} text="быстрое и качественное выполнение заказа, спасибо!" />
-                </li>
-                <li>
-                  <FeedbackLine user="Raccoon5" rate={2.8} text="Быстро и чётко,спасибо продавцу" />
-                </li>
-                <li>
-                  <FeedbackLine user="Obnyalpodnyal" rate={4.8} text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum." />
-                </li>
-                <li>
-                  <FeedbackLine user="Galadriel_90" rate={4.1} text="быстрое и качественное выполнение заказа, спасибо!" />
-                </li>
-                <li>
-                  <FeedbackLine user="Raccoon5" rate={2.8} text="Быстро и чётко,спасибо продавцу" />
-                </li>
-              </ul>
-            </div>
-            <div className="list-wrapping-bottom">
-              <NavPagination />
-            </div>
+          :
+          <div className="list-wrapping mt-4 mt-sm-5">
+            {review.loading ? (
+              <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                Загрузка отзывов...
+              </div>
+            ) : (<>
+              <div className="list-wrapping-top">
+                <h5 className='fw-6'>Всего {totalItems} {declension}</h5>
+              </div>
+              <div className="list-wrapping-main p-sm-4">
+                <ul className='row row-cols-1 g-3'>
+                  {review?.items.map((item) => (
+                    <li>
+                      <FeedbackLine  {...item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+              <div className="list-wrapping-bottom">
+                <NavPagination totalPages={review?.pagination?.totalPages} onPageChange={onPageChange} />
+              </div>
+            </>)}
           </div>
       }
     </section>

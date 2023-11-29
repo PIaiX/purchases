@@ -1,23 +1,57 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import InputRating from '../../components/utils/InputRating';
 import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
+import { editReview } from '../../services/review';
+import { NotificationManager } from "react-notifications";
+import { useForm } from 'react-hook-form';
+import { useCallback } from 'react';
 
 const LeaveFeedback = () => {
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    setValue
+  } = useForm({
+    mode: 'onChange',
+    reValidateMode: 'onChange',
+  });
+
+  const onClick = useCallback((data) => {
+    if (!data.rating || data.rating <= 0) {
+      return NotificationManager.error(
+        "Укажите оценку"
+      )
+    }
+    editReview(data)
+      .then(() => {
+        NotificationManager.success("Отзыв отправлен");
+      })
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+          )
+      );
+  }, [])
+
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
-      <ReturnTitle link={'/account/feedback'} title={'Оставить отзыв'}/>
+      <ReturnTitle link={'/account/feedback'} title={'Оставить отзыв'} />
       <Row xs={1} xxl={2} className='gx-xxl-5'>
         <Col>
-          <form action="">
-            <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to="/">Obnyalpodnyal</Link></p>
-            <InputRating className="mb-4 mb-sm-5"/>
-            <Input type={'textarea'} rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'}/>
-            <button type='button' className='btn-1 mt-4'>Оценить</button>
-          </form>
+
+          <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to="/">Obnyalpodnyal</Link></p>
+          <InputRating className="mb-4 mb-sm-5" name="rating" onChange={e => setValue('rating', e)} />
+          <Input type='textarea' rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'} name="text" register={register} />
+          <button type='button' className='btn-1 mt-4' onClick={handleSubmit(onClick)}>Оценить</button>
+
         </Col>
         <Col>
           <div className="list-wrapping mt-5 mt-xxl-0">
@@ -51,8 +85,8 @@ const LeaveFeedback = () => {
               <p className='gray mb-2'>Описание</p>
               <div>
                 <p>Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты)
-                  <br/>88 уровеньСкриншоты аккаунта по ссылке: https://imgur.com/a/qOAzOUN 
-                  <br/>Аккаунт с релиза<br/>54 шестизвездочных операторов
+                  <br />88 уровеньСкриншоты аккаунта по ссылке: https://imgur.com/a/qOAzOUN
+                  <br />Аккаунт с релиза<br />54 шестизвездочных операторов
                 </p>
                 <p>На аккаунте присутствуют все вышедшие коллабные операторы. Присутствует весь пул коллаба с R6 Siege227к орундума, 833 апельсина</p>
               </div>
