@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FiEdit } from "react-icons/fi";
 import StarRating from '../../components/utils/StarRating';
 import NavPagination from '../../components/NavPagination';
 import FeedbackLine from '../../components/FeedbackLine';
 import PurchaseLine from '../../components/PurchaseLine';
 import ReturnTitle from '../../components/utils/ReturnTitle';
+import { getReview } from '../../services/review';
 
 const Feedback = () => {
   const [isMyFeedback, setIsMyFeedback] = useState(false);
@@ -12,14 +13,14 @@ const Feedback = () => {
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
-  const [orders, setOrders] = useState({
+  const [Review, setReview] = useState({
     loading: true,
     items: [],
   });
   useEffect(() => {
-    getOrders({ page: currentPage })
+    getReview({ page: currentPage })
       .then((res) => {
-        setOrders((prev) => ({
+        setReview((prev) => ({
           prev,
           loading: false,
           ...res,

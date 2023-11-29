@@ -34,7 +34,7 @@ const apiRoutes = {
   ORDER_DELETE: BASE_URL + "/user/order/delete",
 
   // review
-  review: BASE_URL + "/user/review",
+  REVIEWS: BASE_URL + "/user/review",
 
   // Category
   CATEGORIES: BASE_URL + "/category",

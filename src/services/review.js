@@ -1,10 +1,10 @@
 import { apiRoutes } from '../config/api'
-import { $api } from './index'
+import { $authApi } from './index'
 import axios from 'axios';
 
-const getReview = async () => {
+const getReview = async (data) => {
 
-    const response = await $api.get(apiRoutes.CATEGORY_ALL)
+    const response = await $authApi.get(apiRoutes.REVIEWS, { params: data })
     return response?.data
 
 }

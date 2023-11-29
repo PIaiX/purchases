@@ -1,10 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import useIsMobile from '../../hooks/isMobile';
+import { useDispatch } from 'react-redux';
+import { logout } from '../../services/auth';
+
 
 const AccountMenu = (props) => {
   const isMobileLG = useIsMobile('1109px')
-
+  const dispatch = useDispatch();
   return (
     <nav className='account-nav'>
       <ul>
@@ -41,7 +44,7 @@ const AccountMenu = (props) => {
             <div>Финансы</div>
           </NavLink>
         </li>
-        
+
         <li className='mt-sm-4 mt-lg-5'>
           <NavLink to="messages">
             <div>Сообщения</div>
@@ -66,7 +69,7 @@ const AccountMenu = (props) => {
         </li>
         <li>
           <NavLink to="/">
-            <div>Выйти</div>
+            <div onClick={() => dispatch(logout())} >Выйти</div>
           </NavLink>
         </li>
       </ul>
