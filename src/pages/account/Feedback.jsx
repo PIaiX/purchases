@@ -34,6 +34,7 @@ const Feedback = () => {
 
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
+  console.log(review)
   return (
     <section className='sec-feedback mb-6'>
       <ReturnTitle link={'/account'} title={'Отзывы'} />
@@ -79,7 +80,7 @@ const Feedback = () => {
               </div>
               <div className="list-wrapping-main p-3">
                 <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
-                  {orders?.items.map((item) => (
+                  {review?.orders?.length > 0 && review.orders.map((item) => (
                     <li>
                       <PurchaseLine  {...item} />
                     </li>
@@ -87,7 +88,7 @@ const Feedback = () => {
                 </ul>
               </div>
               <div className="list-wrapping-bottom">
-                <NavPagination totalPages={orders?.pagination?.totalPages} onPageChange={onPageChange1} />
+                {/* <NavPagination totalPages={review?.orders?.pagination?.totalPages} onPageChange={onPageChange1} /> */}
               </div>
             </div>
             <div className="list-wrapping mt-5">
@@ -96,7 +97,7 @@ const Feedback = () => {
               </div>
               <div className="list-wrapping-main p-3">
                 <ul className='row row-cols-1 g-4'>
-                  {review?.items.map((item) => (
+                  {review?.reviews?.items?.length > 0 && review.reviews.items.map((item) => (
                     <li>
                       <FeedbackLine  {...item} />
                     </li>
@@ -104,7 +105,7 @@ const Feedback = () => {
                 </ul>
               </div>
               <div className="list-wrapping-bottom">
-                <NavPagination totalPages={review?.pagination?.totalPages} onPageChange={onPageChange} />
+                <NavPagination totalPages={review?.reviews.pagination?.totalPages} onPageChange={onPageChange} />
               </div>
             </div>
           </>
@@ -120,7 +121,7 @@ const Feedback = () => {
               </div>
               <div className="list-wrapping-main p-sm-4">
                 <ul className='row row-cols-1 g-3'>
-                  {review?.items.map((item) => (
+                  {review?.reviews?.items?.length > 0 && review.reviews.items.map((item) => (
                     <li>
                       <FeedbackLine  {...item} />
                     </li>

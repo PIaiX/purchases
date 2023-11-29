@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import InputRating from '../../components/utils/InputRating';
 import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
@@ -11,6 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 
 const LeaveFeedback = () => {
+  const { productId } = useParams();
   const {
     control,
     register,
@@ -20,10 +21,13 @@ const LeaveFeedback = () => {
   } = useForm({
     mode: 'onChange',
     reValidateMode: 'onChange',
+    defaultValues: {
+      productId
+    }
   });
 
   const onClick = useCallback((data) => {
-    if (!data.rating || data.rating <= 0) {
+    if (!data.value || data.value <= 0) {
       return NotificationManager.error(
         "Укажите оценку"
       )
@@ -48,7 +52,7 @@ const LeaveFeedback = () => {
         <Col>
 
           <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to="/">Obnyalpodnyal</Link></p>
-          <InputRating className="mb-4 mb-sm-5" name="rating" onChange={e => setValue('rating', e)} />
+          <InputRating className="mb-4 mb-sm-5" onChange={e => setValue('value', e)} />
           <Input type='textarea' rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'} name="text" register={register} />
           <button type='button' className='btn-1 mt-4' onClick={handleSubmit(onClick)}>Оценить</button>
 

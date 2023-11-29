@@ -51,7 +51,7 @@ const AccountRouter = () => {
           <Route path=":dialogId" element={<MessagesChat />} />
         </Route>
         <Route path="feedback" element={<Feedback />} />
-        <Route path="feedback/add" element={<LeaveFeedback />} />
+        <Route path="feedback/add/:productId" element={<LeaveFeedback />} />
         <Route path="callback" element={<Callback />} />
         <Route path="callback/:id" element={<CallbackChat />} />
         <Route path="favs" element={<SecFavorites />} />
