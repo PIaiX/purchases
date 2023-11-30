@@ -1,10 +1,10 @@
 import React from 'react';
 import StarIcon from '../svg/StarIcon';
 
-export default function StarRating(props) {
+export default function StarRating({ value }) {
   const arr = [1, 2, 3, 4, 5]
-  const num = Number(props.rate)
-  const numRound = Math.round(Number(props.rate))
+  const num = Number(value)
+  const numRound = Math.round(Number(value))
   return (
     <div className="star-rating">
       {arr.map((item) => {

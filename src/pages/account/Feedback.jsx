@@ -34,7 +34,6 @@ const Feedback = () => {
 
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
-  console.log(review)
   return (
     <section className='sec-feedback mb-6'>
       <ReturnTitle link={'/account'} title={'Отзывы'} />

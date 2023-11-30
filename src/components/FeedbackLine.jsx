@@ -15,7 +15,7 @@ const FeedbackLine = ({ text, value, createdAt, author, user }) => {
           <h5>{author.nickname}</h5>
           <div className='d-flex align-items-center'>
             <span className='d-none d-md-block fs-09 fw-3 me-3'>{data}</span>
-            <StarRating rate={value} />
+            <StarRating {...value} />
           </div>
           <h5>{user.nickname}</h5>
         </div>

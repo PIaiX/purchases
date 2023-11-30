@@ -35,7 +35,10 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
     } else {
       return FILE_URL + "/" + type + "/" + path;
     }
-  } else {
+  }
+  else if (!type || type == 'product' || type == 'sale' || type == 'banner' || type == 'category') {
+    return "/imgs/archeage.jpg";
+  } else if (type == 'user') {
     return "/imgs/user.jpg";
   }
 };

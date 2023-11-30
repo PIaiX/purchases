@@ -8,6 +8,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 
 import { useLocation } from 'react-router-dom';
+import { getImageURL } from "../helpers/all";
 
 const GameCard = memo(({ param1, param2 }) => {
   let data, catId;
@@ -20,7 +21,7 @@ const GameCard = memo(({ param1, param2 }) => {
   };
   return filteredGames.map(el => (
     <div className="game-card">
-      <Link to='/game'><img src="/imgs/archeage.jpg" alt="ArcheAge" className='img' /></Link>
+      <Link to='/game'><img src={getImageURL({ path: el, type: "category" })} alt="ArcheAge" className='img' /></Link>
       <div>
         <h4><Link to={`/game/${el.id}/?regId=${regId}`}>{el.title}</Link></h4>
 

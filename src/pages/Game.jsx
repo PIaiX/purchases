@@ -8,10 +8,10 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import Pagination from '../components/Pagination';
-import TableDate from '../components/TableDate';
+import { useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
+import { declOfNum, getImageURL } from '../helpers/all';
+import NavPagination from '../components/NavPagination';
 
 
 const Game = () => {
@@ -24,17 +24,11 @@ const Game = () => {
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
 
-  const productsPerPage = 3;
-  const totalProducts = TableDate.length;
-  const totalPages = Math.ceil(totalProducts / productsPerPage);
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const currentProducts = TableDate.slice(indexOfFirstProduct, indexOfLastProduct);
 
 
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
-    getGame({ catId: catId, regId: regId, page: currentPage, filters: filters, id })
+    getGame({ catId: catId, regId: regId, page: currentPage, filters: filters, id, size: 3 })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
       })
@@ -55,7 +49,9 @@ const Game = () => {
   const handleFilterChange = (event) => {
     setFilters(event);
   };
-  console.log(filters)
+  const image = getImageURL({ path: games.items.category, type: "category" })
+  const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
+  const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
   return (
     <main>
       <Container>
@@ -76,10 +72,10 @@ const Game = () => {
                     <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
                   ))}
                   <div className="img">
-                    <GameСover />
+                    <GameСover {...image} />
                     <div className="img-lots">
-                      <div className='num'>856</div>
-                      <div>лотов</div>
+                      <div className='num'>{totalItems}</div>
+                      <div>{declension}</div>
                     </div>
                   </div>
                 </ul>
@@ -137,17 +133,13 @@ const Game = () => {
               <div className='price'>Цена</div>
             </div>
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-              {currentProducts.map((item) => (
+              {games?.items?.products?.items?.length > 0 && games.items.products.items.map((item) => (
                 <li>
-                  <OfferLine id={item.id} serv={item.serv} descr={item.descr} seller={item.seller} sellerRating={item.sellerRating} sellerImg={item.sellerImg} count={item.count} price={item.price} />
+                  <OfferLine {...item} />
                 </li>
               ))}
             </ul>
-            <Pagination
-              currentPage={currentPage}
-              totalPages={totalPages}
-              onPageChange={onPageChange}
-            />
+            <NavPagination totalPages={games?.items?.products?.pagination?.totalPages} onPageChange={onPageChange} />
           </div>
         </Container>
       </section>
