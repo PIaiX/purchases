@@ -12,12 +12,12 @@ import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
 
 
-const Chat = () => {
+const Chat = memo(({ toId }) => {
 
 
   const userId = useSelector(state => state.auth?.user?.id);
-  const { dialogId } = useParams();
-  const toId = 2;
+  var { dialogId } = useParams();
+
   const { state } = useLocation();
   const timer = useRef(0);
   const [messages, setMessages] = useState({
@@ -32,24 +32,35 @@ const Chat = () => {
     },
   });
   const data = useWatch({ control });
-  useEffect(() => {
-    socket.emit('createRoom', 'message/' + dialogId);
-    viewMessages({ fromId: userId, toId: toId, id: dialogId });
+  console.log(dialogId)
+  const getPage = () => {
     getMessages({ fromId: userId, toId: toId, id: dialogId })
       .then((res) =>
         setMessages((prev) => ({
           ...prev,
           loading: false,
-          ...res,
-        }))
-
+          ...res.messages,
+          dialog: res.dialog
+        })),
       )
       .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+  }
+  useEffect(() => {
+
+    // viewMessages({ fromId: userId, toId: toId, id: dialogId });
+    getPage()
 
   }, [userId, toId, dialogId]);
 
   useEffect(() => {
     if (data?.userId) {
+      if (messages?.dialog?.id) {
+        dialogId = messages.dialog.id
+      }
+
+      socket.emit('createRoom', 'message/' + dialogId);
+
+      messages?.dialog?.id
       socket.on("message", (data) => {
 
         setMessages((prev) => ({
@@ -71,7 +82,7 @@ const Chat = () => {
         socket.off("message");
       };
     }
-  }, [data?.userId]);
+  }, [data?.userId, messages?.dialog?.id, dialogId]);
 
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
@@ -85,7 +96,7 @@ const Chat = () => {
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, toId: toId, id: dialogId, text });
+      createMessage({ ...data, fromId: userId, toId: toId, id: dialogId, text }).then(() => messages.items.length === 0 && getPage());
       reset({ userId: data.userId });
     },
     [data, state, userId, dialogId, toId]
@@ -160,6 +171,6 @@ const Chat = () => {
       </div>
     </div >
   );
-};
+});
 
 export default Chat;

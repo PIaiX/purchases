@@ -1,7 +1,6 @@
 import React from 'react';
 
 const GameСover = ({ image }) => {
-  console.log(image);
   return (
     <svg width="587" height="485" preserveAspectRatio="none" viewBox="0 0 587 485" fill="none" xmlns="http://www.w3.org/2000/svg" xmlnsXlink="http://www.w3.org/1999/xlink">
       <image id="image-cover" preserveAspectRatio="xMidYMin slice" width="587" height="485" xlinkHref={image} clipPath="url(#image-cover-clip)" />
