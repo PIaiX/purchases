@@ -19,20 +19,20 @@ const Game = () => {
   const isMobileLG = useIsMobile('1109px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const searchParams = new URLSearchParams(window.location.search);
-  const [currentPage, setCurrentPage] = useState(1);
+  const [currentPage, setCurrentPage] = useState();
   const [filters, setFilters] = useState();
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
-
+  const [serverId, setServerId] = useState(1);
 
 
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
-    getGame({ catId: catId, regId: regId, page: currentPage, filters: filters, id, size: 3 })
+    getGame({ catId: catId, regId: regId, page: currentPage, serverId: serverId, filters: filters, id, size: 3 })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
       })
-  }, [regId, catId, currentPage, filters]);
+  }, [regId, catId, currentPage, filters, serverId]);
 
   const onPageChange = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -42,10 +42,12 @@ const Game = () => {
     setCatId(paramId);
   };
 
-  const handleServerChange = (regionId) => {
+  const handleRegionChange = (regionId) => {
     setRegId(regionId);
   };
-
+  const handleServerChange = (serverId) => {
+    setServerId(serverId);
+  };
   const handleFilterChange = (event) => {
     setFilters(event);
   };
@@ -65,7 +67,7 @@ const Game = () => {
             <Row>
               <Col xs={12} xl={7}>
                 {games?.items?.category?.regions && games.items.category.regions.length > 0 && (
-                  <ServerSwitcher serversArr={games.items.category.regions} onChange={handleServerChange} active={regId} />
+                  <ServerSwitcher serversArr={games.items.category.regions} onChange={handleRegionChange} active={regId} />
                 )}
                 <ul className='categories'>
                   {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
@@ -96,19 +98,30 @@ const Game = () => {
                         <input type="checkbox" />
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
+                      {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
+                        (param.id == regId &&
+                          <select onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                            {
+                              param.servers?.length > 0 && param.servers.map(item => (
+                                <option key={item.id} value={item.id} >{item.title}</option>
+                              ))
+                            }
+                          </select>
+
+
+                        )))}
 
                       {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
 
-                        (param.id === catId &&
+                        (param.id == catId &&
                           param.options.map(e => {
                             let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
-                            console.log(options, 124124124)
                             if (!e.parent) {
                               return <select onChange={(event) => handleFilterChange(event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
                                 {
                                   options?.length > 0 && options.map(item => (
-                                    <option key={item.id - 1} value={item.id - 1} >{item.title}</option>
+                                    <option key={item.id} value={item.id} >{item.title}</option>
                                   ))
                                 }
                               </select>
