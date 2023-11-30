@@ -9,8 +9,6 @@ import StarIcon from '../components/svg/StarIcon';
 import { FiMessageCircle, FiEdit, FiShare, FiAlertTriangle, FiChevronDown } from "react-icons/fi";
 import Input from '../components/utils/Input';
 import Chat from '../components/chat/Chat';
-import { useLocation, useNavigate } from 'react-router-dom';
-import TableDate from '../components/TableDate';
 import { getProduct } from '../services/product';
 import { useSelector } from "react-redux";
 
@@ -129,15 +127,21 @@ const LotPage = () => {
                                     <p className='blue'>Напишите продавцу перед покупкой</p>
                                 </div>
                                 <hr />
-                                <div className="p-0">
-                                    {products.loading ? (
-                                        <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                                            Загрузка сообщений...
-                                        </div>
-                                    ) : (
-                                        <Chat toId={products?.items?.userId} />
-                                    )}
-                                </div>
+                                {!userId ? (
+                                    <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                                        Для отправки сообщений войдите в аккаунт!
+                                    </div>
+                                ) : (
+                                    <div className="p-0 fs-09">
+                                        {products.loading ? (
+                                            <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                                                Загрузка чата...
+                                            </div>
+                                        ) : (
+                                            <Chat toId={products?.items?.userId} />
+                                        )}
+                                    </div>
+                                )}
                             </div>
                         </Col>
                         <Col xs={12} lg={4} className='mt-5 mt-lg-0'>

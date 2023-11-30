@@ -52,7 +52,6 @@ const Game = () => {
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
-  console.log(image);
   return (
     <main>
       <Container>

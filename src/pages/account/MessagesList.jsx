@@ -9,10 +9,9 @@ import {
   viewMessages,
 } from "../../services/message";
 import socket from "../../config/socket";
+import { getImageURL } from "../../helpers/all";
 
 const MessagesList = () => {
-
-  const userId = useSelector(state => state.auth.user.id);
   const [dialogs, setDialogs] = useState({
     loading: true,
     items: [],
@@ -30,7 +29,8 @@ const MessagesList = () => {
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
 
   }, []);
-  console.log(dialogs)
+  const image = getImageURL({ path: dialogs.items.from, type: "user" })
+  console.log(image)
   return (
     <div className='sec-messages-list'>
       <form action="" className='p-2 p-sm-3'>
@@ -50,10 +50,11 @@ const MessagesList = () => {
           dialogs.items.map((dialog) => (
             <li>
               <DialogPreview
-                link={dialog.id}
+                id={dialog.id}
                 nickname={dialog.to.nickname}
                 text={dialog.message.text}
                 time={dialog.message.createdAt}
+                image={image}
               />
             </li>
           ))) : (

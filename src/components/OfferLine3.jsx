@@ -1,10 +1,11 @@
 import React from 'react';
 import StarRating from './utils/StarRating';
 import moment from "moment";
+import { getImageURL } from '../helpers/all';
 
-const OfferLine3 = ({ date, descr, seller, id, status, price }) => {
+const OfferLine3 = ({ date, descr, nickname, id, status, price, author }) => {
   date = date ? moment(date).format("DD MMMM YYYY kk:mm") : null
-
+  const image = getImageURL({ path: author, type: "user" })
   return (
     <div className="offer-line-3">
       <div className="date"><span>{date}</span>
@@ -15,9 +16,9 @@ const OfferLine3 = ({ date, descr, seller, id, status, price }) => {
       </div>
       <div className="descr">{descr}</div>
       <div className="seller">
-        <img src="/imgs/user.jpg" alt="User8name" />
+        <img src={image} alt="User8name" />
         <div>
-          <h6 className='text-start mb-xl-1'>{seller}</h6>
+          <h6 className='text-start mb-xl-1'>{nickname}</h6>
           <StarRating rate={4} />
         </div>
       </div>

@@ -32,7 +32,6 @@ const Chat = memo(({ toId }) => {
     },
   });
   const data = useWatch({ control });
-  console.log(dialogId)
   const getPage = () => {
     getMessages({ fromId: userId, toId: toId, id: dialogId })
       .then((res) =>
