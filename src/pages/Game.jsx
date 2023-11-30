@@ -72,7 +72,7 @@ const Game = () => {
                     <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
                   ))}
                   <div className="img">
-                    <GameСover {...image} />
+                    <GameСover />
                     <div className="img-lots">
                       <div className='num'>{totalItems}</div>
                       <div>{declension}</div>

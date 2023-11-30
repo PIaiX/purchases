@@ -2,7 +2,7 @@ import { apiRoutes } from '../config/api'
 import { $api, $authApi } from './index'
 
 const getProduct = async (payloads = {}) => {
-    const response = await $api.get(apiRoutes.PRODUCTS, {
+    const response = await $api.get(apiRoutes.PRODUCT, {
         params: payloads,
     })
 
