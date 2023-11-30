@@ -55,7 +55,8 @@ const apiRoutes = {
 
   // Product
   PRODUCT: BASE_URL + "/product/one",
-  PRODUCT_CREATE: BASE_URL + "/product/create",
+  USER_PRODUCTS: BASE_URL + "/user/product/",
+  USER_PRODUCT: BASE_URL + "/user/product/one",
 
   // Sale
   SALES: BASE_URL + "/sale",
