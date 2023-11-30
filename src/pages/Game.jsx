@@ -49,9 +49,10 @@ const Game = () => {
   const handleFilterChange = (event) => {
     setFilters(event);
   };
-  const image = getImageURL({ path: games.items.category, type: "category" })
+  const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
+  console.log(image);
   return (
     <main>
       <Container>
@@ -72,7 +73,7 @@ const Game = () => {
                     <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
                   ))}
                   <div className="img">
-                    <GameСover />
+                    <GameСover image={image} />
                     <div className="img-lots">
                       <div className='num'>{totalItems}</div>
                       <div>{declension}</div>
