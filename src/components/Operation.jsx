@@ -2,7 +2,7 @@ import React from 'react';
 import moment from "moment";
 
 const Operation = (props) => {
-  const date = moment(props.date).format("DD MMMM YYYY kk:mm");
+  const date = moment(props.date).format("DD.MM.YYYY kk:mm");
   const type = props.type;
   const id = props.id;
   const status = props.status;

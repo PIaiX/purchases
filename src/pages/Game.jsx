@@ -101,7 +101,7 @@ const Game = () => {
                       {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
                         (param.id == regId &&
-                          <select onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                          <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0].id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
                             {
                               param.servers?.length > 0 && param.servers.map(item => (
                                 <option key={item.id} value={item.id} >{item.title}</option>

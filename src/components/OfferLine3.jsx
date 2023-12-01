@@ -4,7 +4,7 @@ import moment from "moment";
 import { getImageURL } from '../helpers/all';
 
 const OfferLine3 = ({ date, descr, nickname, id, status, price, author }) => {
-  date = date ? moment(date).format("DD MMMM YYYY kk:mm") : null
+  date = date ? moment(date).format("DD.MM.YYYY kk:mm") : null
   const image = getImageURL({ path: author, type: "user" })
   return (
     <div className="offer-line-3">

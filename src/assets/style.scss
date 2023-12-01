@@ -1531,28 +1531,25 @@ nav.pagination {
   }
 
   &-item {
-    padding: 0px;
+    display: block;
+    padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
+    text-align: left;
+    width: 100%;
+    justify-content: flex-start !important;
+    transition: $transition;
 
-    a {
-      display: block;
-      padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
-      text-align: left;
-      width: 100%;
-      justify-content: flex-start !important;
-      transition: $transition;
+    &:hover,
+    &:focus {
+      color: var(--bs-dropdown-link-hover-color) !important;
+      background-color: var(--bs-dropdown-link-hover-bg);
+    }
 
-      &:hover,
-      &:focus {
-        color: var(--bs-dropdown-link-hover-color) !important;
-        background-color: var(--bs-dropdown-link-hover-bg);
-      }
-
-      &:active {
-        color: var(--bs-dropdown-link-active-color) !important;
-        background-color: var(--bs-dropdown-link-active-bg);
-      }
+    &:active {
+      color: var(--bs-dropdown-link-active-color) !important;
+      background-color: var(--bs-dropdown-link-active-bg);
     }
   }
+
 }
 
 /* Box */

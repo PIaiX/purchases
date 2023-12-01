@@ -83,7 +83,7 @@ const Header = () => {
                   <Link
                     to="/account"
                     className="profile-link ms-4 ms-xxl-5"
-                    // onClick={handleShowAdvice}
+                  // onClick={handleShowAdvice}
                   >
                     <img src="/imgs/user.jpg" alt="user" />
                     <span>{user?.nickname}</span>
@@ -107,7 +107,7 @@ const Header = () => {
                 </>
               )}
             </div>
-            <ThemeToggler/>
+            <ThemeToggler />
           </div>
         </header>
       </Container>

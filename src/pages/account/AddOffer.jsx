@@ -1,108 +1,199 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
+import LabeledInput from '../../components/utils/LabeledInput';
+import Textarea from '../../components/utils/Textarea';
+import { getGames } from '../../services/game';
+import Select from '../../components/utils/Select';
+import { useForm, useWatch } from 'react-hook-form';
+import { useCallback } from 'react';
+import { NotificationManager } from "react-notifications";
 
 const AddOffer = () => {
+  const [games, setGames] = useState({ items: [], loading: true });
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    reset,
+    setValue,
+  } = useForm({
+    mode: 'onClick',
+    reValidateMode: 'onChange',
+
+  });
+  const [category, setCategory] = useState([]);
+  const [regions, setRegions] = useState([]);
+  const data = useWatch({ control })
+  console.log(data)
+  const onClick = useCallback((data) => {
+    // if (!data.value || data.value <= 0) {
+    //   return NotificationManager.error(
+    //     "Укажите оценку"
+    //   )
+    // }
+    createUserProduct(data)
+      .then(() => {
+        NotificationManager.success("Отзыв отправлен");
+      })
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+          )
+      );
+  }, [])
+
+  useEffect(() => {
+    getGames()
+      .then((res) => {
+        setGames(prev => ({ ...prev, items: res, loading: false }));
+      })
+      .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+  }, []);
+
+
+  useEffect(() => {
+
+    if (data.region) {
+      let serverIndex = data.game.regions.findIndex(e => e.id === data.region)
+      let servers = data.game.regions[serverIndex].servers
+
+      reset({
+        ...data,
+        server: false,
+        servers: servers?.length > 0 ? servers : false
+      })
+    }
+
+  }, [data.region]);
+
+  useEffect(() => {
+    if (data.param) {
+      let optionsIndex = data.game.params.findIndex(e => e.id === data.param)
+      let options = data.game.params[optionsIndex].options
+
+      reset({
+        ...data,
+        option: false,
+        options: options?.length > 0 ? options : false
+      })
+    }
+
+  }, [data.param]);
+
+  console.log(data)
   return (
     <section className='mb-3 mb-sm-5'>
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
-          <ReturnTitle link={'/account/offers'} title={'Новое объявление'}/>
+          <ReturnTitle link={'/account/offers'} title={'Новое объявление'} />
 
           <form action="" className='add-offer'>
             <Row>
               <Col xs={12} xl={10} xxl={9}>
                 <Row className='g-4 g-xl-5'>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Игра"} 
-                      options={[{value:1, text: 'World of Warcraft'}, {value:2, text: 'World of Warcraft'}, {value:3, text: 'World of Warcraft'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Платформа"} 
-                      options={[{value:1, text: 'Платформа 1'}, {value:2, text: 'Платформа 2'}, {value:3, text: 'Платформа 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Сервер"} 
-                      options={[{value:1, text: 'Сервер 1'}, {value:2, text: 'Сервер 2'}, {value:3, text: 'Сервер 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Что вы продаете?"} 
-                      options={[{value:1, text: 'Продукт 1'}, {value:2, text: 'Продукт 2'}, {value:3, text: 'Продукт 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Уровень"} 
-                      options={[{value:1, text: 'Уровень 1'}, {value:2, text: 'Уровень 2'}, {value:3, text: 'Уровень 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Раса"} 
-                      options={[{value:1, text: 'Раса 1'}, {value:2, text: 'Раса 2'}, {value:3, text: 'Раса 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Экипировка"} 
-                      options={[{value:1, text: 'Экипировка 1'}, {value:2, text: 'Экипировка 2'}, {value:3, text: 'Экипировка 3'}]}
-                    />
-                  </Col>
-                  <Col md={6}>
-                    <Input 
-                      type={"select"} 
-                      label={"Профессия"} 
-                      options={[{value:1, text: 'Профессия 1'}, {value:2, text: 'Профессия 2'}, {value:3, text: 'Профессия 3'}]}
-                    />
-                  </Col>
+                  {games?.items?.length > 0 && (
+                    <Col md={6}>
+                      <Select
+                        value={data.category}
+                        title="Игра"
+                        onClick={e => {
+                          reset({
+                            category: e.value,
+                            game: games.items[games.items.findIndex(e2 => e2.id === e.value)]
+                          })
+                        }}
+                        data={games.items.map((item) => ({ value: item.id, title: item.title }))}
+                      />
+                    </Col>
+                  )}
+
+
+
+                  {data?.game?.regions?.length > 0 && (
+                    <Col md={6} >
+                      <Select
+                        value={data.region}
+                        title="Регион"
+                        onClick={e => setValue('region', e.value)}
+                        data={data.game.regions.map((item) => ({ value: item.id, title: item.title }))}
+                      />
+                    </Col>
+                  )}
+
+                  {data.servers && (
+                    <Col md={6} >
+                      <Select
+                        value={data.server}
+                        title="Сервер"
+                        onClick={e => setValue('server', e.value)}
+                        data={data.servers.map((item) => ({ value: item.id, title: item.title }))}
+                      />
+                    </Col>
+                  )}
+
+                  {data?.game?.params?.length > 0 && (
+                    <Col md={6} >
+                      <Select
+                        value={data.param}
+                        title="Что вы продаете?"
+                        onClick={e => setValue('param', e.value)}
+                        data={data.game.params.map((item) => ({ value: item.id, title: item.title }))}
+                      />
+                    </Col>
+                  )}
+
+                  {data.options && data.options.map(e => {
+                    let options = data.options.filter(item => (item.parent == e.id));
+                    let name = data.options.filter(item => (!item.parent && item.id == e.id));
+                    console.log(name.title)
+                    if (!e.parent) {
+                      return <Col md={6} >
+                        <Select
+                          value={data.option}
+                          title={name.title}
+                          onClick={e => setValue(name.title, e.value)}
+                          data={options.map((item) => ({ value: item.id, title: item.title }))}
+                        />
+                      </Col>
+                    }
+
+                  })}
+
+
                   <Col md={12}>
-                    <Input 
-                      type={"text"} 
-                      label={"Краткое описание"} 
-                    />
-                  </Col>
-                  <Col md={12}>
-                    <Input 
-                      type={"text"} 
-                      label={"Подробное описание"} 
+                    <Textarea
+                      type={"text"}
+                      label={"Описание"}
+                      name="text"
+                      register={register}
                     />
                   </Col>
                   <Col md={4}>
-                    <Input 
-                      type={"text"} 
-                      label={"Наличие"} 
+                    <LabeledInput
+                      type={"text"}
+                      label={"Наличие"}
                     />
                   </Col>
                   <Col md={4}>
-                    <Input 
-                      type={"text"} 
-                      label={"Цена, ₽ "} 
+                    <LabeledInput
+                      type={"text"}
+                      label={"Цена, ₽ "}
                     />
                   </Col>
                 </Row>
               </Col>
             </Row>
-            <button type='button' className='btn-1 mt-4 mt-sm-5'>Опубликовать</button>
+            <button type='button' className='btn-1 mt-4 mt-sm-5' onClick={handleSubmit(onClick)}>Опубликовать</button>
           </form>
         </div>
-      </div>
-    </section>
+      </div >
+    </section >
   );
 };
 
