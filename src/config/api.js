@@ -50,6 +50,10 @@ const apiRoutes = {
   MEMBER_GET: BASE_URL + "/member/one",
   MEMBER_CREATE: BASE_URL + "/member/create",
 
+  // article
+  ARTICLES: BASE_URL + "/document",
+  ARTICLE: BASE_URL + "/document/one",
+
   // Invoice
   INVOICES: BASE_URL + "/invoice",
   INVOICE: BASE_URL + "/invoice/one",

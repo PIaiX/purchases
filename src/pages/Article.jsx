@@ -1,43 +1,70 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import NavBreadcrumbs from '../components/NavBreadcrumbs';
 import BlogCard2 from '../components/BlogCard2';
+import { getArticle } from '../services/article';
+import NavPagination from '../components/NavPagination';
+import Loader from '../components/utils/Loader';
+import { getImageURL } from '../helpers/all';
 
 const Article = () => {
+  const { id } = useParams();
+  const [currentPage, setCurrentPage] = useState(1)
+  const onPageChange = (page) => {
+    setCurrentPage(page.selected + 1);
+  };
+  const [articles, setArticles] = useState({
+    loading: true,
+    items: [],
+  });
+  useEffect(() => {
+    getArticle({ id: id, page: currentPage, size: 2 })
+      .then((res) => {
+        setArticles((prev) => ({
+          prev,
+          loading: false,
+          ...res,
+        }))
+        setCurrentPage(res.documents.pagination.currentPage)
+      })
+      .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
+  }, [currentPage]);
+  if (articles.loading) {
+    return <Loader full />;
+  }
+  const image = getImageURL({ path: articles?.document, type: "articles" })
   return (
     <main>
       <Container>
-        <NavBreadcrumbs/>
+        <NavBreadcrumbs />
 
         <section className='page-blog mb-3 mb-sm-4 mb-md-5'>
           <Row className='justify-content-between'>
             <Col xs={12} lg={8} xxl={7}>
               <article>
-                <h1>Заметки эмоционального геймера: Впечатления от открытой беты Diablo 4</h1>
-                <p>ПО МНОГОЧИСЛЕННЫМ ПРОСЬБАМ НЕЗНАКОМЫХ С ИНДУСТРИЕЙ ЛЮДЕЙ «НЕПОНЯТНЫЕ» ИГРОВЫЕ ТЕРМИНЫ БУДУТ ПОМЕЧАТЬСЯ ЗНАКОМ* И РАЗЪЯСНЕНЫ В КОНЦЕ МАТЕРИАЛА! ОБЫЧНЫХ ИГРОКОВ ВЕЖЛИВО ПРОШУ ДАННОЕ ОБСТОЯТЕЛЬСТВО ИГНОРИРОВАТЬ!</p>
-                <p>В этот замечательный день, когда компания Blizzard завершает открытое бета — тестирование* столь долгожданной своей новой игры Diablo 4, я решила поделиться своими мыслями о столь значимом событии для фанатов франшизы.*</p>
-                <img src="/imgs/img1.jpg" alt="img1" className='img-fluid'/>
-                <p>Признаться честно, в серии я недавно — начала играть с релиза* Diablo 2 Ressurected*, которая очень сильно запала мне в душу своей мрачной атмосферой, и возможностью играть за некроманта*.</p>
-                <p>К сожалению, Diablo 2 — единственная часть, которая мне была полноценно доступна на момент заинтересованности франшизой. Первая часть слишком старая, чтобы ее запустил новый ПК*, в третьей много доната*, а Diablo Immortal* вообще на телефоне распадается на пиксели. Таково мое печальное знакомство с данной серией, которую я очень полюбила за выбранный стиль темного фэнтези. Теперь же можно перейти к виновнику событий.</p>
-                <p>Сюжет в 4й части знаменитой франшизе начинается с того, что пятеро охотников за сокровищами неосознанно пробуждают древнее зло в лице Лилит — одной из страшнейших демониц ада, которая, недолго думая, начинает порабощать людей, заставляя их отвернуться от Господа нашего и искать спасение от грехов именно у нее, из -за чего люди начинают сходить с ума, а нашему бесстрашному герою предстоит помешать ее дьявольским планам.</p>
-                <p>Геймплей* Diablo 4 представляет из себя классический экшен с изометрическим видом сверху, где надо сражаться с противниками, заниматься сбором и улучшением ресурсов (брони, оружия, и магических предметов), а также улучшением героя.</p>
-                <p>В целом компания Blizzard здесь не подкачала, играть в игру очень увлекательно, а менеджмент ресурсов поймут даже те, кто с данным жанром на «вы».</p>
+                <h1>{articles?.document?.title}</h1>
+                <img src={image} alt={articles?.document?.title} className='img-fluid' />
+                {articles?.document?.content}
               </article>
             </Col>
             <Col xs={12} lg={4}>
               <Row className='gx-2 gx-sm-4 gy-4 gy-sm-5'>
+
                 <Col xs={12}>
                   <Link to='/blog' className='cognition'><h3 className='fw-7 text-end mb-0'>Познать больше</h3></Link>
                 </Col>
-                <Col xs={6} lg={12}>
-                  <BlogCard2 img={'imgs/img1.jpg'} title={'Как сэкономить ~6% при выводе денег'}/>
-                </Col>
-                <Col xs={6} lg={12}>
-                  <BlogCard2 img={'imgs/img1.jpg'} title={'Как сэкономить ~6% при выводе денег'}/>
-                </Col>
+                {articles?.documents?.items?.length > 0 && articles.documents.items.map((item) => (
+
+                  <Col xs={6} lg={12}>
+                    <BlogCard2 {...item} />
+                  </Col>
+                ))}
+                <div className="list-wrapping-bottom">
+                  <NavPagination totalPages={articles?.documents?.pagination?.totalPages} onPageChange={onPageChange} />
+                </div>
               </Row>
             </Col>
           </Row>
