@@ -15,6 +15,7 @@ import 'swiper/css';
 import 'swiper/css/scrollbar';
 import useIsMobile from '../hooks/isMobile';
 import axios from 'axios';
+import ChatGeneral from "../components/chat/ChatGeneral";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -64,12 +65,7 @@ const Home = () => {
             <Row>
               <Col xs={12} md={8}>
                 <section className="sec-chat">
-                  <h2>Общий чат</h2>
-                  <Chat />
-                  <div className="sec-chat-count">
-                    <div className="num">102</div>
-                    <div className="text">участника online</div>
-                  </div>
+                  <ChatGeneral />
                 </section>
               </Col>
               <Col xs={12} md={4}>

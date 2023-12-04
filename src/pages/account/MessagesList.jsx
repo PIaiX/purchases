@@ -23,7 +23,8 @@ const MessagesList = () => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
-          items: [...res],
+          items: [...res.dialogs],
+          count: res.countOnline
         }))
       })
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
@@ -40,7 +41,7 @@ const MessagesList = () => {
         <li>
           <Link to="general" className='general-chat'>
             <div className="count">
-              <div class="fs-13">102</div>
+              <div class="fs-13">{dialogs.count}</div>
               <div>online</div>
             </div>
             <h6>Общий чат</h6>
@@ -55,6 +56,7 @@ const MessagesList = () => {
                 text={dialog.message.text}
                 time={dialog.message.createdAt}
                 image={image}
+                status={dialog.to.online.status}
               />
             </li>
           ))) : (

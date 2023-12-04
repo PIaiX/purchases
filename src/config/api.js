@@ -43,6 +43,7 @@ const apiRoutes = {
   // MESSAGES
   MESSAGES: BASE_URL + "/message",
   DIALOGS: BASE_URL + "/message/dialogs",
+  MESSAGES_GENERAL: BASE_URL + "/message/general",
 
   // Member
   MEMBERS_GET: BASE_URL + "/member",

@@ -34,8 +34,8 @@ const Game = () => {
       })
   }, [regId, catId, currentPage, filters, serverId]);
 
-  const onPageChange = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  const onPageChange = (page) => {
+    setCurrentPage(page.selected + 1);
   };
 
   const handleParamClick = (paramId) => {

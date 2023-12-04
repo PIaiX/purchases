@@ -4,19 +4,18 @@ import SimpleInputFile from '../utils/SimpleInputFile';
 import { useSelector } from "react-redux";
 import socket from "../../config/socket";
 import {
-  createMessage,
-  getMessages,
-  viewMessages,
+  createMessageGeneral,
+  getMessagesGeneral,
+  viewMessagesGeneral,
 } from "../../services/message";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
 
 
-const Chat = memo(({ toId }) => {
+const ChatGeneral = memo(() => {
 
 
   const userId = useSelector(state => state.auth?.user?.id);
-  let { dialogId } = useParams();
 
   const { state } = useLocation();
   const timer = useRef(0);
@@ -33,13 +32,13 @@ const Chat = memo(({ toId }) => {
   });
   const data = useWatch({ control });
   const getPage = () => {
-    getMessages({ fromId: userId, toId: toId, id: dialogId })
+    getMessagesGeneral()
       .then((res) =>
         setMessages((prev) => ({
           ...prev,
           loading: false,
           ...res.messages,
-          dialog: res.dialog
+          count: res.countOnline
         })),
       )
       .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
@@ -49,17 +48,12 @@ const Chat = memo(({ toId }) => {
     // viewMessages({ fromId: userId, toId: toId, id: dialogId });
     getPage()
 
-  }, [userId, toId, dialogId]);
+  }, []);
 
   useEffect(() => {
     if (data?.userId) {
-      if (messages?.dialog?.id) {
-        dialogId = messages.dialog.id
-      }
+      socket.emit('createRoom', 'message/general');
 
-      socket.emit('createRoom', 'message/' + dialogId);
-
-      messages?.dialog?.id
       socket.on("message", (data) => {
 
         setMessages((prev) => ({
@@ -81,7 +75,7 @@ const Chat = memo(({ toId }) => {
         socket.off("message");
       };
     }
-  }, [data?.userId, messages?.dialog?.id, dialogId]);
+  }, [data?.userId]);
 
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
@@ -95,10 +89,10 @@ const Chat = memo(({ toId }) => {
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, fromId: userId, toId: toId, id: dialogId, text }).then(() => messages.items.length === 0 && getPage());
+      createMessageGeneral({ ...data, text }).then(() => messages.items.length === 0 && getPage());
       reset({ userId: data.userId });
     },
-    [data, state, userId, dialogId, toId]
+    [data, state, userId]
   );
   const emptyText = "Нет сообщений";
   const auth = useSelector((state) => state.auth);
@@ -115,18 +109,19 @@ const Chat = memo(({ toId }) => {
       setText("");
     }
   }, [text, onNewMessage]);
+  const [receivedData, setReceivedData] = useState('');
 
-
+  function onDataReceived(data) {
+    setReceivedData(data);
+  }
   return (
+
     <div className="chat">
-      <div className="dialog-preview">
-        <img src="/imgs/user.jpg" alt="user" />
-        <div className="text">
-          <div className='d-flex justify-content-between align-items-center mb-1'>
-            <h6>Артем</h6>
-          </div>
-          <p>status</p>
-        </div>
+      <div className="d-flex flex-column align-items-center justify-content-center">
+        <h2>Общий чат</h2>
+        <div className="sec-chat-count">
+          <div className="num">{messages.count}</div>
+          <div className="text">участника online</div></div>
       </div>
 
       {
@@ -172,4 +167,4 @@ const Chat = memo(({ toId }) => {
   );
 });
 
-export default Chat;
+export default ChatGeneral;

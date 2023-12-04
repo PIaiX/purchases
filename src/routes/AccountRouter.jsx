@@ -47,7 +47,6 @@ const AccountRouter = () => {
               ? <Route index element={<MessagesList />} />
               : <Route index element={<Navigate to=":dialogId" replace={true} />} />
           }
-          <Route path="general" element={<MessagesChat />} />
           <Route path=":dialogId" element={<MessagesChat />} />
         </Route>
         <Route path="feedback" element={<Feedback />} />

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import moment from "moment";
 
-const DialogPreview = ({ id, nickname, text, time, image }) => {
+const DialogPreview = ({ id, nickname, text, time, image, status }) => {
   const [elapsedTime, setElapsedTime] = useState('');
 
   useEffect(() => {
@@ -27,7 +27,8 @@ const DialogPreview = ({ id, nickname, text, time, image }) => {
           <time>{elapsedTime}</time>
         </div>
         <p>{text}</p>
-        <div className="indicator green"></div>
+        {status &&
+          <div className="indicator green"></div>}
       </div>
 
     </NavLink>
