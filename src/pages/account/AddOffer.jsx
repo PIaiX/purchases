@@ -28,7 +28,6 @@ const AddOffer = () => {
   const [category, setCategory] = useState([]);
   const [regions, setRegions] = useState([]);
   const data = useWatch({ control })
-  console.log(data)
   const onClick = useCallback((data) => {
     // if (!data.value || data.value <= 0) {
     //   return NotificationManager.error(
@@ -71,12 +70,12 @@ const AddOffer = () => {
     }
 
   }, [data.region]);
-
+  let i;
   useEffect(() => {
     if (data.param) {
       let optionsIndex = data.game.params.findIndex(e => e.id === data.param)
       let options = data.game.params[optionsIndex].options
-
+      i = 0;
       reset({
         ...data,
         option: false,
@@ -150,19 +149,20 @@ const AddOffer = () => {
 
                   {data.options && data.options.map(e => {
                     let options = data.options.filter(item => (item.parent == e.id));
-                    let name = data.options.filter(item => (!item.parent && item.id == e.id));
-                    console.log(name.title)
+                    let name = data.options.find(item => (!item.parent && item.id == e.id));
+
+                    console.log(name)
                     if (!e.parent) {
                       return <Col md={6} >
                         <Select
-                          value={data.option}
+                          value={data.option[i]}
                           title={name.title}
-                          onClick={e => setValue(name.title, e.value)}
+                          onClick={e => setValue(`option[${i}]`, e.value)}
                           data={options.map((item) => ({ value: item.id, title: item.title }))}
                         />
                       </Col>
                     }
-
+                    i++;
                   })}
 
 
