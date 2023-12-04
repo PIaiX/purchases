@@ -11,7 +11,10 @@ import ChatGeneral from '../../components/chat/ChatGeneral';
 const MessagesChat = () => {
   const { dialogId } = useParams();
   let ChatComponent = null;
-  if (dialogId == 'general') {
+  if (dialogId == ':dialogId') {
+    return null;
+  }
+  else if (dialogId == 'general') {
     ChatComponent = <ChatGeneral />;
   } else {
     ChatComponent = <Chat />;

@@ -9,7 +9,7 @@ const DialogPreview = ({ id, nickname, text, time, image, status }) => {
     const interval = setInterval(() => {
       const timePassed = moment(time).fromNow();
       setElapsedTime(timePassed);
-    }, 1000); // Обновление времени каждую минуту
+    }, 6000); // Обновление времени каждую минуту
 
     return () => clearInterval(interval);
   }, [time]);

@@ -16,7 +16,7 @@ const Chat = memo(({ toId }) => {
 
 
   const userId = useSelector(state => state.auth?.user?.id);
-  let { dialogId } = useParams();
+  var { dialogId } = useParams();
 
   const { state } = useLocation();
   const timer = useRef(0);
@@ -123,9 +123,11 @@ const Chat = memo(({ toId }) => {
         <img src="/imgs/user.jpg" alt="user" />
         <div className="text">
           <div className='d-flex justify-content-between align-items-center mb-1'>
-            <h6>Артем</h6>
+            <h6>{messages?.dialog?.to.nickname}</h6>
           </div>
-          <p>status</p>
+          {messages?.dialog?.to?.online?.status &&
+            <p>online</p>
+          }
         </div>
       </div>
 
