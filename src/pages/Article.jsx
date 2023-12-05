@@ -31,7 +31,7 @@ const Article = () => {
         setCurrentPage(res.documents.pagination.currentPage)
       })
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
-  }, [currentPage]);
+  }, [currentPage, id]);
   if (articles.loading) {
     return <Loader full />;
   }
@@ -47,7 +47,7 @@ const Article = () => {
               <article>
                 <h1>{articles?.document?.title}</h1>
                 <img src={image} alt={articles?.document?.title} className='img-fluid' />
-                {articles?.document?.content}
+                <div dangerouslySetInnerHTML={{ __html: articles?.document?.content }} />
               </article>
             </Col>
             <Col xs={12} lg={4}>
