@@ -49,7 +49,7 @@ const Home = () => {
     <main>
       <Container>
         <section className="mb-5">
-          {/* <MainSlider data={sales.home.items} /> */}
+          <MainSlider data={sales.home.items} />
         </section>
       </Container>
       <CatalogSection />

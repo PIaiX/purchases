@@ -13,7 +13,7 @@ const MessagesChat = () => {
       <Link to='/account/messages' className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
         <ReturnIcon />
       </Link>
-      <Dialogs />
+      {/* <Dialogs /> */}
     </div>
   );
 };

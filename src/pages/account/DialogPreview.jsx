@@ -1,33 +1,32 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import moment from "moment";
+import { getImageURL } from '../../helpers/all';
 
-const DialogPreview = ({ id, nickname, text, time, image, status }) => {
+const DialogPreview = ({ id, to, message }) => {
   const [elapsedTime, setElapsedTime] = useState('');
 
   useEffect(() => {
     const interval = setInterval(() => {
-      const timePassed = moment(time).fromNow();
+      const timePassed = moment(message.createdAt).fromNow();
       setElapsedTime(timePassed);
     }, 6000); // Обновление времени каждую минуту
 
     return () => clearInterval(interval);
-  }, [time]);
+  }, [message.createdAt]);
+  const imag = getImageURL({ path: to, type: "user" })
 
-  const data = { time }
-    ? moment(time).format("DD.MM.YYYY kk:mm")
-    : moment().format("DD MMMM YYYY kk:mm");
   return (
     <NavLink to={`${id}`} className="dialog-preview">
-      <img src={image} alt="user" />
+      <img src={imag} alt="user" />
 
       <div className="text">
         <div className='d-flex justify-content-between align-items-center mb-1'>
-          <h6>{nickname}</h6>
+          <h6>{to.nickname}</h6>
           <time>{elapsedTime}</time>
         </div>
-        <p>{text}</p>
-        {status &&
+        <p>{message.text ?? "Нет сообщений"}</p>
+        {to.online.status &&
           <div className="indicator green"></div>}
       </div>
 

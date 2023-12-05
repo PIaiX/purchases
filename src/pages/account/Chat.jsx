@@ -5,11 +5,10 @@ import { useForm, useWatch } from "react-hook-form";
 import { IoChevronForwardOutline, IoEllipsisVertical } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Chat from "../../components/chat";
+import Chat from "../../components/chat/Chat1";
 import Meta from "../../components/Meta";
 import Loader from "../../components/utils/Loader";
 import socket from "../../config/socket";
-import { deliveryData, paymentData } from "../../helpers/order";
 import {
   createMessage,
   createMessageGeneral,
@@ -18,6 +17,7 @@ import {
   getMessagesGeneral,
   viewMessages,
 } from "../../services/message";
+import DialogPreview from "./DialogPreview";
 
 const DialogItem = memo(({ item, active }) => {
   return (
@@ -61,41 +61,7 @@ const DialogItem = memo(({ item, active }) => {
   );
 });
 
-const OrderItem = memo((item) => {
-  return (
-    <Link
-      to={"/order/" + item.id}
-      className="dialog-order d-block p-2 px-3 border-top"
-    >
-      <div className="d-flex justify-content-between aling-items-center">
-        <div>
-          <b className="fs-09">
-            {moment(item.createdAt).format("DD.MM.YYYY kk:mm")}
-          </b>
-        </div>
-        <div className="fs-07 text-muted d-flex align-items-center justify-content-end">
-          {item?.statuses[0]?.status?.name ?? "Нет статуса"}
-        </div>
-      </div>
-      <div className="d-flex justify-content-between aling-items-center">
-        <div>
-          <p className="d-block text-nowrap text-muted fs-08">
-            id {item.id} - {paymentData(item.payment).text} -{" "}
-            {deliveryData(item.delivery).text}
-          </p>
-          {item.delivery == "delivery" && (
-            <p className="d-block text-nowrap text-muted fs-08">
-              {item.street} {item.home}
-            </p>
-          )}
-        </div>
-        <div className="d-flex align-items-center justify-content-end">
-          <IoChevronForwardOutline color="#999" size={20} />
-        </div>
-      </div>
-    </Link>
-  );
-});
+
 
 const Dialogs = () => {
   const { dialogId } = useParams();
@@ -307,8 +273,8 @@ const Dialogs = () => {
                 </Col>
               </Row>
             </Link>
-            {dialogs.items.map((item) => (
-              <DialogItem item={item} active={data?.id} />
+            {dialogs?.items?.length > 0 && dialogs.items.map((item) => (
+              <DialogPreview item={item} />
             ))}
           </Col>
           <Col className="p-0 chat-container">
@@ -416,13 +382,7 @@ const Dialogs = () => {
                   </p>
                 )}
               </div>
-              <h5 className="fw-7 p-3 pb-3 d-flex justify-content-between align-items-center">
-                Заказы
-                <Badge bg="secondary">{messages?.order?.length ?? 0}</Badge>
-              </h5>
 
-              {messages?.order?.length > 0 &&
-                messages.order.map((item) => <OrderItem {...item} />)}
             </Col>
           )}
         </Row>
