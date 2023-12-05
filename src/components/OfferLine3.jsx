@@ -8,7 +8,11 @@ const OfferLine3 = ({ date, descr, nickname, id, status, price, author }) => {
   const image = getImageURL({ path: author, type: "user" })
   return (
     <div className="offer-line-3">
-      <div className="date"><span>{date}</span>
+      <div className="date">
+        <time>
+          <span>{moment(date).format("DD.MM.YYYY")}</span>
+          <span className='ms-3 gray'>{moment(date).format("kk:mm")}</span>
+        </time>
       </div>
       <div className="id">
         <span className='d-xl-none me-2'>ID заказа:</span>

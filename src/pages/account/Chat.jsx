@@ -5,23 +5,26 @@ import { useForm, useWatch } from "react-hook-form";
 import { IoChevronForwardOutline, IoEllipsisVertical } from "react-icons/io5";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from "react-router-dom";
-import Chat from "../components/chat/Chat";
-import socket from "../config/socket";
+import Chat from "../../components/chat";
+import Meta from "../../components/Meta";
+import Loader from "../../components/utils/Loader";
+import socket from "../../config/socket";
+import { deliveryData, paymentData } from "../../helpers/order";
 import {
   createMessage,
+  createMessageGeneral,
   getDialogs,
   getMessages,
+  getMessagesGeneral,
   viewMessages,
 } from "../../services/message";
 
 const DialogItem = memo(({ item, active }) => {
   return (
     <Link
-      to={"/dialogs/" + item.adminId}
-      state={{ adminId: item.adminId }}
-      className={
-        "dialog d-block py-2" + (item.adminId == active ? " active" : "")
-      }
+      to={"/dialogs/" + item.id}
+      state={{ dialogId: item.id }}
+      className={"dialog d-block py-2" + (item.id == active ? " active" : "")}
     >
       <Row className="m-0 align-items-center">
         <Col md={3} xxl={2} className="pe-0">
@@ -31,27 +34,26 @@ const DialogItem = memo(({ item, active }) => {
           <div className="d-flex justify-content-between aling-items-center">
             <div>
               <b className="fs-09 d-flex align-items-center">
-                {item?.user?.firstName?.length > 0
-                  ? item.user.firstName
-                  : item?.user?.email?.length > 0
-                    ? item.user.email
-                    : item?.user?.phone?.length > 0
-                      ? item.user.phone
-                      : "Клиент"}
-                {item?.user?.online?.status && (
+                {item?.from?.firstName
+                  ? item.from.firstName
+                  : item.from.nickname}{" "}
+                с {item?.to?.firstName ? item.to.firstName : item.to.nickname}
+                {/* {item?.user?.online?.status && (
                   <div className="online ms-2 mt-1 align-self-center" />
-                )}
+                )} */}
               </b>
             </div>
             <div className="fs-07 text-muted d-flex align-items-center justify-content-end">
-              {moment(item.createdAt).format("kk:mm")}
+              {moment(item.message.createdAt).format("kk:mm")}
             </div>
           </div>
           <div className="d-flex justify-content-between aling-items-center">
-            <p className="d-block text-nowrap text-muted fs-08">{item.text}</p>
-            {!item.memberId && !item.view && (
+            <p className="d-block text-nowrap text-muted fs-08">
+              {item?.message?.text ?? "Нет сообщений"}
+            </p>
+            {/* {!item.memberId && !item.view && (
               <div className="dialog-new align-self-center" />
-            )}
+            )} */}
           </div>
         </Col>
       </Row>
@@ -96,17 +98,16 @@ const OrderItem = memo((item) => {
 });
 
 const Dialogs = () => {
-  const brand = useSelector((state) => state.brand.active);
-  const { adminId } = useParams();
+  const { dialogId } = useParams();
   const { state } = useLocation();
-  const timer = useRef(0);
-  const message = useSelector((state) => state.notification.message);
+  // const timer = useRef(0);
+  // const message = useSelector((state) => state.notification.message);
 
   const { control, reset, setValue } = useForm({
     mode: "all",
     reValidateMode: "onChange",
     defaultValues: {
-      adminId: state?.adminId ?? adminId,
+      id: state?.dialogId ?? dialogId,
     },
   });
 
@@ -130,40 +131,52 @@ const Dialogs = () => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
-          ...res,
+          items: res,
         }))
       )
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
   };
   useEffect(() => {
     onLoadDialogs();
-  }, [message, brand]);
-
-  useEffect(
-    () =>
-      (state?.adminId || adminId) &&
-      setValue("adminId", state?.adminId ?? adminId),
-    [state?.adminId, adminId]
-  );
+  }, [messages]);
 
   useEffect(() => {
-    if (data?.adminId) {
-      viewMessages(data);
-      getMessages(data)
-        .then((res) =>
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            ...res,
-          }))
-        )
-        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    (state?.dialogId || dialogId) &&
+      setValue("id", state?.dialogId ?? dialogId);
+  }, [state?.dialogId, dialogId]);
+
+  useEffect(() => {
+    if (data?.id) {
+      // viewMessages(data);
+      if (data?.id == "general") {
+        getMessagesGeneral(data)
+          .then((res) =>
+            setMessages((prev) => ({
+              ...prev,
+              loading: false,
+              ...res,
+            }))
+          )
+          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+      } else {
+        getMessages(data)
+          .then((res) =>
+            setMessages((prev) => ({
+              ...prev,
+              loading: false,
+              ...res,
+            }))
+          )
+          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+      }
     }
-  }, [data?.adminId, brand]);
+  }, [data?.id]);
 
   useEffect(() => {
-    if (data?.adminId) {
-      socket.on("message/user/" + data.adminId, (data) => {
+    if (data?.id) {
+      socket.emit("createRoom", "message/" + data.id);
+
+      socket.on("message", (data) => {
         if (data) {
           setPrint(false);
           setMessages((prev) => ({
@@ -181,62 +194,67 @@ const Dialogs = () => {
           }));
         }
       });
-      socket.on("message/view/" + data.adminId, (data) => {
-        setMessages((prev) => ({
-          ...prev,
-          loading: false,
-          items: prev.items.map((e) => {
-            if (e?.memberId && data == "client") {
-              e.view = true;
-            }
-            return e;
-          }),
-        }));
-      });
-      socket.on("message/online/" + data.adminId, (online) => {
-        setMessages((prev) => ({
-          ...prev,
-          user: {
-            ...prev.user,
-            online,
-          },
-        }));
-        onLoadDialogs();
-      });
-      socket.on("message/print/admin/" + data.adminId, () => {
-        setPrint(true);
-        if (timer.current === 0) {
-          timer.current = 1;
-          setTimeout(() => {
-            timer.current = 0;
-            setPrint(false);
-          }, 5000);
-        }
-      });
+      // socket.on("message/view/" + data.id, (data) => {
+      //   setMessages((prev) => ({
+      //     ...prev,
+      //     loading: false,
+      //     items: prev.items.map((e) => {
+      //       if (e?.memberId && data == "client") {
+      //         e.view = true;
+      //       }
+      //       return e;
+      //     }),
+      //   }));
+      // });
+      // socket.on("message/online/" + data.id, (online) => {
+      //   setMessages((prev) => ({
+      //     ...prev,
+      //     user: {
+      //       ...prev.user,
+      //       online,
+      //     },
+      //   }));
+      //   onLoadDialogs();
+      // });
+      // socket.on("message/print/admin/" + data.id, () => {
+      //   setPrint(true);
+      //   if (timer.current === 0) {
+      //     timer.current = 1;
+      //     setTimeout(() => {
+      //       timer.current = 0;
+      //       setPrint(false);
+      //     }, 5000);
+      //   }
+      // });
       return () => {
-        socket.off("message/user/" + data.adminId);
-        socket.off("message/view/" + data.adminId);
-        socket.off("message/print/admin/" + data.adminId);
+        socket.off("message");
+        // socket.off("message/view/" + data.id);
+        // socket.off("message/print/admin/" + data.id);
       };
     }
-  }, [data?.adminId, brand]);
+  }, [data?.id]);
 
-  useEffect(() => {
-    if (timer.current === 0 && data?.text?.length > 0) {
-      timer.current = 1;
-      socket.emit("message/print", { adminId: data.adminId });
-      setTimeout(() => {
-        timer.current = 0;
-      }, 3000);
-    }
-  }, [data?.text]);
+  // useEffect(() => {
+  //   if (timer.current === 0 && data?.text?.length > 0) {
+  //     timer.current = 1;
+  //     socket.emit("message/print", { userId: data.id });
+  //     setTimeout(() => {
+  //       timer.current = 0;
+  //     }, 3000);
+  //   }
+  // }, [data?.text]);
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, text });
-      reset({ adminId: data.adminId });
+      if (data?.id === "general" || dialogId === "general") {
+        createMessageGeneral({ ...data, text });
+      } else {
+        createMessage({ ...data, text });
+      }
+
+      reset({ id: data.id ?? dialogId });
     },
-    [data, state, adminId]
+    [data, state, dialogId]
   );
 
   if (dialogs.loading) {
@@ -258,9 +276,39 @@ const Dialogs = () => {
                 <Badge bg="secondary">{dialogs.items.length ?? 0}</Badge>
               </h5>
             </div>
-
+            <Link
+              to="/dialogs/general"
+              state={{ dialogId: "general" }}
+              className="dialog d-block py-2"
+            >
+              <Row className="m-0 align-items-center">
+                <Col md={3} xxl={2} className="pe-0">
+                  <img src="/images/general-chat.svg" width={40} />
+                </Col>
+                <Col md={9} xxl={10}>
+                  <div className="d-flex justify-content-between aling-items-center">
+                    <div>
+                      <b className="fs-09 d-flex align-items-center">
+                        Общий чат
+                        {/* {item?.user?.online?.status && (
+                  <div className="online ms-2 mt-1 align-self-center" />
+                )} */}
+                      </b>
+                    </div>
+                  </div>
+                  <div className="d-flex justify-content-between aling-items-center">
+                    <p className="d-block text-nowrap text-muted fs-08">
+                      Чат со всеми пользователями
+                    </p>
+                    {/* {!item.memberId && !item.view && (
+              <div className="dialog-new align-self-center" />
+            )} */}
+                  </div>
+                </Col>
+              </Row>
+            </Link>
             {dialogs.items.map((item) => (
-              <DialogItem item={item} active={data?.adminId} />
+              <DialogItem item={item} active={data?.id} />
             ))}
           </Col>
           <Col className="p-0 chat-container">
@@ -287,7 +335,7 @@ const Dialogs = () => {
               </div>
             </div>
             <div className="p-3 pt-0">
-              {!data?.adminId ? (
+              {!data?.id ? (
                 <div className="chat d-flex align-items-center justify-content-center flex-column">
                   <h2 className="mb-3">Выберите диалог</h2>
                   <p className="text-gray">

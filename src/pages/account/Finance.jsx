@@ -29,7 +29,6 @@ const Finance = () => {
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
-  console.log(transactions)
   const [balanceSection, setBalanceSection] = useState(2);
   return (
     <section className="sec-finance mb-6">
@@ -143,7 +142,7 @@ const Finance = () => {
               <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
                 {transactions?.items.map((item) => (
                   <li>
-                    <Operation date={item.createdAt} type={item.orderId} id={item.id} status={item.status} sum={item.price} />
+                    <Operation {...item} />
                   </li>
                 ))}
               </ul>
