@@ -36,8 +36,10 @@ const Textarea = memo(
           type={type}
           placeholder={placeholder}
           rows={rows}
-          defaultValue={defaultValue}
-          onChange={(e) => onChange && !register && onChange(e.target.value)}
+          onChange={(e) =>
+            onChange && !register && onChange(e.target.value)
+          }
+          {...(register && { ...register(name, validation) })}
           readOnly={!readOnly && "readonly"}
           {...(register && { ...register(name, validation) })}
         />

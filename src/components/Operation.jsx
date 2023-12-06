@@ -11,7 +11,18 @@ const Operation = ({ createdAt, orderId, id, status, price, className }) => {
         </time>
       </div>
       <div className="id"><span className='d-xl-none'>ID:</span>{id}</div>
-      <div className="type">{orderId}</div>
+      {orderId ?
+        (price > 0 ? (
+          < div className="type">Покупка</div>
+        ) : (
+          < div className="type">Продажа</div>
+        )) : (
+          price > 0 ? (
+            < div className="type">Пополнение</div>
+          ) : (
+            < div className="type">Вывод средств</div>
+          ))
+      }
       <div className="stat">
         <span className="blue">{status}</span>
       </div>

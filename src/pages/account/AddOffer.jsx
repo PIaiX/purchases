@@ -3,13 +3,13 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
-import LabeledInput from '../../components/utils/LabeledInput';
 import Textarea from '../../components/utils/Textarea';
 import { getGames } from '../../services/game';
 import Select from '../../components/utils/Select';
 import { useForm, useWatch } from 'react-hook-form';
 import { useCallback } from 'react';
 import { NotificationManager } from "react-notifications";
+import { createUserProduct } from '../../services/product';
 
 const AddOffer = () => {
   const [games, setGames] = useState({ items: [], loading: true });
@@ -21,7 +21,7 @@ const AddOffer = () => {
     reset,
     setValue,
   } = useForm({
-    mode: 'onClick',
+    mode: 'onChange',
     reValidateMode: 'onChange',
 
   });
@@ -34,9 +34,9 @@ const AddOffer = () => {
     //     "Укажите оценку"
     //   )
     // }
-    createUserProduct(data)
+    createUserProduct({ category: data.category, region: data.region, server: data.server, option: data.option, text: data.text, count: data.count, price: data.price })
       .then(() => {
-        NotificationManager.success("Отзыв отправлен");
+        NotificationManager.success("Лот создан");
       })
       .catch(
         (err) =>
@@ -150,8 +150,6 @@ const AddOffer = () => {
                   {data.options && data.options.map(e => {
                     let options = data.options.filter(item => (item.parent == e.id));
                     let name = data.options.find(item => (!item.parent && item.id == e.id));
-
-                    console.log(name)
                     if (!e.parent) {
                       return <Col md={6} >
                         <Select
@@ -175,15 +173,19 @@ const AddOffer = () => {
                     />
                   </Col>
                   <Col md={4}>
-                    <LabeledInput
+                    <Input
                       type={"text"}
                       label={"Наличие"}
+                      name="count"
+                      register={register}
                     />
                   </Col>
                   <Col md={4}>
-                    <LabeledInput
+                    <Input
                       type={"text"}
                       label={"Цена, ₽ "}
+                      name="price"
+                      register={register}
                     />
                   </Col>
                 </Row>
