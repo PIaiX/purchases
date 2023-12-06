@@ -250,7 +250,6 @@ const Messages = ({ isMobileXL }) => {
                   ) : (
                     <>
                       {data?.id == 'general' ? (
-                        // <div className="dialog-preview"></div>
                         <div className="dialog-preview">
 
                           <div className="text">
