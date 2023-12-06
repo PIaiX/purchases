@@ -24,6 +24,7 @@ const Messages = ({ isMobileXL }) => {
   const { dialogId } = useParams();
   const { state } = useLocation();
   const timer = useRef(0);
+  const userId = useSelector(state => state.auth?.user?.id);
   // const message = useSelector((state) => state.notification.message);
 
   const { control, reset, setValue } = useForm({
@@ -78,7 +79,7 @@ const Messages = ({ isMobileXL }) => {
             setMessages((prev) => ({
               ...prev,
               loading: false,
-              ...res,
+              items: res.messages.items,
             }))
           )
           .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
@@ -145,20 +146,21 @@ const Messages = ({ isMobileXL }) => {
       //   }));
       //   onLoadDialogs();
       // });
-      socket.on("message/print/admin/" + data.id, () => {
+      socket.on("message/print/" + data.id, () => {
         setPrint(true);
         if (timer.current === 0) {
           timer.current = 1;
           setTimeout(() => {
             timer.current = 0;
             setPrint(false);
-          }, 5000);
+          }, 1000);
+          return () => clearTimeout(timer.current);
         }
       });
       return () => {
         socket.off("message");
         // socket.off("message/view/" + data.id);
-        socket.off("message/print/admin/" + data.id);
+        socket.off("message/print/" + data.id);
       };
     }
 
@@ -167,10 +169,11 @@ const Messages = ({ isMobileXL }) => {
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
       timer.current = 1;
-      socket.emit("message/print", { userId: data.id });
+      socket.emit("message/print", { adminId: data.id });
       setTimeout(() => {
         timer.current = 0;
-      }, 3000);
+      }, 1000);
+      return () => clearTimeout(timer.current);
     }
   }, [data?.text]);
 
@@ -247,23 +250,18 @@ const Messages = ({ isMobileXL }) => {
                   ) : (
                     <>
                       {data?.id == 'general' ? (
+                        // <div className="dialog-preview"></div>
                         <div className="dialog-preview">
-                          <img src="/imgs/user.jpg" alt="user" />
+
                           <div className="text">
-                            <h5 className="fw-7 mb-0">{messages?.dialog?.to?.nickname}</h5>
-                            <p className="text-muted fs-07">
-                              {print ? (
-                                "Печатает сообщение..."
-                              ) : messages?.dialog?.to?.online?.status ? (
-                                <span className="text-success">Онлайн</span>
-                              ) : messages?.user?.online?.end ? (
-                                "Был(-а) в сети " +
-                                moment(messages?.dialog?.to?.online?.end).fromNow()
-                              ) : (
-                                "Оффлайн"
-                              )}
+                            <h5 className="fw-7 mb-0">Общий чат</h5>
+                            <p className="text-muted">
+                              <span className="fw-7 mb-0">{dialogs.count} </span>
+                              <span className="text-success"> Онлайн</span>
+
                             </p>
                           </div>
+
                         </div>
                       ) : (
                         messages?.dialog?.to && (
@@ -301,7 +299,7 @@ const Messages = ({ isMobileXL }) => {
             </div>
           </div>
         }
-      </section>
+      </section >
     </>
   );
 };
