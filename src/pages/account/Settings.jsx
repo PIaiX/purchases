@@ -20,8 +20,11 @@ import { customPrice } from "../../helpers/all";
 import Meta from "../../components/Meta";
 import { deleteSession } from "../../services/user";
 import { logout } from "../../services/auth";
+import { editReserve } from "../../services/reserve";
 
 const Settings = () => {
+  const cash = useSelector((state) => state.auth.user.cash);
+  const reserve = useSelector((state) => state.auth.user.cash);
   const { user } = useSelector((state) => state.auth);
   const [sessions, setSessions] = useState({
     items: [],
@@ -55,6 +58,19 @@ const Settings = () => {
       .then(() => {
         dispatch(setUser({ ...user, options: data?.options ?? {} }));
         NotificationManager.success("Данные успешно обновлены");
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Ошибка при сохранении"
+        );
+      });
+  }, []);
+
+  const onEditReserve = useCallback((data) => {
+    editReserve({ reserve: data.reserve })
+      .then((res) => {
+        dispatch(setUser({ res }));
+        NotificationManager.success("Деньги успешно");
       })
       .catch((err) => {
         NotificationManager.error(
@@ -154,8 +170,10 @@ const Settings = () => {
             type="number"
             label="Зарезервировать на балансе"
             placeholder="Введите сумму"
+            name="reserve"
+            register={register}
           />
-          <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4">
+          <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmit(onEditReserve)}>
             Зарезервировать
           </button>
         </div>

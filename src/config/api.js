@@ -35,6 +35,8 @@ const apiRoutes = {
 
   // review
   REVIEWS: BASE_URL + "/user/review",
+  // reserve
+  RESERVE: BASE_URL + "/user/reserve",
 
   // Category
   CATEGORIES: BASE_URL + "/category",
