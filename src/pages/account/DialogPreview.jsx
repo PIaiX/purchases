@@ -7,8 +7,13 @@ const DialogPreview = ({ id, to, message }) => {
   const [elapsedTime, setElapsedTime] = useState('');
 
   useEffect(() => {
-    const timePassed = moment().to(message.createdAt);
-    setElapsedTime(timePassed);
+
+
+    const interval = setInterval(() => {
+      const timePassed = moment(message.createdAt).fromNow();
+      setElapsedTime(timePassed);
+    }, 1000);
+    return () => clearInterval(interval); // Очистить интервал перед перемонтированием компонента
   }, [message.createdAt]);
   const imag = getImageURL({ path: to, type: "user" })
 
