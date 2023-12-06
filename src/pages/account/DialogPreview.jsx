@@ -7,12 +7,8 @@ const DialogPreview = ({ id, to, message }) => {
   const [elapsedTime, setElapsedTime] = useState('');
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      const timePassed = moment(message.createdAt).fromNow();
-      setElapsedTime(timePassed);
-    }, 6000); // Обновление времени каждую минуту
-
-    return () => clearInterval(interval);
+    const timePassed = moment().to(message.createdAt);
+    setElapsedTime(timePassed);
   }, [message.createdAt]);
   const imag = getImageURL({ path: to, type: "user" })
 

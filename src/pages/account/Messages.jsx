@@ -4,8 +4,10 @@ import { Link, useLocation, useParams } from 'react-router-dom';
 import { useSelector } from "react-redux";
 import {
   createMessage,
+  createMessageGeneral,
   getDialogs,
   getMessages,
+  getMessagesGeneral,
   viewMessages,
 } from "../../services/message";
 import socket from "../../config/socket";
@@ -15,12 +17,13 @@ import Loader from "../../components/utils/Loader"
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import ReturnIcon from '../../components/svg/ReturnIcon';
 import Chat1 from "../../components/chat/Chat1";
+import { useRef } from "react";
 
 
 const Messages = ({ isMobileXL }) => {
   const { dialogId } = useParams();
   const { state } = useLocation();
-  // const timer = useRef(0);
+  const timer = useRef(0);
   // const message = useSelector((state) => state.notification.message);
 
   const { control, reset, setValue } = useForm({
@@ -70,7 +73,7 @@ const Messages = ({ isMobileXL }) => {
     if (data?.id) {
       // viewMessages(data);
       if (data?.id == "general") {
-        getMessagesGeneral(data)
+        getMessagesGeneral()
           .then((res) =>
             setMessages((prev) => ({
               ...prev,
@@ -81,12 +84,15 @@ const Messages = ({ isMobileXL }) => {
           .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
       } else {
         getMessages(data)
-          .then((res) =>
+          .then((res) => {
+            console.log(res)
             setMessages((prev) => ({
               ...prev,
               loading: false,
-              ...res,
+              items: res.messages.items,
+              dialog: res.dialog
             }))
+          }
           )
           .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
       }
@@ -98,15 +104,17 @@ const Messages = ({ isMobileXL }) => {
       socket.emit("createRoom", "message/" + data.id);
 
       socket.on("message", (data) => {
+
         if (data) {
           setPrint(false);
+
           setMessages((prev) => ({
             ...prev,
             loading: false,
             items: [
               data,
               ...prev.items.map((e) => {
-                if (e?.memberId) {
+                if (e?.userId) {
                   e.view = true;
                 }
                 return e;
@@ -137,33 +145,34 @@ const Messages = ({ isMobileXL }) => {
       //   }));
       //   onLoadDialogs();
       // });
-      // socket.on("message/print/admin/" + data.id, () => {
-      //   setPrint(true);
-      //   if (timer.current === 0) {
-      //     timer.current = 1;
-      //     setTimeout(() => {
-      //       timer.current = 0;
-      //       setPrint(false);
-      //     }, 5000);
-      //   }
-      // });
+      socket.on("message/print/admin/" + data.id, () => {
+        setPrint(true);
+        if (timer.current === 0) {
+          timer.current = 1;
+          setTimeout(() => {
+            timer.current = 0;
+            setPrint(false);
+          }, 5000);
+        }
+      });
       return () => {
         socket.off("message");
         // socket.off("message/view/" + data.id);
-        // socket.off("message/print/admin/" + data.id);
+        socket.off("message/print/admin/" + data.id);
       };
     }
+
   }, [data?.id]);
 
-  // useEffect(() => {
-  //   if (timer.current === 0 && data?.text?.length > 0) {
-  //     timer.current = 1;
-  //     socket.emit("message/print", { userId: data.id });
-  //     setTimeout(() => {
-  //       timer.current = 0;
-  //     }, 3000);
-  //   }
-  // }, [data?.text]);
+  useEffect(() => {
+    if (timer.current === 0 && data?.text?.length > 0) {
+      timer.current = 1;
+      socket.emit("message/print", { userId: data.id });
+      setTimeout(() => {
+        timer.current = 0;
+      }, 3000);
+    }
+  }, [data?.text]);
 
   const onNewMessage = useCallback(
     (text) => {
@@ -218,7 +227,78 @@ const Messages = ({ isMobileXL }) => {
             <Link to='/account/messages' className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
               <ReturnIcon />
             </Link>
-            <Chat1 />
+            <div className="p-3 d-flex align-items-center justify-content-between">
+              <div>
+
+
+                <div className="p-3 pt-0">
+                  {!data?.id ? (
+                    <div className="chat d-flex align-items-center justify-content-center flex-column">
+                      <h2 className="mb-3">Выберите диалог</h2>
+                      <p className="text-gray">
+                        В данный момент нет диалогов. Возможно вы не выбрали
+                        конкретный диалог.
+                      </p>
+                    </div>
+                  ) : messages.loading ? (
+                    <div className="chat d-flex align-items-center justify-content-center flex-column">
+                      <Loader />
+                    </div>
+                  ) : (
+                    <>
+                      {data?.id == 'general' ? (
+                        <div className="dialog-preview">
+                          <img src="/imgs/user.jpg" alt="user" />
+                          <div className="text">
+                            <h5 className="fw-7 mb-0">{messages?.dialog?.to?.nickname}</h5>
+                            <p className="text-muted fs-07">
+                              {print ? (
+                                "Печатает сообщение..."
+                              ) : messages?.dialog?.to?.online?.status ? (
+                                <span className="text-success">Онлайн</span>
+                              ) : messages?.user?.online?.end ? (
+                                "Был(-а) в сети " +
+                                moment(messages?.dialog?.to?.online?.end).fromNow()
+                              ) : (
+                                "Оффлайн"
+                              )}
+                            </p>
+                          </div>
+                        </div>
+                      ) : (
+                        messages?.dialog?.to && (
+
+                          <div className="dialog-preview">
+                            <img src="/imgs/user.jpg" alt="user" />
+                            <div className="text">
+                              <h5 className="fw-7 mb-0">{messages?.dialog?.to?.nickname}</h5>
+                              <p className="text-muted fs-07">
+                                {print ? (
+                                  "Печатает сообщение..."
+                                ) : messages?.dialog?.to?.online?.status ? (
+                                  <span className="text-success">Онлайн</span>
+                                ) : messages?.user?.online?.end ? (
+                                  "Был(-а) в сети " +
+                                  moment(messages?.dialog?.to?.online?.end).fromNow()
+                                ) : (
+                                  "Оффлайн"
+                                )}
+                              </p>
+                            </div>
+                          </div>
+
+                        ))}
+                      <Chat1
+                        messages={messages}
+                        emptyText="Нет сообщений"
+                        onSubmit={(e) => onNewMessage(e)}
+                        onChange={(e) => setValue("text", e)}
+                      />
+                    </>
+                  )}
+                </div>
+              </div>
+            </div>
           </div>
         }
       </section>

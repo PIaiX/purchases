@@ -1,24 +1,22 @@
 import React from 'react'
 import { Navigate, Route, Routes } from 'react-router-dom'
+import SecFavorites from '../components/SecFavorites'
 import useIsMobile from '../hooks/isMobile'
 import AccountLayout from '../layouts/AccountLayout'
-import Profile from '../pages/account/Profile'
-import AccountMenu from '../pages/account/AccountMenu';
-import Offers from '../pages/account/Offers'
+import AccountMenu from '../pages/account/AccountMenu'
 import AddOffer from '../pages/account/AddOffer'
-import PhoneVerification from '../pages/account/PhoneVerification'
+import Callback from '../pages/account/Callback'
+import CallbackChat from '../pages/account/CallbackChat'
 import EmailVerification from '../pages/account/EmailVerification'
+import Feedback from '../pages/account/Feedback'
+import Finance from '../pages/account/Finance'
+import LeaveFeedback from '../pages/account/LeaveFeedback'
+import Messages from '../pages/account/Messages'
+import Offers from '../pages/account/Offers'
+import PhoneVerification from '../pages/account/PhoneVerification'
+import Profile from '../pages/account/Profile'
 import PurchaseHistory from '../pages/account/PurchaseHistory'
 import SalesHistory from '../pages/account/SalesHistory'
-import Finance from '../pages/account/Finance'
-import Feedback from '../pages/account/Feedback'
-import Messages from '../pages/account/Messages'
-import LeaveFeedback from '../pages/account/LeaveFeedback'
-import Callback from '../pages/account/Callback'
-import MessagesChat from '../pages/account/MessagesChat'
-import MessagesList from '../pages/account/MessagesList'
-import CallbackChat from '../pages/account/CallbackChat'
-import SecFavorites from '../components/SecFavorites'
 import Settings from '../pages/account/Settings'
 
 const AccountRouter = () => {
@@ -42,12 +40,7 @@ const AccountRouter = () => {
         <Route path="sales-history" element={<SalesHistory />} />
         <Route path="finance" element={<Finance />} />
         <Route path="messages" element={<Messages isMobileXL={isMobileXL} />}>
-          {
-            (isMobileXL)
-              ? <Route index element={<MessagesList />} />
-              : <Route index element={<Navigate to=":dialogId" replace={true} />} />
-          }
-          <Route path=":dialogId" element={<MessagesChat />} />
+          <Route path=":dialogId" element={<Messages />} />
         </Route>
         <Route path="feedback" element={<Feedback />} />
         <Route path="feedback/add/:productId" element={<LeaveFeedback />} />

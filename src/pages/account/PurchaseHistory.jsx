@@ -50,7 +50,7 @@ const PurchaseHistory = () => {
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-4 g-xl-0'>
               {orders?.items.map((item) => (
                 <li>
-                  <OfferLine3 date={item.createdAt} descr={item.comment} nickname={item.author.nickname} id={item.id} status={item.status} price={item.total} image={item.author.media} />
+                  <OfferLine3 {...item} />
                 </li>
               ))}
             </ul>
