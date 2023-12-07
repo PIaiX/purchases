@@ -24,9 +24,13 @@ import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
 import { getUser } from "../services/user";
 import Input from "../components/utils/Input";
+import { getImageURL } from "../helpers/all";
+import Chat from "../components/chat/Chat";
+import { useSelector } from "react-redux";
 
 const Profile = () => {
   const { userId } = useParams();
+  const myId = useSelector(state => state.auth?.user?.id);
   const [showShare, setShowShare] = useState(false);
   const [user, setUser] = useState({
     data: {},
@@ -70,7 +74,7 @@ const Profile = () => {
               <div className="d-flex align-items-start mb-5">
                 <div className="user flex-1">
                   <div className="user-photo">
-                    <img src="/imgs/user2.jpg" alt="userphoto" />
+                    <img src={getImageURL(user)} alt="userphoto" />
                     <button type="button">
                       <FiEdit />
                     </button>
@@ -80,13 +84,13 @@ const Profile = () => {
                       {user.data.nickname ?? "Никнейм"}
                     </div>
                     <div className="d-flex align-items-center">
-                      <StarRating rate={user?.data?.options?.rating ?? 0} />
+                      <StarRating value={user?.data?.rating ?? 0} />
                       <span className="fs-13 fw-7 ms-2">
-                        {user?.data?.options?.rating ?? 0}
+                        {user?.data?.rating ?? 0}
                       </span>
                     </div>
                     <p className="mt-2">
-                      {user.data.about ?? "Ничего не написано"}
+                      {user.data.about ?? ""}
                     </p>
                   </div>
                   <ul className="user-info">
@@ -214,74 +218,15 @@ const Profile = () => {
             </Col>
             <Col lg={4}>
               <h2 className="text-center">Чат с пользователем</h2>
-              <div className="sec-messages-chat">
-                <Link
-                  to="/account/messages"
-                  className="d-flex align-items-center d-xl-none return-icon ms-4 mb-2"
-                >
-                  <ReturnIcon />
-                </Link>
-                <div className="chat-window">
-                  <UserMessage
-                    name={"User8name"}
-                    time={"12:36"}
-                    text={
-                      "Куплю аккаунт в игре Marvel Future Fight с хорошей прокачкой"
-                    }
-                  />
-                  <UserMessage
-                    name={"Galadriel_90"}
-                    time={"12:37"}
-                    text={
-                      "Другим отключают со временем. Как другу отключили. Хотелось бы на новый год такой подарок."
-                    }
-                  />
-                  <MyMessage
-                    name={"Weatherwax"}
-                    time={"12:37"}
-                    text={"Ребятааааа! Куплю аккаунты в доте"}
-                  />
-                  <UserMessage
-                    name={"Galadriel_90"}
-                    time={"12:37"}
-                    text={
-                      "Какая-то слишком глупая схема обмана Через рефералы Схема стара как жизнь"
-                    }
-                  />
-                  <UserMessage
-                    name={"User8name"}
-                    time={"12:40"}
-                    text={
-                      "Куплю аккаунт в игре Marvel Future Fight с хорошей прокачкой"
-                    }
-                  />
-                  <MyMessage
-                    name={"Weatherwax"}
-                    time={"12:37"}
-                    text={"Ребятааааа! Куплю аккаунты в доте"}
-                  />
-                  <UserMessage
-                    name={"User8name"}
-                    time={"12:36"}
-                    text={
-                      "Куплю аккаунт в игре Marvel Future Fight с хорошей прокачкой"
-                    }
-                  />
-                  <UserMessage
-                    name={"Galadriel_90"}
-                    time={"12:37"}
-                    text={
-                      "Другим отключают со временем. Как другу отключили. Хотелось бы на новый год такой подарок."
-                    }
-                  />
+              {!myId ? (
+                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                  Для отправки сообщений войдите в аккаунт!
                 </div>
-                <form action="" className="chat-form">
-                  <input type="text" placeholder="Ваше сообщение" />
-                  <button type="submit" className="btn-1 fs-08 py-2 px-3">
-                    Отправить
-                  </button>
-                </form>
-              </div>
+              ) : (
+                <div className="p-0 fs-09">
+                  <Chat toId={user?.data?.id} />
+                </div>
+              )}
             </Col>
           </Row>
         </Container>

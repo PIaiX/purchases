@@ -119,18 +119,6 @@ const Chat = memo(({ toId }) => {
 
   return (
     <div className="chat">
-      <div className="dialog-preview">
-        <img src="/imgs/user.jpg" alt="user" />
-        <div className="text">
-          <div className='d-flex justify-content-between align-items-center mb-1'>
-            <h6>{messages?.dialog?.to.nickname}</h6>
-          </div>
-          {messages?.dialog?.to?.online?.status &&
-            <p>online</p>
-          }
-        </div>
-      </div>
-
       {
         messages.loading ? (
           <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
