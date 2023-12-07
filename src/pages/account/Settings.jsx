@@ -23,8 +23,6 @@ import { logout } from "../../services/auth";
 import { editReserve } from "../../services/reserve";
 
 const Settings = () => {
-  const cash = useSelector((state) => state.auth.user.cash);
-  const reserve = useSelector((state) => state.auth.user.cash);
   const { user } = useSelector((state) => state.auth);
   const [sessions, setSessions] = useState({
     items: [],
@@ -44,6 +42,8 @@ const Settings = () => {
   });
 
   const form = useWatch({ control });
+
+  const [reserve, setReserve] = useState();
 
   useLayoutEffect(() => {
     getSessions()
@@ -65,19 +65,19 @@ const Settings = () => {
         );
       });
   }, []);
-
-  const onEditReserve = useCallback((data) => {
-    editReserve({ reserve: data.reserve })
+  console.log(reserve)
+  const onEditReserve = useCallback((reserve) => {
+    editReserve({ reserve: reserve })
       .then((res) => {
         dispatch(setUser({ res }));
-        NotificationManager.success("Деньги успешно");
+        NotificationManager.success("Деньги успешно зарезервированы");
       })
       .catch((err) => {
         NotificationManager.error(
           err?.response?.data?.error ?? "Ошибка при сохранении"
         );
       });
-  }, []);
+  }, [reserve]);
 
   useEffect(() => {
     Object.keys(form).length > 0 && handleSubmit(onEditAccount(form));
@@ -157,27 +157,56 @@ const Settings = () => {
         </Col>
       </Row>
 
-      <div className="d-xxl-flex align-items-end mt-5">
-        <div className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
-          <span className="fs-18">Доступно для резервирования</span>
-          <div className="d-flex align-items-center justify-content-center">
-            <span className="fs-18 ms-4">{customPrice(user?.cash)}</span>
-          </div>
-        </div>
-        <div className="flex-1 d-sm-flex align-items-end ms-xxl-4 mt-4 mt-xxl-0">
-          <Input
-            className="flex-1"
-            type="number"
-            label="Зарезервировать на балансе"
-            placeholder="Введите сумму"
-            name="reserve"
-            register={register}
-          />
-          <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmit(onEditReserve)}>
-            Зарезервировать
-          </button>
-        </div>
-      </div>
+
+      {!user?.reserve ? (
+        <Col className="d-xxl-flex align-items-end mt-5">
+          <Row className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
+            <span className="fs-18">Доступно для резервирования</span>
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="fs-18 ms-4">{customPrice(user?.cash)}</span>
+            </div>
+          </Row>
+          <Row className="flex-1 d-sm-flex align-items-end ms-xxl-4 mt-4 mt-xxl-0">
+            <Input
+              className="flex-1"
+              type="number"
+              label="Зарезервировать на балансе"
+              placeholder="Введите сумму"
+              onChange={e => setReserve(e.target.value)}
+
+            />
+            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={onEditReserve}>
+              Зарезервировать
+            </button>
+          </Row>
+        </Col>
+
+      ) : (
+        <Col className="d-xxl-flex align-items-end mt-5">
+          <Row className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
+            <span className="fs-18">Зарезервиорвано {customPrice(user?.reserve)}. Доступно для перерезервирования</span>
+            <div className="d-flex align-items-center justify-content-center">
+              <span className="fs-18 ms-4">{customPrice(user?.cash)}</span>
+            </div>
+          </Row>
+
+          <Row className="flex-1 d-sm-flex align-items-end ms-xxl-4 mt-4 mt-xxl-1">
+            <Input
+              className="flex-1"
+              type="number"
+              label="Зарезервировать на балансе"
+              placeholder="Введите сумму"
+              onChange={e => setReserve(e.target.value)}
+            />
+            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={onEditReserve}>
+              Зарезервировать
+            </button>
+          </Row>
+        </Col>
+      )}
+
+
+
     </section>
   );
 };
