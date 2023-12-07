@@ -18,6 +18,7 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import ReturnIcon from '../../components/svg/ReturnIcon';
 import Chat1 from "../../components/chat/Chat1";
 import { useRef } from "react";
+import moment from "moment";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -276,7 +277,7 @@ const Messages = ({ isMobileXL }) => {
                                   "Печатает сообщение..."
                                 ) : messages?.dialog?.to?.online?.status ? (
                                   <span className="text-success">Онлайн</span>
-                                ) : messages?.user?.online?.end ? (
+                                ) : messages?.dialog?.to?.online?.end ? (
                                   "Был(-а) в сети " +
                                   moment(messages?.dialog?.to?.online?.end).fromNow()
                                 ) : (
