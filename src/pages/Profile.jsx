@@ -24,9 +24,11 @@ import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
 import { getUser } from "../services/user";
 import Input from "../components/utils/Input";
-import { getImageURL } from "../helpers/all";
+import { declOfNum, getImageURL } from "../helpers/all";
 import Chat from "../components/chat/Chat";
 import { useSelector } from "react-redux";
+import NavPagination from "../components/NavPagination";
+import moment from "moment";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -36,10 +38,22 @@ const Profile = () => {
     data: {},
     loading: true,
   });
-
+  const [currentPageProducts, setCurrentPageProducts] = useState(1)
+  const onPageChangeProducts = (page) => {
+    setCurrentPageProducts(page.selected + 1);
+  };
+  const [currentPageReviews, setCurrentPageReviews] = useState(1)
+  const onPageChangeReviews = (page) => {
+    setCurrentPageReviews(page.selected + 1);
+  };
   useLayoutEffect(() => {
     getUser(userId)
-      .then((res) => res && setUser({ data: res, loading: false }))
+      .then((res) => res && setUser({
+        loading: false,
+        data: res.user,
+        products: res.products,
+        reviews: res.reviews,
+      }))
       .catch(() => setUser((e) => ({ ...e, loading: false })));
   }, [userId]);
 
@@ -89,6 +103,14 @@ const Profile = () => {
                         {user?.data?.rating ?? 0}
                       </span>
                     </div>
+                    <div>
+                      <p className="fs-13 fw-7 ms-1 mt-2">
+                        {user?.data?.createdAt ? moment(user.data.createdAt).fromNow(1) : ""} на платформе
+                      </p>
+                    </div>
+                    <div>
+                      <p className="text-success fs-13 fw-7 ms-0">Онлайн</p>
+                    </div>
                     <p className="mt-2">
                       {user.data.about ?? ""}
                     </p>
@@ -106,7 +128,7 @@ const Profile = () => {
                         <Joystick className="path" />
                         <span>Лотов:</span>
                       </div>
-                      <span>{0}</span>
+                      <span>{user?.data?.product ?? 0}</span>
                     </li>
                     <li>
                       <div>
@@ -142,77 +164,36 @@ const Profile = () => {
 
               <h4>Предложения</h4>
               <div className="list-wrapping mt-4 mt-sm-5">
-                <div className="list-wrapping-top"></div>
+                <div className="list-wrapping-top d-flex justify-content-between ">
+                  <div className="serv">Сервер</div>
+                  <div className='descr'>Описание</div>
+                  <div className='price'>Цена</div>
+                </div>
                 <div className="list-wrapping-main p-sm-4">
                   <ul className="row row-cols-1 g-3">
-                    <li>
-                      <TraderLine
-                        serv={"Airin + Blackbird"}
-                        descr={
-                          "Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R"
-                        }
-                        price={"186,97 ₽"}
-                      />
-                    </li>
-                    <li>
-                      <TraderLine
-                        serv={"Airin + Blackbird"}
-                        descr={
-                          "Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R"
-                        }
-                        price={"186,97 ₽"}
-                      />
-                    </li>
-                    <li>
-                      <TraderLine
-                        serv={"Airin + Blackbird"}
-                        descr={
-                          "Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты), R"
-                        }
-                        price={"186,97 ₽"}
-                      />
-                    </li>
+                    {user?.products?.items?.length > 0 && user.products.items.map(item => (
+                      <li>
+                        <TraderLine {...item} />
+                      </li>
+                    ))}
                   </ul>
+                  <NavPagination totalPages={user?.products?.pagination?.totalPages} onPageChange={onPageChangeProducts} />
                 </div>
               </div>
 
               <div className="list-wrapping mt-4 mt-sm-5">
                 <div className="list-wrapping-top">
-                  <h5 className="fw-6">Всего 193 отзыва</h5>
+                  <h5 className="fw-6">Всего {user?.reviews?.pagination?.totalItems} {declOfNum(user?.reviews?.pagination?.totalItems, ['отзыв', 'отзыва', 'отзывов'])}</h5>
                 </div>
                 <div className="list-wrapping-main p-sm-4">
                   <ul className="row row-cols-1 g-3">
-                    {/* <li>
-                      <FeedbackLine
-                        user="Galadriel_90"
-                        rate={4.1}
-                        text="быстрое и качественное выполнение заказа, спасибо!"
-                      />
-                    </li>
-                    <li>
-                      <FeedbackLine
-                        user="Galadriel_90"
-                        rate={4.1}
-                        text="быстрое и качественное выполнение заказа, спасибо!"
-                      />
-                    </li>
-                    <li>
-                      <FeedbackLine
-                        user="Raccoon5"
-                        rate={2.8}
-                        text="Быстро и чётко,спасибо продавцу"
-                      />
-                    </li> */}
+                    {user?.reviews?.items?.length > 0 && user.reviews.items.map(item => (
+                      <li>
+                        <FeedbackLine {...item} />
+                      </li>
+                    ))}
                   </ul>
-                </div>
-                <div className="list-wrapping-bottom">
-                  <button
-                    type="button"
-                    className="mx-auto d-flex flex-column align-items-center pale-blue fs-11"
-                  >
-                    <span>Показать ещё</span>
-                    <FiChevronDown className="fs-14" />
-                  </button>
+                  <NavPagination totalPages={user?.reviews?.pagination?.totalPages} onPageChange={onPageChangeProducts} />
                 </div>
               </div>
             </Col>
@@ -242,7 +223,7 @@ const Profile = () => {
           />
         </Modal.Body>
       </Modal>
-    </main>
+    </main >
   );
 };
 

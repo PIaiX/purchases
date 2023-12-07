@@ -1,13 +1,13 @@
 import React from 'react';
 import StarRating from './utils/StarRating';
-import {Link} from 'react-router-dom';
+import { Link } from 'react-router-dom';
 
-const TraderLine = (props) => {
+const TraderLine = ({ title, desc, price }) => {
   return (
     <div className='trader-line'>
-      <div className="serv">{props.serv}</div>
-      <div className="descr">{props.descr}</div>
-      <div className='price'>{props.price} 
+      <div className="serv">{title}</div>
+      <div className="descr">{desc}</div>
+      <div className='price'>{price}
         <span className='rouble ms-1'>₽</span>
       </div>
     </div>
