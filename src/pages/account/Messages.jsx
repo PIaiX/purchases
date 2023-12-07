@@ -153,7 +153,7 @@ const Messages = ({ isMobileXL }) => {
           setTimeout(() => {
             timer.current = 0;
             setPrint(false);
-          }, 1000);
+          }, 5000);
           return () => clearTimeout(timer.current);
         }
       });
@@ -169,10 +169,12 @@ const Messages = ({ isMobileXL }) => {
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
       timer.current = 1;
+      setPrint(true);
       socket.emit("message/print", { adminId: data.id });
       setTimeout(() => {
         timer.current = 0;
-      }, 1000);
+        setPrint(false);
+      }, 5000);
       return () => clearTimeout(timer.current);
     }
   }, [data?.text]);
