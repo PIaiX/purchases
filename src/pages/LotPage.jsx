@@ -19,17 +19,20 @@ const LotPage = () => {
         loading: true,
         items: [],
     });
+
     useEffect(() => {
         getProduct({ id: lotId })
             .then((res) => {
                 setProducts((prev) => ({
                     prev,
                     loading: false,
-                    items: res,
+                    items: res.product,
+                    reviews: res.reviews,
                 }))
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
     }, [lotId]);
+    console.log(products)
     return (
         <main>
             <section className='lot-page mb-6'>
@@ -147,21 +150,11 @@ const LotPage = () => {
                         <Col xs={12} lg={4} className='mt-5 mt-lg-0'>
                             <h2 className='fs-15'>Отзывы</h2>
                             <ul className='list-unstyled'>
-                                <li className='mb-3'>
-                                    <ReviewCard />
-                                </li>
-                                <li className='mb-3'>
-                                    <ReviewCard />
-                                </li>
-                                <li className='mb-3'>
-                                    <ReviewCard />
-                                </li>
-                                <li className='mb-3'>
-                                    <ReviewCard />
-                                </li>
-                                <li className='mb-3'>
-                                    <ReviewCard />
-                                </li>
+                                {products?.reviews?.length > 0 && products.reviews.map(review => (
+                                    <li className='mb-3'>
+                                        <ReviewCard {...review} />
+                                    </li>
+                                ))}
                             </ul>
                         </Col>
                     </Row>

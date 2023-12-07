@@ -42,11 +42,7 @@ const Profile = () => {
   if (user?.loading) {
     return <Loader full />;
   }
-
-  if (user?.loading) {
-    return <Loader full />;
-  }
-
+  console.log(user)
   if (user && user.data.status === 0) {
     return (
       <main className="d-flex justify-content-center flex-column align-items-center">
@@ -182,7 +178,7 @@ const Profile = () => {
                 </div>
                 <div className="list-wrapping-main p-sm-4">
                   <ul className="row row-cols-1 g-3">
-                    <li>
+                    {/* <li>
                       <FeedbackLine
                         user="Galadriel_90"
                         rate={4.1}
@@ -202,7 +198,7 @@ const Profile = () => {
                         rate={2.8}
                         text="Быстро и чётко,спасибо продавцу"
                       />
-                    </li>
+                    </li> */}
                   </ul>
                 </div>
                 <div className="list-wrapping-bottom">
