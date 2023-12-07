@@ -41,9 +41,22 @@ const Settings = () => {
     reValidateMode: "onSubmit",
   });
 
+  const {
+    control: controlReserve,
+    register: registerReserve,
+    formState: { errors: errorsReserve, isValid: isValidReserve },
+    handleSubmit: handleSubmitReserve,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+  });
+
+
   const form = useWatch({ control });
 
-  const [reserve, setReserve] = useState();
+  const data = useWatch({ control: controlReserve });
+
+  const [reserve, setReserve] = useState(0);
 
   useLayoutEffect(() => {
     getSessions()
@@ -65,9 +78,9 @@ const Settings = () => {
         );
       });
   }, []);
-  console.log(reserve)
-  const onEditReserve = useCallback((reserve) => {
-    editReserve({ reserve: reserve })
+
+  const onEditReserve = useCallback((data) => {
+    editReserve(data)
       .then((res) => {
         dispatch(setUser({ res }));
         NotificationManager.success("Деньги успешно зарезервированы");
@@ -77,7 +90,7 @@ const Settings = () => {
           err?.response?.data?.error ?? "Ошибка при сохранении"
         );
       });
-  }, [reserve]);
+  }, []);
 
   useEffect(() => {
     Object.keys(form).length > 0 && handleSubmit(onEditAccount(form));
@@ -172,10 +185,11 @@ const Settings = () => {
               type="number"
               label="Зарезервировать на балансе"
               placeholder="Введите сумму"
-              onChange={e => setReserve(e.target.value)}
+              name="reserve"
+              register={registerReserve}
 
             />
-            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={onEditReserve}>
+            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmitReserve(onEditReserve)}>
               Зарезервировать
             </button>
           </Row>
@@ -196,9 +210,10 @@ const Settings = () => {
               type="number"
               label="Зарезервировать на балансе"
               placeholder="Введите сумму"
-              onChange={e => setReserve(e.target.value)}
+              name="reserve"
+              register={registerReserve}
             />
-            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={onEditReserve}>
+            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmitReserve(onEditReserve)}>
               Зарезервировать
             </button>
           </Row>
