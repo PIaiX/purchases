@@ -23,7 +23,7 @@ const AddOffer = () => {
     setValue,
   } = useForm({
     mode: 'onChange',
-    reValidateMode: 'onChange',
+    reValidateMode: "onSubmit",
 
   });
   const [category, setCategory] = useState([]);
@@ -85,6 +85,7 @@ const AddOffer = () => {
     }
 
   }, [data.param]);
+  console.log(data)
   if (games.loading) {
     return <Loader full />;
   }
@@ -105,6 +106,9 @@ const AddOffer = () => {
                         title="Игра"
                         onClick={e => {
                           reset({
+                            text: data.text,
+                            count: data.count,
+                            price: data.price,
                             category: e.value,
                             game: games.items[games.items.findIndex(e2 => e2.id === e.value)]
                           })
