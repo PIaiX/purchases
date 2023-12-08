@@ -42,7 +42,7 @@ const Home = () => {
   }, []);
 
   if (sales.loading) {
-    return <Loader full />;
+    return <Loader />;
   }
 
   return (

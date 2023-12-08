@@ -84,6 +84,9 @@ const AddOffer = () => {
     }
 
   }, [data.param]);
+  if (games.loading) {
+    return <Loader full />;
+  }
   return (
     <section className='mb-3 mb-sm-5'>
       <div className='row'>

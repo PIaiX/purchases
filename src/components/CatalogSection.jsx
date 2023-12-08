@@ -37,7 +37,9 @@ const CatalogSection = () => {
   }, []);
 
 
-
+  if (games.loading) {
+    return <Loader />;
+  }
 
 
   return (

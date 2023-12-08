@@ -116,7 +116,9 @@ const Chat = memo(({ toId }) => {
     }
   }, [text, onNewMessage]);
 
-
+  if (messages.loading) {
+    return <Loader full />;
+  }
   return (
     <div className="chat">
       {

@@ -49,7 +49,9 @@ const ChatGeneral = memo(() => {
     getPage()
 
   }, []);
-
+  if (messages.loading) {
+    return <Loader />;
+  }
   useEffect(() => {
     if (data?.userId) {
       socket.emit('createRoom', 'message/general');

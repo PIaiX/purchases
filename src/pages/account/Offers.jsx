@@ -29,6 +29,9 @@ const Offers = () => {
       })
       .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
+  if (products.loading) {
+    return <Loader full />;
+  }
   return (
     <section className='mb-6'>
       <div className='row'>

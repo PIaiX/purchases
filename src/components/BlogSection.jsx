@@ -29,7 +29,7 @@ const BlogSection = () => {
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
   if (articles.loading) {
-    return <Loader full />;
+    return <Loader />;
   }
   return (
     <section className='sec-blog mb-6'>

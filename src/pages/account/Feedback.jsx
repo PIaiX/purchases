@@ -32,9 +32,11 @@ const Feedback = () => {
       })
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
   }, [currentPage, isMyFeedback]);
-
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
+  if (review.loading) {
+    return <Loader full />;
+  }
   return (
     <section className='sec-feedback mb-6'>
       <ReturnTitle link={'/account'} title={'Отзывы'} />

@@ -30,6 +30,9 @@ const Finance = () => {
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
   const [balanceSection, setBalanceSection] = useState(2);
+  if (transactions.loading) {
+    return <Loader full />;
+  }
   return (
     <section className="sec-finance mb-6">
       <Meta title="Финансы" />

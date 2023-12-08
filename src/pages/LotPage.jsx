@@ -32,6 +32,9 @@ const LotPage = () => {
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
     }, [lotId]);
+    if (products.loading) {
+        return <Loader full />;
+    }
     return (
         <main>
             <section className='lot-page mb-6'>

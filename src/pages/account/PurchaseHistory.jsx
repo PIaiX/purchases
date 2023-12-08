@@ -25,6 +25,9 @@ const PurchaseHistory = () => {
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
+  if (orders.loading) {
+    return <Loader full />;
+  }
   return (
     <section className='mb-6'>
       <ReturnTitle link={'/account'} title={'История покупок'} />
