@@ -72,7 +72,6 @@ const Profile = () => {
   if (user?.loading) {
     return <Loader full />;
   }
-  console.log(user)
   if (user && user.data.status === 0) {
     return (
       <main className="d-flex justify-content-center flex-column align-items-center">

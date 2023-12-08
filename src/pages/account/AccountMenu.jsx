@@ -48,7 +48,7 @@ const AccountMenu = (props) => {
         <li className='mt-sm-4 mt-lg-5'>
           <NavLink to="messages">
             <div>Сообщения</div>
-            <span className='badge'>+32</span>
+            {/* <span className='badge'></span> */}
           </NavLink>
         </li>
         <li>

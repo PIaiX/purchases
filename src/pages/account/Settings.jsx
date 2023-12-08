@@ -78,11 +78,10 @@ const Settings = () => {
         );
       });
   }, []);
-
   const onEditReserve = useCallback((data) => {
-    editReserve(data)
+    editReserve(data.reserve)
       .then((res) => {
-        dispatch(setUser({ res }));
+        dispatch(setUser(res));
         NotificationManager.success("Деньги успешно зарезервированы");
       })
       .catch((err) => {
@@ -171,7 +170,7 @@ const Settings = () => {
       </Row>
 
 
-      {!user?.reserve ? (
+      {(!user?.reserve?.value || user?.reserve?.value == 0) ? (
         <Col className="d-xxl-flex align-items-end mt-5">
           <Row className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
             <span className="fs-18">Доступно для резервирования</span>
@@ -198,7 +197,7 @@ const Settings = () => {
       ) : (
         <Col className="d-xxl-flex align-items-end mt-5">
           <Row className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
-            <span className="fs-18">Зарезервиорвано {customPrice(user?.reserve)}. Доступно для перерезервирования</span>
+            <span className="fs-18">Зарезервиорвано {customPrice(user?.reserve?.value)}. Доступно для перерезервирования</span>
             <div className="d-flex align-items-center justify-content-center">
               <span className="fs-18 ms-4">{customPrice(user?.cash)}</span>
             </div>
@@ -214,7 +213,7 @@ const Settings = () => {
               register={registerReserve}
             />
             <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmitReserve(onEditReserve)}>
-              Зарезервировать
+              Перезарезервировать
             </button>
           </Row>
         </Col>

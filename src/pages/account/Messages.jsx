@@ -87,7 +87,6 @@ const Messages = ({ isMobileXL }) => {
       } else {
         getMessages(data)
           .then((res) => {
-            console.log(res)
             setMessages((prev) => ({
               ...prev,
               loading: false,

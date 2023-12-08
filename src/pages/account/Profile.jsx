@@ -142,7 +142,6 @@ const Profile = () => {
     },
     [user]
   );
-  console.log(user)
   return (
     <section className="sec-profile mb-6">
       <Meta title="Профиль" />

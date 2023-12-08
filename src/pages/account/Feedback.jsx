@@ -33,7 +33,6 @@ const Feedback = () => {
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
   }, [currentPage, isMyFeedback]);
 
-  console.log(user)
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   return (

@@ -84,8 +84,6 @@ const AddOffer = () => {
     }
 
   }, [data.param]);
-
-  console.log(data)
   return (
     <section className='mb-3 mb-sm-5'>
       <div className='row'>

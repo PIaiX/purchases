@@ -32,7 +32,6 @@ const LotPage = () => {
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
     }, [lotId]);
-    console.log(products)
     return (
         <main>
             <section className='lot-page mb-6'>
