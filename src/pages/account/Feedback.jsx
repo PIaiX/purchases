@@ -50,7 +50,7 @@ const Feedback = () => {
             <div className='title'>{user.nickname}</div>
             <div className="d-flex align-items-center">
               <StarRating value={user.rating} />
-              <span className='fs-13 fw-7 ms-2'>5</span>
+              <span className='fs-13 fw-7 ms-2'>{user.rating}</span>
             </div>
           </div>
         </div>

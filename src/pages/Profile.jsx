@@ -1,35 +1,31 @@
-import React, { useLayoutEffect, useState } from "react";
+import moment from "moment";
+import React, { useEffect, useState } from "react";
 import { Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import {
   FiAlertTriangle,
-  FiChevronDown,
   FiEdit,
   FiMessageCircle,
-  FiShare,
+  FiShare
 } from "react-icons/fi";
 import { TbHeartHandshake } from "react-icons/tb";
 import QRCode from "react-qr-code";
-import { Link, useParams } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import FeedbackLine from "../components/FeedbackLine";
+import GameMiniCard from "../components/GameMiniCard";
 import Meta from "../components/Meta";
+import NavPagination from "../components/NavPagination";
 import TraderLine from "../components/TraderLine";
-import MyMessage from "../components/chat/MyMessage";
-import UserMessage from "../components/chat/UserMessage";
+import Chat from "../components/chat/Chat";
 import Joystick from "../components/svg/Joystick";
-import ReturnIcon from "../components/svg/ReturnIcon";
+import Input from "../components/utils/Input";
 import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
-import { getUser } from "../services/user";
-import Input from "../components/utils/Input";
 import { declOfNum, getImageURL } from "../helpers/all";
-import Chat from "../components/chat/Chat";
-import { useSelector } from "react-redux";
-import NavPagination from "../components/NavPagination";
-import moment from "moment";
-import GameMiniCard from "../components/GameMiniCard";
+import { getUser } from "../services/user";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -47,16 +43,30 @@ const Profile = () => {
   const onGameChange = (game) => {
     setCurrentGame(game);
   };
-  useLayoutEffect(() => {
-    getUser({ id: userId, page: currentPage, categoryId: currentGame })
-      .then((res) => res && setUser({
-        loading: false,
-        data: res.user,
-        products: res.products,
-        reviews: res.reviews,
-        categories: res.categories,
-      }))
-      .catch(() => setUser((e) => ({ ...e, loading: false })));
+  useEffect(() => {
+    if (currentGame) {
+      setCurrentPage(1)
+      getUser({ id: userId, page: currentPage, categoryId: currentGame })
+        .then((res) => res && setUser({
+          loading: false,
+          data: res.user,
+          products: res.products,
+          reviews: res.reviews,
+          categories: res.categories,
+        }))
+        .catch(() => setUser((e) => ({ ...e, loading: false })));
+    }
+    else {
+      getUser({ id: userId, page: currentPage })
+        .then((res) => res && setUser({
+          loading: false,
+          data: res.user,
+          products: res.products,
+          reviews: res.reviews,
+          categories: res.categories,
+        }))
+        .catch(() => setUser((e) => ({ ...e, loading: false })));
+    }
   }, [userId, currentPage, currentGame]);
 
   if (user?.loading) {
@@ -181,10 +191,10 @@ const Profile = () => {
                       <li><GameMiniCard {...item} onGameChange={onGameChange} /></li>
                     ))}
                   </ul>
-                  <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5'>
+                  {/* <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5' onClick={handleShowAll}>
                     <span>Показать все</span>
                     <FiChevronDown className='fs-13' />
-                  </button>
+                  </button> */}
                 </div>
               </div>
               <div className="list-wrapping mt-4 mt-sm-5">

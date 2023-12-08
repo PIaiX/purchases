@@ -36,7 +36,6 @@ const Profile = () => {
     reValidateMode: "onSubmit",
     defaultValues: user,
   });
-
   const {
     register: registerPassword,
     formState: { errors: errorsPassword, isValid: isValidPassword },
@@ -143,7 +142,7 @@ const Profile = () => {
     },
     [user]
   );
-
+  console.log(user)
   return (
     <section className="sec-profile mb-6">
       <Meta title="Профиль" />
@@ -177,8 +176,8 @@ const Profile = () => {
           <div className="user-main">
             <div className="title">{user?.nickname ?? "Никнейм"}</div>
             <div className="d-flex align-items-center">
-              <StarRating value={user?.data?.options?.rating ?? 0} />
-              <span className="fs-13 fw-7 ms-2">{user?.data?.options?.rating ?? 0}</span>
+              <StarRating value={user?.rating ?? 0} />
+              <span className="fs-13 fw-7 ms-2">{user?.rating ?? 0}</span>
             </div>
             <p className="mt-2">{user?.about ?? "Напишите о себе"}</p>
           </div>
