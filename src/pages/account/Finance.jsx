@@ -6,6 +6,7 @@ import ReturnTitle from "../../components/utils/ReturnTitle";
 import { customPrice } from "../../helpers/all";
 import Meta from "../../components/Meta";
 import { getTransactions } from "../../services/transaction"
+import Loader from '../../components/utils/Loader';
 
 const Finance = () => {
   const [currentPage, setCurrentPage] = useState(1)

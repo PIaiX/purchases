@@ -11,6 +11,7 @@ import Input from '../components/utils/Input';
 import Chat from '../components/chat/Chat';
 import { getProduct } from '../services/product';
 import { useSelector } from "react-redux";
+import Loader from '../components/utils/Loader';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);

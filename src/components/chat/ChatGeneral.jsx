@@ -10,6 +10,7 @@ import {
 } from "../../services/message";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
+import Loader from "../utils/Loader";
 
 
 const ChatGeneral = memo(() => {
@@ -49,9 +50,7 @@ const ChatGeneral = memo(() => {
     getPage()
 
   }, []);
-  if (messages.loading) {
-    return <Loader />;
-  }
+
   useEffect(() => {
     if (data?.userId) {
       socket.emit('createRoom', 'message/general');
@@ -115,6 +114,9 @@ const ChatGeneral = memo(() => {
 
   function onDataReceived(data) {
     setReceivedData(data);
+  }
+  if (messages.loading) {
+    return <Loader />;
   }
   return (
 

@@ -4,6 +4,7 @@ import NavBreadcrumbs from '../components/NavBreadcrumbs';
 import BlogCard2 from '../components/BlogCard2'
 import { getArticles } from '../services/article';
 import NavPagination from '../components/NavPagination';
+import Loader from '../components/utils/Loader';
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -26,6 +27,9 @@ const Blog = () => {
       })
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
+  if (articles.loading) {
+    return <Loader full />;
+  }
   return (
     <main>
       <Container>

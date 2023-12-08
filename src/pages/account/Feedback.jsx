@@ -8,6 +8,7 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getReview } from '../../services/review';
 import { declOfNum } from '../../helpers/all';
 import { useSelector } from 'react-redux';
+import Loader from '../../components/utils/Loader';
 
 const Feedback = () => {
   const user = useSelector(state => state.auth?.user);
@@ -32,7 +33,7 @@ const Feedback = () => {
       })
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
   }, [currentPage, isMyFeedback]);
-  const totalItems = review?.pagination?.totalItems ?? 0;
+  const totalItems = review?.reviews?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   if (review.loading) {
     return <Loader full />;

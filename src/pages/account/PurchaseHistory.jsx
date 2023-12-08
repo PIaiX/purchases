@@ -3,6 +3,7 @@ import NavPagination from '../../components/NavPagination';
 import OfferLine3 from '../../components/OfferLine3';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getOrders } from "../../services/order"
+import Loader from '../../components/utils/Loader';
 
 const PurchaseHistory = () => {
   const [currentPage, setCurrentPage] = useState(1)

@@ -6,6 +6,7 @@ import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import ScrollSpy from "react-ui-scrollspy";
 import { getGames } from '../services/game';
+import Loader from './utils/Loader';
 
 const CatalogSection = () => {
   const [full, setFull] = useState(false);

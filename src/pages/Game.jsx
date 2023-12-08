@@ -12,6 +12,7 @@ import { useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
 import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
+import Loader from '../components/utils/Loader';
 
 
 const Game = () => {

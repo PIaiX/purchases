@@ -10,6 +10,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { useCallback } from 'react';
 import { NotificationManager } from "react-notifications";
 import { createUserProduct } from '../../services/product';
+import Loader from '../../components/utils/Loader';
 
 const AddOffer = () => {
   const [games, setGames] = useState({ items: [], loading: true });

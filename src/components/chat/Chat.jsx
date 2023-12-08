@@ -10,6 +10,7 @@ import {
 } from "../../services/message";
 import { useLocation, useParams } from "react-router-dom";
 import { useForm, useWatch } from "react-hook-form";
+import Loader from "../utils/Loader";
 
 
 const Chat = memo(({ toId }) => {
@@ -117,7 +118,7 @@ const Chat = memo(({ toId }) => {
   }, [text, onNewMessage]);
 
   if (messages.loading) {
-    return <Loader full />;
+    return <Loader />;
   }
   return (
     <div className="chat">

@@ -7,6 +7,7 @@ import OfferLine2 from '../../components/OfferLine2';
 import Plus from '../../components/svg/Plus';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getUserProducts } from '../../services/product';
+import Loader from '../../components/utils/Loader';
 
 const Offers = () => {
   const [currentPage, setCurrentPage] = useState(1)
