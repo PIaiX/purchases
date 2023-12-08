@@ -5,7 +5,7 @@ import { getImageURL } from '../helpers/all';
 
 
 const FeedbackLine = ({ text, value, createdAt, author, user }) => {
-  const data = moment(createdAt).format("DD.MM.YYYY kk:mm");
+  const data = moment(createdAt).fromNow();
   const image = getImageURL({ path: author, type: "user" })
   return (
     <div className="feedback-line">

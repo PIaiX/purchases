@@ -164,7 +164,7 @@ const Profile = () => {
 
               <h4>Предложения</h4>
               <div className="list-wrapping mt-4 mt-sm-5">
-                <div className="list-wrapping-top d-flex justify-content-between ">
+                <div className="list-wrapping-top d-flex justify-content-between ms-4 me-4">
                   <div className="serv">Сервер</div>
                   <div className='descr'>Описание</div>
                   <div className='price'>Цена</div>

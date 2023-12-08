@@ -7,8 +7,10 @@ import PurchaseLine from '../../components/PurchaseLine';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getReview } from '../../services/review';
 import { declOfNum } from '../../helpers/all';
+import { useSelector } from 'react-redux';
 
 const Feedback = () => {
+  const user = useSelector(state => state.auth?.user);
   const [isMyFeedback, setIsMyFeedback] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
   const onPageChange = (page) => {
@@ -31,7 +33,7 @@ const Feedback = () => {
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
   }, [currentPage, isMyFeedback]);
 
-
+  console.log(user)
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   return (
@@ -45,9 +47,9 @@ const Feedback = () => {
             <button type='button'><FiEdit /></button>
           </div>
           <div className="user-main">
-            <div className='title'>Weatherwax</div>
+            <div className='title'>{user.nickname}</div>
             <div className="d-flex align-items-center">
-              <StarRating rate={5} />
+              <StarRating value={user.rating} />
               <span className='fs-13 fw-7 ms-2'>5</span>
             </div>
           </div>
