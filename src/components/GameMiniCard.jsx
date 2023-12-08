@@ -1,12 +1,17 @@
-import React from 'react';
-import {Link} from 'react-router-dom';
+import React, { useState } from 'react';
+import { getImageURL } from '../helpers/all';
 
-const GameMiniCard = () => {
+const GameMiniCard = ({ id, media, title, onGameChange }) => {
+  const [isActive, setIsActive] = useState(false);
+  const handleGameChange = () => {
+    onGameChange(id);
+    setIsActive(true);
+  };
   return (
-    <Link to='/game' className="game-card-mini">
-      <img src="/imgs/archeage.jpg" alt="ArcheAge" className='img'/>
-      <h6>ArcheAge</h6>
-    </Link>
+    <button className={`game-card-mini ${isActive ? 'bg-gray' : ''}`} onClick={handleGameChange}>
+      <img src={getImageURL({ path: media })} alt="ArcheAge" className='img' />
+      <h6>{title}</h6>
+    </button>
   );
 };
 

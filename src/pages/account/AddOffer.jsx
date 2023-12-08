@@ -147,7 +147,7 @@ const AddOffer = () => {
                     </Col>
                   )}
 
-                  {data.options && data.options.map(e => {
+                  {data.options && data.options.map((e, i) => {
                     let options = data.options.filter(item => (item.parent == e.id));
                     let name = data.options.find(item => (!item.parent && item.id == e.id));
                     if (!e.parent) {
@@ -160,7 +160,6 @@ const AddOffer = () => {
                         />
                       </Col>
                     }
-                    i++;
                   })}
 
 

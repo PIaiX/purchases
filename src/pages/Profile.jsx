@@ -29,6 +29,7 @@ import Chat from "../components/chat/Chat";
 import { useSelector } from "react-redux";
 import NavPagination from "../components/NavPagination";
 import moment from "moment";
+import GameMiniCard from "../components/GameMiniCard";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -38,24 +39,25 @@ const Profile = () => {
     data: {},
     loading: true,
   });
-  const [currentPageProducts, setCurrentPageProducts] = useState(1)
-  const onPageChangeProducts = (page) => {
-    setCurrentPageProducts(page.selected + 1);
+  const [currentPage, setCurrentPage] = useState(1)
+  const onPageChange = (page) => {
+    setCurrentPage(page.selected + 1);
   };
-  const [currentPageReviews, setCurrentPageReviews] = useState(1)
-  const onPageChangeReviews = (page) => {
-    setCurrentPageReviews(page.selected + 1);
+  const [currentGame, setCurrentGame] = useState("")
+  const onGameChange = (game) => {
+    setCurrentGame(game);
   };
   useLayoutEffect(() => {
-    getUser(userId)
+    getUser({ id: userId, page: currentPage, categoryId: currentGame })
       .then((res) => res && setUser({
         loading: false,
         data: res.user,
         products: res.products,
         reviews: res.reviews,
+        categories: res.categories,
       }))
       .catch(() => setUser((e) => ({ ...e, loading: false })));
-  }, [userId]);
+  }, [userId, currentPage, currentGame]);
 
   if (user?.loading) {
     return <Loader full />;
@@ -109,7 +111,16 @@ const Profile = () => {
                       </p>
                     </div>
                     <div>
-                      <p className="text-success fs-13 fw-7 ms-0">Онлайн</p>
+                      <p className="text-muted fs-13 fw-7 ms-0">
+                        {user?.data?.online?.status ? (
+                          <span className="text-success">Онлайн</span>
+                        ) : user?.data?.online?.end ? (
+                          "Был(-а) в сети " +
+                          moment(user?.data?.online?.end).fromNow()
+                        ) : (
+                          "Оффлайн"
+                        )}
+                      </p>
                     </div>
                     <p className="mt-2">
                       {user.data.about ?? ""}
@@ -163,6 +174,19 @@ const Profile = () => {
               </div>
 
               <h4>Предложения</h4>
+              <div className="d-flex align-items-start">
+                <div className='flex-1'>
+                  <ul className='list-unstyled g-2 g-sm-4 row row-cols-sm-2 row-cols-md-3 row-cols-xxl-4'>
+                    {user?.categories?.length > 0 && user.categories.map(item => (
+                      <li><GameMiniCard {...item} onGameChange={onGameChange} /></li>
+                    ))}
+                  </ul>
+                  <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5'>
+                    <span>Показать все</span>
+                    <FiChevronDown className='fs-13' />
+                  </button>
+                </div>
+              </div>
               <div className="list-wrapping mt-4 mt-sm-5">
                 <div className="list-wrapping-top d-flex justify-content-between ms-4 me-4">
                   <div className="serv">Сервер</div>
@@ -177,23 +201,22 @@ const Profile = () => {
                       </li>
                     ))}
                   </ul>
-                  <NavPagination totalPages={user?.products?.pagination?.totalPages} onPageChange={onPageChangeProducts} />
+                  <NavPagination totalPages={user?.products?.pagination?.totalPages} onPageChange={onPageChange} />
                 </div>
               </div>
 
               <div className="list-wrapping mt-4 mt-sm-5">
                 <div className="list-wrapping-top">
-                  <h5 className="fw-6">Всего {user?.reviews?.pagination?.totalItems} {declOfNum(user?.reviews?.pagination?.totalItems, ['отзыв', 'отзыва', 'отзывов'])}</h5>
+                  <h5 className="fw-6">Всего {user?.data?.review} {declOfNum(user?.data?.review, ['отзыв', 'отзыва', 'отзывов'])}</h5>
                 </div>
                 <div className="list-wrapping-main p-sm-4">
                   <ul className="row row-cols-1 g-3">
-                    {user?.reviews?.items?.length > 0 && user.reviews.items.map(item => (
+                    {user?.reviews?.length > 0 && user.reviews.map(item => (
                       <li>
                         <FeedbackLine {...item} />
                       </li>
                     ))}
                   </ul>
-                  <NavPagination totalPages={user?.reviews?.pagination?.totalPages} onPageChange={onPageChangeProducts} />
                 </div>
               </div>
             </Col>

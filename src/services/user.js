@@ -1,10 +1,8 @@
 import { $api, $authApi } from ".";
 import { apiRoutes } from "../config/api";
 
-const getUser = async (id) => {
-  const response = await $api.get(apiRoutes.USER, {
-    params: { id },
-  });
+const getUser = async (data) => {
+  const response = await $api.get(apiRoutes.USER, { params: data });
   return response?.data;
 };
 
