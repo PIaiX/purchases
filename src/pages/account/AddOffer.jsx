@@ -173,30 +173,31 @@ const AddOffer = () => {
                     <Textarea
                       type={"text"}
                       label={"Описание"}
-                      name="text"
-                      register={register}
+                      onChange={e => setValue("text", e)}
                     />
                   </Col>
                   <Col md={4}>
                     <Input
                       type={"text"}
                       label={"Наличие"}
-                      name="count"
-                      register={register}
+                      onChange={e => setValue("count", e)}
                     />
                   </Col>
                   <Col md={4}>
                     <Input
                       type={"text"}
                       label={"Цена, ₽ "}
-                      name="price"
-                      register={register}
+                      onChange={e => setValue("price", e)}
                     />
                   </Col>
                 </Row>
               </Col>
             </Row>
-            <button type='button' className='btn-1 mt-4 mt-sm-5' onClick={handleSubmit(onClick)}>Опубликовать</button>
+            <button
+              type='button'
+              className='btn-1 mt-4 mt-sm-5'
+              onClick={handleSubmit(onClick)}
+            >Опубликовать</button>
           </form>
         </div>
       </div >
