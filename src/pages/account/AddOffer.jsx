@@ -85,7 +85,7 @@ const AddOffer = () => {
     }
 
   }, [data.param]);
-  console.log(data)
+
   if (games.loading) {
     return <Loader full />;
   }
@@ -113,6 +113,7 @@ const AddOffer = () => {
                             game: games.items[games.items.findIndex(e2 => e2.id === e.value)]
                           })
                         }}
+                        validation={{ required: "Обязательное поле" }}
                         data={games.items.map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </Col>
@@ -127,6 +128,7 @@ const AddOffer = () => {
                         title="Регион"
                         onClick={e => setValue('region', e.value)}
                         data={data.game.regions.map((item) => ({ value: item.id, title: item.title }))}
+                        validation={{ required: "Обязательное поле" }}
                       />
                     </Col>
                   )}
@@ -138,6 +140,7 @@ const AddOffer = () => {
                         title="Сервер"
                         onClick={e => setValue('server', e.value)}
                         data={data.servers.map((item) => ({ value: item.id, title: item.title }))}
+                        validation={{ required: "Обязательное поле" }}
                       />
                     </Col>
                   )}
@@ -149,6 +152,7 @@ const AddOffer = () => {
                         title="Что вы продаете?"
                         onClick={e => setValue('param', e.value)}
                         data={data.game.params.map((item) => ({ value: item.id, title: item.title }))}
+                        validation={{ required: "Обязательное поле" }}
                       />
                     </Col>
                   )}
@@ -163,6 +167,7 @@ const AddOffer = () => {
                           title={name.title}
                           onClick={e => setValue(`option[${i}]`, e.value)}
                           data={options.map((item) => ({ value: item.id, title: item.title }))}
+                          validation={{ required: "Обязательное поле" }}
                         />
                       </Col>
                     }
@@ -174,6 +179,7 @@ const AddOffer = () => {
                       type={"text"}
                       label={"Описание"}
                       onChange={e => setValue("text", e)}
+                      validation={{ required: "Обязательное поле" }}
                     />
                   </Col>
                   <Col md={4}>
@@ -181,6 +187,7 @@ const AddOffer = () => {
                       type={"text"}
                       label={"Наличие"}
                       onChange={e => setValue("count", e)}
+                      validation={{ required: "Обязательное поле" }}
                     />
                   </Col>
                   <Col md={4}>
@@ -188,6 +195,7 @@ const AddOffer = () => {
                       type={"text"}
                       label={"Цена, ₽ "}
                       onChange={e => setValue("price", e)}
+                      validation={{ required: "Обязательное поле" }}
                     />
                   </Col>
                 </Row>
@@ -197,6 +205,7 @@ const AddOffer = () => {
               type='button'
               className='btn-1 mt-4 mt-sm-5'
               onClick={handleSubmit(onClick)}
+              disabled={isValid}
             >Опубликовать</button>
           </form>
         </div>

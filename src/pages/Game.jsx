@@ -70,7 +70,7 @@ const Game = () => {
             <h1 className='mb-4 mb-xxxl-5'>{games.items?.category?.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                {games?.items?.category?.regions && games.items.category.regions.length > 0 && (
+                {games?.items?.category?.regions.length > 0 && (
                   <ServerSwitcher serversArr={games.items.category.regions} onChange={handleRegionChange} active={regId} />
                 )}
                 <ul className='categories'>

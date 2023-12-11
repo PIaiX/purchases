@@ -193,7 +193,7 @@ const Profile = () => {
                 <Joystick className="path" />
                 <span>Лотов:</span>
               </div>
-              <span>{0}</span>
+              <span>{user.product}</span>
             </li>
             <li>
               <div>
