@@ -58,6 +58,7 @@ const Game = () => {
   if (games.loading) {
     return <Loader full />;
   }
+  console.log(regId)
   return (
     <main>
       <Container>
@@ -70,7 +71,7 @@ const Game = () => {
             <h1 className='mb-4 mb-xxxl-5'>{games.items?.category?.title}</h1>
             <Row>
               <Col xs={12} xl={7}>
-                {games?.items?.category?.regions.length > 0 && (
+                {games?.items?.category?.regions?.length > 0 && (
                   <ServerSwitcher serversArr={games.items.category.regions} onChange={handleRegionChange} active={regId} />
                 )}
                 <ul className='categories'>
@@ -105,9 +106,9 @@ const Game = () => {
                       {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
                         (param.id == regId &&
-                          <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0].id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                          <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
                             {
-                              param.servers?.length > 0 && param.servers.map(item => (
+                              param?.servers?.length > 0 && param.servers.map(item => (
                                 <option key={item.id} value={item.id} >{item.title}</option>
                               ))
                             }

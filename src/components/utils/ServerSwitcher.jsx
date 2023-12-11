@@ -1,9 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import BeadIcon from '../../assets/imgs/bead.svg';
 
-const ServerSwitcher = (props) => {
-  const { serversArr, onChange, active } = props;
-  const Servers = props.serversArr;
+const ServerSwitcher = ({ serversArr, onChange, active }) => {
+  const Servers = serversArr;
   const [server, setServer] = useState(active || Servers[0].id);
   const cut2 = useRef();
 
