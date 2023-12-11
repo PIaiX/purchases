@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
+import { Modal } from 'react-bootstrap';
+import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import { Link, useParams } from 'react-router-dom';
+import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight, PiWarningLight } from "react-icons/pi";
-import ReviewCard from '../components/ReviewCard';
-import StarIcon from '../components/svg/StarIcon';
-import { FiMessageCircle, FiEdit, FiShare, FiAlertTriangle, FiChevronDown } from "react-icons/fi";
-import Input from '../components/utils/Input';
-import Chat from '../components/chat/Chat';
-import { getProduct } from '../services/product';
 import { useSelector } from "react-redux";
+import { Link, useParams } from 'react-router-dom';
+import ReviewCard from '../components/ReviewCard';
+import Chat from '../components/chat/Chat';
+import Input from '../components/utils/Input';
 import Loader from '../components/utils/Loader';
+import StarRating from '../components/utils/StarRating';
+import { getProduct } from '../services/product';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
+    const [showShare, setShowShare] = useState(false);
     const [products, setProducts] = useState({
         loading: true,
         items: [],
@@ -40,7 +42,7 @@ const LotPage = () => {
         <main>
             <section className='lot-page mb-6'>
                 <Container>
-                    <Link to="/game" className='blue d-flex align-items-center mb-3'>
+                    <Link to={`/game/${products.items.categoryId}`} className='blue d-flex align-items-center mb-3'>
                         <PiCaretLeftLight className='fs-15' />
                         <span className='ms-2'>Назад в каталог</span>
                     </Link>
@@ -102,13 +104,13 @@ const LotPage = () => {
                             </div>
 
                             <div className="lot-page-box">
-                                <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
+                                <Link to={`/profile/${products?.items?.userId}`} className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                     <div className="seller w-xs-100">
                                         <img src="/imgs/user.jpg" alt="Weatherwax" />
                                         <h3 className='title-font lh-n mb-0'>{products?.items?.seller}</h3>
                                         <div className='rating ms-3'>
-                                            <StarIcon />
-                                            <span>{products?.items?.sellerRating}</span>
+                                            <StarRating value={products?.items?.ratings ?? 0} />
+                                            <span>{products?.items?.ratings}</span>
                                         </div>
                                     </div>
                                     <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
@@ -123,11 +125,18 @@ const LotPage = () => {
                                             </div>
                                         </div>
                                         <div className='ms-5'>
-                                            <button type='button' className='d-flex gray fs-13 mb-2 mb-sm-3'><FiShare /></button>
+
+                                            <button
+                                                type="button"
+                                                onClick={setShowShare}
+                                                className='d-flex gray fs-13 mb-2 mb-sm-3'
+                                            >
+                                                <FiShare />
+                                            </button>
                                             <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                                 <hr />
                                 <div className="px-3 py-2">
                                     <p className='blue'>Напишите продавцу перед покупкой</p>
@@ -161,6 +170,17 @@ const LotPage = () => {
                             </ul>
                         </Col>
                     </Row>
+                    <Modal show={showShare} onHide={setShowShare} centered>
+                        <Modal.Header closeButton></Modal.Header>
+                        <Modal.Body>
+                            <h4 className="mb-3">Профиль продавца</h4>
+                            <Input
+                                onClick={(e) => e.target.select()}
+                                readOnly
+                                defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${products.items.userId}`}
+                            />
+                        </Modal.Body>
+                    </Modal>
                 </Container>
             </section>
         </main>

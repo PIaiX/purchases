@@ -178,7 +178,7 @@ const Profile = () => {
               <StarRating value={user?.rating ?? 0} />
               <span className="fs-13 fw-7 ms-2">{user?.rating ?? 0}</span>
             </div>
-            <p className="mt-2">{user?.about ?? "Напишите о себе"}</p>
+            <p className="mt-2">{user?.about?.length > 0 ?? "Напишите о себе"}</p>
           </div>
           <ul className="user-info">
             <li>

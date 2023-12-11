@@ -36,6 +36,7 @@ const AccountRouter = () => {
         <Route path="profile/email" element={<EmailVerification />} />
         <Route path="offers" element={<Offers />} />
         <Route path="offers/add" element={<AddOffer />} />
+        <Route path="offers/edit/:id" element={<AddOffer />} />
         <Route path="purchase-history" element={<PurchaseHistory />} />
         <Route path="sales-history" element={<SalesHistory />} />
         <Route path="finance" element={<Finance />} />

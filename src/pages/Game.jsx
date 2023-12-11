@@ -105,10 +105,10 @@ const Game = () => {
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
                       {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
-                        (param.id == regId &&
+                        (param.id == regId && param?.servers?.length > 0 &&
                           <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
                             {
-                              param?.servers?.length > 0 && param.servers.map(item => (
+                              param.servers.map(item => (
                                 <option key={item.id} value={item.id} >{item.title}</option>
                               ))
                             }
@@ -119,7 +119,7 @@ const Game = () => {
 
                       {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
 
-                        (param.id == catId &&
+                        (param.id == catId && param?.options?.length > 0 &&
                           param.options.map(e => {
                             let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
                             if (!e.parent) {

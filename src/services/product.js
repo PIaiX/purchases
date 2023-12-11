@@ -49,8 +49,10 @@ const getUserProducts = async (data) => {
     return response?.data
 }
 
-const getUserProduct = async (data) => {
-    const response = await $authApi.get(apiRoutes.USER_PRODUCT, { params: data })
+const getUserProduct = async (payloads = {}) => {
+    const response = await $authApi.get(apiRoutes.USER_PRODUCT, {
+        params: payloads,
+    })
     return response?.data
 }
 
