@@ -32,7 +32,11 @@ const OfferLine3 = ({ id, author, user, comment, createdAt, status, total }) => 
       </div>
       <div className="status">
         <span className='d-xl-none me-2'>Статус: </span>
-        <button type='button' className='btn-5 py-1 px-2'>{status}</button>
+        {status == "ok" ?
+          <div className='blue'>Подтверждено</div>
+          :
+          <button type='button' className='btn-5 py-1 px-2'>{status}</button>
+        }
       </div>
       <div className="price">{total}&nbsp;&nbsp;₽</div>
     </div>
