@@ -234,8 +234,6 @@ const Messages = ({ isMobileXL }) => {
             </Link>
             <div className="p-3 d-flex align-items-center justify-content-between">
               <div>
-
-
                 <div className="p-3 pt-0">
                   {!data?.id ? (
                     <div className="chat d-flex align-items-center justify-content-center flex-column">
