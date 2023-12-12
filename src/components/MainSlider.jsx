@@ -25,7 +25,7 @@ const MainSlider = ({ data }) => {
       setActiveSlide(nextSlide);
     }
   };
-
+  console.log(data)
   return (
     <div className="main-slider">
       <div className={"main-slider-box pos-" + (activeSlide + 1)}>
@@ -38,6 +38,7 @@ const MainSlider = ({ data }) => {
               type: "sale",
               size: "full",
             })}
+            id={e.categoryId}
             btn={e.btn}
             imgMini={getImageURL({ path: e.mediaMini, type: "sale" })}
             onClick={() => setActiveSlide(index)}

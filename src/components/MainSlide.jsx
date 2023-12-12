@@ -35,7 +35,7 @@ const MainSlide = (props) => {
       <div className="title-mini">
         <h2>{props.title}</h2>
       </div>
-      <Link to="/" className="link btn-1">
+      <Link to={`/game/${props.id}`} className="link btn-1">
         {props.btn ? props.btn : "Перейти в каталог"}
       </Link>
     </div>
