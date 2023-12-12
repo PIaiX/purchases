@@ -21,7 +21,6 @@ const GameCard = memo(({ param1, param2 }) => {
   };
   return filteredGames.map(el => (
     <div className="game-card">
-      <Link to='/game'><img src={getImageURL({ path: el, type: "category" })} alt="ArcheAge" className='img' /></Link>
       <div>
         <h4><Link to={`/game/${el.id}/?regId=${regId}`}>{el.title}</Link></h4>
 
