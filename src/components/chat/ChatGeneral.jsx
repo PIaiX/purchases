@@ -24,7 +24,7 @@ const ChatGeneral = memo(() => {
     loading: true,
     items: [],
   });
-  const { control, reset, setValue } = useForm({
+  const { control, handleSubmit, register, reset, setValue } = useForm({
     mode: "all",
     reValidateMode: "onChange",
     defaultValues: {
@@ -90,7 +90,7 @@ const ChatGeneral = memo(() => {
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessageGeneral({ ...data, text }).then(() => messages.items.length === 0 && getPage());
+      createMessageGeneral({ ...data }).then(() => messages.items.length === 0 && getPage());
       reset({ userId: data.userId });
     },
     [data, state, userId]
@@ -165,8 +165,9 @@ const ChatGeneral = memo(() => {
               placeholder='Ваше сообщение'
               onChange={(e) => onChangeText(e.target.value)}
             />
-            <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
-            <SimpleInputFile className="mx-3" />
+            {/* <input type="file" {...register('image')} /> */}
+            <button onClick={handleSubmit(onClick)} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
+            <SimpleInputFile onChange={(e) => setValue("image", e.target.value)} className="mx-3" />
 
           </div>
         </>

@@ -131,9 +131,9 @@ const Profile = () => {
                         )}
                       </p>
                     </div>
-                    <p className="mt-2">
+                    {/* <p className="mt-2">
                       {user.data.about ?? ""}
-                    </p>
+                    </p> */}
                   </div>
                   <ul className="user-info">
                     <li>

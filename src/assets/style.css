@@ -12448,6 +12448,7 @@ header .profile-link img {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
+  max-width: 100vh;
 }
 
 .chat-window-message:not(:first-child),
@@ -12481,6 +12482,7 @@ header .profile-link img {
   width: -moz-fit-content;
   width: fit-content;
   min-width: 50%;
+  max-width: 90%;
   background: rgba(var(--pale-blue), 0.2);
   border-radius: 0.67em;
   padding: 1em;
