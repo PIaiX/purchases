@@ -229,7 +229,7 @@ const Profile = () => {
                 </div>
               </div>
             </Col>
-            <Col lg={4}>
+            <Col className="chat-container" lg={4}>
               <h2 className="text-center">Чат с пользователем</h2>
               {!myId ? (
                 <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
