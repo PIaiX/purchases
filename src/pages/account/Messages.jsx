@@ -19,6 +19,7 @@ import ReturnIcon from '../../components/svg/ReturnIcon';
 import Chat1 from "../../components/chat/Chat1";
 import { useRef } from "react";
 import moment from "moment";
+import Meta from "../../components/Meta";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -198,6 +199,7 @@ const Messages = ({ isMobileXL }) => {
 
   return (
     <>
+      <Meta title="Сообщения" />
       <ReturnTitle link={'/account'} title={'Сообщения'} />
       <section className='sec-messages'>
         <div className='sec-messages-list'>

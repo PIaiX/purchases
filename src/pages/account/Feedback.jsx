@@ -9,6 +9,7 @@ import { getReview } from '../../services/review';
 import { declOfNum } from '../../helpers/all';
 import { useSelector } from 'react-redux';
 import Loader from '../../components/utils/Loader';
+import Meta from '../../components/Meta';
 
 const Feedback = () => {
   const user = useSelector(state => state.auth?.user);
@@ -41,7 +42,7 @@ const Feedback = () => {
   return (
     <section className='sec-feedback mb-6'>
       <ReturnTitle link={'/account'} title={'Отзывы'} />
-
+      <Meta title="Отзывы" />
       <div className="d-xl-flex align-items-stretch justify-content-between">
         <div className='user'>
           <div className="user-photo">

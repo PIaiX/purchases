@@ -13,6 +13,7 @@ import { getGame } from '../services/game';
 import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
+import { FiHeart } from 'react-icons/fi';
 
 
 const Game = () => {
@@ -68,7 +69,12 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container className='mb-lg-5'>
           <div className="page-game-top">
-            <h1 className='mb-4 mb-xxxl-5'>{games.items?.category?.title}</h1>
+            <div className='mb-4 mb-xxxl-5 d-flex'>
+              <h1 className=' my-4 '>{games.items?.category?.title}</h1>
+              <button type="button">
+                <FiHeart style={{ fontSize: "60px" }} />
+              </button>
+            </div>
             <Row>
               <Col xs={12} xl={7}>
                 {games?.items?.category?.regions?.length > 0 && (

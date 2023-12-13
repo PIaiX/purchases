@@ -8,6 +8,7 @@ import Plus from '../../components/svg/Plus';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getUserProducts } from '../../services/product';
 import Loader from '../../components/utils/Loader';
+import Meta from '../../components/Meta';
 
 const Offers = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -38,7 +39,7 @@ const Offers = () => {
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
           <ReturnTitle link={'/account'} title={'Мои объявления'} />
-
+          <Meta title="Мои объявления" />
           <div className="d-flex align-items-start">
             <Link to='add' className='btn-add-offer me-3 me-md-4'>
               <Plus />

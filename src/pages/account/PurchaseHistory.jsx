@@ -4,6 +4,7 @@ import OfferLine3 from '../../components/OfferLine3';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import { getOrders } from "../../services/order"
 import Loader from '../../components/utils/Loader';
+import Meta from '../../components/Meta';
 
 const PurchaseHistory = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -31,6 +32,7 @@ const PurchaseHistory = () => {
   }
   return (
     <section className='mb-6'>
+      <Meta title="История покупок" />
       <ReturnTitle link={'/account'} title={'История покупок'} />
 
       <div className="list-wrapping">

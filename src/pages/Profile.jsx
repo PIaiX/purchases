@@ -127,7 +127,7 @@ const Profile = () => {
 
   return (
     <main>
-      <Meta title={user.data.nickname ?? "Профиль"} />
+      <Meta title={user?.data?.nickname ?? "Профиль"} />
       <section className="mb-6">
         <Container>
           <Row>
