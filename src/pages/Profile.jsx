@@ -27,10 +27,32 @@ import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
 import { declOfNum, getImageURL } from "../helpers/all";
 import { getUser } from "../services/user";
+import { useForm, useWatch } from "react-hook-form";
+import Textarea from "../components/utils/Textarea";
 
 const Profile = () => {
   const { userId } = useParams();
   const myId = useSelector(state => state.auth?.user?.id);
+  const [showAlert, setShowAlert] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const handleCloseAlert = () => {
+    setShowAlert(false);
+  };
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    setValue,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+    defaultValues: userId,
+  });
+  const data = useWatch({ control });
+  const handleSubmitComplaint = () => {
+    setSubmitted(true);
+  };
   const [showShare, setShowShare] = useState(false);
   const [copied, setCopied] = useState(false);
   const handleCopyLink = () => {
@@ -83,7 +105,7 @@ const Profile = () => {
         .catch(() => setUser((e) => ({ ...e, loading: false })));
     }
   }, [userId, currentPage, currentGame]);
-
+  console.log(data)
   if (user?.loading) {
     return <Loader full />;
   }
@@ -189,6 +211,7 @@ const Profile = () => {
                     <FiShare />
                   </button>
                   <button
+                    onClick={() => setShowAlert(true)}
                     type="button"
                     className="mt-4 d-flex dark-blue fs-15 ms-2 ms-xl-4"
                   >
@@ -278,6 +301,38 @@ const Profile = () => {
             </div>
           )
           }
+        </Modal.Body>
+      </Modal>
+      <Modal show={showAlert} onHide={handleCloseAlert} centered>
+        <Modal.Header closeButton></Modal.Header>
+        <Modal.Body>
+          <h4 className="mb-3">Пожаловаться</h4>
+          {!submitted ? (
+            <div>
+              <div className="mb-4">
+                <select value={data.title} onClick={e => setValue('title', e.value)} className="mb-3">
+                  <option value="">Выберите тему жалобы</option>
+                  <option value="spam">Спам</option>
+                  <option value="inappropriate">Неуместное содержимое</option>
+                  <option value="other">Другое</option>
+                </select>
+                <Textarea
+                  className="col-md-6"
+                  type={"text"}
+                  label={"Описание"}
+                  onChange={e => setValue("text", e)}
+                />
+              </div>
+              <div className="d-flex justify-content-between">
+                <Button onClick={handleSubmit(handleSubmitComplaint)} className="mr-3">Отправить жалобу</Button>
+                <Button onClick={handleCloseAlert} className="mr-3">Закрыть</Button>
+              </div>
+            </div>
+          ) : (
+            <div className="mb-3 text-success">
+              Жалоба отправлена!
+            </div>
+          )}
         </Modal.Body>
       </Modal>
     </main >
