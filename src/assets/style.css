@@ -11164,8 +11164,13 @@ main {
   }
 }
 
+
 header {
-  position: relative;
+  background-color: var(--white);
+  opacity: 0.85;
+  max-width: 100%;
+  position: fixed;
+  top: 0;
   z-index: 1042;
   height: var(--h-height);
 }
@@ -15771,13 +15776,13 @@ footer .nav-mobile ul li button.active svg path {
 }
 
 .scroll-to-top {
+  z-index: 1042;
   position: fixed;
   bottom: 10vh;
   right: 10vh;
-  background-color: var(--white);
+  background-color: rgba(var(--white), 0.9);
   font-size: 1.75rem !important;
   color: var(--gray);
-  /* Цвет иконки */
   width: 80px;
   height: 80px;
   border-radius: 50%;

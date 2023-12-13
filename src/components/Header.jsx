@@ -28,7 +28,7 @@ const Header = () => {
   return (
     <>
       <Container>
-        <header>
+        <header className="header-container">
           <div className="h-100 d-flex align-items-center justify-content-between">
             <Link to="/">
               <Logo />
