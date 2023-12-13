@@ -1,11 +1,12 @@
 import moment from "moment";
 import React, { useEffect, useState } from "react";
-import { Modal } from "react-bootstrap";
+import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import {
   FiAlertTriangle,
+  FiCheck,
   FiEdit,
   FiMessageCircle,
   FiShare
@@ -31,6 +32,20 @@ const Profile = () => {
   const { userId } = useParams();
   const myId = useSelector(state => state.auth?.user?.id);
   const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const handleCopyLink = () => {
+    const textField = document.createElement('textarea');
+    textField.innerText = `${process.env.REACT_APP_SITE_URL} /profile/${user.id}`;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
+    setCopied(true);
+  };
+  const handleClose = () => {
+    setShowShare(false);
+    setCopied(false);
+  };
   const [user, setUser] = useState({
     data: {},
     loading: true,
@@ -167,7 +182,7 @@ const Profile = () => {
                 </div>
                 <div>
                   <button
-                    onClick={setShowShare}
+                    onClick={() => setShowShare(true)}
                     type="button"
                     className="d-flex dark-blue fs-15 ms-2 ms-xl-4"
                   >
@@ -244,15 +259,25 @@ const Profile = () => {
           </Row>
         </Container>
       </section>
-      <Modal show={showShare} onHide={setShowShare} centered>
+      <Modal show={showShare} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <h4 className="mb-3">Поделитесь профилем</h4>
-          <Input
-            onClick={(e) => e.target.select()}
-            readOnly
-            defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.data.id}`}
-          />
+          {copied ? (
+            <div className="mb-3 text-success">
+              <FiCheck /> Ссылка скопирована!
+            </div>
+          ) : (
+            <div>
+              <Input
+                onClick={(e) => e.target.select()}
+                readOnly
+                defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
+              />
+              <Button onClick={handleCopyLink} className="mt-3">Скопировать ссылку</Button>
+            </div>
+          )
+          }
         </Modal.Body>
       </Modal>
     </main >

@@ -3,7 +3,7 @@ import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Row from "react-bootstrap/Row";
 import { useForm, useWatch } from "react-hook-form";
-import { FiEdit, FiMessageCircle, FiShare } from "react-icons/fi";
+import { FiCheck, FiEdit, FiMessageCircle, FiShare } from "react-icons/fi";
 import { TbHeartHandshake } from "react-icons/tb";
 import { NotificationManager } from "react-notifications";
 import QRCode from "react-qr-code";
@@ -25,6 +25,20 @@ const Profile = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showShare, setShowShare] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const handleCopyLink = () => {
+    const textField = document.createElement('textarea');
+    textField.innerText = `${process.env.REACT_APP_SITE_URL} /profile/${user.id}`;
+    document.body.appendChild(textField);
+    textField.select();
+    document.execCommand('copy');
+    textField.remove();
+    setCopied(true);
+  };
+  const handleClose = () => {
+    setShowShare(false);
+    setCopied(false); // Сбросить статус скопированного текста при закрытии модального окна
+  };
   const [avatar, setAvatar] = useState(false);
   const {
     control,
@@ -212,7 +226,7 @@ const Profile = () => {
         </div>
         <button
           type="button"
-          onClick={setShowShare}
+          onClick={() => setShowShare(true)}
           className="share-btn ms-2 ms-xl-4"
         >
           <FiShare />
@@ -351,15 +365,25 @@ const Profile = () => {
           </Button>
         </Col>
       </Row>
-      <Modal show={showShare} onHide={setShowShare} centered>
+      <Modal show={showShare} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>
         <Modal.Body>
           <h4 className="mb-3">Поделитесь профилем</h4>
-          <Input
-            onClick={(e) => e.target.select()}
-            readOnly
-            defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
-          />
+          {copied ? (
+            <div className="mb-3 text-success">
+              <FiCheck /> Ссылка скопирована!
+            </div>
+          ) : (
+            <div>
+              <Input
+                onClick={(e) => e.target.select()}
+                readOnly
+                defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
+              />
+              <Button onClick={handleCopyLink} className="mt-3">Скопировать ссылку</Button>
+            </div>
+          )
+          }
         </Modal.Body>
       </Modal>
     </section>
