@@ -3,13 +3,16 @@ import { Outlet } from 'react-router-dom'
 import Container from 'react-bootstrap/Container';
 import AccountMenu from '../pages/account/AccountMenu';
 import bgImg from '../assets/imgs/bg/gradient.jpg'
+import ScrollToTopButton from '../components/utils/ScrollToTopButton';
 
 const AccountLayout = ({ isMobile }) => {
   return (
     <main className='account'>
       <img src={bgImg} alt="bgImg" className='account-bg' />
       <Container>
+        <ScrollToTopButton />
         {
+
           (isMobile)
             ? <Outlet />
             : <div className="row justify-content-between">

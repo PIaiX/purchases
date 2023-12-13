@@ -1,21 +1,19 @@
-import React, { useLayoutEffect, useEffect, useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
+import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import BlogSection from "../components/BlogSection";
-import MainSlider from "../components/MainSlider";
-import Loader from "../components/utils/Loader";
-import Chat from "../components/chat/Chat";
-import OfferCard from "../components/OfferCard";
-import CatalogSection from "../components/CatalogSection";
-import { getSales } from "../services/sales";
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Scrollbar, Mousewheel } from 'swiper';
+import { Mousewheel, Scrollbar } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
-import useIsMobile from '../hooks/isMobile';
-import axios from 'axios';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import BlogSection from "../components/BlogSection";
+import CatalogSection from "../components/CatalogSection";
+import MainSlider from "../components/MainSlider";
+import OfferCard from "../components/OfferCard";
 import ChatGeneral from "../components/chat/ChatGeneral";
+import Loader from "../components/utils/Loader";
+import useIsMobile from '../hooks/isMobile';
+import { getSales } from "../services/sales";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
