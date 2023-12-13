@@ -16,7 +16,7 @@ const Blog = () => {
     items: [],
   });
   useEffect(() => {
-    getArticles({ page: currentPage, size: 2 })
+    getArticles({ page: currentPage })
       .then((res) => {
         setArticles((prev) => ({
           prev,
@@ -36,14 +36,17 @@ const Blog = () => {
         <NavBreadcrumbs />
 
         <section className='page-blog mb-3 mb-sm-4 mb-md-5'>
+
           <h1 className='mb-3 mb-sm-4 mb-md-5'>Новости биржи игровых ценностей</h1>
-          <ul className='list-unstyled row row-cols-2 row-cols-lg-3 gx-2 gx-sm-4 gy-4 gy-sm-5'>
-            {articles?.items?.length > 0 && articles.items.map((item) => (
-              <li>
-                <BlogCard2 {...item} />
-              </li>
-            ))}
-          </ul>
+          <div className="mb-5">
+            <ul className='list-unstyled row row-cols-2 row-cols-lg-3 gx-2 gx-sm-4 gy-4 gy-sm-5'>
+              {articles?.items?.length > 0 && articles.items.map((item) => (
+                <li>
+                  <BlogCard2 {...item} />
+                </li>
+              ))}
+            </ul>
+          </div>
           <div className="list-wrapping-bottom">
             <NavPagination totalPages={articles?.pagination?.totalPages} onPageChange={onPageChange} />
           </div>

@@ -9398,7 +9398,7 @@ progress {
   --footer-bg: #232B42;
   --font-color: rgb(255 255 255 / 95%);
   --switcher: #262F45;
-  --pale-blue: #0d59ab;
+  --pale-blue: #9dc4ef;
   --blue: #4a83dc;
   --dark-blue: #9dc4ef;
   --light-blue: #0F86AC;
@@ -12314,7 +12314,7 @@ header .profile-link img {
 }
 
 .page-blog .article-mini figcaption {
-  background-color: var(--white);
+  background: var(--glass);
   border-radius: 0 0 0.67em 0.67em;
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   padding: 1.5em 1.5em 0.6em;
@@ -12396,7 +12396,7 @@ header .profile-link img {
 /* Chat */
 .chat {
   position: relative;
-  background-color: rgba(255, 255, 255, 0.8);
+  background-color: rgba(var(--glass), 0.2))
 }
 
 .chat-container {
@@ -13006,7 +13006,7 @@ header .profile-link img {
   grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
   grid-template-areas: "serv descr seller availability price";
-  background-color: var(--white);
+  background-color: var(--glass);
   box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   border-radius: 0.67em;
 }
@@ -14390,7 +14390,7 @@ ACCOUNT
     left: 0px;
     height: 100%;
     width: 70%;
-    background-color: #ebf3fc;
+    background-color: var(--extrapale-gray);
     border-radius: 0.67em 0 0 0.67em;
   }
 
@@ -14402,7 +14402,8 @@ ACCOUNT
     right: 0px;
     height: 100%;
     width: 50%;
-    background-color: #ebf3fc;
+    background-color: var(--extrapale-gray);
+    ;
     transform: skewX(-25deg);
     border-radius: 0.67em;
   }
