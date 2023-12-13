@@ -4,10 +4,10 @@ import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { useForm, useWatch } from "react-hook-form";
 import {
   FiAlertTriangle,
   FiCheck,
-  FiEdit,
   FiMessageCircle,
   FiShare
 } from "react-icons/fi";
@@ -25,10 +25,9 @@ import Joystick from "../components/svg/Joystick";
 import Input from "../components/utils/Input";
 import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
+import Textarea from "../components/utils/Textarea";
 import { declOfNum, getImageURL } from "../helpers/all";
 import { getUser } from "../services/user";
-import { useForm, useWatch } from "react-hook-form";
-import Textarea from "../components/utils/Textarea";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -137,9 +136,6 @@ const Profile = () => {
                 <div className="user flex-1">
                   <div className="user-photo">
                     <img src={getImageURL(user)} alt="userphoto" />
-                    <button type="button">
-                      <FiEdit />
-                    </button>
                   </div>
                   <div className="user-main">
                     <div className="title">
