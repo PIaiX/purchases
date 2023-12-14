@@ -22,8 +22,8 @@ const Game = () => {
   const isMobileLG = useIsMobile('1109px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const searchParams = new URLSearchParams(window.location.search);
-  const [currentPage, setCurrentPage] = useState();
-  const [filters, setFilters] = useState();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [filters, setFilters] = useState([]);
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
   const [serverId, setServerId] = useState(1);
@@ -31,11 +31,11 @@ const Game = () => {
 
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
-    getGame({ catId: catId, regId: regId, page: currentPage, serverId: serverId, filters: filters, id, size: 3 })
+    getGame({ param: catId, region: regId, server: serverId, id, })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
       })
-  }, [regId, catId, currentPage, filters, serverId]);
+  }, [regId, catId, serverId]);
 
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
@@ -51,16 +51,26 @@ const Game = () => {
   const handleServerChange = (serverId) => {
     setServerId(serverId);
   };
-  const handleFilterChange = (event) => {
-    setFilters(event);
+  const handleFilterChange = (id, event) => {
+    setFilters({ ...filters, [id]: event });
   };
+
+  const totalProducts = games?.items?.products?.items.length;
+  const productsPerPage = 10;
+
+  const pagesCount = Math.ceil(totalProducts / productsPerPage);
+  const indexOfLastProduct = currentPage * productsPerPage;
+  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  const displayedProducts = games?.items?.products?.items.slice(indexOfFirstProduct, indexOfLastProduct);
+
+
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
+  console.log(displayedProducts)
   if (games.loading) {
     return <Loader full />;
   }
-  console.log(regId)
   return (
     <main>
       <Meta title={games.items?.category?.title ?? "Игра"} />
@@ -131,7 +141,7 @@ const Game = () => {
                           param.options.map(e => {
                             let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
                             if (!e.parent) {
-                              return <select onChange={(event) => handleFilterChange(event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
+                              return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
                                 {
                                   options?.length > 0 && options.map(item => (
                                     <option key={item.id} value={item.id} >{item.title}</option>
@@ -159,13 +169,13 @@ const Game = () => {
               <div className='price'>Цена</div>
             </div>
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-              {games?.items?.products?.items?.length > 0 && games.items.products.items.map((item) => (
+              {displayedProducts?.length > 0 && displayedProducts.map((item) => (
                 <li>
                   <OfferLine {...item} />
                 </li>
               ))}
             </ul>
-            <NavPagination totalPages={games?.items?.products?.pagination?.totalPages} onPageChange={onPageChange} />
+            <NavPagination totalPages={pagesCount} onPageChange={onPageChange} />
           </div>
         </Container>
       </section>

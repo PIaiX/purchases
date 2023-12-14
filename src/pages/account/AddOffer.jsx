@@ -35,7 +35,7 @@ const AddOffer = () => {
     //     "Укажите оценку"
     //   )
     // }
-    createUserProduct({ category: data.category, region: data.region, server: data.server, option: data.option, text: data.text, count: data.count, price: data.price })
+    createUserProduct({ category: data.category, region: data.region, server: data.server, param: data.param, option: data.option, text: data.text, count: data.count, price: data.price })
       .then(() => {
         NotificationManager.success("Лот создан");
       })
