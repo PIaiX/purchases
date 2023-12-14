@@ -55,13 +55,13 @@ const Game = () => {
     setFilters({ ...filters, [id]: event });
   };
 
-  const totalProducts = games?.items?.products?.items.length;
+  const totalProducts = games?.items?.products?.length;
   const productsPerPage = 10;
 
   const pagesCount = Math.ceil(totalProducts / productsPerPage);
   const indexOfLastProduct = currentPage * productsPerPage;
   const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const displayedProducts = games?.items?.products?.items.slice(indexOfFirstProduct, indexOfLastProduct);
+  const displayedProducts = games?.items?.products?.slice(indexOfFirstProduct, indexOfLastProduct);
 
 
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
