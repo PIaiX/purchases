@@ -5,6 +5,7 @@ import BlogCard2 from '../components/BlogCard2'
 import { getArticles } from '../services/article';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
+import Meta from '../components/Meta';
 
 const Blog = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -32,6 +33,7 @@ const Blog = () => {
   }
   return (
     <main>
+      <Meta title="Новости" />
       <Container>
         <NavBreadcrumbs />
 

@@ -28,8 +28,8 @@ const Header = () => {
   return (
     <>
       <Container>
-        <header className="header-container">
-          <div className="h-100 d-flex align-items-center justify-content-between">
+        <header className="header">
+          <div className="h-100 w-100 d-flex align-items-center justify-content-between">
             <Link to="/">
               <Logo />
             </Link>

@@ -9,6 +9,7 @@ import { getArticle } from '../services/article';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
 import { getImageURL } from '../helpers/all';
+import Meta from '../components/Meta';
 
 const Article = () => {
   const { id } = useParams();
@@ -38,6 +39,7 @@ const Article = () => {
   const image = getImageURL({ path: articles?.document, type: "articles" })
   return (
     <main>
+      <Meta title={articles?.document?.title ?? "Новости"} />
       <Container>
         <NavBreadcrumbs />
 
