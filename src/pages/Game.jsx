@@ -14,6 +14,7 @@ import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
 import { FiHeart } from 'react-icons/fi';
+import Meta from '../components/Meta';
 
 
 const Game = () => {
@@ -62,6 +63,7 @@ const Game = () => {
   console.log(regId)
   return (
     <main>
+      <Meta title={games.items?.category?.title ?? "Игра"} />
       <Container>
         <NavBreadcrumbs />
       </Container>

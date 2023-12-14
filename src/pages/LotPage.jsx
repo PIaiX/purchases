@@ -13,6 +13,7 @@ import Input from '../components/utils/Input';
 import Loader from '../components/utils/Loader';
 import StarRating from '../components/utils/StarRating';
 import { getProduct } from '../services/product';
+import Meta from '../components/Meta';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -40,6 +41,7 @@ const LotPage = () => {
     }
     return (
         <main>
+            <Meta title="Лот" />
             <section className='lot-page mb-6'>
                 <Container>
                     <Link to={`/game/${products.items.categoryId}`} className='blue d-flex align-items-center mb-3'>

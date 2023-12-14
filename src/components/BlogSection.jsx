@@ -17,7 +17,7 @@ const BlogSection = () => {
     items: [],
   });
   useEffect(() => {
-    getArticles({ page: currentPage, size: 2 })
+    getArticles({ page: currentPage })
       .then((res) => {
         setArticles((prev) => ({
           prev,

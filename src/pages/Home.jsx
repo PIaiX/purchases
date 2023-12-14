@@ -14,6 +14,7 @@ import ChatGeneral from "../components/chat/ChatGeneral";
 import Loader from "../components/utils/Loader";
 import useIsMobile from '../hooks/isMobile';
 import { getSales } from "../services/sales";
+import Meta from "../components/Meta";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -45,6 +46,7 @@ const Home = () => {
 
   return (
     <main>
+      <Meta title="Rush2Play" />
       <Container>
         <section className="mb-5">
           <MainSlider data={sales.home.items} />
