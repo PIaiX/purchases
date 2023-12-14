@@ -11168,9 +11168,10 @@ main {
 header {
   background-color: var(--white);
   opacity: 0.9;
-  width: 85vw;
+  width: 100%;
   position: fixed;
   top: 0;
+  left: 0%;
   z-index: 1042;
   height: var(--h-height);
 }

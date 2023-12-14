@@ -27,8 +27,8 @@ const Header = () => {
 
   return (
     <>
-      <Container>
-        <header className="header">
+      <header className="header">
+        <Container className="h-100">
           <div className="h-100 w-100 d-flex align-items-center justify-content-between">
             <Link to="/">
               <Logo />
@@ -109,8 +109,9 @@ const Header = () => {
             </div>
             <ThemeToggler />
           </div>
-        </header>
-      </Container>
+        </Container>
+      </header>
+
 
       <Modal show={showAdvice} onHide={handleCloseAdvice} size={"lg"} centered>
         <Modal.Header closeButton>
