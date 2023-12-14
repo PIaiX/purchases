@@ -11166,7 +11166,7 @@ main {
 
 
 header {
-  background-color: var(--white);
+  background-color: var(--body-bg);
   opacity: 0.9;
   width: 100%;
   position: fixed;
@@ -15781,7 +15781,8 @@ footer .nav-mobile ul li button.active svg path {
   position: fixed;
   bottom: 10vh;
   right: 10vh;
-  background-color: rgba(var(--white), 0.9);
+  background-color: var(--white);
+  opacity: 0.6;
   font-size: 1.75rem !important;
   color: var(--gray);
   width: 80px;

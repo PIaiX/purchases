@@ -6,7 +6,7 @@ import ScrollToTopButton from "../components/utils/ScrollToTopButton";
 
 const AppLayout = () => {
   return (
-    <div style={{ paddingTop: "100px" }}>
+    <div style={{ paddingTop: "80px" }}>
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
