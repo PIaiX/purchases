@@ -41,7 +41,7 @@ const Article = () => {
     <main>
       <Meta title={articles?.document?.title ?? "Новости"} />
       <Container>
-        <NavBreadcrumbs />
+        <NavBreadcrumbs title="Новости" />
 
         <section className='page-blog mb-3 mb-sm-4 mb-md-5'>
           <Row className='justify-content-between'>

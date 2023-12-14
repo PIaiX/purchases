@@ -35,7 +35,7 @@ const Blog = () => {
     <main>
       <Meta title="Новости" />
       <Container>
-        <NavBreadcrumbs />
+        <NavBreadcrumbs title="Новости" />
 
         <section className='page-blog mb-3 mb-sm-4 mb-md-5'>
 

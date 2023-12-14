@@ -65,7 +65,7 @@ const Game = () => {
     <main>
       <Meta title={games.items?.category?.title ?? "Игра"} />
       <Container>
-        <NavBreadcrumbs />
+        <NavBreadcrumbs title="Каталог" />
       </Container>
 
       <section className='page-game pb-2 pb-4 pb-md-5'>
