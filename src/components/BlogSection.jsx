@@ -1,7 +1,6 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 // import {Link} from 'react-router-dom';
 import BlogCard from './BlogCard';
-import { getArticles } from '../services/article';
 import NavPagination from './NavPagination';
 import Loader from './utils/Loader';
 // import useIsMobile from '../hooks/isMobile';

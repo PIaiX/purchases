@@ -1,15 +1,7 @@
-import React, { memo, useCallback, useEffect, useRef, useState } from "react";
-import Message from './Message';
-import SimpleInputFile from '../utils/SimpleInputFile';
+import React, { memo, useCallback, useState } from "react";
 import { useSelector } from "react-redux";
-import socket from "../../config/socket";
-import {
-  createMessage,
-  getMessages,
-  viewMessages,
-} from "../../services/message";
-import { useLocation, useParams } from "react-router-dom";
-import { useForm, useWatch } from "react-hook-form";
+import SimpleInputFile from '../utils/SimpleInputFile';
+import Message from './Message';
 
 
 const Chat1 = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
