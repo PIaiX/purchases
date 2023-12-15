@@ -6,28 +6,9 @@ import NavPagination from './NavPagination';
 import Loader from './utils/Loader';
 // import useIsMobile from '../hooks/isMobile';
 
-const BlogSection = () => {
+const BlogSection = ({ articles, onPageChange }) => {
   // const {isMobile} = useIsMobile('1289px');
-  const [currentPage, setCurrentPage] = useState(1)
-  const onPageChange = (page) => {
-    setCurrentPage(page.selected + 1);
-  };
-  const [articles, setArticles] = useState({
-    loading: true,
-    items: [],
-  });
-  useEffect(() => {
-    getArticles({ page: currentPage })
-      .then((res) => {
-        setArticles((prev) => ({
-          prev,
-          loading: false,
-          ...res,
-        }))
-        setCurrentPage(res.pagination.currentPage)
-      })
-      .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
-  }, [currentPage]);
+
   if (articles.loading) {
     return <Loader />;
   }

@@ -1,41 +1,19 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
-import SearchIcon from './svg/SearchIcon';
+import ScrollSpy from "react-ui-scrollspy";
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
-import ScrollSpy from "react-ui-scrollspy";
-import { getGames } from '../services/game';
+import SearchIcon from './svg/SearchIcon';
 import Loader from './utils/Loader';
 
-const CatalogSection = () => {
+const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
   const onScroll = (id) => {
     const link = document.querySelector('[data-to-scrollspy-id="' + id + '"]');
     cut.current.style.top = link.offsetTop + 'px';
   }
-  const [games, setGames] = useState({ items: [], data: [], loading: true });
-
-
-  useEffect(() => {
-    getGames()
-      .then((res) => {
-        var uniqueLetters = new Set();
-
-        res.forEach(word => {
-          let firstLetter = word.title.charAt(0).toUpperCase();
-
-          if (!uniqueLetters.has(firstLetter)) {
-            uniqueLetters.add(firstLetter);
-          }
-        });
-
-        const alphabet = Array.from(uniqueLetters).sort();
-        setGames(prev => ({ ...prev, items: res, data: alphabet, loading: false }));
-      }
-      )
-  }, []);
 
 
   if (games.loading) {
