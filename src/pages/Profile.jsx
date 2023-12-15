@@ -20,17 +20,16 @@ import GameMiniCard from "../components/GameMiniCard";
 import Meta from "../components/Meta";
 import NavPagination from "../components/NavPagination";
 import TraderLine from "../components/TraderLine";
-import Chat from "../components/chat/Chat";
+import Chat1 from "../components/chat/Chat1";
 import Joystick from "../components/svg/Joystick";
 import Input from "../components/utils/Input";
 import Loader from "../components/utils/Loader";
 import StarRating from "../components/utils/StarRating";
 import Textarea from "../components/utils/Textarea";
-import { declOfNum, getImageURL } from "../helpers/all";
-import { getUser } from "../services/user";
-import { createMessage, getMessages } from "../services/message";
-import Chat1 from "../components/chat/Chat1";
 import socket from "../config/socket";
+import { declOfNum, getImageURL } from "../helpers/all";
+import { createMessage, getMessages } from "../services/message";
+import { getUser } from "../services/user";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -183,7 +182,7 @@ const Profile = () => {
     },
     [dataMessage]
   );
-  console.log(dataMessage)
+
   if (user?.loading) {
     return <Loader full />;
   }

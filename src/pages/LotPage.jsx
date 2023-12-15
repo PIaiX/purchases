@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
@@ -14,6 +14,10 @@ import Loader from '../components/utils/Loader';
 import StarRating from '../components/utils/StarRating';
 import { getProduct } from '../services/product';
 import Meta from '../components/Meta';
+import { useForm, useWatch } from 'react-hook-form';
+import { createMessage, getMessages } from '../services/message';
+import socket from '../config/socket';
+import Chat1 from '../components/chat/Chat1';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -36,6 +40,77 @@ const LotPage = () => {
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
     }, [lotId]);
+
+    const { control, reset, setValue } = useForm({
+        mode: "all",
+        reValidateMode: "onChange",
+        defaultValues: {
+            fromId: userId,
+        },
+    });
+
+    const data = useWatch({ control });
+    const [messages, setMessages] = useState({
+        loading: true,
+        items: [],
+    });
+    useEffect(() => {
+        setValue("id", messages.dialogId);
+        setValue("toId", products?.items?.userId);
+    }, [messages.dialogId, products?.items?.userId]);
+
+    useEffect(() => {
+        getMessages(data)
+            .then((res) => {
+                setMessages((prev) => ({
+                    ...prev,
+                    loading: false,
+                    items: res.messages.items,
+                    dialogId: res.dialog.id
+                }))
+            }
+            )
+            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    }, []);
+
+    useEffect(() => {
+        if (data?.id) {
+            socket.emit("createRoom", "message/" + data.id);
+
+            socket.on("message", (data) => {
+
+                if (data) {
+                    setMessages((prev) => ({
+                        ...prev,
+                        loading: false,
+                        items: [
+                            data,
+                            ...prev.items.map((e) => {
+                                if (e?.userId) {
+                                    e.view = true;
+                                }
+                                return e;
+                            }),
+                        ],
+                    }));
+                }
+            });
+            return () => {
+                socket.off("message");
+            };
+        }
+
+    }, [data?.id]);
+
+
+    const onNewMessage = useCallback(
+        (text) => {
+            createMessage({ ...data, text });
+        },
+        [data]
+    );
+
+
     if (products.loading) {
         return <Loader full />;
     }
@@ -155,7 +230,12 @@ const LotPage = () => {
                                                 Загрузка чата...
                                             </div>
                                         ) : (
-                                            <Chat toId={products?.items?.userId} />
+                                            < Chat1
+                                                messages={messages}
+                                                emptyText="Нет сообщений"
+                                                onSubmit={(e) => onNewMessage(e)}
+                                                onChange={(e) => setValue("text", e)}
+                                            />
                                         )}
                                     </div>
                                 )}
