@@ -64,8 +64,8 @@ const Home = () => {
 
         const alphabet = Array.from(uniqueLetters).sort();
         setGames(prev => ({ ...prev, items: res, data: alphabet, loading: false }));
-      }
-      )
+      })
+      .catch(() => getGames((prev) => ({ ...prev, loading: false })));
   }, []);
 
   const [currentPage, setCurrentPage] = useState(1)
@@ -88,14 +88,6 @@ const Home = () => {
       })
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
-
-
-
-
-
-  //Chat
-
-
   const userId = useSelector(state => state.auth?.user?.id);
 
   const { control, reset, setValue } = useForm({

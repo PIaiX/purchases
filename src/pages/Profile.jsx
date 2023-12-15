@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -28,6 +28,9 @@ import StarRating from "../components/utils/StarRating";
 import Textarea from "../components/utils/Textarea";
 import { declOfNum, getImageURL } from "../helpers/all";
 import { getUser } from "../services/user";
+import { createMessage, getMessages } from "../services/message";
+import Chat1 from "../components/chat/Chat1";
+import socket from "../config/socket";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -104,7 +107,83 @@ const Profile = () => {
         .catch(() => setUser((e) => ({ ...e, loading: false })));
     }
   }, [userId, currentPage, currentGame]);
-  console.log(data)
+
+
+  const {
+    control: controlMessage,
+    register: registerMessage,
+    formState: { errors: errorsMessage, isValid: isValidMessage },
+    setValue: setValueMessage,
+  } = useForm({
+    mode: "all",
+    reValidateMode: "onChange",
+    defaultValues: {
+      fromId: myId,
+      toId: userId,
+    },
+  });
+
+  const dataMessage = useWatch({ control: controlMessage });
+  const [messages, setMessages] = useState({
+    loading: true,
+    items: [],
+  });
+
+
+
+  useEffect(() => {
+    getMessages(dataMessage)
+      .then((res) => {
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: res.messages.items,
+          dialogId: res.dialog.id
+        }))
+      }
+      )
+      .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+  }, []);
+  useEffect(() => {
+    setValueMessage("id", messages.dialogId);
+  }, [messages.dialogId]);
+  useEffect(() => {
+    if (dataMessage?.id) {
+      socket.emit("createRoom", "message/" + dataMessage.id);
+
+      socket.on("message", (dataMessage) => {
+
+        if (dataMessage) {
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [
+              dataMessage,
+              ...prev.items.map((e) => {
+                if (e?.userId) {
+                  e.view = true;
+                }
+                return e;
+              }),
+            ],
+          }));
+        }
+      });
+      return () => {
+        socket.off("message");
+      };
+    }
+
+  }, [dataMessage?.id]);
+
+
+  const onNewMessage = useCallback(
+    (text) => {
+      createMessage({ ...dataMessage, text });
+    },
+    [dataMessage]
+  );
+  console.log(dataMessage)
   if (user?.loading) {
     return <Loader full />;
   }
@@ -271,7 +350,12 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className="p-0 fs-09">
-                  <Chat toId={user?.data?.id} />
+                  <Chat1
+                    messages={messages}
+                    emptyText="Нет сообщений"
+                    onSubmit={(e) => onNewMessage(e)}
+                    onChange={(e) => setValueMessage("text", e)}
+                  />
                 </div>
               )}
             </Col>
