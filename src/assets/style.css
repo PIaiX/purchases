@@ -12402,7 +12402,7 @@ header .profile-link img {
 /* Chat */
 .chat {
   position: relative;
-  background-color: rgba(var(--glass), 0.2))
+  background-color: var(--glass);
 }
 
 .chat-container {
@@ -12423,6 +12423,7 @@ header .profile-link img {
 .chat-window {
   display: flex;
   flex-direction: column-reverse;
+  background-color: var(--glass);
   overflow: auto;
   padding: 1em 1.5em;
   max-height: 50vh;

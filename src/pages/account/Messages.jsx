@@ -1,25 +1,22 @@
-import React, { useCallback, useEffect, useState } from "react";
-import DialogPreview from './DialogPreview';
-import { Link, useLocation, useParams } from 'react-router-dom';
+import moment from "moment";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
+import { Link, useLocation, useParams } from 'react-router-dom';
+import Meta from "../../components/Meta";
+import Chat1 from "../../components/chat/Chat1";
+import ReturnIcon from '../../components/svg/ReturnIcon';
+import Loader from "../../components/utils/Loader";
+import ReturnTitle from '../../components/utils/ReturnTitle';
+import socket from "../../config/socket";
 import {
   createMessage,
   createMessageGeneral,
   getDialogs,
   getMessages,
-  getMessagesGeneral,
-  viewMessages,
+  getMessagesGeneral
 } from "../../services/message";
-import socket from "../../config/socket";
-import { getImageURL } from "../../helpers/all";
-import { useForm, useWatch } from "react-hook-form";
-import Loader from "../../components/utils/Loader"
-import ReturnTitle from '../../components/utils/ReturnTitle';
-import ReturnIcon from '../../components/svg/ReturnIcon';
-import Chat1 from "../../components/chat/Chat1";
-import { useRef } from "react";
-import moment from "moment";
-import Meta from "../../components/Meta";
+import DialogPreview from './DialogPreview';
 
 
 const Messages = ({ isMobileXL }) => {

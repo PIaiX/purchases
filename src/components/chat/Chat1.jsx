@@ -53,17 +53,25 @@ const Chat1 = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
           </div>
         )
       }
-
-      <div className='chat-form'>
-        <input
-          value={text}
-          type="text"
-          placeholder='Ваше сообщение'
-          onChange={(e) => onChangeText(e.target.value)}
-        />
-        <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
-        <SimpleInputFile className="mx-3" />
-      </div>
+      {userId ?
+        <>
+          <div className='chat-form'>
+            <input
+              value={text}
+              type="text"
+              placeholder='Ваше сообщение'
+              onChange={(e) => onChangeText(e.target.value)}
+            />
+            <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
+            <SimpleInputFile className="mx-3" />
+          </div>
+        </>
+        : (
+          <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+            Для отправки сообщений войдите в аккаунт!
+          </div>
+        )
+      }
     </div >
   );
 });

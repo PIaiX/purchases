@@ -1,7 +1,9 @@
-import React, { useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
+import { useForm, useWatch } from "react-hook-form";
+import { useSelector } from "react-redux";
 import { Mousewheel, Scrollbar } from 'swiper';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
@@ -9,14 +11,16 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import BlogSection from "../components/BlogSection";
 import CatalogSection from "../components/CatalogSection";
 import MainSlider from "../components/MainSlider";
-import OfferCard from "../components/OfferCard";
-import ChatGeneral from "../components/chat/ChatGeneral";
-import Loader from "../components/utils/Loader";
-import useIsMobile from '../hooks/isMobile';
-import { getSales } from "../services/sales";
 import Meta from "../components/Meta";
-import { getGames } from "../services/game";
+import OfferCard from "../components/OfferCard";
+import Chat1 from "../components/chat/Chat1";
+import Loader from "../components/utils/Loader";
+import socket from "../config/socket";
+import useIsMobile from '../hooks/isMobile';
 import { getArticles } from "../services/article";
+import { getGames } from "../services/game";
+import { createMessageGeneral, getMessagesGeneral } from "../services/message";
+import { getSales } from "../services/sales";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -85,6 +89,85 @@ const Home = () => {
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
 
+
+
+
+
+  //Chat
+
+
+  const userId = useSelector(state => state.auth?.user?.id);
+
+  const { control, reset, setValue } = useForm({
+    mode: "all",
+    reValidateMode: "onChange",
+    defaultValues: {
+      id: "general",
+    },
+  });
+
+  const data = useWatch({ control });
+
+  const [messages, setMessages] = useState({
+    loading: true,
+    items: [],
+  });
+
+  useEffect(() => {
+    if (data?.id) {
+      getMessagesGeneral()
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: res.messages.items,
+            count: res.countOnline,
+          }))
+        )
+        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+
+    }
+  }, [data?.id]);
+
+  useEffect(() => {
+    if (data?.id) {
+      socket.emit("createRoom", "message/" + data.id);
+
+      socket.on("message", (data) => {
+
+        if (data) {
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [
+              data,
+              ...prev.items.map((e) => {
+                if (e?.userId) {
+                  e.view = true;
+                }
+                return e;
+              }),
+            ],
+          }));
+        }
+      });
+
+      return () => {
+        socket.off("message");
+      };
+    }
+
+  }, [data?.id]);
+
+  const onNewMessage = useCallback(
+    (text) => {
+      createMessageGeneral({ ...data, text });
+    },
+    [data]
+  );
+
+
+
   if (sales.loading) {
     return <Loader />;
   }
@@ -110,8 +193,19 @@ const Home = () => {
             <Row>
               <Col xs={12} md={8}>
                 <section className="sec-chat">
-                  <ChatGeneral />
+                  <h2>Общий чат</h2>
+                  <div className="sec-chat-count">
+                    <div className="num">{messages.count}</div>
+                    <div className="text">участника online</div>
+                  </div>
                 </section>
+                <Chat1
+                  messages={messages}
+                  emptyText="Нет сообщений"
+                  onSubmit={(e) => onNewMessage(e)}
+                  onChange={(e) => setValue("text", e)}
+                />
+
               </Col>
               <Col xs={12} md={4}>
                 <section className="sec-popular">
