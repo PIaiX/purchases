@@ -13,7 +13,7 @@ import CatalogSection from "../components/CatalogSection";
 import MainSlider from "../components/MainSlider";
 import Meta from "../components/Meta";
 import OfferCard from "../components/OfferCard";
-import Chat1 from "../components/chat/Chat1";
+import Chat from "../components/chat/Chat";
 import Loader from "../components/utils/Loader";
 import socket from "../config/socket";
 import useIsMobile from '../hooks/isMobile';
@@ -191,7 +191,7 @@ const Home = () => {
                     <div className="text">участника online</div>
                   </div>
                 </section>
-                <Chat1
+                <Chat
                   messages={messages}
                   emptyText="Нет сообщений"
                   onSubmit={(e) => onNewMessage(e)}

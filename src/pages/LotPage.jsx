@@ -3,21 +3,20 @@ import { Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight, PiWarningLight } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
+import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
 import Chat from '../components/chat/Chat';
 import Input from '../components/utils/Input';
 import Loader from '../components/utils/Loader';
 import StarRating from '../components/utils/StarRating';
-import { getProduct } from '../services/product';
-import Meta from '../components/Meta';
-import { useForm, useWatch } from 'react-hook-form';
-import { createMessage, getMessages } from '../services/message';
 import socket from '../config/socket';
-import Chat1 from '../components/chat/Chat1';
+import { createMessage, getMessages } from '../services/message';
+import { getProduct } from '../services/product';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -37,6 +36,7 @@ const LotPage = () => {
                     items: res.product,
                     reviews: res.reviews,
                 }))
+                setValue("toId", res.product.userId);
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
     }, [lotId]);
@@ -56,23 +56,24 @@ const LotPage = () => {
     });
     useEffect(() => {
         setValue("id", messages.dialogId);
-        setValue("toId", products?.items?.userId);
-    }, [messages.dialogId, products?.items?.userId]);
+    }, [messages.dialogId]);
 
     useEffect(() => {
-        getMessages(data)
-            .then((res) => {
-                setMessages((prev) => ({
-                    ...prev,
-                    loading: false,
-                    items: res.messages.items,
-                    dialogId: res.dialog.id
-                }))
-            }
-            )
-            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-    }, []);
-
+        if (data.toId) {
+            getMessages(data)
+                .then((res) => {
+                    setMessages((prev) => ({
+                        ...prev,
+                        loading: false,
+                        items: res.messages.items,
+                        dialogId: res.dialog.id
+                    }))
+                }
+                )
+                .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+        }
+    }, [data.toId]);
+    console.log(data)
     useEffect(() => {
         if (data?.id) {
             socket.emit("createRoom", "message/" + data.id);
@@ -181,10 +182,12 @@ const LotPage = () => {
                             </div>
 
                             <div className="lot-page-box">
-                                <Link to={`/profile/${products?.items?.userId}`} className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
+                                <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                     <div className="seller w-xs-100">
-                                        <img src="/imgs/user.jpg" alt="Weatherwax" />
-                                        <h3 className='title-font lh-n mb-0'>{products?.items?.seller}</h3>
+                                        <Link to={`/profile/${products?.items?.userId}`}>
+                                            <img src="/imgs/user.jpg" alt="Weatherwax" />
+                                            <h3 className='title-font lh-n mb-0'>{products?.items?.seller}</h3>
+                                        </Link>
                                         <div className='rating ms-3'>
                                             <StarRating value={products?.items?.ratings ?? 0} />
                                             <span>{products?.items?.ratings}</span>
@@ -213,7 +216,7 @@ const LotPage = () => {
                                             <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
                                         </div>
                                     </div>
-                                </Link>
+                                </div>
                                 <hr />
                                 <div className="px-3 py-2">
                                     <p className='blue'>Напишите продавцу перед покупкой</p>
@@ -230,7 +233,7 @@ const LotPage = () => {
                                                 Загрузка чата...
                                             </div>
                                         ) : (
-                                            < Chat1
+                                            < Chat
                                                 messages={messages}
                                                 emptyText="Нет сообщений"
                                                 onSubmit={(e) => onNewMessage(e)}

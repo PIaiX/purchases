@@ -20,7 +20,7 @@ import GameMiniCard from "../components/GameMiniCard";
 import Meta from "../components/Meta";
 import NavPagination from "../components/NavPagination";
 import TraderLine from "../components/TraderLine";
-import Chat1 from "../components/chat/Chat1";
+import Chat from "../components/chat/Chat";
 import Joystick from "../components/svg/Joystick";
 import Input from "../components/utils/Input";
 import Loader from "../components/utils/Loader";
@@ -349,7 +349,7 @@ const Profile = () => {
                 </div>
               ) : (
                 <div className="p-0 fs-09">
-                  <Chat1
+                  <Chat
                     messages={messages}
                     emptyText="Нет сообщений"
                     onSubmit={(e) => onNewMessage(e)}

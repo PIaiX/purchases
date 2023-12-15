@@ -4,7 +4,7 @@ import { useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
 import { Link, useLocation, useParams } from 'react-router-dom';
 import Meta from "../../components/Meta";
-import Chat1 from "../../components/chat/Chat1";
+import Chat from "../../components/chat/Chat";
 import ReturnIcon from '../../components/svg/ReturnIcon';
 import Loader from "../../components/utils/Loader";
 import ReturnTitle from '../../components/utils/ReturnTitle';
@@ -284,7 +284,7 @@ const Messages = ({ isMobileXL }) => {
                           </div>
 
                         ))}
-                      <Chat1
+                      <Chat
                         messages={messages}
                         emptyText="Нет сообщений"
                         onSubmit={(e) => onNewMessage(e)}
