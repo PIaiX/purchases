@@ -16,7 +16,7 @@ import ThemeToggler from "./utils/ThemeToggler";
 const Header = () => {
   const { isAuth, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
-
+  const userId = useSelector(state => state.auth?.user?.id);
   const [showAdvice, setShowAdvice] = useState(false);
   const handleCloseAdvice = () => setShowAdvice(false);
   const handleShowAdvice = () => setShowAdvice(true);
@@ -40,13 +40,15 @@ const Header = () => {
                   <RxChevronDown className="fs-12 ms-1" />
                 </Dropdown.Toggle>
                 <Dropdown.Menu>
-                  <Dropdown.Item
-                    as="button"
-                    onClick={handleShowFav}
-                    className="d-xl-none"
-                  >
-                    <Link to="/">Избранное</Link>
-                  </Dropdown.Item>
+                  {userId &&
+                    <Dropdown.Item
+                      as="button"
+                      onClick={handleShowFav}
+                      className="d-xl-none"
+                    >
+                      <Link to="/">Избранное</Link>
+                    </Dropdown.Item>
+                  }
                   <Dropdown.Item as="div">
                     <Link to="/">Информация</Link>
                   </Dropdown.Item>
@@ -61,13 +63,15 @@ const Header = () => {
                   </Dropdown.Item>
                 </Dropdown.Menu>
               </Dropdown>
-              <button
-                type="button"
-                onClick={handleShowFav}
-                className="d-flex align-items-center ms-lg-4 ms-xxl-5"
-              >
-                <span className="d-none d-xl-inline">Избранное</span>
-              </button>
+              {userId &&
+                <button
+                  type="button"
+                  onClick={handleShowFav}
+                  className="d-flex align-items-center ms-lg-4 ms-xxl-5"
+                >
+                  <span className="d-none d-xl-inline">Избранное</span>
+                </button>
+              }
             </div>
             <div className="d-none d-lg-flex align-items-center">
               <input
