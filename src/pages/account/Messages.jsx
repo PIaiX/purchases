@@ -231,7 +231,7 @@ const Messages = ({ isMobileXL }) => {
             <Link to='/account/messages' className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
               <ReturnIcon />
             </Link>
-            <div className="p-3 d-flex align-items-center justify-content-between">
+            <div className="p-3 pr-0">
               <div>
                 <div className="p-3 pt-0">
                   {!data?.id ? (

@@ -12403,6 +12403,7 @@ header .profile-link img {
 .chat {
   position: relative;
   background-color: var(--glass);
+  width: 100%;
 }
 
 .chat-container {
@@ -12427,6 +12428,7 @@ header .profile-link img {
   overflow: auto;
   padding: 1em 1.5em;
   max-height: 50vh;
+  width: 100%;
 }
 
 @media (max-width: 1109.98px) {
