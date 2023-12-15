@@ -64,6 +64,7 @@ const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
               type="text"
               placeholder='Ваше сообщение'
               onChange={(e) => onChangeText(e.target.value)}
+              onKeyPress={(e) => { (e.key === 'Enter') && onClick(); }}
             />
             <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
             <SimpleInputFile className="mx-3" />
