@@ -4,27 +4,17 @@ import moment from "moment";
 import { getImageURL } from '../../helpers/all';
 
 const DialogPreview = ({ id, to, message }) => {
-  const [elapsedTime, setElapsedTime] = useState('');
 
-  useEffect(() => {
-
-
-    const interval = setInterval(() => {
-      const timePassed = moment(message.createdAt).fromNow();
-      setElapsedTime(timePassed);
-    }, 1000);
-    return () => clearInterval(interval); // Очистить интервал перед перемонтированием компонента
-  }, [message.createdAt]);
   const imag = getImageURL({ path: to, type: "user" })
 
   return (
-    <NavLink to={`${id}`} className="dialog-preview">
+    <NavLink to={`${id}`} className="dialog-preview ms-3 me-3">
       <img src={imag} alt="user" />
 
       <div className="text">
         <div className='d-flex justify-content-between align-items-center mb-1'>
           <h6>{to.nickname}</h6>
-          <time>{elapsedTime}</time>
+          <time>{moment(message.createdAt).subtract(5, 'seconds').fromNow()}</time>
         </div>
         <p>{message.text ?? "Нет сообщений"}</p>
         {to.online.status &&
