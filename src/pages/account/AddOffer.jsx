@@ -35,7 +35,7 @@ const AddOffer = () => {
     //     "Укажите оценку"
     //   )
     // }
-    createUserProduct({ categoryId: data.category, region: data.region, server: data.server, param: data.param, option: data.option, desc: data.text, count: data.count, price: data.price })
+    createUserProduct({ categoryId: data.category, region: data.region, server: data.server, param: data.param, option: data.option, title: data.title, desc: data.text, count: data.count, price: data.price })
       .then(() => {
         NotificationManager.success("Лот создан");
       })
@@ -106,6 +106,7 @@ const AddOffer = () => {
                         title="Игра"
                         onClick={e => {
                           reset({
+                            title: data.title,
                             text: data.text,
                             count: data.count,
                             price: data.price,
@@ -173,7 +174,14 @@ const AddOffer = () => {
                     }
                   })}
 
-
+                  <Col md={12}>
+                    <Input
+                      type={"title"}
+                      label={"Название"}
+                      onChange={e => setValue("title", e)}
+                    // validation={{ required: "Обязательное поле" }}
+                    />
+                  </Col>
                   <Col md={12}>
                     <Textarea
                       type={"text"}

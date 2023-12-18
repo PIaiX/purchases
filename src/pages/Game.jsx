@@ -26,7 +26,7 @@ const Game = () => {
   const [filters, setFilters] = useState([]);
   const [catId, setCatId] = useState(searchParams.get('catId'));
   const [regId, setRegId] = useState(searchParams.get('regId'));
-  const [serverId, setServerId] = useState(1);
+  const [serverId, setServerId] = useState();
 
 
   const [games, setGames] = useState({ items: [], loading: true });
@@ -64,20 +64,20 @@ const Game = () => {
   };
   var filteredData = games?.items?.products?.filter(product => {
     return Object.values(filters).every(filter => {
-      return product?.data?.some(dataItem => dataItem.optionId == filter);
+      return product?.options?.some(dataItem => dataItem.optionId == filter);
     });
   })
   console.log(filters)
   console.log(filteredData)
   var totalProducts = (filteredData ?? games.items.products) ?? [];
-  const productsPerPage = 10;
+  const productsPerPage = 30;
 
   var pagesCount = Math.ceil(totalProducts.length / productsPerPage);
   var indexOfLastProduct = currentPage * productsPerPage;
   var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   var displayedProducts = totalProducts.slice(indexOfFirstProduct, indexOfLastProduct);
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
-  const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
+  const totalItems = games?.items?.category?.productCount ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
   if (games.loading) {
     return <Loader full />;

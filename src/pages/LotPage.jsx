@@ -17,6 +17,7 @@ import StarRating from '../components/utils/StarRating';
 import socket from '../config/socket';
 import { createMessage, getMessages } from '../services/message';
 import { getProduct } from '../services/product';
+import moment from 'moment';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -129,27 +130,29 @@ const LotPage = () => {
                         <Col xs={12} lg={8}>
                             <div className="lot-page-box lot-page-grid mb-4">
                                 <div className="game">
-                                    <img src="/imgs/img5.jpg" alt="AFK Arena" />
+                                    {/* <img src="/imgs/img5.jpg" alt="AFK Arena" /> */}
                                     <h6 className='mt-2'>AFK Arena</h6>
                                 </div>
 
                                 <div className='info'>
                                     <div className='d-flex align-items-center'>
                                         <span className='tag-gray me-3'>Аккаунты</span>
-                                        <span className='tag-green me-3'>RU/EU</span>
+                                        <span className='tag-green me-3'>{products?.items?.data?.region?.title}</span>
                                     </div>
-                                    <div className='d-flex align-items-center'>
-                                        <span>Сервер</span>
-                                        <span className='fs-09 pale-blue mx-2'>●</span>
-                                        <span>{products?.items?.title}</span>
-                                    </div>
+                                    {products?.items?.title &&
+                                        <div className='d-flex align-items-center'>
+                                            <span>Сервер</span>
+                                            <span className='fs-09 pale-blue mx-2'>●</span>
+                                            <span>{products?.items?.title}</span>
+                                        </div>
+                                    }
                                 </div>
 
-                                <div className='title'>{products?.items?.desc} </div>
+                                <div className='title'>{products?.items?.title} </div>
 
                                 <div className='date'>
-                                    <time>14:51</time>
-                                    <time className='ms-3'>16/03/2023</time>
+                                    <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
+                                    <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
                                     <button type='button' className='d-flex fs-14 ms-3'>
                                         <PiWarningLight />
                                     </button>
