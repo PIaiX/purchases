@@ -195,28 +195,34 @@ const Settings = () => {
         </Col>
 
       ) : (
-        <Col className="d-xxl-flex align-items-end mt-5">
+        <div className="mt-5" >
           <Row className="text-center d-sm-flex align-items-center bg-blue white rounded-3 title-font py-2 px-3">
-            <span className="fs-18">Зарезервиорвано {customPrice(user?.reserve?.value)}. Доступно для перерезервирования</span>
-            <div className="d-flex align-items-center justify-content-center">
-              <span className="fs-18 ms-4">{customPrice(user?.cash)}</span>
-            </div>
+            <Col md={12} >
+              <div className="d-flex align-items-center justify-content-center">
+                <span className="fs-18">Зарезервиорвано {customPrice(user?.reserve?.value)}.</span>
+                <span className="fs-13 ms-3">Доступно для перерезервирования {customPrice(user?.cash)}</span>
+              </div>
+            </Col>
           </Row>
 
-          <Row className="flex-1 d-sm-flex align-items-end ms-xxl-4 mt-4 mt-xxl-1">
-            <Input
-              className="flex-1"
-              type="number"
-              label="Зарезервировать на балансе"
-              placeholder="Введите сумму"
-              name="reserve"
-              register={registerReserve}
-            />
-            <button className="w-xs-100 btn-1 mt-3 mt-sm-0 ms-sm-4" onClick={handleSubmitReserve(onEditReserve)}>
-              Перезарезервировать
-            </button>
+          <Row className="flex-1 d-sm-flex align-items-end mt-4">
+            <Col md={8} >
+              <Input
+                className="flex-1"
+                type="number"
+                label="Зарезервировать на балансе"
+                placeholder="Введите сумму"
+                name="reserve"
+                register={registerReserve}
+              />
+            </Col>
+            <Col md={4} >
+              <button className="w-xs-100 btn-1 mt-3" onClick={handleSubmitReserve(onEditReserve)}>
+                Перезарезервировать
+              </button>
+            </Col>
           </Row>
-        </Col>
+        </div>
       )}
 
 

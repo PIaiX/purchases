@@ -51,23 +51,30 @@ const Game = () => {
   const handleServerChange = (serverId) => {
     setServerId(serverId);
   };
+  const [filteredData, setFilteredData] = useState([]);
   const handleFilterChange = (id, event) => {
     setFilters({ ...filters, [id]: event });
+    setFilteredData(games.items.products.filter(product => {
+      return Object.values(filters).every(filter => {
+        return product.data.some(dataItem => dataItem.optionId === filter);
+      });
+    }))
   };
 
-  const totalProducts = games?.items?.products?.length;
+  var totalProducts = filteredData.length > 0 ? filteredData : games.items.products;
   const productsPerPage = 10;
+  var totalProductsLength = totalProductsLength.length;
 
-  const pagesCount = Math.ceil(totalProducts / productsPerPage);
-  const indexOfLastProduct = currentPage * productsPerPage;
-  const indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  const displayedProducts = games?.items?.products?.slice(indexOfFirstProduct, indexOfLastProduct);
+  var pagesCount = Math.ceil(totalProducts / productsPerPage);
+  var indexOfLastProduct = currentPage * productsPerPage;
+  var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+  var displayedProducts = totalProducts.slice(indexOfFirstProduct, indexOfLastProduct);
 
 
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
-  console.log(indexOfFirstProduct)
+  console.log(filters)
   if (games.loading) {
     return <Loader full />;
   }
