@@ -193,7 +193,7 @@ const Messages = ({ isMobileXL }) => {
   if (dialogs.loading) {
     return <Loader full />;
   }
-
+  const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
   return (
     <>
       <Meta title="Сообщения" />
@@ -216,11 +216,11 @@ const Messages = ({ isMobileXL }) => {
             {dialogs?.items?.length > 0 ? (
               dialogs.items.map((dialog) => (
                 <li>
-                  <DialogPreview {...dialog} />
+                  <DialogPreview {...dialog} userId={userId} />
                 </li>
               ))) : (
               <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                В данный момент нет диалогов. . . .
+                В данный момент нет диалогов
               </p>
             )
             }
@@ -262,20 +262,21 @@ const Messages = ({ isMobileXL }) => {
 
                         </div>
                       ) : (
-                        messages?.dialog?.to && (
+                        user && (
+
 
                           <div className="dialog-preview">
                             <img src="/imgs/user.jpg" alt="user" />
                             <div className="text">
-                              <h5 className="fw-7 mb-0">{messages?.dialog?.to?.nickname}</h5>
+                              <h5 className="fw-7 mb-0">{user.nickname}</h5>
                               <p className="text-muted fs-07">
                                 {print ? (
                                   "Печатает сообщение..."
-                                ) : messages?.dialog?.to?.online?.status ? (
+                                ) : user.online?.status ? (
                                   <span className="text-success">Онлайн</span>
-                                ) : messages?.dialog?.to?.online?.end ? (
+                                ) : user.online?.end ? (
                                   "Был(-а) в сети " +
-                                  moment(messages?.dialog?.to?.online?.end).fromNow()
+                                  moment(user.online?.end).fromNow()
                                 ) : (
                                   "Оффлайн"
                                 )}

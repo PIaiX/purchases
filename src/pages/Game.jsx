@@ -51,30 +51,34 @@ const Game = () => {
   const handleServerChange = (serverId) => {
     setServerId(serverId);
   };
-  const [filteredData, setFilteredData] = useState([]);
+
   const handleFilterChange = (id, event) => {
-    setFilters({ ...filters, [id]: event });
-    setFilteredData(games.items.products.filter(product => {
-      return Object.values(filters).every(filter => {
-        return product.data.some(dataItem => dataItem.optionId === filter);
-      });
-    }))
+    if (id == event) {
+      let updatedFilters = { ...filters };
+      delete updatedFilters[id];
+      setFilters(updatedFilters);
+    } else {
+      setFilters({ ...filters, [id]: event });
+    }
+
   };
-
-  var totalProducts = filteredData.length > 0 ? filteredData : games.items.products;
+  var filteredData = games?.items?.products?.filter(product => {
+    return Object.values(filters).every(filter => {
+      return product?.data?.some(dataItem => dataItem.optionId == filter);
+    });
+  })
+  console.log(filters)
+  console.log(filteredData)
+  var totalProducts = (filteredData ?? games.items.products) ?? [];
   const productsPerPage = 10;
-  var totalProductsLength = totalProductsLength.length;
 
-  var pagesCount = Math.ceil(totalProducts / productsPerPage);
+  var pagesCount = Math.ceil(totalProducts.length / productsPerPage);
   var indexOfLastProduct = currentPage * productsPerPage;
   var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   var displayedProducts = totalProducts.slice(indexOfFirstProduct, indexOfLastProduct);
-
-
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.products?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
-  console.log(filters)
   if (games.loading) {
     return <Loader full />;
   }
@@ -166,24 +170,31 @@ const Game = () => {
               </Col>
             </Row>
           </div>
-
-          <div className="page-game-offers">
-            <div className="top">
-              <div className="serv">Сервер</div>
-              <div className='descr'>Описание</div>
-              <div className='seller'>Продавец</div>
-              <div className='availability'>Наличие, шт.</div>
-              <div className='price'>Цена</div>
+          {totalProducts.length > 0 ?
+            <div className="page-game-offers">
+              <div className="top">
+                <div className="serv">Сервер</div>
+                <div className='descr'>Описание</div>
+                <div className='seller'>Продавец</div>
+                <div className='availability'>Наличие, шт.</div>
+                <div className='price'>Цена</div>
+              </div>
+              <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
+                {displayedProducts?.length > 0 && displayedProducts.map((item) => (
+                  <li>
+                    <OfferLine {...item} />
+                  </li>
+                ))}
+              </ul>
+              <NavPagination totalPages={pagesCount} onPageChange={onPageChange} />
             </div>
-            <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-              {displayedProducts?.length > 0 && displayedProducts.map((item) => (
-                <li>
-                  <OfferLine {...item} />
-                </li>
-              ))}
-            </ul>
-            <NavPagination totalPages={pagesCount} onPageChange={onPageChange} />
-          </div>
+            :
+            <div className="page-game-offers d-flex align-items-center justify-content-center mt-4">
+              <h3>
+                Нет объявлений
+              </h3>
+            </div>
+          }
         </Container>
       </section>
     </main >
