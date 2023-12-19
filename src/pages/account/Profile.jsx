@@ -19,6 +19,7 @@ import { editAccount, editAvatar } from "../../services/account";
 import { authEditPassword, authEditPhone } from "../../services/auth";
 import { setUser } from "../../store/reducers/authSlice";
 import { getImageURL } from "../../helpers/all";
+import moment from "moment";
 
 const Profile = () => {
   const { user } = useSelector((state) => state.auth);
@@ -192,7 +193,9 @@ const Profile = () => {
               <StarRating value={user?.rating ?? 0} />
               <span className="fs-13 fw-7 ms-2">{user?.rating ?? 0}</span>
             </div>
-            <p className="mt-2">{user?.about?.length > 0 ?? "Напишите о себе"}</p>
+            <p className="mt-2">
+              {user?.createdAt ? moment(user.createdAt).fromNow(1) : ""} на платформе
+            </p>
           </div>
           <ul className="user-info">
             <li>

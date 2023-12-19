@@ -12407,10 +12407,11 @@ header .profile-link img {
 }
 
 .chat-container {
-  position: fixed;
-  top: 10vh;
-  right: 1vh;
-  /* или другое значение ширины */
+  position: -webkit-sticky;
+  position: sticky;
+  top: 15vh;
+  right: 1px;
+
   overflow-y: auto;
   padding: 1em 1em;
 }

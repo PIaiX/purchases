@@ -215,23 +215,25 @@ const Profile = () => {
                   <div className="user-photo">
                     <img src={getImageURL(user)} alt="userphoto" />
                   </div>
-                  <div className="user-main">
-                    <div className="title">
-                      {user.data.nickname ?? "Никнейм"}
-                    </div>
-                    <div className="d-flex align-items-center">
-                      <StarRating value={user?.data?.rating ?? 0} />
-                      <span className="fs-13 fw-7 ms-2">
-                        {user?.data?.rating ?? 0}
-                      </span>
+                  <div className="flex-1 flex-column">
+                    <div className="user-main">
+                      <div className="title">
+                        {user.data.nickname ?? "Никнейм"}
+                      </div>
+                      <div className="d-flex align-items-center">
+                        <StarRating value={user?.data?.rating ?? 0} />
+                        <span className="fs-13 fw-7 ms-2">
+                          {user?.data?.rating ?? 0}
+                        </span>
+                      </div>
+                      <div>
+                        <p className="mt-2">
+                          {user?.data?.createdAt ? moment(user.data.createdAt).fromNow(1) : ""} на платформе
+                        </p>
+                      </div>
                     </div>
                     <div>
-                      <p className="fs-13 fw-7 ms-1 mt-2">
-                        {user?.data?.createdAt ? moment(user.data.createdAt).fromNow(1) : ""} на платформе
-                      </p>
-                    </div>
-                    <div>
-                      <p className="text-muted fs-13 fw-7 ms-0">
+                      <p className="text-muted">
                         {user?.data?.online?.status ? (
                           <span className="text-success">Онлайн</span>
                         ) : user?.data?.online?.end ? (
@@ -242,10 +244,8 @@ const Profile = () => {
                         )}
                       </p>
                     </div>
-                    {/* <p className="mt-2">
-                      {user.data.about ?? ""}
-                    </p> */}
                   </div>
+
                   <ul className="user-info">
                     <li>
                       <div>
