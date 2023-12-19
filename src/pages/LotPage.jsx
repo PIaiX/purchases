@@ -21,11 +21,12 @@ import { getImageURL } from '../helpers/all';
 import { createMessage, getMessages } from '../services/message';
 import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
+import { NotificationManager } from 'react-notifications';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
-    const [pay, setPay] = useState();
+    const [count, setCount] = useState();
     const [showShare, setShowShare] = useState(false);
     const [products, setProducts] = useState({
         loading: true,
@@ -78,7 +79,6 @@ const LotPage = () => {
                 .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
         }
     }, [data.toId]);
-    console.log(data)
     useEffect(() => {
         if (data?.id) {
             socket.emit("createRoom", "message/" + data.id);
@@ -115,11 +115,41 @@ const LotPage = () => {
         },
         [data]
     );
-    const onPay = useCallback(
-        (pay) => {
-            createOrder({ lotId: lotId, type: pay })
-        }, [lotId]
-    )
+    const {
+        control: controlPay,
+        register: registerPay,
+        setValue: setValuePay,
+        reset: resetPay,
+        formState: {
+            errors: errorsPay,
+            isValid: isValidPay
+        },
+        handleSubmit: handleSubmitPay,
+    } = useForm({
+        mode: "all",
+        reValidateMode: "onSubmit",
+        defaultValues: {
+            productId: lotId
+        },
+    });
+    const pay = useWatch({ control: controlPay })
+    // const onPay = useCallback(
+    //     () => {
+    //         createOrder({ productId: lotId, type: pay, count: count })
+    //     }, [lotId, pay, count]
+    // )
+    const onPay = useCallback((pay) => {
+        createOrder(pay)
+            .then((res) => {
+                NotificationManager.success("Куплено");
+                resetPay()
+            })
+            .catch((err) => {
+                NotificationManager.error(
+                    err?.response?.data?.error ?? "Ошибка при покупке"
+                );
+            });
+    }, []);
     if (products.loading) {
         return <Loader full />;
     }
@@ -137,8 +167,10 @@ const LotPage = () => {
                         <Col xs={12} lg={8}>
                             <div className="lot-page-box lot-page-grid mb-4">
                                 <div className="game">
-                                    {/* <img src="/imgs/img5.jpg" alt="AFK Arena" /> */}
-                                    <h6 className='mt-2'>AFK Arena</h6>
+                                    {products?.items?.category?.media &&
+                                        <img src={getImageURL(products?.items?.category?.media)} alt="AFK Arena" />
+                                    }
+                                    <h6 className='mt-2'>{products?.items?.category?.title}</h6>
                                 </div>
 
                                 <div className='info'>
@@ -166,14 +198,25 @@ const LotPage = () => {
                                 </div>
 
                                 <div className="payment align-items-center">
+
+                                    <h6 className='me-2'>Доступно:</h6>
+                                    <h6 className='me-4'>{products?.items?.count}</h6>
+                                    <Input
+                                        value={pay.count}
+                                        className='me-4'
+                                        type={"text"}
+                                        label={"Количество"}
+                                        name="count"
+                                        register={registerPay}
+                                    />
                                     <Select
-                                        value={pay}
+                                        value={pay.type}
                                         className={"min-250 me-md-4"}
                                         title="Выберите способ оплаты"
-                                        onClick={e => setPay(e.value)}
+                                        onClick={e => setValuePay("type", e.value)}
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
-                                    <button onClick={() => onPay(pay)} type='button' className='btn-1'>Оплатить {products?.items?.price} ₽</button>
+                                    <button onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {products?.items?.price} ₽</button>
                                 </div>
 
                                 <div className='text fs-09'>
@@ -181,12 +224,6 @@ const LotPage = () => {
                                 </div>
 
                                 <ul className='specifications'>
-                                    {products?.items?.options?.length > 0 && products?.items?.options?.map(item => (
-                                        <li>
-                                            <span>Хакатеристика</span>
-                                            <span>{item.option.title}</span>
-                                        </li>
-                                    ))}
                                     {products?.items?.options?.length > 0 && products?.items?.options?.map(item => (
                                         <li>
                                             <span>Хакатеристика</span>
@@ -208,7 +245,7 @@ const LotPage = () => {
                                         <div className='rating ms-3'>
                                             <StarIcon />
                                             {/* <StarRating value={products?.items?.user?.rating} /> */}
-                                            <span>{products?.items?.user?.rating}</span>
+                                            <span>{products?.items?.user?.rating ?? "0.0"}</span>
                                         </div>
                                     </div>
                                     <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>

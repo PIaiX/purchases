@@ -14,6 +14,7 @@ const Finance = () => {
     setCurrentPage(page.selected + 1);
   };
   const { user } = useSelector((state) => state.auth);
+  console.log(user)
   const [transactions, setTransactions] = useState({
     loading: true,
     items: [],
@@ -70,7 +71,7 @@ const Finance = () => {
                   ? "btn-2 active h-100 px-2 px-sm-4"
                   : "btn-2 h-100 px-2 px-sm-4"
               }
-              onClick={() => setBalanceSection(2)}
+              onClick={() => setBalanceSection(1)}
             >
               Пополнить баланс
             </button>
@@ -79,7 +80,7 @@ const Finance = () => {
             <button
               type="button"
               className={
-                balanceSection === 2
+                balanceSection == 2
                   ? "btn-2 active h-100 px-2 px-sm-4"
                   : "btn-2 h-100 px-2 px-sm-4"
               }
@@ -127,35 +128,43 @@ const Finance = () => {
       )}
 
       {balanceSection === 2 && (
-        <div className="list-wrapping">
-          <div className="list-wrapping-top px-0">
-            <ul className="line-operation">
-              <li className="date">Дата</li>
-              <li className="id">ID операции</li>
-              <li className="type">Тип</li>
-              <li className="stat">Статус</li>
-              <li className="sum">Сумма</li>
-            </ul>
-          </div>
-          <div className="list-wrapping-main">
-            {transactions.loading ? (
-              <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                Загрузка операций...
-              </div>
-            ) : (
-              <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
-                {transactions?.items.map((item) => (
-                  <li>
-                    <Operation {...item} />
-                  </li>
-                ))}
+        transactions?.pagination?.totalPages ? (
+          <div className="list-wrapping">
+            <div className="list-wrapping-top px-0">
+              <ul className="line-operation">
+                <li className="date">Дата</li>
+                <li className="id">ID операции</li>
+                <li className="type">Тип</li>
+                <li className="stat">Статус</li>
+                <li className="sum">Сумма</li>
               </ul>
-            )}
+            </div>
+            <div className="list-wrapping-main">
+              {transactions.loading ? (
+                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                  Загрузка операций...
+                </div>
+              ) : (
+                <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
+                  {transactions?.items.map((item) => (
+                    <li>
+                      <Operation {...item} />
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </div>
+            <div className="list-wrapping-bottom">
+              <NavPagination totalPages={transactions?.pagination?.totalPages} onPageChange={onPageChange} />
+            </div>
           </div>
-          <div className="list-wrapping-bottom">
-            <NavPagination totalPages={transactions?.pagination?.totalPages} onPageChange={onPageChange} />
+        ) : (
+          <div className="d-flex align-items-center justify-content-center mt-4">
+            <h3>
+              Нет операций
+            </h3>
           </div>
-        </div>
+        )
       )}
     </section>
   );

@@ -59,34 +59,42 @@ const Offers = () => {
               </button>
             </div>
           </div>
-
-          <div className="list-wrapping">
-            <div className="list-wrapping-top">
-              <ul className='line-2'>
-                <li className='descr'>Описание</li>
-                <li className='price'>Цена</li>
-                <li className='btns'></li>
-              </ul>
-            </div>
-            <div className="list-wrapping-main">
-              {products.loading ? (
-                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                  Загрузка историй...
+          {products?.pagination?.totalItems > 1 ?
+            (
+              <div className="list-wrapping">
+                <div className="list-wrapping-top">
+                  <ul className='line-2'>
+                    <li className='descr'>Описание</li>
+                    <li className='price'>Цена</li>
+                    <li className='btns'></li>
+                  </ul>
                 </div>
-              ) : (
-                <ul className='g-4 g-xl-0 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-1'>
-                  {products?.items.map((item) => (
-                    <li>
-                      <OfferLine2 {...item} />
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-            <div className="list-wrapping-bottom">
-              <NavPagination totalPages={products?.pagination?.totalPages} onPageChange={onPageChange} />
-            </div>
-          </div>
+                <div className="list-wrapping-main">
+                  {products.loading ? (
+                    <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                      Загрузка лотов...
+                    </div>
+                  ) : (
+                    <ul className='g-4 g-xl-0 row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-1'>
+                      {products?.items.map((item) => (
+                        <li>
+                          <OfferLine2 {...item} />
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </div>
+                <div className="list-wrapping-bottom">
+                  <NavPagination totalPages={products?.pagination?.totalPages} onPageChange={onPageChange} />
+                </div>
+              </div>
+            ) : (
+              <div className="d-flex align-items-center justify-content-center mt-4">
+                <h3>
+                  Нет объявлений
+                </h3>
+              </div>
+            )}
         </div>
       </div>
     </section>

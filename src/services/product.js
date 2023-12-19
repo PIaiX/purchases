@@ -40,8 +40,8 @@ const getFree = async () => {
 }
 
 const createUserProduct = async (data) => {
-    const response = await $authApi.post(apiRoutes.USER_PRODUCTS, data)
-    return response
+    const response = await $authApi.post(apiRoutes.USER_PRODUCTS, { params: data })
+    return response?.data
 }
 
 const getUserProducts = async (data) => {

@@ -2,7 +2,7 @@ import { apiRoutes } from '../config/api'
 import { $authApi } from './index'
 
 const createOrder = async (data) => {
-    const response = await $authApi.post(apiRoutes.ORDER_CREATE, { params: data })
+    const response = await $authApi.post(apiRoutes.ORDER_CREATE, data)
     return response?.data
 }
 const getOrders = async (data) => {
