@@ -1,3 +1,4 @@
+import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
@@ -5,23 +6,26 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
-import { PiCaretLeftLight, PiWarningLight } from "react-icons/pi";
+import { PiCaretLeftLight } from "react-icons/pi";
 import { useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
 import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
 import Chat from '../components/chat/Chat';
+import StarIcon from '../components/svg/StarIcon';
 import Input from '../components/utils/Input';
 import Loader from '../components/utils/Loader';
-import StarRating from '../components/utils/StarRating';
+import Select from '../components/utils/Select';
 import socket from '../config/socket';
+import { getImageURL } from '../helpers/all';
 import { createMessage, getMessages } from '../services/message';
+import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
-import moment from 'moment';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
+    const [pay, setPay] = useState();
     const [showShare, setShowShare] = useState(false);
     const [products, setProducts] = useState({
         loading: true,
@@ -60,7 +64,7 @@ const LotPage = () => {
     }, [messages.dialogId]);
 
     useEffect(() => {
-        if (data.toId) {
+        if (data.toId && userId != products.items.user.id) {
             getMessages(data)
                 .then((res) => {
                     setMessages((prev) => ({
@@ -111,8 +115,11 @@ const LotPage = () => {
         },
         [data]
     );
-
-
+    const onPay = useCallback(
+        (pay) => {
+            createOrder({ lotId: lotId, type: pay })
+        }, [lotId]
+    )
     if (products.loading) {
         return <Loader full />;
     }
@@ -136,8 +143,8 @@ const LotPage = () => {
 
                                 <div className='info'>
                                     <div className='d-flex align-items-center'>
-                                        <span className='tag-gray me-3'>Аккаунты</span>
-                                        <span className='tag-green me-3'>{products?.items?.data?.region?.title}</span>
+                                        <span className='tag-gray me-3'>{products?.items?.param?.title}</span>
+                                        <span className='tag-green me-3'>{products?.items?.region?.title}</span>
                                     </div>
                                     {products?.items?.title &&
                                         <div className='d-flex align-items-center'>
@@ -153,58 +160,66 @@ const LotPage = () => {
                                 <div className='date'>
                                     <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
                                     <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
-                                    <button type='button' className='d-flex fs-14 ms-3'>
+                                    {/* <button type='button' className='d-flex fs-14 ms-3'>
                                         <PiWarningLight />
-                                    </button>
+                                    </button> */}
                                 </div>
 
-                                <div className="payment">
-                                    <Input
+                                <div className="payment align-items-center">
+                                    <Select
+                                        value={pay}
                                         className={"min-250 me-md-4"}
-                                        type={"select"}
-                                        label={"Выберите способ оплаты"}
-                                        options={[{ value: 1, text: 'Банковская карта' }, { value: 2, text: 'СБП' }, { value: 3, text: 'MIR PAY' }]}
+                                        title="Выберите способ оплаты"
+                                        onClick={e => setPay(e.value)}
+                                        data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
-                                    <button type='button' className='btn-1'>Оплатить {products?.items?.price} ₽</button>
+                                    <button onClick={() => onPay(pay)} type='button' className='btn-1'>Оплатить {products?.items?.price} ₽</button>
                                 </div>
 
                                 <div className='text fs-09'>
-                                    <p>Какое то продающее описание товара </p>
+                                    <p>{products?.items?.desc}</p>
                                 </div>
 
                                 <ul className='specifications'>
-                                    <li>
-                                        <span>Хакатеристика</span>
-                                        <span>Значение</span>
-                                    </li>
-                                    <li>
-                                        <span>Хакатеристика</span>
-                                        <span>Очень длинное значение</span>
-                                    </li>
+                                    {products?.items?.options?.length > 0 && products?.items?.options?.map(item => (
+                                        <li>
+                                            <span>Хакатеристика</span>
+                                            <span>{item.option.title}</span>
+                                        </li>
+                                    ))}
+                                    {products?.items?.options?.length > 0 && products?.items?.options?.map(item => (
+                                        <li>
+                                            <span>Хакатеристика</span>
+                                            <span>{item.option.title}</span>
+                                        </li>
+                                    ))}
                                 </ul>
                             </div>
 
                             <div className="lot-page-box">
                                 <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
-                                    <div className="seller w-xs-100">
+                                    <div className="seller">
                                         <Link to={`/profile/${products?.items?.userId}`}>
-                                            <img src="/imgs/user.jpg" alt="Weatherwax" />
-                                            <h3 className='title-font lh-n mb-0'>{products?.items?.seller}</h3>
+                                            <img src={getImageURL(products?.items?.user)} alt="Weatherwax" />
+                                        </Link>
+                                        <Link to={`/profile/${products?.items?.userId}`}>
+                                            <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>
                                         </Link>
                                         <div className='rating ms-3'>
-                                            <StarRating value={products?.items?.ratings ?? 0} />
-                                            <span>{products?.items?.ratings}</span>
+                                            <StarIcon />
+                                            {/* <StarRating value={products?.items?.user?.rating} /> */}
+                                            <span>{products?.items?.user?.rating}</span>
                                         </div>
                                     </div>
                                     <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
                                         <div className="d-flex">
-                                            <div>
+                                            <div className="d-flex flex-column align-items-center">
                                                 <p className='fs-09 mb-1 mb-sm-2'>Сделки</p>
-                                                <p className="fs-15 title-font lh-n">200</p>
+                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.order}</p>
                                             </div>
-                                            <div className='ms-4'>
+                                            <div className='d-flex flex-column align-items-center ms-4'>
                                                 <p className='fs-09 mb-1 mb-sm-2'>Лоты</p>
-                                                <p className="fs-15 title-font lh-n">2266</p>
+                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.product}</p>
                                             </div>
                                         </div>
                                         <div className='ms-5'>
@@ -216,35 +231,41 @@ const LotPage = () => {
                                             >
                                                 <FiShare />
                                             </button>
-                                            <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
+                                            {userId != products?.items?.user?.id &&
+                                                <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
-                                <hr />
-                                <div className="px-3 py-2">
-                                    <p className='blue'>Напишите продавцу перед покупкой</p>
-                                </div>
-                                <hr />
-                                {!userId ? (
-                                    <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                                        Для отправки сообщений войдите в аккаунт!
-                                    </div>
-                                ) : (
-                                    <div className="p-0 fs-09">
-                                        {products.loading ? (
+                                {userId != products?.items?.user?.id &&
+                                    <>
+                                        <hr />
+                                        <div className="px-3 py-2">
+                                            <p className='blue'>Напишите продавцу перед покупкой</p>
+                                        </div>
+                                        <hr />
+                                        {!userId ? (
                                             <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                                                Загрузка чата...
+                                                Для отправки сообщений войдите в аккаунт!
                                             </div>
                                         ) : (
-                                            < Chat
-                                                messages={messages}
-                                                emptyText="Нет сообщений"
-                                                onSubmit={(e) => onNewMessage(e)}
-                                                onChange={(e) => setValue("text", e)}
-                                            />
+                                            <div className="p-0 fs-09">
+                                                {products.loading ? (
+                                                    <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                                                        Загрузка чата...
+                                                    </div>
+                                                ) : (
+                                                    < Chat
+                                                        messages={messages}
+                                                        emptyText="Нет сообщений"
+                                                        onSubmit={(e) => onNewMessage(e)}
+                                                        onChange={(e) => setValue("text", e)}
+                                                    />
+                                                )}
+                                            </div>
                                         )}
-                                    </div>
-                                )}
+                                    </>
+                                }
                             </div>
                         </Col>
                         <Col xs={12} lg={4} className='mt-5 mt-lg-0'>

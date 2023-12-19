@@ -13313,7 +13313,7 @@ header .profile-link img {
 .lot-page-grid {
   display: grid;
   grid-template-columns: 120px 4fr 5fr;
-  grid-template-rows: 35px 40px 30px 85px 70px;
+  grid-template-rows: 35px 40px 30px 85px auto;
   gap: 0px 0px;
   grid-template-areas: "game . date" "game info info" "game title title" "payment payment payment" "text text specifications";
 }
@@ -13469,11 +13469,6 @@ header .profile-link img {
 .lot-page-grid .text {
   grid-area: text;
   padding: 1em;
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center;
-  flex-wrap: nowrap;
 }
 
 @media (max-width: 767.98px) {
