@@ -11169,7 +11169,7 @@ header {
   background-color: var(--body-bg);
   opacity: 0.9;
   width: 100%;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0%;
   z-index: 1042;
