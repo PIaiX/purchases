@@ -3,8 +3,11 @@ import StarRating from './utils/StarRating';
 import moment from "moment";
 import { getImageURL } from '../helpers/all';
 import { useSelector } from 'react-redux';
+import { Dropdown } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { IoEllipsisVertical } from 'react-icons/io5';
 
-const OfferLine3 = ({ id, author, user, comment, createdAt, status, total }) => {
+const OfferLine3 = ({ id, author, user, comment, createdAt, status, total, onStatus }) => {
   const userId = useSelector(state => state.auth?.user?.id);
   const nickname = (user.id == userId) ? author.nickname : user.nickname;
   const rating = (user.id == userId) ? author.rating : user.rating;
@@ -35,7 +38,39 @@ const OfferLine3 = ({ id, author, user, comment, createdAt, status, total }) => 
         {status == "ok" ?
           <div className='blue'>Подтверждено</div>
           :
-          <button type='button' className='btn-5 py-1 px-2'>{status}</button>
+          (user.id == userId ?
+            <>
+
+              <div className='green'>в процессе</div>
+              <Dropdown className="d-flex align-items-center">
+                <Dropdown.Toggle
+                  as={React.forwardRef(({ children, onClick }, ref) => (
+                    <Link
+                      ref={ref}
+                      className="green py-0"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        onClick(e);
+                      }}
+                    >
+                      <IoEllipsisVertical size={20} />
+                    </Link>
+                  ))}
+                />
+                <Dropdown.Menu align="end">
+                  <Dropdown.Item className='btn-5 py-1 px-2' onClick={() => onStatus({ id: id, status: "ok", authorId: 0 })}>
+                    <div>Подтвердить</div>
+
+                  </Dropdown.Item>
+                  <Dropdown.Item className='btn-3 py-1 px-2' onClick={() => onStatus({ id: id, status: "cancel", authorId: 0 })}>
+                    <div>Отменить</div>
+
+                  </Dropdown.Item>
+                </Dropdown.Menu>
+              </Dropdown>
+            </>
+            : <button className='btn-3 py-1 px-2' onClick={() => onStatus({ id: id, status: "cancel", authorId: 1 })}>Отменить</button>
+          )
         }
       </div>
       <div className="price">{total}&nbsp;&nbsp;₽</div>

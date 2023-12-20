@@ -11,7 +11,7 @@ import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
 
 const LeaveFeedback = () => {
-  const { productId } = useParams();
+  const { orderId } = useParams();
   const {
     control,
     register,
@@ -22,7 +22,7 @@ const LeaveFeedback = () => {
     mode: 'onChange',
     reValidateMode: 'onChange',
     defaultValues: {
-      productId
+      orderId
     }
   });
 

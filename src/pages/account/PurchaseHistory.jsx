@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import NavPagination from '../../components/NavPagination';
 import OfferLine3 from '../../components/OfferLine3';
 import ReturnTitle from '../../components/utils/ReturnTitle';
-import { getOrders } from "../../services/order"
+import { editOrder, getOrders } from "../../services/order"
 import Loader from '../../components/utils/Loader';
 import Meta from '../../components/Meta';
 
@@ -11,6 +11,7 @@ const PurchaseHistory = () => {
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
+  const [status, setStatus] = useState([]);
   const [orders, setOrders] = useState({
     loading: true,
     items: [],
@@ -26,7 +27,19 @@ const PurchaseHistory = () => {
         setCurrentPage(res.pagination.currentPage)
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
-  }, [currentPage]);
+  }, [currentPage, status]);
+  const onStatus = useCallback((status) => {
+    editOrder(status)
+      .then((res) => {
+        NotificationManager.success("Покупка подтвержден");
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Покупка отменена"
+        );
+      });
+    setStatus(status)
+  }, []);
   if (orders.loading) {
     return <Loader full />;
   }
@@ -56,7 +69,7 @@ const PurchaseHistory = () => {
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-4 g-xl-0'>
                 {orders?.items.map((item) => (
                   <li>
-                    <OfferLine3 {...item} />
+                    <OfferLine3 {...item} onStatus={onStatus} />
                   </li>
                 ))}
               </ul>

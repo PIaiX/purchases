@@ -27,7 +27,7 @@ const apiRoutes = {
   ORDERS_GET_ALL: BASE_URL + "/user/order",
   ORDER_GET_ONE: BASE_URL + "/user/order/one",
   ORDER_CREATE: BASE_URL + "/user/order",
-  ORDER_EDIT: BASE_URL + "/user/order/edit",
+  ORDER_EDIT: BASE_URL + "/user/order",
   ORDER_NOTE_CREATE: BASE_URL + "/user/order/createNote",
   ORDER_NOTES_GET: BASE_URL + "/user/order/notes",
   ORDER_EDIT_STATUS: BASE_URL + "/user/order/editStatus",

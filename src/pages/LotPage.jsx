@@ -144,9 +144,9 @@ const LotPage = () => {
                 "Выберите способ оплаты"
             )
         }
-        if (pay.count > products?.items?.count) {
+        if (products.items.count - pay.count < 0) {
             return NotificationManager.error(
-                "Укажите количество"
+                "У продавца недостаточно кол-ва данного товара"
             )
         }
         createOrder(pay)
@@ -159,8 +159,8 @@ const LotPage = () => {
                     err?.response?.data?.error ?? "Ошибка при покупке"
                 );
             });
-    }, []);
-    console.log(pay)
+    }, [products.items.count]);
+
     if (products.loading) {
         return <Loader full />;
     }
@@ -225,9 +225,10 @@ const LotPage = () => {
                                         className={"me-md-4"}
                                         title="Выберите способ оплаты"
                                         onClick={e => setValuePay("type", e.value)}
+
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
-                                    <button onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {products?.items?.price} ₽</button>
+                                    <button onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.price} ₽</button>
                                 </div>
 
                                 <div className='text fs-09'>
