@@ -83,6 +83,7 @@ const Profile = () => {
   };
   useEffect(() => {
     if (currentGame) {
+      setUser({ loading: true })
       setCurrentPage(1)
       getUser({ id: userId, page: currentPage, categoryId: currentGame })
         .then((res) => res && setUser({
@@ -131,17 +132,19 @@ const Profile = () => {
 
 
   useEffect(() => {
-    getMessages(dataMessage)
-      .then((res) => {
-        setMessages((prev) => ({
-          ...prev,
-          loading: false,
-          items: res.messages.items,
-          dialogId: res.dialog.id
-        }))
-      }
-      )
-      .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    if (userId != myId) {
+      getMessages(dataMessage)
+        .then((res) => {
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: res.messages.items,
+            dialogId: res.dialog.id
+          }))
+        }
+        )
+        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    }
   }, []);
   useEffect(() => {
     setValueMessage("id", messages.dialogId);
@@ -209,7 +212,7 @@ const Profile = () => {
       <section className="mb-6">
         <Container>
           <Row>
-            <Col lg={8}>
+            <Col lg={userId != myId ? 8 : 12}>
               <div className="d-flex align-items-start mb-5">
                 <div className="user flex-1">
                   <div className="user-photo">
@@ -284,13 +287,15 @@ const Profile = () => {
                   >
                     <FiShare />
                   </button>
-                  <button
-                    onClick={() => setShowAlert(true)}
-                    type="button"
-                    className="mt-4 d-flex dark-blue fs-15 ms-2 ms-xl-4"
-                  >
-                    <FiAlertTriangle />
-                  </button>
+                  {userId != myId &&
+                    <button
+                      onClick={() => setShowAlert(true)}
+                      type="button"
+                      className="mt-4 d-flex dark-blue fs-15 ms-2 ms-xl-4"
+                    >
+                      <FiAlertTriangle />
+                    </button>
+                  }
                 </div>
               </div>
 
@@ -341,23 +346,25 @@ const Profile = () => {
                 </div>
               </div>
             </Col>
-            <Col className="chat-container" lg={4}>
-              <h2 className="text-center">Чат с пользователем</h2>
-              {!myId ? (
-                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                  Для отправки сообщений войдите в аккаунт!
-                </div>
-              ) : (
-                <div className="p-0 fs-09">
-                  <Chat
-                    messages={messages}
-                    emptyText="Нет сообщений"
-                    onSubmit={(e) => onNewMessage(e)}
-                    onChange={(e) => setValueMessage("text", e)}
-                  />
-                </div>
-              )}
-            </Col>
+            {userId != myId &&
+              <Col className="chat-container" lg={4}>
+                <h2 className="text-center">Чат с пользователем</h2>
+                {!myId ? (
+                  <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                    Для отправки сообщений войдите в аккаунт!
+                  </div>
+                ) : (
+                  <div className="p-0 fs-09">
+                    <Chat
+                      messages={messages}
+                      emptyText="Нет сообщений"
+                      onSubmit={(e) => onNewMessage(e)}
+                      onChange={(e) => setValueMessage("text", e)}
+                    />
+                  </div>
+                )}
+              </Col>
+            }
           </Row>
         </Container>
       </section>
