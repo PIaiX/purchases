@@ -193,7 +193,7 @@ const LotPage = () => {
                                         <div className='d-flex align-items-center'>
                                             <span>Сервер</span>
                                             <span className='fs-09 pale-blue mx-2'>●</span>
-                                            <span>{products?.items?.title}</span>
+                                            <span>{products?.items?.server?.title}</span>
                                         </div>
                                     }
                                 </div>

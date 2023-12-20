@@ -67,8 +67,6 @@ const Game = () => {
       return product?.options?.some(dataItem => dataItem.optionId == filter);
     });
   })
-  console.log(filters)
-  console.log(filteredData)
   var totalProducts = (filteredData ?? games.items.products) ?? [];
   const productsPerPage = 30;
 

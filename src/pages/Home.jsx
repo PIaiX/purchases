@@ -173,11 +173,12 @@ const Home = () => {
         </section>
       </Container>
       <CatalogSection games={games} />
+      {articles?.pagination?.totalItems > 0 && (
+        <Container>
+          <BlogSection articles={articles} onPageChange={onPageChange} />
+        </Container>)
 
-      <Container>
-        <BlogSection articles={articles} onPageChange={onPageChange} />
-      </Container>
-
+      }
       {
         (!isMobileLG) &&
         <section className='sec-bottom mb-md-5'>
