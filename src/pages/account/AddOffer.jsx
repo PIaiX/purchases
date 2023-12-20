@@ -50,7 +50,7 @@ const AddOffer = () => {
         "Выберите объект продажи"
       )
     }
-    if (!data?.option || data?.options?.filter((option) => option.parent === null).length > data?.option?.length) {
+    if (data?.options && (!data?.option || data?.options?.filter((option) => option.parent === null).length > data?.option?.length)) {
       return NotificationManager.error(
         "Выберите характеристики продукта"
       )
