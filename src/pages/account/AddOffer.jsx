@@ -30,12 +30,55 @@ const AddOffer = () => {
   const [regions, setRegions] = useState([]);
   const data = useWatch({ control })
   const onClick = useCallback((data) => {
-    // if (!data.value || data.value <= 0) {
-    //   return NotificationManager.error(
-    //     "Укажите оценку"
-    //   )
-    // }
-    createUserProduct({ categoryId: data.category, region: data.region, server: data.server, param: data.param, option: data.option, title: data.title, desc: data.text, count: data.count, price: data.price })
+    if (!data.category) {
+      return NotificationManager.error(
+        "Выберите игру"
+      )
+    }
+    if (!data.region && data?.game?.regions?.length > 0) {
+      return NotificationManager.error(
+        "Выберите регион"
+      )
+    }
+    if (!data.server && data?.servers?.length > 0) {
+      return NotificationManager.error(
+        "Выберите сервер"
+      )
+    }
+    if (!data.param && data?.game?.params?.length > 0) {
+      return NotificationManager.error(
+        "Выберите объект продажи"
+      )
+    }
+    if (!data?.option || data?.options?.filter((option) => option.parent === null).length > data?.option?.length) {
+      return NotificationManager.error(
+        "Выберите характеристики продукта"
+      )
+    }
+    if (!data.title) {
+      return NotificationManager.error(
+        "Введите название объявления"
+      )
+    }
+    if (!data.count) {
+      setValue("count", 1)
+    }
+    if (!data.price) {
+      return NotificationManager.error(
+        "Введите цену объявления"
+      )
+    }
+    createUserProduct({
+      categoryId: data.category,
+      region: data.region,
+      server: data.server,
+      param: data.param,
+      option: data.option,
+      title: data.title,
+      desc: data.text,
+      count: data.count,
+      price: data.price
+    })
       .then(() => {
         NotificationManager.success("Лот создан");
       })
@@ -85,7 +128,6 @@ const AddOffer = () => {
     }
 
   }, [data.param]);
-
   if (games.loading) {
     return <Loader full />;
   }
