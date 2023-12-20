@@ -133,12 +133,22 @@ const LotPage = () => {
         },
     });
     const pay = useWatch({ control: controlPay })
-    // const onPay = useCallback(
-    //     () => {
-    //         createOrder({ productId: lotId, type: pay, count: count })
-    //     }, [lotId, pay, count]
-    // )
     const onPay = useCallback((pay) => {
+        if (!pay.count || pay.count <= 0) {
+            return NotificationManager.error(
+                "Укажите количество"
+            )
+        }
+        if (!pay.type || pay.type <= 0) {
+            return NotificationManager.error(
+                "Выберите способ оплаты"
+            )
+        }
+        if (pay.count > products?.items?.count) {
+            return NotificationManager.error(
+                "Укажите количество"
+            )
+        }
         createOrder(pay)
             .then((res) => {
                 NotificationManager.success("Куплено");
@@ -150,6 +160,7 @@ const LotPage = () => {
                 );
             });
     }, []);
+    console.log(pay)
     if (products.loading) {
         return <Loader full />;
     }
@@ -211,7 +222,7 @@ const LotPage = () => {
                                     />
                                     <Select
                                         value={pay.type}
-                                        className={"min-250 me-md-4"}
+                                        className={"me-md-4"}
                                         title="Выберите способ оплаты"
                                         onClick={e => setValuePay("type", e.value)}
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
@@ -308,11 +319,18 @@ const LotPage = () => {
                         <Col xs={12} lg={4} className='mt-5 mt-lg-0'>
                             <h2 className='fs-15'>Отзывы</h2>
                             <ul className='list-unstyled'>
-                                {products?.reviews?.length > 0 && products.reviews.map(review => (
+                                {products?.reviews?.length > 0 ? products.reviews.map(review => (
                                     <li className='mb-3'>
                                         <ReviewCard {...review} />
                                     </li>
-                                ))}
+                                )) : (
+                                    <div className="d-flex align-items-center justify-content-center mt-4">
+                                        <h5>
+                                            Нет отзывов
+                                        </h5>
+                                    </div>
+                                )
+                                }
                             </ul>
                         </Col>
                     </Row>

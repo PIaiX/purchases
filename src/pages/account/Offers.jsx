@@ -20,7 +20,7 @@ const Offers = () => {
     items: [],
   });
   useEffect(() => {
-    getUserProducts({ page: currentPage, authorId: 0 })
+    getUserProducts({ page: currentPage })
       .then((res) => {
         setProducts((prev) => ({
           prev,
@@ -59,7 +59,7 @@ const Offers = () => {
               </button>
             </div>
           </div>
-          {products?.pagination?.totalItems > 1 ?
+          {products?.pagination?.totalItems > 0 ?
             (
               <div className="list-wrapping">
                 <div className="list-wrapping-top">
