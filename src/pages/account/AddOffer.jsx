@@ -9,13 +9,12 @@ import Select from '../../components/utils/Select';
 import { useForm, useWatch } from 'react-hook-form';
 import { useCallback } from 'react';
 import { NotificationManager } from "react-notifications";
-import { createUserProduct, getUserProduct } from '../../services/product';
+import { createUserProduct, editUserProduct, getUserProduct } from '../../services/product';
 import Loader from '../../components/utils/Loader';
 import { useParams } from 'react-router-dom';
 
 const AddOffer = () => {
   const { id } = useParams();
-  const [game, setGame] = useState({ items: [], loading: true });
   const [games, setGames] = useState({ items: [], loading: true });
   const {
     control,
@@ -31,6 +30,7 @@ const AddOffer = () => {
   const [category, setCategory] = useState([]);
   const [regions, setRegions] = useState([]);
   const data = useWatch({ control })
+  const [sum, setSum] = useState(0);
   const onClick = useCallback((data) => {
     if (!data.category) {
       return NotificationManager.error(
@@ -70,27 +70,53 @@ const AddOffer = () => {
         "Введите цену объявления"
       )
     }
-    createUserProduct({
-      categoryId: data.category,
-      region: data.region,
-      server: data.server,
-      param: data.param,
-      option: data.option,
-      title: data.title,
-      desc: data.text,
-      count: data.count,
-      price: data.price
-    })
-      .then(() => {
-        NotificationManager.success("Лот создан");
+    if (!id) {
+      createUserProduct({
+        categoryId: data.category,
+        region: data.region,
+        server: data.server,
+        param: data.param,
+        option: data.option,
+        title: data.title,
+        desc: data.text,
+        count: data.count,
+        price: data.price
       })
-      .catch(
-        (err) =>
-          err &&
-          NotificationManager.error(
-            err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
-          )
-      );
+        .then(() => {
+          NotificationManager.success("Лот создан");
+        })
+        .catch(
+          (err) =>
+            err &&
+            NotificationManager.error(
+              err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+            )
+        );
+    }
+    else {
+      editUserProduct({
+        id: data.id,
+        categoryId: data.category,
+        region: data.region,
+        server: data.server,
+        param: data.param,
+        option: data.option,
+        title: data.title,
+        desc: data.text,
+        count: data.count,
+        price: data.price
+      })
+        .then(() => {
+          NotificationManager.success("Лот обновлён");
+        })
+        .catch(
+          (err) =>
+            err &&
+            NotificationManager.error(
+              err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+            )
+        );
+    }
   }, [])
 
   useEffect(() => {
@@ -105,12 +131,14 @@ const AddOffer = () => {
     if (id) {
       getUserProduct({ id: id })
         .then((res) => {
-          setGame(prev => ({ ...prev, items: res, loading: false }));
+          setValue('id', res.id);
           setValue('category', res.categoryId);
           setValue('game', res.category);
           setValue('region', res.regionId);
+          setValue('servers', res.region.servers);
           setValue('server', res.serverId);
           setValue('param', res.paramId);
+          setValue('options', res.param.options);
           for (let i = 0; i < res.options.length; i++) {
             setValue(`option[${i}]`, res.options[i].optionId);
           }
@@ -119,55 +147,41 @@ const AddOffer = () => {
           setValue('count', res.count);
           setValue('price', res.price);
         })
-        .catch(() => setGame((prev) => ({ ...prev, loading: false })));
 
     }
   }, []);
-  console.log(data)
+
+  let i;
 
   useEffect(() => {
-
-    if (data.region) {
+    if (data.region && sum > 1) {
       let serverIndex = data.game.regions.findIndex(e => e.id === data.region)
       let servers = data.game.regions[serverIndex].servers
-      if (!id) {
-        reset({
-          ...data,
-          server: false,
-          servers: servers?.length > 0 ? servers : false
-        })
-      }
-      else {
-        reset({
-          ...data,
-          servers: servers?.length > 0 ? servers : false
-        })
-      }
+      reset({
+        ...data,
+        server: false,
+        servers: servers?.length > 0 ? servers : false
+      })
     }
+    setSum(sum + 1)
 
   }, [data.region]);
-  let i;
+
   useEffect(() => {
-    if (data.param) {
+    if (data.param && sum > 1) {
       let optionsIndex = data.game.params.findIndex(e => e.id === data.param)
       let options = data.game.params[optionsIndex].options
       i = 0;
-      if (!id) {
-        reset({
-          ...data,
-          option: false,
-          options: options?.length > 0 ? options : false
-        })
-      }
-      else {
-        reset({
-          ...data,
-          options: options?.length > 0 ? options : false
-        })
-      }
+      reset({
+        ...data,
+        option: false,
+        options: options?.length > 0 ? options : false
+      })
     }
+    setSum(sum + 1)
 
   }, [data.param]);
+  console.log(sum)
   if (games.loading) {
     return <Loader full />;
   }
@@ -175,8 +189,11 @@ const AddOffer = () => {
     <section className='mb-3 mb-sm-5'>
       <div className='row'>
         <div className='col-12 col-xxl-11 col-xxxl-10'>
-          <ReturnTitle link={'/account/offers'} title={'Новое объявление'} />
-
+          {!id ?
+            <ReturnTitle link={'/account/offers'} title={'Новое объявление'} />
+            :
+            <ReturnTitle link={'/account/offers'} title={'Изменение объявления'} />
+          }
           <form action="" className='add-offer'>
             <Row>
               <Col xs={12} xl={10} xxl={9}>
@@ -214,7 +231,7 @@ const AddOffer = () => {
                     </Col>
                   )}
 
-                  {data.servers && (
+                  {data?.servers?.length > 0 && (
                     <Col md={6} >
                       <Select
                         value={data.server}
@@ -286,11 +303,19 @@ const AddOffer = () => {
                 </Row>
               </Col>
             </Row>
-            <button
-              type='button'
-              className='btn-1 mt-4 mt-sm-5'
-              onClick={handleSubmit(onClick)}
-            >Опубликовать</button>
+            {!id ?
+              <button
+                type='button'
+                className='btn-1 mt-4 mt-sm-5'
+                onClick={handleSubmit(onClick)}
+              >Опубликовать</button>
+              :
+              <button
+                type='button'
+                className='btn-1 mt-4 mt-sm-5'
+                onClick={handleSubmit(onClick)}
+              >Сохранить изменения</button>
+            }
           </form>
         </div>
       </div >
