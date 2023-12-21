@@ -24,7 +24,7 @@ const Operation = ({ createdAt, orderId, id, status, price, className }) => {
           ))
       }
       <div className="stat">
-        {status ?
+        {status == "ok" ?
           <span className="blue">Исполнено</span>
           : <span className="green">В обработке</span>
 
