@@ -34,6 +34,7 @@ const Textarea = memo(
           id={name}
           name={name}
           type={type}
+          defaultValue={defaultValue}
           placeholder={placeholder}
           rows={rows}
           onChange={(e) =>

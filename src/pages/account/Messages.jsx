@@ -203,7 +203,7 @@ const Messages = ({ isMobileXL }) => {
           <form action="" className='p-2 p-sm-3'>
             <input type="search" placeholder='Поиск пользователя' className='p-blue' />
           </form>
-          <ul>
+          <ul className=" ms-3 me-3">
             <li>
               <Link to="general" className='general-chat'>
                 <div className="count">

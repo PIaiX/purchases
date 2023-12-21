@@ -36,11 +36,9 @@ const Message = ({ my, time, text, name, admin, view = false }) => {
         <img src="/imgs/user.jpg" alt={name} />
         <div className='text'>
           <div className='gray fs-08 d-flex align-items-center mb-2'>
-            <time className='me-2'>{time}</time>
-            <button type='button' className='report d-flex fs-15'>
-              <WarningIcon />
-            </button>
-            <h6>ADMIN</h6>
+            <h6 className="me-2 fs-12">Admin </h6>
+            <time className='me-2'> {time}</time>
+
           </div>
           <div className="bubble">
             <p>{text}</p>
@@ -53,9 +51,6 @@ const Message = ({ my, time, text, name, admin, view = false }) => {
         <div className='text'>
           <div className='gray fs-08 d-flex align-items-center mb-2'>
             <time className='me-2'>{time}</time>
-            <button type='button' className='report d-flex fs-15'>
-              <WarningIcon />
-            </button>
           </div>
           <div className="bubble">
             <p>{text}</p>

@@ -9,7 +9,7 @@ const DialogPreview = ({ id, to, from, message, userId }) => {
   const imag = getImageURL({ path: user, type: "user" })
   console.log(user)
   return (
-    <NavLink to={`${id}`} className="dialog-preview ms-3 me-3">
+    <NavLink to={`${id}`} className="dialog-preview">
       <img src={imag} alt="user" />
 
       <div className="text">

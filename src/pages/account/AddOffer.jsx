@@ -9,10 +9,13 @@ import Select from '../../components/utils/Select';
 import { useForm, useWatch } from 'react-hook-form';
 import { useCallback } from 'react';
 import { NotificationManager } from "react-notifications";
-import { createUserProduct } from '../../services/product';
+import { createUserProduct, getUserProduct } from '../../services/product';
 import Loader from '../../components/utils/Loader';
+import { useParams } from 'react-router-dom';
 
 const AddOffer = () => {
+  const { id } = useParams();
+  const [game, setGame] = useState({ items: [], loading: true });
   const [games, setGames] = useState({ items: [], loading: true });
   const {
     control,
@@ -24,7 +27,6 @@ const AddOffer = () => {
   } = useForm({
     mode: 'onChange',
     reValidateMode: "onSubmit",
-
   });
   const [category, setCategory] = useState([]);
   const [regions, setRegions] = useState([]);
@@ -99,18 +101,48 @@ const AddOffer = () => {
       .catch(() => setGames((prev) => ({ ...prev, loading: false })));
   }, []);
 
+  useEffect(() => {
+    if (id) {
+      getUserProduct({ id: id })
+        .then((res) => {
+          setGame(prev => ({ ...prev, items: res, loading: false }));
+          setValue('category', res.categoryId);
+          setValue('game', res.category);
+          setValue('region', res.regionId);
+          setValue('server', res.serverId);
+          setValue('param', res.paramId);
+          for (let i = 0; i < res.options.length; i++) {
+            setValue(`option[${i}]`, res.options[i].optionId);
+          }
+          setValue('title', res.title);
+          setValue('text', res.desc);
+          setValue('count', res.count);
+          setValue('price', res.price);
+        })
+        .catch(() => setGame((prev) => ({ ...prev, loading: false })));
+
+    }
+  }, []);
+  console.log(data)
 
   useEffect(() => {
 
     if (data.region) {
       let serverIndex = data.game.regions.findIndex(e => e.id === data.region)
       let servers = data.game.regions[serverIndex].servers
-
-      reset({
-        ...data,
-        server: false,
-        servers: servers?.length > 0 ? servers : false
-      })
+      if (!id) {
+        reset({
+          ...data,
+          server: false,
+          servers: servers?.length > 0 ? servers : false
+        })
+      }
+      else {
+        reset({
+          ...data,
+          servers: servers?.length > 0 ? servers : false
+        })
+      }
     }
 
   }, [data.region]);
@@ -120,11 +152,19 @@ const AddOffer = () => {
       let optionsIndex = data.game.params.findIndex(e => e.id === data.param)
       let options = data.game.params[optionsIndex].options
       i = 0;
-      reset({
-        ...data,
-        option: false,
-        options: options?.length > 0 ? options : false
-      })
+      if (!id) {
+        reset({
+          ...data,
+          option: false,
+          options: options?.length > 0 ? options : false
+        })
+      }
+      else {
+        reset({
+          ...data,
+          options: options?.length > 0 ? options : false
+        })
+      }
     }
 
   }, [data.param]);
@@ -215,6 +255,7 @@ const AddOffer = () => {
                     <Input
                       type={"title"}
                       label={"Название"}
+                      defaultValue={data.title}
                       onChange={e => setValue("title", e)}
                     />
                   </Col>
@@ -222,6 +263,7 @@ const AddOffer = () => {
                     <Textarea
                       type={"text"}
                       label={"Описание"}
+                      defaultValue={data.text}
                       onChange={e => setValue("text", e)}
                     />
                   </Col>
@@ -229,6 +271,7 @@ const AddOffer = () => {
                     <Input
                       type={"text"}
                       label={"Наличие"}
+                      defaultValue={data.count}
                       onChange={e => setValue("count", e)}
                     />
                   </Col>
@@ -236,6 +279,7 @@ const AddOffer = () => {
                     <Input
                       type={"text"}
                       label={"Цена, ₽ "}
+                      defaultValue={data.price}
                       onChange={e => setValue("price", e)}
                     />
                   </Col>
