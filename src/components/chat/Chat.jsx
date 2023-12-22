@@ -1,4 +1,4 @@
-import React, { memo, useCallback, useState } from "react";
+import React, { memo, useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import SimpleInputFile from '../utils/SimpleInputFile';
 import Message from './Message';
@@ -13,6 +13,20 @@ const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
   const onChangeText = (e) => {
     setText(e);
     onChange(e);
+  };
+  const onKeyPress = (e) => {
+    if (e.key === 'Enter' && e.shiftKey) {
+      e.preventDefault();
+      const textarea = e.target.value;
+      const cursorPosition = textarea.selectionStart;
+      const textBefore = textarea.value.substring(0, cursorPosition);
+      const textAfter = textarea.value.substring(cursorPosition, textarea.value.length);
+      textarea.value = textBefore + '\n' + textAfter;
+      textarea.selectionStart = cursorPosition + 1;
+      textarea.selectionEnd = cursorPosition + 1;
+    } else if (e.key === 'Enter' && !e.shiftKey) {
+      onClick();
+    }
   };
 
   const onClick = useCallback(() => {
@@ -64,7 +78,7 @@ const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
               type="text"
               placeholder='Ваше сообщение'
               onChange={(e) => onChangeText(e.target.value)}
-              onKeyPress={(e) => { (e.key === 'Enter') && onClick(); }}
+              onKeyPress={onKeyPress}
             />
             <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
             <SimpleInputFile className="mx-3" />
