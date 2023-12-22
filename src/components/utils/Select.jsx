@@ -28,7 +28,7 @@ const Select = memo(
     );
 
     const CustomToggle = React.forwardRef(({ onClick }, ref) => {
-      let item = data.find((e) => e.value === value || e.title === value);
+      let item = data?.find((e) => e.value === value || e.title === value);
       let titleFind = item?.title ?? title ?? "Выберите элемент";
 
       return (
@@ -48,7 +48,7 @@ const Select = memo(
           <span
             className={
               "d-flex align-items-center flex-row " +
-              (!data.find((e) => e.value === value || e.title === value)
+              (!data?.find((e) => e.value === value || e.title === value)
                 ? "text-muted"
                 : "")
             }
@@ -80,42 +80,42 @@ const Select = memo(
           )}
           {searchData.length > 0
             ? searchData.map((e, index) => (
-                <Dropdown.Item
-                  key={index}
-                  active={e.value === value ?? e.title === value ?? e.main}
-                  onClick={() => onClick && onClick(e)}
-                  className="d-flex align-items-center flex-row"
-                >
-                  {image && (
-                    <img
-                      src="/images/lang/fr.svg"
-                      height={17}
-                      width={24}
-                      className="me-2"
-                    />
-                  )}
-                  {e.title}
-                </Dropdown.Item>
-              ))
-            : data.length > 0 &&
-              data.map((e, index) => (
-                <Dropdown.Item
-                  key={index}
-                  active={e.value === value ?? e.title === value ?? e.main}
-                  onClick={() => onClick && onClick(e)}
-                  className="d-flex align-items-center flex-row"
-                >
-                  {e?.image && (
-                    <img
-                      src={e.image}
-                      height={20}
-                      width={20}
-                      className="me-2"
-                    />
-                  )}
-                  {e.title}
-                </Dropdown.Item>
-              ))}
+              <Dropdown.Item
+                key={index}
+                active={e.value === value ?? e.title === value ?? e.main}
+                onClick={() => onClick && onClick(e)}
+                className="d-flex align-items-center flex-row"
+              >
+                {image && (
+                  <img
+                    src="/images/lang/fr.svg"
+                    height={17}
+                    width={24}
+                    className="me-2"
+                  />
+                )}
+                {e.title}
+              </Dropdown.Item>
+            ))
+            : data?.length > 0 &&
+            data.map((e, index) => (
+              <Dropdown.Item
+                key={index}
+                active={e.value === value ?? e.title === value ?? e.main}
+                onClick={() => onClick && onClick(e)}
+                className="d-flex align-items-center flex-row"
+              >
+                {e?.image && (
+                  <img
+                    src={e.image}
+                    height={20}
+                    width={20}
+                    className="me-2"
+                  />
+                )}
+                {e.title}
+              </Dropdown.Item>
+            ))}
         </Dropdown.Menu>
       </Dropdown>
     );
