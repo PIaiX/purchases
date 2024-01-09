@@ -81,9 +81,9 @@ const Header = () => {
               />
               {isAuth ? (
                 <>
-                  <span className="ms-4">
+                  {/* <span className="ms-4">
                     <LanguageSwitcher />
-                  </span>
+                  </span> */}
                   <Link
                     to="/account"
                     className="profile-link ms-4 ms-xxl-5"

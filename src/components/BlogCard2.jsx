@@ -8,7 +8,8 @@ const BlogCard2 = ({ id, link, title, createdAt }) => {
   const image = getImageURL({ path: link, type: "articles" })
   return (
     <figure className='article-mini'>
-      <img src={image} alt={title} />
+      <Link className='stretched-link' to={`/blog/${id}`}><img src={image} alt={title} /></Link>
+
       <figcaption>
         <h5><Link className='stretched-link' to={`/blog/${id}`}>{title}</Link></h5>
         <time>{date}</time>
