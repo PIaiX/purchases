@@ -185,7 +185,7 @@ const Home = () => {
           <Container className="">
             <Row>
               <Col xs={12} md={8}>
-                <section className="sec-chat">
+                <section className="sec-chat mb-5">
                   <h2>Общий чат</h2>
                   <div className="sec-chat-count">
                     <div className="num">{messages.count}</div>
