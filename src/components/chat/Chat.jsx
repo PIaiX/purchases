@@ -5,7 +5,7 @@ import Message from './Message';
 import Loader from "../utils/Loader";
 
 
-const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit }) => {
 
   const userId = useSelector(state => state.auth?.user?.id);
   const [text, setText] = useState("");
@@ -54,7 +54,9 @@ const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
 
               < Message
                 my={item.userId === userId}
-                name="Альберт"
+                general={general}
+                id={item.userId}
+                user={item.user}
                 time={item.createdAt}
                 text={item.text}
                 admin={item.memberId}
@@ -81,7 +83,9 @@ const Chat = memo(({ messages, emptyText, onChange, className, onSubmit }) => {
               onKeyPress={onKeyPress}
             />
             <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
-            <SimpleInputFile className="mx-3" />
+            {general != "general" &&
+              <SimpleInputFile className="mx-3" />
+            }
           </div>
         </>
         : (

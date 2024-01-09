@@ -26,7 +26,9 @@ const Operation = ({ createdAt, orderId, id, status, price, className }) => {
       <div className="stat">
         {status == "ok" ?
           <span className="blue">Исполнено</span>
-          : <span className="green">В обработке</span>
+          : status == "refund" ?
+            <span className="blue">Отменено</span>
+            : <span className="green">В обработке</span>
 
         }
       </div>

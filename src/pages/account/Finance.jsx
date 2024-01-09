@@ -14,7 +14,6 @@ const Finance = () => {
     setCurrentPage(page.selected + 1);
   };
   const { user } = useSelector((state) => state.auth);
-  console.log(user)
   const [transactions, setTransactions] = useState({
     loading: true,
     items: [],

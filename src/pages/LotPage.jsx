@@ -160,7 +160,6 @@ const LotPage = () => {
                 );
             });
     }, [products.items.count]);
-
     if (products.loading) {
         return <Loader full />;
     }
@@ -236,12 +235,18 @@ const LotPage = () => {
                                 </div>
 
                                 <ul className='specifications'>
-                                    {products?.items?.options?.length > 0 && products?.items?.options?.map(item => (
-                                        <li>
-                                            <span>Хакатеристика</span>
-                                            <span>{item.option.title}</span>
-                                        </li>
-                                    ))}
+                                    {products?.items?.param?.options && products?.items?.param?.options.map(e => {
+                                        let name = products.items.param.options.find(item => (!item.parent && item.id == e.id));
+
+                                        if (!e.parent) {
+                                            let options = products.items.options.find(item => (item.option.parent == name.id));
+                                            return <li>
+                                                <span>{name.title}</span>
+                                                <span>{options.option.title}</span>
+                                            </li>
+
+                                        }
+                                    })}
                                 </ul>
                             </div>
 

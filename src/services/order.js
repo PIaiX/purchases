@@ -14,7 +14,7 @@ const getOrders = async (data) => {
     return response?.data
 }
 const getOrder = async (data) => {
-    const response = await $authApi.get(apiRoutes.ORDERS_GET_ONE, { params: data })
+    const response = await $authApi.get(apiRoutes.ORDER_GET_ONE, { params: data })
     return response?.data
 }
 

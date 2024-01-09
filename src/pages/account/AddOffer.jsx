@@ -181,7 +181,6 @@ const AddOffer = () => {
     setSum(sum + 1)
 
   }, [data.param]);
-  console.log(sum)
   if (games.loading) {
     return <Loader full />;
   }

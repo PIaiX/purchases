@@ -34,7 +34,6 @@ function App() {
             data && dispatch(setUser(data));
             data && dispatch(setAuth(true));
             socket.io.opts.query = { userId: data.id }
-            socket.connect();
           }
         })
         .catch(() => dispatch(logout()))
@@ -42,6 +41,7 @@ function App() {
     } else {
       setLoading(false);
     }
+    socket.connect();
   }, []);
 
   if (loading) {

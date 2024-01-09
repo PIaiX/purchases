@@ -9,6 +9,8 @@ import { editReview } from '../../services/review';
 import { NotificationManager } from "react-notifications";
 import { useForm } from 'react-hook-form';
 import { useCallback } from 'react';
+import { getOrder } from '../../services/order';
+import Loader from '../../components/utils/Loader';
 
 const LeaveFeedback = () => {
   const { orderId } = useParams();
@@ -44,7 +46,24 @@ const LeaveFeedback = () => {
           )
       );
   }, [])
-
+  const [order, setOrder] = useState({
+    loading: true,
+    items: [],
+  });
+  useEffect(() => {
+    getOrder({ id: orderId })
+      .then((res) => {
+        setOrder((prev) => ({
+          prev,
+          loading: false,
+          items: res,
+        }))
+      })
+      .catch(() => setOrder((prev) => ({ ...prev, loading: false })));
+  }, []);
+  if (order.loading) {
+    return <Loader />;
+  }
   return (
     <section className='sec-feedback mb-3 mb-sm-5'>
       <ReturnTitle link={'/account/feedback'} title={'Оставить отзыв'} />
@@ -60,56 +79,57 @@ const LeaveFeedback = () => {
         <Col>
           <div className="list-wrapping mt-5 mt-xxl-0">
             <div className="list-wrapping-top">
-              <h5 className='fw-6'>Аккаунты ArcheAge</h5>
+              <h5 className='fw-6'>{order?.items?.product?.param?.title} {order?.items?.product?.category?.title}</h5>
             </div>
             <div className="list-wrapping-main p-sm-4">
-              <h5 className='fw-6 d-xl-none mb-3'>Аккаунты ArcheAge</h5>
+              <h5 className='fw-6 d-xl-none mb-3'>{order?.items?.product?.param?.title} {order?.items?.product?.category?.title}</h5>
               <ul className='info-list mb-2 mb-sm-4'>
-                <li>
-                  <span className='blue me-1'>Сервер</span>
-                  <span>Airin + Blackbird</span>
-                </li>
-                <li>
-                  <span className='blue me-1'>Регион</span>
-                  <span>Free</span>
-                </li>
-                <li>
-                  <span className='blue me-1'>Уровень</span>
-                  <span>88</span>
-                </li>
-                <li>
-                  <span className='blue me-1'>Раса</span>
-                  <span>Эльф</span>
-                </li>
-                <li>
-                  <span className='blue me-1'>Профессия</span>
-                  <span>Архимаг</span>
-                </li>
+                {order?.items?.product?.server?.title &&
+                  <li>
+                    <span className='blue me-1'>Сервер</span>
+                    <span>{order?.items?.product?.server?.title}</span>
+                  </li>
+                }
+                {order?.items?.product?.region?.title &&
+                  < li >
+                    <span className='blue me-1'>Регион</span>
+                    <span>{order?.items?.product?.region?.title}</span>
+                  </li>
+                }
+                {order?.items?.product?.param?.options && order?.items?.product?.param?.options.map(e => {
+                  let name = order.items.product.param.options.find(item => (!item.parent && item.id == e.id));
+                  if (!e.parent) {
+                    let options = order.items.product.options.find(item => (item.option.parent == name.id));
+                    return <li>
+                      <span className='blue me-1'>{name.title}</span>
+                      <span>{options.option.title}</span>
+                    </li>
+
+                  }
+                })}
+
               </ul>
               <p className='gray mb-2'>Описание</p>
               <div>
-                <p>Тяж, Лайт, Маг Сэт Ада Пустые, Наборы (сеты)
-                  <br />88 уровеньСкриншоты аккаунта по ссылке: https://imgur.com/a/qOAzOUN
-                  <br />Аккаунт с релиза<br />54 шестизвездочных операторов
-                </p>
-                <p>На аккаунте присутствуют все вышедшие коллабные операторы. Присутствует весь пул коллаба с R6 Siege227к орундума, 833 апельсина</p>
+                <p>{order?.items?.product?.title}</p>
+                <p>{order?.items?.product?.desc}</p>
               </div>
             </div>
             <div className="list-wrapping-bottom d-sm-flex justify-content-between align-items-center">
               <div className='box'>
                 <span className='gray me-3'>Количество</span>
-                <span>1</span>
+                <span>{order?.items?.count}</span>
               </div>
-              <div className='btn-5 w-xs-100 mt-2 mt-sm-0'>
-                <span className='fw-6'>Стоимость</span>
-                <span className='ms-3 ms-xxxl-5'>1 086,97</span>
-                <span className='rouble ms-2'>₽</span>
+              <div className='box'>
+                <span className='me-3'>Стоимость</span>
+                <span className='me-1'>{order?.items?.total}</span>
+                <span>₽</span>
               </div>
             </div>
           </div>
         </Col>
       </Row>
-    </section>
+    </section >
   );
 };
 

@@ -1,11 +1,15 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $api, $authApi } from ".";
 import { apiRoutes } from "../config/api";
-// import socket from "../config/socket";
+import socket from "../config/socket";
 
 const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
   try {
     const response = await $api.post(apiRoutes.AUTH_LOGIN, payloads);
+    if (response?.data) {
+      socket.io.opts.query = { userId: response?.data?.user?.id }
+      socket.connect()
+    }
     return response?.data;
   } catch (error) {
     return thunkAPI.rejectWithValue(error);
@@ -13,6 +17,8 @@ const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
 });
 
 const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
+  socket.io.opts.query = false
+  socket.disconnect().connect()
   try {
     const response = await $api.post(apiRoutes.AUTH_LOGOUT);
     return response?.data;

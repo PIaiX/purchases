@@ -126,7 +126,6 @@ const Home = () => {
       socket.emit("createRoom", "message/" + data.id);
 
       socket.on("message", (data) => {
-
         if (data) {
           setMessages((prev) => ({
             ...prev,
@@ -149,7 +148,7 @@ const Home = () => {
       };
     }
 
-  }, [data?.id]);
+  }, [data?.id, userId]);
 
   const onNewMessage = useCallback(
     (text) => {
@@ -193,6 +192,7 @@ const Home = () => {
                   </div>
                 </section>
                 <Chat
+                  general="general"
                   messages={messages}
                   emptyText="Нет сообщений"
                   onSubmit={(e) => onNewMessage(e)}

@@ -288,6 +288,7 @@ const Messages = ({ isMobileXL }) => {
 
                         ))}
                       <Chat
+                        general={data.id}
                         messages={messages}
                         emptyText="Нет сообщений"
                         onSubmit={(e) => onNewMessage(e)}
