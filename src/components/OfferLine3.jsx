@@ -9,6 +9,7 @@ import { IoEllipsisVertical } from 'react-icons/io5';
 
 const OfferLine3 = ({ id, author, user, comment, createdAt, status, total, onStatus }) => {
   const userId = useSelector(state => state.auth?.user?.id);
+  const profileId = (user.id == userId) ? author.id : user.id;
   const nickname = (user.id == userId) ? author.nickname : user.nickname;
   const rating = (user.id == userId) ? author.rating : user.rating;
   const image = getImageURL({ path: ((user.id == userId) ? author : user), type: "user" })
@@ -27,9 +28,9 @@ const OfferLine3 = ({ id, author, user, comment, createdAt, status, total, onSta
       </div>
       <div className="descr">{comment}</div>
       <div className="seller">
-        <img src={image} alt="User8name" />
+        <Link to={`/profile/${profileId}`}><img src={image} alt="User8name" /></Link>
         <div>
-          <h6 className='text-start mb-xl-1'>{nickname}</h6>
+          <h6 className='text-start mb-xl-1'><Link to={`/profile/${profileId}`}>{nickname}</Link></h6>
           <StarRating value={rating} />
         </div>
       </div>

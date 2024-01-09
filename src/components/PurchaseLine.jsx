@@ -14,9 +14,9 @@ const PurchaseLine = ({ createdAt, comment, author, id }) => {
       </time>
       <div className='purchase-line-text'>{comment}</div>
       <div className='purchase-line-user'>
-        <img src={image} alt="user" className='me-2' />
+        <Link to={`/profile/${author.id}`}><img src={image} alt="user" className='me-2' /></Link>
         <div>
-          <h6 className='mb-1'>{author.nickname}</h6>
+          <h6 className='mb-1'><Link to={`/profile/${author.id}`}>{author.nickname}</Link></h6>
           <Link to={`add/${id}`} className='btn-6 px-3 py-2'>Оценить</Link>
         </div>
         <button type='button' className='blue fs-14 ms-4'><RxChevronRight /></button>

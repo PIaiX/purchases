@@ -17,6 +17,7 @@ import {
   getMessagesGeneral
 } from "../../services/message";
 import DialogPreview from './DialogPreview';
+import { getImageURL } from "../../helpers/all";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -194,6 +195,7 @@ const Messages = ({ isMobileXL }) => {
     return <Loader full />;
   }
   const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
+  const image = getImageURL({ path: user, type: "user" })
   return (
     <>
       <Meta title="Сообщения" />
@@ -266,9 +268,9 @@ const Messages = ({ isMobileXL }) => {
 
 
                           <div className="dialog-preview">
-                            <img src="/imgs/user.jpg" alt="user" />
+                            <Link to={`/profile/${user.id}`}><img src={image} alt="user" /></Link>
                             <div className="text">
-                              <h5 className="fw-7 mb-0">{user.nickname}</h5>
+                              <h5 className="fw-7 mb-0"><Link to={`/profile/${user.id}`}>{user.nickname}</Link></h5>
                               <p className="text-muted fs-07">
                                 {print ? (
                                   "Печатает сообщение..."
