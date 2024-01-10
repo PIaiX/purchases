@@ -237,9 +237,9 @@ const Profile = () => {
       </div>
       <h3 className="mb-3 mb-sm-4">Основное</h3>
       <Row className="g-3 gy-xl-4 mb-md-4">
-        <Col xs={6} xxl={6}>
+        {/* <Col xs={6} xxl={6}>
           <Row className="g-3 gy-xl-4">
-            {/* <Col md={12} xl={12}>
+            <Col md={12} xl={12}>
               <Input
                 type="text"
                 label="Имя/Ник"
@@ -248,7 +248,7 @@ const Profile = () => {
                 defaultValue={form?.nickname}
                 register={register}
               />
-            </Col> */}
+            </Col>
             <Col md={12} xl={12}>
               <Textarea
                 label="О себе"
@@ -258,7 +258,7 @@ const Profile = () => {
                 register={register}
               />
             </Col>
-            {/* <Col md={12} xl={12}>
+            <Col md={12} xl={12}>
               <Input
                 type="email"
                 label="Email"
@@ -267,7 +267,7 @@ const Profile = () => {
                 defaultValue={form?.email}
                 register={register}
               />
-            </Col> */}
+            </Col>
             <Col md={12} xl={12}>
               <Button
                 variant="primary"
@@ -279,7 +279,7 @@ const Profile = () => {
               </Button>
             </Col>
           </Row>
-        </Col>
+        </Col> */}
         <Col xs={6} xxl={6}>
           <Row className="g-3 gy-xl-4">
             <Col md={12}>

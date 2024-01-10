@@ -65,6 +65,9 @@ const apiRoutes = {
   USER_PRODUCTS: BASE_URL + "/user/product/",
   USER_PRODUCT: BASE_URL + "/user/product/one",
 
+  // RECOMMENDS
+  RECOMMENDS: BASE_URL + "/product/recommend",
+
   // Sale
   SALES: BASE_URL + "/sale",
   SALE: BASE_URL + "/sale/one",
@@ -127,6 +130,10 @@ const apiRoutes = {
 
   // Options
   OPTIONS: BASE_URL + "/option/",
+
+  // Task
+  TASK_GET_ALL: BASE_URL + "/task",
+  TASK_CREATE: BASE_URL + "/task",
 
   //transaction
   TRANSACTION_GET_ALL: BASE_URL + "/user/transaction",

@@ -21,6 +21,8 @@ import { getArticles } from "../services/article";
 import { getGames } from "../services/game";
 import { createMessageGeneral, getMessagesGeneral } from "../services/message";
 import { getSales } from "../services/sales";
+import { getRecommends } from "../services/recommend";
+import { declOfNum } from "../helpers/all";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
@@ -88,6 +90,24 @@ const Home = () => {
       })
       .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
   }, [currentPage]);
+
+  const [recommends, setRecommends] = useState({
+    loading: true,
+    items: [],
+  });
+  useEffect(() => {
+    getRecommends({ page: currentPage })
+      .then((res) => {
+        setRecommends((prev) => ({
+          prev,
+          loading: false,
+          items: res,
+        }))
+      })
+      .catch(() => setRecommends((prev) => ({ ...prev, loading: false })));
+  }, []);
+
+
   const userId = useSelector(state => state.auth?.user?.id);
 
   const { control, reset, setValue } = useForm({
@@ -157,7 +177,7 @@ const Home = () => {
     [data]
   );
 
-
+  const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
   if (sales.loading) {
     return <Loader />;
@@ -188,7 +208,7 @@ const Home = () => {
                   <h2>Общий чат</h2>
                   <div className="sec-chat-count">
                     <div className="num">{messages.count}</div>
-                    <div className="text">участника online</div>
+                    <div className="text">{declension} online</div>
                   </div>
                 </section>
                 <Chat
@@ -212,18 +232,11 @@ const Home = () => {
                     scrollbar={{ draggable: true }}
                     mousewheel={{ releaseOnEdges: true }}
                   >
-                    <SwiperSlide>
-                      <OfferCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard />
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <OfferCard />
-                    </SwiperSlide>
+                    {recommends?.items && recommends?.items?.map(item => (
+                      <SwiperSlide>
+                        <OfferCard {...item} />
+                      </SwiperSlide>
+                    ))}
                   </Swiper>
                 </section>
               </Col>

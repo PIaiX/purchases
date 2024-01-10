@@ -23,7 +23,7 @@ const CatalogSection = ({ games }) => {
 
   return (
     <section className='sec-catalog mb-6'>
-      <Container><h2>Выбери одну из 104 игр</h2></Container>
+      <Container><h2>Выбери одну из {games?.items?.length} игр</h2></Container>
       <Container>
         <div className="sec-catalog-box">
           <ScrollSpy

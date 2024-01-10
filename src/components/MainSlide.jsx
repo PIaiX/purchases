@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import SlideMini from "./svg/SlideMini";
 import SlideMobile from "./svg/SlideMobile";
 import useIsMobile from "../hooks/isMobile";
+import { declOfNum } from "../helpers/all";
 
 const MainSlide = (props) => {
   const isMobileLG = useIsMobile("1109px");
+  const declension = declOfNum(props?.length, ['лот', 'лота', 'лотов']);
   return (
     <div
       className={
@@ -25,7 +27,7 @@ const MainSlide = (props) => {
         )}
         <div className="lots">
           <div className="num">1325</div>
-          <div>лотов</div>
+          <div>{declension}</div>
         </div>
       </div>
       <div className="title-full">

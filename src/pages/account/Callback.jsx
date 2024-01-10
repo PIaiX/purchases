@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Input from '../../components/utils/Input';
 import NavPagination from '../../components/NavPagination';
 import AppealLine from '../../components/AppealLine';
@@ -7,11 +7,20 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import { useForm, useWatch } from 'react-hook-form';
 import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
+import { getTasks } from '../../services/task';
 
 const Callback = () => {
   const [cbSection, setCbSection] = useState(1);
   const isSelected = (v) => (v === cbSection ? 'btn-2 active h-100 p-3 p-sm-4' : 'btn-2 h-100 p-3 p-sm-4')
-  const [games, setGames] = useState({ items: [], loading: true });
+  const [tasks, setTasks] = useState({ items: [], loading: true });
+  useEffect(() => {
+    getTasks()
+      .then((res) => {
+        setTasks(prev => ({ ...prev, items: res, loading: false }));
+      })
+      .catch(() => setTasks((prev) => ({ ...prev, loading: false })));
+  }, []);
+
   const {
     control,
     register,
@@ -110,10 +119,10 @@ const Callback = () => {
                             count: data.count,
                             price: data.price,
                             category: e.value,
-                            game: games.items[games.items.findIndex(e2 => e2.id === e.value)]
+                            game: tasks.items[tasks.items.findIndex(e2 => e2.id === e.value)]
                           })
                         }}
-                        data={games.items.map((item) => ({ value: item.id, title: item.title }))}
+                        data={tasks.items.map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </div>
                     <div className="col-md-6">
