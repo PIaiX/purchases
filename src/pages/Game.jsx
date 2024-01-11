@@ -35,6 +35,7 @@ const Game = () => {
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
       })
+      .catch(() => setGames((prev) => ({ ...prev, loading: false })));
   }, [regId, catId, serverId]);
 
   const onPageChange = (page) => {
