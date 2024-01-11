@@ -5,6 +5,7 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import { editOrder, getOrders } from "../../services/order"
 import Loader from '../../components/utils/Loader';
 import Meta from '../../components/Meta';
+import { NotificationManager } from 'react-notifications';
 
 const PurchaseHistory = () => {
   const [currentPage, setCurrentPage] = useState(1)
@@ -16,18 +17,22 @@ const PurchaseHistory = () => {
     loading: true,
     items: [],
   });
-  useEffect(() => {
+
+  const getPage = (currentPage) => {
     getOrders({ page: currentPage, authorId: 0 })
       .then((res) => {
         setOrders((prev) => ({
-          prev,
+          ...prev,
           loading: false,
           ...res,
         }))
         setCurrentPage(res.pagination.currentPage)
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
-  }, [currentPage, status]);
+  };
+  useEffect(() => {
+    getPage(currentPage);
+  }, [currentPage]);
   const onStatus = useCallback((status) => {
     editOrder(status)
       .then((res) => {
@@ -38,7 +43,8 @@ const PurchaseHistory = () => {
           err?.response?.data?.error ?? "Покупка отменена"
         );
       });
-    setStatus(status)
+    setStatus(status);
+    getPage(currentPage);
   }, []);
   if (orders.loading) {
     return <Loader full />;

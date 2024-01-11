@@ -126,49 +126,47 @@ const Home = () => {
   });
 
   useEffect(() => {
-    if (data?.id) {
-      getMessagesGeneral()
-        .then((res) =>
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            items: res.messages.items,
-            count: res.countOnline,
-          }))
-        )
-        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+    getMessagesGeneral()
+      .then((res) =>
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: res.messages.items,
+          count: res.countOnline,
+        }))
+      )
+      .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
 
-    }
-  }, [data?.id]);
+
+  }, []);
 
   useEffect(() => {
-    if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
+    socket.emit("createRoom", "message/" + data.id);
 
-      socket.on("message", (data) => {
-        if (data) {
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            items: [
-              data,
-              ...prev.items.map((e) => {
-                if (e?.userId) {
-                  e.view = true;
-                }
-                return e;
-              }),
-            ],
-          }));
-        }
-      });
+    socket.on("message", (data) => {
+      if (data) {
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: [
+            data,
+            ...prev.items.map((e) => {
+              if (e?.userId) {
+                e.view = true;
+              }
+              return e;
+            }),
+          ],
+        }));
+      }
+    });
 
-      return () => {
-        socket.off("message");
-      };
-    }
+    return () => {
+      socket.off("message");
+    };
 
-  }, [data?.id, userId]);
+
+  }, [userId]);
 
   const onNewMessage = useCallback(
     (text) => {

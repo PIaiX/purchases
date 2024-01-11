@@ -18,12 +18,13 @@ const Message = ({ my, id, general, time, text, name, admin, user, view = false 
         <div className='gray fs-08 d-flex align-items-center mb-2'>
           <time className='me-2'>
             {time}
-            {view ? (
-              <IoCheckmarkDoneOutline className="text-success ms-1" size={15} />
-            ) : (
-              <IoCheckmarkOutline className="ms-1" size={15} />
-            )}
           </time>
+          {view ? (
+            <IoCheckmarkDoneOutline className="text-success ms-1" size={15} />
+          ) : (
+            <IoCheckmarkOutline className="ms-1" size={15} />
+          )}
+
         </div>
         <div className="bubble">
           <p>{text}</p>
