@@ -190,12 +190,13 @@ const Messages = ({ isMobileXL }) => {
     },
     [data, state, dialogId]
   );
+  const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
+  const image = getImageURL({ path: user, type: "user" })
 
   if (dialogs.loading) {
     return <Loader full />;
   }
-  const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
-  const image = getImageURL({ path: user, type: "user" })
+
   return (
     <>
       <Meta title="Сообщения" />

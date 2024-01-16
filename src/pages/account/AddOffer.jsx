@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from 'react';
-import Row from 'react-bootstrap/Row';
+import React, { useCallback, useEffect, useState } from 'react';
 import Col from 'react-bootstrap/Col';
+import Row from 'react-bootstrap/Row';
+import { useForm, useWatch } from 'react-hook-form';
+import { NotificationManager } from "react-notifications";
+import { useParams } from 'react-router-dom';
 import Input from '../../components/utils/Input';
+import Loader from '../../components/utils/Loader';
 import ReturnTitle from '../../components/utils/ReturnTitle';
+import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
 import { getGames } from '../../services/game';
-import Select from '../../components/utils/Select';
-import { useForm, useWatch } from 'react-hook-form';
-import { useCallback } from 'react';
-import { NotificationManager } from "react-notifications";
 import { createUserProduct, editUserProduct, getUserProduct } from '../../services/product';
-import Loader from '../../components/utils/Loader';
-import { useParams } from 'react-router-dom';
 
 const AddOffer = () => {
   const { id } = useParams();

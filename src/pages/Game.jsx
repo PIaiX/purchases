@@ -75,6 +75,7 @@ const Game = () => {
   var indexOfLastProduct = currentPage * productsPerPage;
   var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
   var displayedProducts = totalProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.category?.productCount ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
