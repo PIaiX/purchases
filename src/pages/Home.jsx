@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
@@ -16,96 +16,37 @@ import OfferCard from "../components/OfferCard";
 import Chat from "../components/chat/Chat";
 import Loader from "../components/utils/Loader";
 import socket from "../config/socket";
-import useIsMobile from '../hooks/isMobile';
-import { getArticles } from "../services/article";
-import { getGames } from "../services/game";
-import { createMessageGeneral, getMessagesGeneral } from "../services/message";
-import { getSales } from "../services/sales";
-import { getRecommends } from "../services/recommend";
 import { declOfNum } from "../helpers/all";
+import useIsMobile from '../hooks/isMobile';
+import { createMessageGeneral, getMessagesGeneral } from "../services/message";
+import { useGetArticlesQuery, useGetGamesQuery, useGetRecommendsQuery, useGetSalesQuery } from "../store/reducers/homeQuery";
 
 const Home = () => {
   const isMobileLG = useIsMobile('1109px');
-
-
-  const [sales, setSales] = useState({
-    loading: true,
-    home: [],
-    ad: [],
-  });
-
-  useLayoutEffect(() => {
-    getSales()
-      .then(
-        (res) =>
-          res &&
-          setSales((prev) => ({
-            ...prev,
-            loading: false,
-            ...res,
-          }))
-      )
-      .finally(() => setSales((prev) => ({ ...prev, loading: false })));
-  }, []);
-
+  const category = useGetGamesQuery();
+  const recommends = useGetRecommendsQuery();
+  const articles = useGetArticlesQuery();
+  const sales = useGetSalesQuery();
   const [games, setGames] = useState({ items: [], data: [], loading: true });
 
-
   useEffect(() => {
-    getGames()
-      .then((res) => {
-        var uniqueLetters = new Set();
+    var uniqueLetters = new Set();
 
-        res.forEach(word => {
-          let firstLetter = word.title.charAt(0).toUpperCase();
+    category.data.forEach(word => {
+      let firstLetter = word.title.charAt(0).toUpperCase();
 
-          if (!uniqueLetters.has(firstLetter)) {
-            uniqueLetters.add(firstLetter);
-          }
-        });
+      if (!uniqueLetters.has(firstLetter)) {
+        uniqueLetters.add(firstLetter);
+      }
+    });
 
-        const alphabet = Array.from(uniqueLetters).sort();
-        setGames(prev => ({ ...prev, items: res, data: alphabet, loading: false }));
-      })
-      .catch(() => getGames((prev) => ({ ...prev, loading: false })));
-  }, []);
+    const alphabet = Array.from(uniqueLetters).sort();
+    setGames(prev => ({ ...prev, items: category.data, data: alphabet, loading: false }));
+  }, [category]);
 
-  const [currentPage, setCurrentPage] = useState(1)
-  const onPageChange = (page) => {
-    setCurrentPage(page.selected + 1);
-  };
-  const [articles, setArticles] = useState({
-    loading: true,
-    items: [],
-  });
-  useEffect(() => {
-    getArticles({ page: currentPage })
-      .then((res) => {
-        setArticles((prev) => ({
-          prev,
-          loading: false,
-          ...res,
-        }))
-        setCurrentPage(res.pagination.currentPage)
-      })
-      .catch(() => setArticles((prev) => ({ ...prev, loading: false })));
-  }, [currentPage]);
 
-  const [recommends, setRecommends] = useState({
-    loading: true,
-    items: [],
-  });
-  useEffect(() => {
-    getRecommends({ page: currentPage })
-      .then((res) => {
-        setRecommends((prev) => ({
-          prev,
-          loading: false,
-          items: res,
-        }))
-      })
-      .catch(() => setRecommends((prev) => ({ ...prev, loading: false })));
-  }, []);
+
+
 
 
   const userId = useSelector(state => state.auth?.user?.id);
@@ -177,22 +118,22 @@ const Home = () => {
 
   const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
-  if (sales.loading) {
-    return <Loader />;
-  }
+  // if (articles.isLoading || sales.isLoading || category.isLoading || recommends.isLoading) {
+  //   return <Loader full />;
+  // }
 
   return (
     <main>
       <Meta title="Rush2Play" />
       <Container>
         <section className="mb-5">
-          <MainSlider data={sales.home.items} />
+          <MainSlider data={sales?.data?.home?.items} />
         </section>
       </Container>
       <CatalogSection games={games} />
-      {articles?.pagination?.totalItems > 0 && (
+      {articles?.data?.pagination?.totalItems > 0 && (
         <Container>
-          <BlogSection articles={articles} onPageChange={onPageChange} />
+          <BlogSection articles={articles.data} />
         </Container>)
 
       }
@@ -230,7 +171,7 @@ const Home = () => {
                     scrollbar={{ draggable: true }}
                     mousewheel={{ releaseOnEdges: true }}
                   >
-                    {recommends?.items && recommends?.items?.map(item => (
+                    {recommends?.data?.items && recommends?.data?.items?.map(item => (
                       <SwiperSlide>
                         <OfferCard {...item} />
                       </SwiperSlide>

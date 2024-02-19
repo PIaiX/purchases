@@ -35,9 +35,9 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
       setText("");
     }
   }, [text]);
-  if (messages.loading) {
-    return <Loader />;
-  }
+  // if (messages.loading) {
+  //   return <Loader />;
+  // }
   return (
     <div className={"chat" + className}>
 
