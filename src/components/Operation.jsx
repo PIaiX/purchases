@@ -12,7 +12,7 @@ const Operation = ({ createdAt, orderId, id, status, price, className }) => {
       </div>
       <div className="id"><span className='d-xl-none'>ID:</span>{id}</div>
       {orderId ?
-        (price > 0 ? (
+        (price < 0 ? (
           < div className="type">Покупка</div>
         ) : (
           < div className="type">Продажа</div>
