@@ -1748,7 +1748,12 @@ main {
 }
 
 header {
-  position: relative;
+  background-color: var(--body-bg);
+  opacity: 0.9;
+  width: 100%;
+  position: sticky;
+  top: 0;
+  left: 0%;
   z-index: 1042;
   height: var(--h-height);
 
@@ -2156,7 +2161,7 @@ header {
       backdrop-filter: blur(5px);
       border-radius: $radius;
       position: sticky;
-      top: 0.5em;
+      top: 6em;
       left: 0;
       width: 100%;
       height: fit-content;
@@ -2659,6 +2664,10 @@ header {
   background-size: 100% 100%;
 }
 
+:root[data-theme='dark'] .sec-bottom {
+  background: var(--body-bg);
+}
+
 /* Chat */
 .chat {
   position: relative;
@@ -2711,6 +2720,7 @@ header {
           border-radius: $radius;
           padding: 1em;
           font-weight: 400;
+          overflow-wrap: anywhere;
           font-size: 0.9em;
           text-align: left;
         }
@@ -2728,6 +2738,7 @@ header {
           align-items: flex-end;
 
           .bubble {
+            overflow-wrap: anywhere;
             background: rgba($color: var(--pale-green), $alpha: 0.2);
             text-align: right;
           }
