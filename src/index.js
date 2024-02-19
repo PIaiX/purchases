@@ -7,14 +7,11 @@ import moment from "moment";
 import momentRu from "moment/locale/ru";
 import { NotificationContainer } from "react-notifications";
 moment.updateLocale("ru", momentRu);
-import ThemeProvider from './providers/ThemeProvider';
 
 createRoot(document.getElementById("root")).render(
   <Provider store={store}>
     <PersistGate persistor={persistor}>
-      <ThemeProvider>
-        <App />
-      </ThemeProvider>
+      <App />
       <NotificationContainer />
     </PersistGate>
   </Provider>

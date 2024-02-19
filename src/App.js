@@ -15,7 +15,12 @@ import { useEffect } from "react";
 function App() {
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(true);
+  const theme = useSelector((state) => state.theme.value);
 
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+
+  }, [theme]);
 
   useLayoutEffect(() => {
     (async () =>
