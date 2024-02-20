@@ -1,23 +1,30 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-router-dom';
-import ScrollSpy from "react-ui-scrollspy";
+import { Link, Element, Events, animateScroll as scroll } from 'react-scroll';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import SearchIcon from './svg/SearchIcon';
-import Loader from './utils/Loader';
 
 const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
+
+  useEffect(() => {
+    Events.scrollEvent.register('begin', function (to, element) {
+      // Действия при начале прокрутки
+    });
+
+    return () => {
+      Events.scrollEvent.remove('begin');
+    };
+  }, []);
+
   const onScroll = (id) => {
-    const link = document.querySelector('[data-to-scrollspy-id="' + id + '"]');
-    cut.current.style.top = link.offsetTop + 'px';
-  }
-
-
-  if (games.loading) {
-    return <Loader />;
+    scroll.scrollTo(id, {
+      duration: 800,
+      delay: 0,
+      smooth: 'easeInOutQuart',
+    });
   }
 
 
@@ -26,35 +33,28 @@ const CatalogSection = ({ games }) => {
       <Container><h2>Выбери одну из {games?.items?.length} игр</h2></Container>
       <Container>
         <div className="sec-catalog-box">
-          <ScrollSpy
-            activeClass="ss-active"
-            scrollThrottle={100}
-            useBoxMethod={true}
-            updateHistoryStack={false}
-            onUpdateCallback={(id) => onScroll(id)}
-          >
-            <div>
-              {games.data && games.items && games.data.map((letter) => (
-                <div id={`letter-${letter}`} className="sec-catalog-part">
 
-                  <div className="letter">{letter}</div>
-                  <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
-                    <GameCard param1={letter} param2={games.items} />
+          <div>
+            {games.data && games.items && games.data.map((letter) => (
+              <Element key={letter} name={`section-${letter}`} className="sec-catalog-part">
 
-                  </ul>
+                <div className="letter">{letter}</div>
+                <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
+                  <GameCard param1={letter} param2={games.items} />
 
-                </div>
-              ))}
-              <div className='sec-promo mb-5'>
-                <div className='text'>
-                  <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
-                  <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
-                </div>
-                <img src="/imgs/head.png" alt="head" />
-                <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
+                </ul>
+
+              </Element>
+            ))}
+            <div className='sec-promo mb-5'>
+              <div className='text'>
+                <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
+                <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
               </div>
+              <img src="/imgs/head.png" alt="head" />
+              <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
             </div>
-          </ScrollSpy>
+          </div>
         </div>
 
         <nav className='sec-catalog-nav'>
@@ -63,15 +63,15 @@ const CatalogSection = ({ games }) => {
             onMouseLeave={() => setFull(false)}
             className={(full) ? 'wrap full' : 'wrap'}
           >
-            <form action="">
+            {/* <form action="">
               <button type='submit'>
                 <SearchIcon />
               </button>
               <input type="text" placeholder='Поиск' className='p-blue' />
-            </form>
+            </form> */}
             <ul>
               {games.data && games.items && games.data.map((letter) => (
-                <li><Link to={"/#letter-" + letter} data-to-scrollspy-id={"letter-" + letter}>{letter}</Link></li>
+                <li key={letter}><Link to={`section-${letter}`}>{letter}</Link></li>
               ))}
             </ul>
             <div ref={cut} id="cut" className={(full) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>

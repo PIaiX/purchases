@@ -1,22 +1,19 @@
 import React, { useState } from 'react';
 import { LuImagePlus } from "react-icons/lu";
 
-export default function SimpleInputFile(props) {
-  const [filesCount, setFilesCount] = useState(0);
-  const onChange = props.onChange
-  const handleFileChange = (e) => {
-    setFilesCount(e.target.files.length);
-    onChange(e)
+export default function SimpleInputFile({ setImage, media, className, multiple }) {
+  const onChange = (e) => {
+    setImage(e.target.files)
   }
   return (
-    <label className={'input-file-simple ' + props.className}>
-      {props.multiple ? (
-        <input type="file" multiple onChange={handleFileChange} />
+    <label className={'input-file-simple ' + className}>
+      {multiple ? (
+        <input type="file" multiple onChange={(e) => onChange(e)} />
       ) : (
-        <input type="file" onChange={handleFileChange} />
+        <input type="file" onChange={(e) => onChange(e)} />
       )}
       <LuImagePlus />
-      <div className="ind">{filesCount > 0 && filesCount}</div>
+      <div className="ind">{media && media.length > 0 && media.length}</div>
     </label>
   );
 }

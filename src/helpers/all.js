@@ -36,7 +36,7 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
       return FILE_URL + "/" + type + "/" + path;
     }
   }
-  else if (!type || type == 'product' || type == 'sale' || type == 'banner' || type == 'category' || type == 'articles') {
+  else if (!type || type == 'product' || type == 'sale' || type == 'banner' || type == 'category' || type == 'news') {
     return "/imgs/img5.jpg";
   } else if (type == 'user') {
     return "/imgs/user.jpg";

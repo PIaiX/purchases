@@ -5,12 +5,9 @@ import NavPagination from './NavPagination';
 import Loader from './utils/Loader';
 // import useIsMobile from '../hooks/isMobile';
 
-const BlogSection = ({ articles, onPageChange }) => {
+const BlogSection = ({ articles }) => {
   // const {isMobile} = useIsMobile('1199px');
 
-  if (articles.loading) {
-    return <Loader />;
-  }
   return (
     <section className='sec-blog mb-6'>
       <div className="d-flex align-items-center justify-content-between mb-4">
@@ -27,9 +24,9 @@ const BlogSection = ({ articles, onPageChange }) => {
           </li>
         ))}
       </ul>
-      <div className="list-wrapping-bottom">
+      {/* <div className="list-wrapping-bottom">
         <NavPagination totalPages={articles?.pagination?.totalPages} onPageChange={onPageChange} />
-      </div>
+      </div> */}
       {/* {
         (isMobile) &&
         <Link to='/blog' className='cognition mt-5'><h3 className='fw-7 text-end mb-0'>Познать больше</h3></Link>

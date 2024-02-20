@@ -15,7 +15,7 @@ import cartSlice from "./reducers/cartSlice";
 import checkoutSlice from "./reducers/checkoutSlice";
 import favoriteSlice from "./reducers/favoriteSlice";
 import settingsSlice from "./reducers/settingsSlice";
-// import { homeQuery } from "./reducers/homeQuery";
+import { homeQuery } from "./reducers/homeQuery";
 import themeSlice from "./reducers/themeSlice"
 
 const rootReducer = combineReducers({
@@ -25,7 +25,7 @@ const rootReducer = combineReducers({
   favorite: favoriteSlice,
   checkout: checkoutSlice,
   theme: themeSlice,
-  // [homeQuery.reducerPath]: homeQuery.reducer,
+  [homeQuery.reducerPath]: homeQuery.reducer,
 });
 
 const persistConfig = {
@@ -43,7 +43,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(homeQuery.middleware),
 });
 const persistor = persistStore(store);
 

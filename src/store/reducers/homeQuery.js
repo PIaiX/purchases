@@ -42,6 +42,9 @@ export const homeQuery = createApi({
         getArticles: build.query({
             query: () => apiRoutes.ARTICLES,
         }),
+        getRecommends: build.query({
+            query: () => apiRoutes.RECOMMENDS,
+        }),
         getGames: build.query({
             query: () => apiRoutes.CATEGORIES,
         }),
@@ -52,4 +55,4 @@ export const homeQuery = createApi({
     }),
 });
 
-export const { useGetArticlesQuery, useGetSalesQuery, useGetGamesQuery } = homeQuery;
+export const { useGetArticlesQuery, useGetRecommendsQuery, useGetSalesQuery, useGetGamesQuery } = homeQuery;
