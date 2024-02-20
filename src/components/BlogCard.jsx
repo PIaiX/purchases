@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 import useIsMobile from '../hooks/isMobile';
 import { getImageURL } from '../helpers/all';
 
-const BlogCard = ({ id, link, title }) => {
+const BlogCard = ({ id, media, title }) => {
   const isMobileLG = useIsMobile('1109px');
-  const image = getImageURL({ path: link, type: "articles" })
+  const image = getImageURL({ path: media, type: "news" })
   return (
     <figure className={(isMobileLG) ? 'blog-list-item-mobile' : 'blog-list-item'}>
       <Link className='stretched-link' to={`/blog/${id}`}><img src={image} alt={title} /></Link>
