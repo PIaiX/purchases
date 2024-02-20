@@ -63,12 +63,12 @@ const CatalogSection = ({ games }) => {
             onMouseLeave={() => setFull(false)}
             className={(full) ? 'wrap full' : 'wrap'}
           >
-            <form action="">
+            {/* <form action="">
               <button type='submit'>
                 <SearchIcon />
               </button>
               <input type="text" placeholder='Поиск' className='p-blue' />
-            </form>
+            </form> */}
             <ul>
               {games.data && games.items && games.data.map((letter) => (
                 <li key={letter}><Link to={`section-${letter}`}>{letter}</Link></li>

@@ -7,8 +7,8 @@ const OfferLine = ({ id, title, user, price, count, server }) => {
   const image = getImageURL({ path: user, type: "user" })
   return (
     <div className='offer-line'>
-      <div className="serv">{server.title}</div>
-      <div className="descr"><Link to={`/game/lot/${id}`}>{title}</Link></div>
+      <div className="serv">{server?.title}</div>
+      <div className="descr"><Link to={`/game/lot/${id}`}>{title}1</Link></div>
       <div className="seller">
         <Link to='/trader'><img src={image} alt={user.nickname} /></Link>
         <div>

@@ -5,7 +5,7 @@ import Message from './Message';
 import Loader from "../utils/Loader";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, type, setImage, data }) => {
 
   const userId = useSelector(state => state.auth?.user?.id);
   const [text, setText] = useState("");
@@ -30,14 +30,14 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
   };
 
   const onClick = useCallback(() => {
-    if (text.length > 0) {
+    if (text.length > 0 || data?.media?.length > 0) {
       onSubmit(text);
       setText("");
     }
-  }, [text]);
-  // if (messages.loading) {
-  //   return <Loader />;
-  // }
+  }, [text, data]);
+  if (messages.loading) {
+    return <Loader />;
+  }
   return (
     <div className={"chat" + className}>
 
@@ -51,17 +51,13 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
           <div className="chat-window">
             {messages.items.map((item) => (
 
-
-              < Message
+              <Message
+                {...item}
                 my={item.userId === userId}
                 general={general}
-                id={item.userId}
-                user={item.user}
-                time={item.createdAt}
-                text={item.text}
-                admin={item.memberId}
-                view={item.view}
+                admin={type != "task" && item.memberId}
               />
+
 
             ))}
           </div>
@@ -84,7 +80,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             />
             <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
             {general != "general" &&
-              <SimpleInputFile className="mx-3" />
+              <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} className="mx-3" />
             }
           </div>
         </>

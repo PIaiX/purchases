@@ -7,7 +7,7 @@ import Row from 'react-bootstrap/Row';
 import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight } from "react-icons/pi";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useParams } from 'react-router-dom';
 import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
@@ -28,12 +28,13 @@ const LotPage = () => {
     const { lotId } = useParams()
     const [count, setCount] = useState();
     const [showShare, setShowShare] = useState(false);
+    const dispatch = useDispatch();
     const [products, setProducts] = useState({
         loading: true,
         items: [],
     });
 
-    useEffect(() => {
+    const getPage = () => {
         getProduct({ id: lotId })
             .then((res) => {
                 setProducts((prev) => ({
@@ -41,10 +42,14 @@ const LotPage = () => {
                     loading: false,
                     items: res.product,
                     reviews: res.reviews,
-                }))
+                }));
                 setValue("toId", res.product.userId);
+                setValuePay("productId", res.product.id)
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+    };
+    useEffect(() => {
+        getPage();
     }, [lotId]);
 
     const { control, reset, setValue } = useForm({
@@ -60,9 +65,6 @@ const LotPage = () => {
         loading: true,
         items: [],
     });
-    useEffect(() => {
-        setValue("id", messages.dialogId);
-    }, [messages.dialogId]);
 
     useEffect(() => {
         if (data.toId && userId != products.items.user.id) {
@@ -74,6 +76,7 @@ const LotPage = () => {
                         items: res.messages.items,
                         dialogId: res.dialog.id
                     }))
+                    setValue("id", res.dialog.id);
                 }
                 )
                 .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
@@ -84,34 +87,55 @@ const LotPage = () => {
             socket.emit("createRoom", "message/" + data.id);
 
             socket.on("message", (data) => {
-
                 if (data) {
                     setMessages((prev) => ({
                         ...prev,
                         loading: false,
                         items: [
                             data,
-                            ...prev.items.map((e) => {
-                                if (e?.userId) {
-                                    e.view = true;
-                                }
-                                return e;
-                            }),
+                            ...prev.items,
+                        ],
+                    }));
+                }
+            });
+            socket.on("report", (data) => {
+                if (data) {
+                    setMessages((prev) => ({
+                        ...prev,
+                        loading: false,
+                        items: [
+                            data,
+                            ...prev.items,
                         ],
                     }));
                 }
             });
             return () => {
                 socket.off("message");
+                socket.off("report");
             };
         }
-
     }, [data?.id]);
 
 
     const onNewMessage = useCallback(
         (text) => {
+
             createMessage({ ...data, text });
+            if (!data?.id) {
+                getMessages(data)
+                    .then((res) => {
+                        setMessages((prev) => ({
+                            ...prev,
+                            loading: false,
+                            items: res.messages.items,
+                            dialogId: res.dialog.id,
+                            dialog: res.dialog,
+                        }));
+                        setValue("id", res.dialog.id);
+                    })
+                    .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+            }
         },
         [data]
     );
@@ -129,37 +153,62 @@ const LotPage = () => {
         mode: "all",
         reValidateMode: "onSubmit",
         defaultValues: {
-            productId: lotId
+            count: 1,
         },
     });
     const pay = useWatch({ control: controlPay })
-    const onPay = useCallback((pay) => {
-        if (!pay.count || pay.count <= 0) {
-            return NotificationManager.error(
-                "Укажите количество"
-            )
-        }
-        if (!pay.type || pay.type <= 0) {
-            return NotificationManager.error(
-                "Выберите способ оплаты"
-            )
-        }
-        if (products.items.count - pay.count < 0) {
-            return NotificationManager.error(
-                "У продавца недостаточно кол-ва данного товара"
-            )
-        }
-        createOrder(pay)
-            .then((res) => {
-                NotificationManager.success("Куплено");
-                resetPay()
+    const onPay = useCallback(
+        (pay) => {
+            if (!pay.type || pay.type <= 0) {
+                return NotificationManager.error("Выберите способ оплаты");
+            }
+            if (products.items.count - pay.count < 0) {
+                return NotificationManager.error(
+                    "У продавца недостаточно кол-ва данного товара"
+                );
+            }
+            createOrder(pay)
+                .then((res) => {
+                    resetPay({ count: "" });
+                    getPage();
+                    dispatch(refreshAuth());
+                    NotificationManager.success("Куплено");
+                    if (!data?.id) {
+                        getMessages(data)
+                            .then((res) => {
+                                setMessages((prev) => ({
+                                    ...prev,
+                                    loading: false,
+                                    items: res.messages.items,
+                                    dialogId: res.dialog.id,
+                                    dialog: res.dialog,
+                                }));
+                                setValue("id", res.dialog.id);
+                            })
+                            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+                    }
+                })
+                .catch((err) => {
+                    NotificationManager.error(
+                        err?.response?.data?.error ?? "Ошибка при покупке"
+                    );
+                });
+        },
+        [products.items.count]
+    );
+
+    const onTask = useCallback(() => {
+        createTask({ type: "report", userId: products?.items?.userId })
+            .then(() => {
+                NotificationManager.success("Жалоба отправлена");
+
             })
             .catch((err) => {
                 NotificationManager.error(
-                    err?.response?.data?.error ?? "Ошибка при покупке"
+                    err?.response?.data?.error ?? "Ошибка при отправке"
                 );
             });
-    }, [products.items.count]);
+    }, [products?.items?.userId]);
     if (products.loading) {
         return <Loader full />;
     }
@@ -314,6 +363,8 @@ const LotPage = () => {
                                                         emptyText="Нет сообщений"
                                                         onSubmit={(e) => onNewMessage(e)}
                                                         onChange={(e) => setValue("text", e)}
+                                                        data={data}
+                                                        setImage={(e) => setValue("media", Array.from(e))}
                                                     />
                                                 )}
                                             </div>
