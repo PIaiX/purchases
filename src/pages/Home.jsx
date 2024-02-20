@@ -32,7 +32,7 @@ const Home = () => {
   useEffect(() => {
     var uniqueLetters = new Set();
 
-    category.data.forEach(word => {
+    category?.data?.forEach(word => {
       let firstLetter = word.title.charAt(0).toUpperCase();
 
       if (!uniqueLetters.has(firstLetter)) {

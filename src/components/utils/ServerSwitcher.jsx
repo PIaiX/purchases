@@ -2,14 +2,14 @@ import React, { useState, useRef, useEffect } from 'react';
 import BeadIcon from '../../assets/imgs/bead.svg';
 
 const ServerSwitcher = ({ serversArr, onChange, active }) => {
-  const Servers = serversArr;
+  const Servers = [...serversArr].sort((a, b) => a.priority - b.priority);
   const [server, setServer] = useState(active || Servers[0].id);
   const cut2 = useRef();
 
-  // useEffect(() => {
-  //   const servLi = document.getElementById(server);
-  //   cut2.current.style.left = Math.round(servLi.offsetLeft + servLi.offsetWidth / 2) + 'px';
-  // });
+  useEffect(() => {
+    const servLi = document.getElementById(server);
+    cut2.current.style.left = Math.round(servLi.offsetLeft + servLi.offsetWidth / 2) + 'px';
+  });
 
   return (
     <ul className="servers">

@@ -10,27 +10,43 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { getImageURL } from "../helpers/all";
 
-const GameCard = memo(({ param1, param2 }) => {
-  let data, catId;
+const GameCard = memo(({ param1, param2, onSearch, term }) => {
+
   const filteredGames = param2.filter(game => game.title.toUpperCase().startsWith(param1));
-  const location = useLocation();
-  const searchParams = new URLSearchParams(location.search);
-  const [regId, setRegId] = useState(1);
-  const handleServerChange = (regionId) => {
-    setRegId(regionId);
-  };
-  return filteredGames.map(el => (
+
+  const [regId, setRegId] = useState([]);
+  return filteredGames.sort((a, b) => {
+    const titleA = a.title.toUpperCase();
+    const titleB = b.title.toUpperCase();
+
+    if (titleA.startsWith(term?.toUpperCase()) && !titleB.startsWith(term?.toUpperCase())) {
+      return -1;
+    }
+    if (!titleA.startsWith(term?.toUpperCase()) && titleB.startsWith(term?.toUpperCase())) {
+      return 1;
+    }
+
+    if (titleA < titleB) {
+      return -1;
+    }
+    if (titleA > titleB) {
+      return 1;
+    }
+    return 0;
+  }).map((el, i) => (
     <div className="game-card">
       <div>
-        <h4><Link to={`/game/${el.id}/?regId=${regId}`}>{el.title}</Link></h4>
+        <h4><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el?.regions?.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${el?.params?.length > 0 ? `catId=${[...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}>
+          {el.title}
+        </Link></h4>
 
-        {el.regions && el.regions.length > 0 && (
-          <ServerSwitcher serversArr={el.regions} onChange={handleServerChange} />
+        {el.regions && el.regions.length > 0 && el.regions[0].status == 1 && (
+          <ServerSwitcher serversArr={el.regions} onChange={(e) => setRegId(prevState => ({ ...prevState, [i]: e }))} />
         )}
 
-        <ul className='categories'>
-          {el.params.map((param) => (
-            <li key={param.id}><Link to={`/game/${el.id}/?regId=${regId}&catId=${param.id}`}>{param.title}</Link></li>
+        <ul onClick={onSearch} className='categories'>
+          {[...el.params].sort((a, b) => a.priority - b.priority).map((param) => (
+            <li key={param.id}><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el.regions.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${param.id ? `catId=${param.id}` : ''}`}>{param.title}</Link></li>
           ))}
         </ul>
       </div>

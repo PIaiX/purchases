@@ -28,7 +28,7 @@ const MainSlider = ({ data }) => {
   return (
     <div className="main-slider">
       <div className={"main-slider-box pos-" + (activeSlide + 1)}>
-        {data.map((e, index) => (
+        {data?.map((e, index) => (
           <MainSlide
             isActive={activeSlide === index}
             title={e.title ? e.title : "Название"}
