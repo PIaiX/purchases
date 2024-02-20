@@ -7,7 +7,7 @@ import { getImageURL } from "../helpers/all";
 
 const MainSlider = ({ data }) => {
   const [activeSlide, setActiveSlide] = useState(0);
-  const isMobileLG = useIsMobile("1109px");
+  const isMobileLG = useIsMobile("991px");
 
   const handleNext = () => {
     const nextSlide = activeSlide + 1;

@@ -4,7 +4,7 @@ import useIsMobile from '../hooks/isMobile';
 import { getImageURL } from '../helpers/all';
 
 const BlogCard = ({ id, link, title }) => {
-  const isMobileLG = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('991px');
   const image = getImageURL({ path: link, type: "articles" })
   return (
     <figure className={(isMobileLG) ? 'blog-list-item-mobile' : 'blog-list-item'}>

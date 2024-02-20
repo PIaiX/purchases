@@ -19,7 +19,7 @@ import Meta from '../components/Meta';
 
 const Game = () => {
   const { id } = useParams();
-  const isMobileLG = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('991px');
   const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
   const searchParams = new URLSearchParams(window.location.search);
   const [currentPage, setCurrentPage] = useState(1);

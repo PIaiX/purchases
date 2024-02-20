@@ -32,9 +32,9 @@ $radius: 0.67em;
 
 $bp-sm: 575.98px;
 $bp-md: 767.98px;
-$bp-lg: 1109.98px;
-$bp-xl: 1289.98px;
-$bp-xxl: 1469.98px;
+$bp-lg: 991.98px;
+$bp-xl: 1199.98px;
+$bp-xxl: 1399.98px;
 
 
 :root {
@@ -1822,6 +1822,12 @@ header {
     .wrap {
       position: relative;
       padding-top: 3.25em;
+      @media (max-width: $bp-xl) {
+        padding-top: 2.75em;
+      }
+      @media (max-width: $bp-lg) {
+        padding-top: 0em;
+      }
     }
     .svg-mini {
       position: relative;
@@ -1832,12 +1838,12 @@ header {
         height: 260px;
       }
       @media (max-width: $bp-xl) {
-        height: 250px;
+        height: 210px;
       }
     }
     .svg-mobile {
       width: 100%;
-      height: 423px;
+      height: 552px;
       @media (max-width: $bp-md){
         height: 410px;
       }
@@ -1911,13 +1917,17 @@ header {
       bottom: 14%;
       right: -6%;
       @include flex(column, center, center, nowrap);
-      color: $white;
+      color: var(--body-bg);
       font-size: .75em;
       @media (max-width: $bp-xxl) {
         font-size: .6em;
       }
       @media (max-width: $bp-xl) {
         font-size: .55em;
+        bottom: 13%;
+      }
+      @media (max-width: $bp-lg) {
+        display: none;
       }
       .num {
         font-size: 1.1em;
@@ -1958,6 +1968,9 @@ header {
       }
       .wrap {
         padding-top: 1em;
+        @media (max-width: $bp-lg) {
+          padding-top: 0em;
+        }
       }
       .svg-full {
         position: relative;
@@ -1969,7 +1982,7 @@ header {
           height: 315px;
         }
         @media (max-width: $bp-xl) {
-          height: 315px;
+          height: 265px;
         }
       }
       .title-full {
@@ -1982,6 +1995,7 @@ header {
         transition: 400ms linear 0ms;
       }
       .lots {
+        display: flex;
         top: 2.6em;
         left: 6.25%;
         bottom: unset;
@@ -1992,12 +2006,10 @@ header {
         }
         @media (max-width: $bp-xl) {
           font-size: .7em;
-          top: 3em;
-          left: 7%;
         }
         @media (max-width: $bp-lg) {
           font-size: 1.3em;
-          top: 7%;
+          top: 8%;
           left: 12.5%;
         }
         @media (max-width: $bp-md) {
@@ -2044,7 +2056,7 @@ header {
     li {
       flex-grow: 1;
       height: .6em;
-      background-color: rgba($color: $black, $alpha: .15);
+      background-color: var(--pale-gray);
       border-radius: .3em;
       transition: $transition;
       @media (max-width: $bp-sm) {
@@ -2052,7 +2064,7 @@ header {
       }
       &:not(:first-child){margin-left: 2em;}
       &.active {
-        background-color: rgba($color: $black, $alpha: 1);
+        background-color: var(--black);
       }
     }
   }
@@ -5326,22 +5338,23 @@ footer {
   position: fixed;
   bottom: 10vh;
   right: 10vh;
-  background-color: var(--white);
+  background: var(--glass);
   opacity: 0.6;
-  font-size: 1.75rem !important;
+  font-size: 1.5em;
   color: var(--gray);
-  width: 80px;
-  height: 80px;
+  width: 2em;
+  height: 2em;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
-  transition: background-color 0.3s ease;
+  box-shadow: var(--shadowMobile);
+  transition: color 0.3s ease-in;
 
   &:hover,
   &:active {
-    background-color: var(--pale-gray);
+    // background-color: var(--body-bg);
+    color: var(--green);
   }
 }

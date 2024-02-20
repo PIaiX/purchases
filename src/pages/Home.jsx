@@ -25,7 +25,7 @@ import { getRecommends } from "../services/recommend";
 import { declOfNum } from "../helpers/all";
 
 const Home = () => {
-  const isMobileLG = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('991px');
 
 
   const [sales, setSales] = useState({

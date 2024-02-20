@@ -6,7 +6,7 @@ import Loader from './utils/Loader';
 // import useIsMobile from '../hooks/isMobile';
 
 const BlogSection = ({ articles, onPageChange }) => {
-  // const {isMobile} = useIsMobile('1289px');
+  // const {isMobile} = useIsMobile('1199px');
 
   if (articles.loading) {
     return <Loader />;
