@@ -226,18 +226,21 @@ const LotPage = () => {
                         <Col xs={12} lg={8}>
                             <div className="lot-page-box lot-page-grid mb-4">
                                 <div className="game">
-                                    {products?.items?.category?.media &&
+                                    {/* {products?.items?.category?.media &&
                                         <img src={getImageURL(products?.items?.category?.media)} alt="AFK Arena" />
-                                    }
-                                    <h6 className='mt-2'>{products?.items?.category?.title}</h6>
+                                    } */}
+                                    <h6>{products?.items?.category?.title}</h6>
                                 </div>
 
                                 <div className='info'>
                                     <div className='d-flex align-items-center'>
                                         <span className='tag-gray me-3'>{products?.items?.param?.title}</span>
-                                        <span className='tag-green me-3'>{products?.items?.region?.title}</span>
+                                        {
+                                            (products?.items?.region?.title) &&
+                                            <span className='tag-green me-3'>{products?.items?.region?.title}</span>
+                                        }
                                     </div>
-                                    {products?.items?.title &&
+                                    {products?.items?.server?.title &&
                                         <div className='d-flex align-items-center'>
                                             <span>Сервер</span>
                                             <span className='fs-09 pale-blue mx-2'>●</span>
@@ -258,19 +261,17 @@ const LotPage = () => {
 
                                 <div className="payment align-items-center">
 
-                                    <h6 className='me-2'>Доступно:</h6>
-                                    <h6 className='me-4'>{products?.items?.count}</h6>
+                                    <h6>Доступно:</h6>
+                                    <h6>{products?.items?.count}</h6>
                                     <Input
                                         value={pay.count}
-                                        className='me-4'
-                                        type={"text"}
+                                        type={"number"}
                                         label={"Количество"}
                                         name="count"
                                         register={registerPay}
                                     />
                                     <Select
                                         value={pay.type}
-                                        className={"me-md-4"}
                                         title="Выберите способ оплаты"
                                         onClick={e => setValuePay("type", e.value)}
 
@@ -279,7 +280,7 @@ const LotPage = () => {
                                     <button onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.price} ₽</button>
                                 </div>
 
-                                <div className='text fs-09'>
+                                <div className='text'>
                                     <p>{products?.items?.desc}</p>
                                 </div>
 
@@ -291,7 +292,7 @@ const LotPage = () => {
                                             let options = products.items.options.find(item => (item.option.parent == name.id));
                                             return <li>
                                                 <span>{name.title}</span>
-                                                <span>{options.option.title}</span>
+                                                {/* <span>{options.option.title}</span> */}
                                             </li>
 
                                         }

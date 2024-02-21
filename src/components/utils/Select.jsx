@@ -1,6 +1,6 @@
 import React, { useCallback, useState, memo } from "react";
 import { Dropdown } from "react-bootstrap";
-import { IoChevronDownOutline } from "react-icons/io5";
+import { BsChevronDown } from "react-icons/bs";
 import Input from "./Input";
 
 const Select = memo(
@@ -32,7 +32,8 @@ const Select = memo(
       let titleFind = item?.title ?? title ?? "Выберите элемент";
 
       return (
-        <a
+        <button
+          type="button"
           disabled={disabled}
           ref={ref}
           onClick={(e) => {
@@ -49,7 +50,7 @@ const Select = memo(
             className={
               "d-flex align-items-center flex-row " +
               (!data?.find((e) => e.value === value || e.title === value)
-                ? "text-muted"
+                ? "gray"
                 : "")
             }
           >
@@ -58,10 +59,8 @@ const Select = memo(
             )}
             {titleFind}
           </span>
-          <span className="ms-2">
-            <IoChevronDownOutline size={18} />
-          </span>
-        </a>
+          <BsChevronDown className="pale-blue fs-12 ms-2"/>
+        </button>
       );
     });
 

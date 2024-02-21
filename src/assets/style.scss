@@ -736,6 +736,13 @@ input {
     background-size: 1.6em;
   }
 
+  &[type="number"] {
+    &::-webkit-inner-spin-button,
+    &::-webkit-outer-spin-button {
+      @include no-appearance();
+    }
+  }
+
   &.code {
     font-family: "Bebas";
     font-size: 2.3em;
@@ -2907,43 +2914,33 @@ header {
   &-top {
     position: relative;
 
-    // .img {
-    //   position: absolute;
-    //   bottom: 0px;
-    //   right: 0px;
-    //   width: 45%;
-    //   height: auto;
-    //   z-index: 1;
-
-    //   @media (max-width: $bp-xxl) {
-    //     width: 50%;
-    //   }
-
-    //   @media (max-width: $bp-xl) {
-    //     width: 100%;
-    //   }
-
-    //   svg {
-    //     width: 100%;
-    //     height: auto;
-    //   }
-
-    //   &-lots {
-    //     position: absolute;
-    //     top: 14%;
-    //     left: 10.7%;
-    //     text-align: center;
-    //     color: var(--white);
-
-    //     .num {
-    //       font-size: 1.6em;
-    //     }
-
-    //     @media (max-width: $bp-sm) {
-    //       font-size: 2.5vw;
-    //     }
-    //   }
-    // }
+    h1 {
+      text-align: center;
+      position: relative;
+      width: fit-content;
+      margin: 0em auto .25em;
+      padding: 0em .6em;
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        right: 100%;
+        top: 50%;
+        width: 150px;
+        height: 1px;
+        background-color: currentColor;
+      }
+      &::after {
+        content: "";
+        display: block;
+        position: absolute;
+        left: 100%;
+        top: 50%;
+        width: 150px;
+        height: 1px;
+        background-color: currentColor;
+      }
+    }
 
     .categories {
       position: unset;
@@ -3028,6 +3025,13 @@ header {
       position: relative;
       z-index: 10;
 
+      @media (max-width: $bp-xl) {
+        background: var(--body-bg);
+        padding: 1em;
+        border-radius: $radius;
+        @include shadow();
+      }
+
       fieldset {
         @include flex(row, flex-start, center, wrap);
 
@@ -3065,11 +3069,14 @@ header {
         text-align: center;
       }
 
-      @media (max-width: $bp-xl) {
-        background: var(--body-bg);
-        padding: 1em;
-        border-radius: $radius;
-        @include shadow();
+      .dropdown {
+        margin-right: 1.5em;
+        .select {
+          background-color: var(--body-bg);
+          padding: 0.7em 1em;
+          border-radius: $radius;
+          box-shadow: var(--shadow);
+        }
       }
     }
   }
@@ -3457,6 +3464,8 @@ header {
         padding: 0em 0.5em;
         line-height: normal;
         @include textEllipsis();
+        width: fit-content;
+        max-width: 48%;
 
         &:first-child {
           color: var(--gray);
@@ -3464,12 +3473,6 @@ header {
 
         &:last-child {
           color: var(--blue);
-          width: 45%;
-
-          @media (max-width: $bp-sm) {
-            width: fit-content;
-            margin-left: 1em;
-          }
         }
       }
     }
@@ -3515,40 +3518,36 @@ header {
 
   &-grid {
     display: grid;
-    grid-template-columns: 120px 4fr 5fr;
-    grid-template-rows: 35px 40px 30px 85px 70px;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: 50px auto auto auto;
     gap: 0px 0px;
     grid-template-areas:
-      "game . date"
-      "game info info"
-      "game title title"
-      "payment payment payment"
-      "text text specifications";
-
-    @media (max-width: $bp-xl) {
-      grid-template-columns: 120px 3fr 5fr;
-    }
+      "game info info date"
+      "title title title title"
+      "payment payment payment payment"
+      "text text specifications specifications";
 
     @media (max-width: $bp-md) {
-      grid-template-columns: 120px auto;
-      grid-template-rows: auto;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: 50px auto auto auto auto auto;
       grid-template-areas:
         "game date"
-        "game info"
+        "info info"
         "title title"
         "text text"
         "specifications specifications"
         "payment payment";
     }
 
-    @media (max-width: $bp-sm) {
-      grid-template-columns: 100px auto;
-    }
+    // @media (max-width: $bp-sm) {
+    //   grid-template-columns: 100px auto;
+    // }
 
     .game {
       grid-area: game;
       width: 100%;
-      @include flex(column, flex-end, center, nowrap);
+      padding: 0em 1em;
+      @include flex(column, center, flex-start, nowrap);
 
       @media (max-width: $bp-md) {
         padding: 1em;
@@ -3561,7 +3560,7 @@ header {
 
     .date {
       grid-area: date;
-      @include flex(row, flex-end, flex-end, nowrap);
+      @include flex(row, flex-end, center, nowrap);
       padding: 0px 1em;
       color: var(--light-gray);
 
@@ -3576,10 +3575,11 @@ header {
 
     .info {
       grid-area: info;
-      @include flex(row, flex-start, center, nowrap);
+      @include flex(row, flex-start, center, wrap);
 
-      @media (max-width: $bp-sm) {
-        @include flex(column, space-evenly, stretch, nowrap);
+      @media (max-width: $bp-md) {
+        padding: 1em;
+        border-top: 1px solid var(--extrapale-gray);
       }
 
       .tag-gray {
@@ -3599,32 +3599,24 @@ header {
     .title {
       grid-area: title;
       color: var(--blue);
-      @include flex(row, flex-start, flex-end, nowrap);
-
-      @media (max-width: $bp-md) {
-        padding: 1em;
-      }
-
-      p {
-        @media (min-width: $bp-md) {
-          @include textEllipsis();
-        }
-      }
+      padding: 1em;
+      border-top: 1px solid var(--extrapale-gray);
+      border-bottom: 1px solid var(--extrapale-gray);
     }
 
     .payment {
       grid-area: payment;
-      @include flex(row, flex-start, flex-end, nowrap);
+      @include flex(row, flex-start, flex-end, wrap);
+      gap: 1em;
       padding: 1em;
       border-bottom: 1px solid var(--extrapale-gray);
 
-      @media (max-width: $bp-md) {
-        @include flex(column, center, stretch, nowrap);
-        border-bottom: none;
-
-        button {
-          width: 100%;
-          margin-top: 0.5em;
+      .labeled-input {
+        width: 100px;
+        label {
+          padding: 0 0.35em;
+          font-size: .8em;
+          transform: translateY(-50%);
         }
       }
     }
@@ -3635,8 +3627,8 @@ header {
       @include flex(row, flex-start, center, nowrap);
 
       @media (max-width: $bp-md) {
-        padding-top: 0px;
         border-bottom: 1px solid var(--extrapale-gray);
+        font-size: .9em;
       }
     }
 
@@ -3644,17 +3636,18 @@ header {
       grid-area: specifications;
       padding: 1em;
 
-      @media (max-width: $bp-xxl) {
-        font-size: 0.8em;
-      }
-
       @media (max-width: $bp-md) {
-        font-size: 1em;
+        font-size: .9em;
       }
+    }
+  }
 
-      @media (max-width: $bp-sm) {
-        font-size: 0.9em;
-      }
+  .dropdown {
+    .select {
+      background-color: var(--body-bg);
+      padding: 0.7em 1em;
+      border-radius: $radius;
+      border: 1px solid $light-gray;
     }
   }
 }
@@ -5534,8 +5527,8 @@ footer {
 .scroll-to-top {
   z-index: 1042;
   position: fixed;
-  bottom: 10vh;
-  right: 10vh;
+  bottom: 6vh;
+  right: 4vh;
   background: var(--glass);
   opacity: 0.6;
   font-size: 1.5em;

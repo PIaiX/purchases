@@ -13,15 +13,14 @@ import { getGame } from '../services/game';
 import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
-import { FiHeart } from 'react-icons/fi';
 import Meta from '../components/Meta';
 import { useDispatch, useSelector } from 'react-redux';
 import useDebounce from '../hooks/useDebounce';
 import { useForm, useWatch } from 'react-hook-form';
-import BtnAddFav from '../components/utils/BtnAddFav';
 import Select from '../components/utils/Select';
 import Input from '../components/utils/Input';
-
+import { HiHeart } from "react-icons/hi";
+import { toggleFavorite, getFavorites } from '../services/favorite';
 
 const Game = () => {
   const { id } = useParams();
@@ -242,169 +241,158 @@ const Game = () => {
       <section className='page-game pb-2 pb-4 pb-md-5'>
         <Container>
           <div className="page-game-top">
-            <Row>
-              <div className='mb-4 mb-xxxl-5 d-flex'>
-                <img src="/imgs/line.svg" alt="" />
-                <h1 className=' my-4 '>{games.items?.category?.title}</h1>
-                <img src="/imgs/line.svg" alt="" />
-                {/* <button type="button">
-                {auth && <BtnAddFav favo={fav} onFav={onFav} />}
+            <h1>{games.items?.category?.title}</h1>
+            <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-5'>
+              {
+                (fav)
+                ? <span>В Избранном</span>
+                : <span>Добавить в Избранное</span>
+              }
+              <HiHeart className='ms-2 fs-12'/>
+            </button>
+            {/* {auth && <BtnAddFav favo={fav} onFav={onFav} />} */}
 
-              </button> */}
+            {games?.items?.category?.regions?.length > 0 && games?.items?.category?.regions[0].status == 1 && (
+              <div className='mb-5'>
+                <ServerSwitcher
+                  data={data}
+                  active={data.region}
+                  serversArr={games.items.category.regions}
+                  onChange={(e) => setValue("region", e)}
+                />
               </div>
-            </Row>
-            <Row>
-              <Col xs={12} xl={7}>
-                {games?.items?.category?.regions?.length > 0 && games?.items?.category?.regions[0].status == 1 && (
-                  <ServerSwitcher
-                    data={data}
-                    active={data.region}
-                    serversArr={games.items.category.regions}
-                    onChange={(e) => setValue("region", e)}
-                  />
-                )}
-                <ul className='categories'>
-                  {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
-                    <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
+            )}
+            
+            <ul className='categories'>
+              {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
+                <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
+              ))}
+            </ul>
+            
+            <form action="" className='filter mb-4 mb-xxl-5'>
+              {
+                (isMobileLG) &&
+                <button onClick={() => setFilterShow(!filterShow)} type='button' className='dark-blue fs-12 fw-5'>
+                  <span className='me-2'>Фильтры</span>
+                  <FilterIcon className="fs-12" />
+                </button>
+              }
+              {
+                (filterShow) &&
+                <fieldset>
+                  <div className="w-100 d-flex mb-3">
+                    <label className='fs-12 me-sm-4 me-md-5 mb-3'>
+                      <span className='me-2'>Только продавцы онлайн</span>
+                      <input type="checkbox" />
+                    </label>
+                    <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
+                  </div>
+                  
+                  {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
-                  ))}
+                    (param.id == regId && param?.servers?.length > 0 &&
+                      <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                        {
+                          param.servers.map(item => (
+                            <option key={item.id} value={item.id} >{item.title}</option>
+                          ))
+                        }
+                      </select>
 
-                </ul>
 
-                <form action="" className='filter mb-4 mb-xxxl-5'>
-                  {
-                    (isMobileLG) &&
-                    <button onClick={() => setFilterShow(!filterShow)} type='button' className='dark-blue fs-12 fw-5'>
-                      <span className='me-2'>Фильтры</span>
-                      <FilterIcon className="fs-12" />
-                    </button>
-                  }
-                  {
-                    (filterShow) &&
-                    <fieldset>
-                      <label className='fs-12 me-sm-4 me-md-5 mb-3'>
-                        <span className='me-2'>Только продавцы онлайн</span>
-                        <input type="checkbox" />
-                      </label>
-                      <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
-                      {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
+                    )))} */}
+                  {data?.servers && data?.servers.length > 0 && (
+                    <Select
+                      value={data.server}
+                      title="Выберите сервер"
+                      onClick={(e) => setValue("server", parseInt(e.value))}
+                      data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
+                        value: item.id,
+                        title: item.title,
+                      }))}
+                    />
+                  )}
+                  {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
 
-                        (param.id == regId && param?.servers?.length > 0 &&
-                          <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                    (param.id == catId && param?.options?.length > 0 &&
+                      param.options.map(e => {
+                        let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
+                        if (!e.parent) {
+                          return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
                             {
-                              param.servers.map(item => (
+                              options?.length > 0 && options.map(item => (
                                 <option key={item.id} value={item.id} >{item.title}</option>
                               ))
                             }
                           </select>
+                        }
 
-
-                        )))} */}
-                      {data?.servers && data?.servers.length > 0 && (
-                        <Col xs={12} sm={6} md={4} >
-                          <Select
-                            value={data.server}
-                            title="Выбрать"
-                            onClick={(e) => setValue("server", parseInt(e.value))}
-                            data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
-                              value: item.id,
-                              title: item.title,
-                            }))}
-                          />
-                        </Col>
-                      )}
-                      {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
-
-                        (param.id == catId && param?.options?.length > 0 &&
-                          param.options.map(e => {
-                            let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
-                            if (!e.parent) {
-                              return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
-                                {
-                                  options?.length > 0 && options.map(item => (
-                                    <option key={item.id} value={item.id} >{item.title}</option>
-                                  ))
-                                }
-                              </select>
-                            }
-
-                          }))))} */}
-                      {data?.options?.length > 0 &&
-                        data.options.map((e, i) => {
-                          let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
-                          var option = []
-                          if (optionIndex > -1) {
-                            option = e?.children[optionIndex]
-                          }
-                          return (
-                            <>
-                              {e.data?.max ?
-                                <Row>
-                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
-                                    <span>{e.title}</span>
-                                  </Col>
-                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
-                                    <span className="me-3">от:</span>
-                                    <Input
-                                      type={"text"}
-                                      defaultValue={data?.option && data?.option[i]?.min}
-                                      onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                                    />
-                                  </Col>
-                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
-                                    <span className="me-3">до:</span>
-                                    <Input
-                                      type={"text"}
-                                      defaultValue={data?.option && data?.option[i]?.max}
-                                      onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                                    />
-                                  </Col>
-                                </Row>
-                                :
-                                <Col xs={12} sm={6} md={4}>
-                                  <Select
-                                    value={data?.optionId && data?.optionId[i]}
-                                    title={e.title}
-                                    onClick={(e) => {
-                                      setValue(`optionId[${i}]`, parseInt(e.value))
-                                      setValue(`child[${i}]`, null)
-                                      setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
-                                    }}
-                                    data={[
-                                      { value: "false", title: e.title },
-                                      ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
-                                    ]}
-                                  />
-                                </Col>
-                              }
-                              {
-                                option?.children?.length > 0 &&
-                                <Col xs={12} sm={6} md={4}>
-                                  <Select
-                                    value={data?.child[i]}
-                                    title={option.children[0].title}
-                                    onClick={(e) => {
-                                      setValue(`child[${i}]`, parseInt(e.value))
-                                      setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
-                                    }}
-                                    data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
-                                      value: item.id,
-                                      title: item.title,
-                                    }))}
-                                  />
-                                </Col >
-                              }
-                            </>
-                          );
-                        })
+                      }))))} */}
+                  {data?.options?.length > 0 &&
+                    data.options.map((e, i) => {
+                      let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
+                      var option = []
+                      if (optionIndex > -1) {
+                        option = e?.children[optionIndex]
                       }
-                    </fieldset>
-
+                      return (
+                        <>
+                          { 
+                            e.data?.max 
+                            ? <div className='d-flex align-items-center me-4'>
+                                <span>{e.title}</span>
+                                <Input
+                                  className="ms-2"
+                                  type={"number"}
+                                  placeholder="От"
+                                  defaultValue={data?.option && data?.option[i]?.min}
+                                  onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                                />
+                                <Input
+                                  className="ms-2"
+                                  type={"number"}
+                                  placeholder="До"
+                                  defaultValue={data?.option && data?.option[i]?.max}
+                                  onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                                />
+                              </div>
+                            : <Select
+                              value={data?.optionId && data?.optionId[i]}
+                              title={e.title}
+                              onClick={(e) => {
+                                setValue(`optionId[${i}]`, parseInt(e.value))
+                                setValue(`child[${i}]`, null)
+                                setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
+                              }}
+                              data={[
+                                ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
+                              ]}
+                            />
+                          }
+                          {
+                            option?.children?.length > 0 &&
+                            <Select
+                              value={data?.child[i]}
+                              title={option.children[0].title}
+                              onClick={(e) => {
+                                setValue(`child[${i}]`, parseInt(e.value))
+                                setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
+                              }}
+                              data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
+                                value: item.id,
+                                title: item.title,
+                              }))}
+                            />
+                          }
+                        </>
+                      );
+                    })
                   }
-                </form>
-              </Col>
-            </Row>
+                </fieldset>
+              }
+            </form>
           </div>
+
           {displayedProducts?.items?.length > 0 ?
             <div className={data.servers ? "page-game-offers" : "page-game-offers-no"}>
               <div className="top">
