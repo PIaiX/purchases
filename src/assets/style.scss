@@ -3502,11 +3502,9 @@ header {
         @include textEllipsis();
         width: fit-content;
         max-width: 48%;
-
         &:first-child {
           color: var(--gray);
         }
-
         &:last-child {
           color: var(--blue);
         }
