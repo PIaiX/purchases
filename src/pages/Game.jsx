@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
@@ -8,77 +8,227 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
 import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
 import { FiHeart } from 'react-icons/fi';
 import Meta from '../components/Meta';
+import { useDispatch, useSelector } from 'react-redux';
+import useDebounce from '../hooks/useDebounce';
+import { useForm, useWatch } from 'react-hook-form';
+import BtnAddFav from '../components/utils/BtnAddFav';
+import Select from '../components/utils/Select';
+import Input from '../components/utils/Input';
 
 
 const Game = () => {
   const { id } = useParams();
-  const isMobileLG = useIsMobile('1109px');
-  const [filterShow, setFilterShow] = useState((!isMobileLG) ? true : false);
-  const searchParams = new URLSearchParams(window.location.search);
+  const isMobileLG = useIsMobile("1109px");
+  const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
+  const searchParams = new URLSearchParams(location.search);
+  const auth = useSelector((state) => state.auth.isAuth);
   const [currentPage, setCurrentPage] = useState(1);
-  const [filters, setFilters] = useState([]);
-  const [catId, setCatId] = useState(searchParams.get('catId'));
-  const [regId, setRegId] = useState(searchParams.get('regId'));
-  const [serverId, setServerId] = useState();
+  const dispatch = useDispatch();
+  const favorite = useSelector((state) => state.favorite.items);
+  const [sum, setSum] = useState(0);
+  const [searchTerm, setSearchTerm] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 900);
+  const {
+    control,
+    register,
+    formState: { errors, isValid },
+    handleSubmit,
+    reset,
+    setValue,
+  } = useForm({
+    mode: "onChange",
+    reValidateMode: "onSubmit",
+    defaultValues: {
+      param: parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null,
+      region: parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null,
+      categoryId: parseInt(id),
+    },
 
+  });
+  useEffect(() => {
+    setValue("param", (parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null))
+  }, [searchParams.get("param")]);
+  useEffect(() => {
+    setValue("categoryId", parseInt(id))
+  }, [id]);
 
+  useEffect(() => {
+    setValue("region", (parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null))
+  }, [searchParams.get("regId")]);
+
+  const data = useWatch({ control });
+  const [displayedProducts, setDisplayedProducts] = useState({
+    loading: true,
+    items: [],
+    pagesCount: [],
+  });
   const [games, setGames] = useState({ items: [], loading: true });
   useEffect(() => {
-    getGame({ param: catId, region: regId, server: serverId, id, })
+
+    getGame({ param: data.param, region: data.region, server: data.server, id, })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
+        if (sum == 0) {
+          let serverIndex = res.category.regions.findIndex(
+            (e) => e.id === data.region
+          );
+          let servers;
+          if (serverIndex > -1) {
+            servers = res.category.regions[serverIndex].servers.sort((a, b) => a.priority - b.priority);
+          }
+          let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
+          let one = res.category.params[optionsIndex].data?.one;
+          let currency = res.category.params[optionsIndex].data?.currency;
+          let options;
+          if (optionsIndex > -1) {
+            options = createTree(res.category.params[optionsIndex].options, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
+          }
+          reset({
+            ...data,
+            game: res.category,
+            notDesc: currency ? currency : null,
+            one: one ? one : null,
+            servers: servers ? servers : null,
+            options: options ? options : null,
+          });
+        }
+        setSum(1)
       })
-      .catch(() => setGames((prev) => ({ ...prev, loading: false })));
-  }, [regId, catId, serverId]);
+      .catch(() => setGames(prev => ({ ...prev, loading: false })));
+  }, [data.param, data.region, data.server, id]);
 
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
 
-  const handleParamClick = (paramId) => {
-    setCatId(paramId);
-  };
 
-  const handleRegionChange = (regionId) => {
-    setRegId(regionId);
-  };
-  const handleServerChange = (serverId) => {
-    setServerId(serverId);
-  };
-
-  const handleFilterChange = (id, event) => {
-    if (id == event) {
-      let updatedFilters = { ...filters };
-      delete updatedFilters[id];
-      setFilters(updatedFilters);
-    } else {
-      setFilters({ ...filters, [id]: event });
+  const getPage = () => {
+    var onlineData
+    if (data?.online) {
+      onlineData = games?.items?.products?.filter(product => product.user.online.status == data.online)
     }
+    var products = onlineData ? onlineData : games?.items?.products;
+    var filteredData = onlineData && onlineData;
+    if (data?.option) {
+      filteredData = products.filter(product => {
+        return data.option.every(optionId => {
+          if (optionId && optionId.id != null) {
 
-  };
-  var filteredData = games?.items?.products?.filter(product => {
-    return Object.values(filters).every(filter => {
-      return product?.options?.some(dataItem => dataItem.optionId == filter);
-    });
-  })
-  var totalProducts = (filteredData ?? games.items.products) ?? [];
-  const productsPerPage = 30;
+            if (optionId.max || optionId.min) {
+              if ((optionId.max == "all" || !optionId.max) && (optionId.min == "all" || !optionId.min)) {
+                return true;
+              }
+              return product.options.some(dataItem => {
+                if (dataItem.optionId === optionId.id) {
+                  const value = parseInt(dataItem.value);
+                  if ((optionId.min == "all" || !optionId.min || value >= optionId.min) && (optionId.max == "all" || !optionId.max || value <= optionId.max)) {
+                    return true;
+                  }
+                }
+              });
+            }
+            else {
+              return product.options.some(dataItem => {
+                if (dataItem.optionId === optionId.id) {
+                  return true;
+                } else {
+                  return data.options.some(item => {
+                    const selectedOption = item.children.find(child => child.id == optionId.id);
+                    return selectedOption && selectedOption.children.some(subOption => subOption.id === dataItem.optionId.id);
+                  });
+                }
+              });
+            }
+          } else {
+            return true;
+          }
+        });
+      });
+    }
+    var totalProducts = (filteredData ?? games?.items?.products) ?? [];
+    if (debouncedSearchTerm) {
+      totalProducts = totalProducts.filter(item =>
+        item.desc.toLowerCase().includes(searchTerm.toLowerCase())
+      );
 
-  var pagesCount = Math.ceil(totalProducts.length / productsPerPage);
-  var indexOfLastProduct = currentPage * productsPerPage;
-  var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
-  var displayedProducts = totalProducts.slice(indexOfFirstProduct, indexOfLastProduct);
+    }
+    const productsPerPage = 30;
+    var indexOfLastProduct = currentPage * productsPerPage;
+    var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
+    setDisplayedProducts({ pagesCount: Math.ceil(totalProducts.length / productsPerPage), items: totalProducts.slice(indexOfFirstProduct, indexOfLastProduct) });
+  }
+  useEffect(() => {
+    if (games?.items?.products) {
+      getPage()
+    }
+  }, [games?.items?.products, currentPage, data.option, debouncedSearchTerm, data.online]);
+
+  const createTree = (data, idProp, parentProp, parentId) =>
+    data
+      .filter((n) => parentId === (n[parentProp] ?? null))
+      .map((n) => ({
+        ...n,
+        children: createTree(data, idProp, parentProp, n[idProp]),
+      }));
+
+  useEffect(() => {
+    if (data.region && data.game) {
+      let serverIndex = games.items.category.regions.findIndex(
+        (e) => e.id === data.region
+      );
+      let servers = null;
+      if (serverIndex > -1 && games.items.category.regions[serverIndex].servers.length > 0) {
+        servers = games.items.category.regions[serverIndex].servers;
+      }
+
+      reset({
+        ...data,
+        server: null,
+        servers: servers ? servers : null,
+      });
+
+    }
+  }, [data.region]);
+  useEffect(() => {
+    if (data.param && data.game) {
+      let optionsIndex = games.items.category.params.findIndex((e) => e.id === data.param);
+      let one = games.items.category.params[optionsIndex]?.data?.one;
+      let currency = games.items.category.params[optionsIndex]?.data?.currency;
+      let options = null;
+      if (optionsIndex > -1) {
+        options = createTree(games.items.category.params[optionsIndex].options, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
+      }
+      reset({
+        ...data,
+        notDesc: currency ? currency : null,
+        one: one ? one : null,
+        optionId: null,
+        option: null,
+        child: null,
+        options: options ? options : null,
+      });
+    }
+  }, [data.param]);
+
+  const onFav = useCallback(() => {
+    dispatch(toggleFavorite({ categoryId: data.categoryId, regionId: data.region, paramId: data.param }));
+    dispatch(getFavorites());
+  }, [data]);
+
+  const fav = favorite.find(el => el.categoryId == games?.items?.category?.id) ? 1 : 0;
 
   const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
   const totalItems = games?.items?.category?.productCount ?? 0;
   const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
+
+  console.log(data)
   if (games.loading) {
     return <Loader full />;
   }
@@ -93,27 +243,30 @@ const Game = () => {
         <Container className='mb-lg-5'>
           <div className="page-game-top">
             <div className='mb-4 mb-xxxl-5 d-flex'>
+              <img src="/imgs/line.svg" alt="" />
               <h1 className=' my-4 '>{games.items?.category?.title}</h1>
-              <button type="button">
-                <FiHeart style={{ fontSize: "60px" }} />
-              </button>
+              <img src="/imgs/line.svg" alt="" />
+              {/* <button type="button">
+                {auth && <BtnAddFav favo={fav} onFav={onFav} />}
+
+              </button> */}
             </div>
             <Row>
               <Col xs={12} xl={7}>
                 {games?.items?.category?.regions?.length > 0 && (
-                  <ServerSwitcher serversArr={games.items.category.regions} onChange={handleRegionChange} active={regId} />
+                  <ServerSwitcher
+                    data={data}
+                    active={data.region}
+                    serversArr={games.items.category.regions}
+                    onChange={(e) => setValue("region", e)}
+                  />
                 )}
                 <ul className='categories'>
-                  {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
-                    <li key={param.id}><button type='button' className={param.id == catId ? 'active' : ''} onClick={() => handleParamClick(param.id)}>{param.title}</button></li>
+                  {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
+                    <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? 'active' : ''}>{param.title}</Link></li>
+
                   ))}
-                  <div className="img">
-                    <GameСover image={image} />
-                    <div className="img-lots">
-                      <div className='num'>{totalItems}</div>
-                      <div>{declension}</div>
-                    </div>
-                  </div>
+
                 </ul>
 
                 <form action="" className='filter mb-4 mb-xxxl-5'>
@@ -132,7 +285,7 @@ const Game = () => {
                         <input type="checkbox" />
                       </label>
                       <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
-                      {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
+                      {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
                         (param.id == regId && param?.servers?.length > 0 &&
                           <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
@@ -144,9 +297,21 @@ const Game = () => {
                           </select>
 
 
-                        )))}
-
-                      {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
+                        )))} */}
+                      {data?.servers && data?.servers.length > 0 && (
+                        <Col>
+                          <Select
+                            value={data.server}
+                            title="Выбрать"
+                            onClick={(e) => setValue("server", parseInt(e.value))}
+                            data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
+                              value: item.id,
+                              title: item.title,
+                            }))}
+                          />
+                        </Col>
+                      )}
+                      {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
 
                         (param.id == catId && param?.options?.length > 0 &&
                           param.options.map(e => {
@@ -161,8 +326,76 @@ const Game = () => {
                               </select>
                             }
 
-                          }))))}
-
+                          }))))} */}
+                      {data?.options?.length > 0 &&
+                        data.options.map((e, i) => {
+                          let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
+                          var option = []
+                          if (optionIndex > -1) {
+                            option = e?.children[optionIndex]
+                          }
+                          return (
+                            <>
+                              {e.data?.max ?
+                                <Row>
+                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
+                                    <span>{e.title}</span>
+                                  </Col>
+                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
+                                    <span className="me-3">от:</span>
+                                    <Input
+                                      type={"text"}
+                                      defaultValue={data?.option && data?.option[i]?.min}
+                                      onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                                    />
+                                  </Col>
+                                  <Col xs={12} sm={12} md={4} className="d-flex align-items-center">
+                                    <span className="me-3">до:</span>
+                                    <Input
+                                      type={"text"}
+                                      defaultValue={data?.option && data?.option[i]?.max}
+                                      onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                                    />
+                                  </Col>
+                                </Row>
+                                :
+                                <Col>
+                                  <Select
+                                    value={data?.optionId && data?.optionId[i]}
+                                    title={e.title}
+                                    onClick={(e) => {
+                                      setValue(`optionId[${i}]`, parseInt(e.value))
+                                      setValue(`child[${i}]`, null)
+                                      setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
+                                    }}
+                                    data={[
+                                      { value: "false", title: e.title },
+                                      ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
+                                    ]}
+                                  />
+                                </Col>
+                              }
+                              {
+                                option?.children?.length > 0 &&
+                                <Col>
+                                  <Select
+                                    value={data?.child[i]}
+                                    title={option.children[0].title}
+                                    onClick={(e) => {
+                                      setValue(`child[${i}]`, parseInt(e.value))
+                                      setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
+                                    }}
+                                    data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
+                                      value: item.id,
+                                      title: item.title,
+                                    }))}
+                                  />
+                                </Col >
+                              }
+                            </>
+                          );
+                        })
+                      }
                     </fieldset>
 
                   }
@@ -170,7 +403,7 @@ const Game = () => {
               </Col>
             </Row>
           </div>
-          {totalProducts.length > 0 ?
+          {displayedProducts?.items?.length > 0 ?
             <div className="page-game-offers">
               <div className="top">
                 <div className="serv">Сервер</div>
@@ -180,13 +413,13 @@ const Game = () => {
                 <div className='price'>Цена</div>
               </div>
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-                {displayedProducts?.length > 0 && displayedProducts.map((item) => (
+                {displayedProducts?.items?.length > 0 && displayedProducts.items.map((item) => (
                   <li>
-                    <OfferLine {...item} />
+                    <OfferLine {...item} notDesc={data.notDesc} />
                   </li>
                 ))}
               </ul>
-              <NavPagination totalPages={pagesCount} onPageChange={onPageChange} />
+              <NavPagination totalPages={displayedProducts.pagesCount} onPageChange={onPageChange} />
             </div>
             :
             <div className="page-game-offers d-flex align-items-center justify-content-center mt-4">
