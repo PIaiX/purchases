@@ -1784,73 +1784,92 @@ header {
 
 /* Slider */
 .main-slider {
-  @media (max-width: $bp-lg){
+  @media (max-width: $bp-lg) {
     overflow: hidden;
     position: relative;
     padding-bottom: 2em;
   }
+
   @media (max-width: $bp-sm) {
     padding-bottom: 1.5em;
   }
+
   &-box {
     @include flex(row, space-between, flex-start, nowrap);
+
     @media (max-width: $bp-lg) {
       width: 300%;
       transition: 400ms ease-in-out;
+
       &.pos-1 {
         transform: translateX(0%);
       }
+
       &.pos-2 {
         transform: translateX(calc(100% / 3 * -1));
       }
+
       &.pos-3 {
         transform: translateX(calc(100% / 3 * 2 * -1));
       }
     }
   }
+
   &-item {
     --w: 17%;
     width: var(--w);
     position: relative;
     transition: 400ms ease-in-out;
+
     @media (max-width: $bp-xl) {
       --w: 16.5%;
     }
+
     @media (max-width: $bp-lg) {
       --w: 100%;
     }
+
     .wrap {
       position: relative;
       padding-top: 3.25em;
+
       @media (max-width: $bp-xl) {
         padding-top: 2.75em;
       }
+
       @media (max-width: $bp-lg) {
         padding-top: 0em;
       }
     }
+
     .svg-mini {
       position: relative;
       z-index: 1;
       width: 112%;
       height: 303px;
+
       @media (max-width: $bp-xxl) {
         height: 260px;
       }
+
       @media (max-width: $bp-xl) {
         height: 210px;
       }
     }
+
     .svg-mobile {
       width: 100%;
       height: 552px;
-      @media (max-width: $bp-md){
+
+      @media (max-width: $bp-md) {
         height: 410px;
       }
+
       @media (max-width: $bp-sm) {
         height: 73vw;
       }
     }
+
     .title-full {
       position: absolute;
       z-index: 10;
@@ -1860,43 +1879,53 @@ header {
       overflow: hidden;
       opacity: 0;
       transition: 400ms linear 0ms;
+
       @media (max-width: $bp-lg) {
         top: 5%;
         left: 30%;
         width: 70%;
       }
+
       @media (max-width: $bp-md) {
         top: 3%;
       }
+
       h2 {
         line-height: 100%;
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         margin-bottom: 0px;
+
         @media (max-width: $bp-xl) {
           font-size: 2.5em;
         }
+
         @media (max-width: $bp-lg) {
           font-size: 3em;
         }
+
         @media (max-width: $bp-md) {
           font-size: 2.5em;
         }
+
         @media (max-width: $bp-sm) {
           font-size: 2.3em;
         }
       }
     }
+
     .title-mini {
       margin-top: 5px;
       width: 100%;
       overflow: hidden;
       opacity: 1;
       transition: 400ms linear 400ms;
+
       @media (max-width: $bp-lg) {
         display: none;
       }
+
       h2 {
         line-height: 100%;
         white-space: nowrap;
@@ -1904,11 +1933,13 @@ header {
         text-overflow: ellipsis;
         margin-bottom: 0px;
         font-size: 2.5em;
+
         @media (max-width: $bp-xxl) {
           font-size: 2em;
         }
       }
     }
+
     .lots {
       width: fit-content;
       height: fit-content;
@@ -1919,25 +1950,31 @@ header {
       @include flex(column, center, center, nowrap);
       color: var(--body-bg);
       font-size: .75em;
+
       @media (max-width: $bp-xxl) {
         font-size: .6em;
       }
+
       @media (max-width: $bp-xl) {
         font-size: .55em;
         bottom: 13%;
       }
+
       @media (max-width: $bp-lg) {
         display: none;
       }
+
       .num {
         font-size: 1.1em;
         line-height: 140%;
         font-weight: 600;
+
         @media (max-width: $bp-xxl) {
           font-size: 1.25em;
         }
       }
     }
+
     .link {
       position: absolute;
       z-index: 10;
@@ -1946,32 +1983,41 @@ header {
       opacity: 0;
       color: $white;
       text-decoration: none;
+
       @media (max-width: $bp-xl) {
         bottom: 1em;
         right: 1em;
       }
+
       @media (max-width: $bp-lg) {
         display: none;
       }
     }
+
     &-active {
       @extend .main-slider-item;
       --w: 60.6%;
+
       @media (max-width: $bp-xxl) {
         --w: 61%;
       }
+
       @media (max-width: $bp-xl) {
         --w: 62%;
       }
+
       @media (max-width: $bp-lg) {
         --w: 100%;
       }
+
       .wrap {
         padding-top: 1em;
+
         @media (max-width: $bp-lg) {
           padding-top: 0em;
         }
       }
+
       .svg-full {
         position: relative;
         z-index: 1;
@@ -1981,19 +2027,23 @@ header {
         @media (max-width: $bp-xxl) {
           height: 315px;
         }
+
         @media (max-width: $bp-xl) {
           height: 265px;
         }
       }
+
       .title-full {
         opacity: 1;
         transition: 400ms linear 400ms;
       }
+
       .title-mini {
         height: 0px;
         opacity: 0;
         transition: 400ms linear 0ms;
       }
+
       .lots {
         display: flex;
         top: 2.6em;
@@ -2001,51 +2051,69 @@ header {
         bottom: unset;
         right: unset;
         font-size: .9em;
+
         @media (max-width: $bp-xxl) {
           font-size: .8em;
         }
+
         @media (max-width: $bp-xl) {
           font-size: .7em;
         }
+
         @media (max-width: $bp-lg) {
           font-size: 1.3em;
           top: 8%;
           left: 12.5%;
         }
+
         @media (max-width: $bp-md) {
           font-size: 1em;
         }
+
         @media (max-width: $bp-sm) {
           font-size: 3vw;
           left: 12%;
         }
+
         .num {
           line-height: 120%;
           font-size: 1.6em;
           font-weight: 400;
         }
       }
+
       .link {
         opacity: 1;
         transition: 200ms ease-in-out 800ms;
       }
     }
   }
-  &-prev, &-next {
+
+  &-prev,
+  &-next {
     display: flex;
     position: absolute;
     top: 67.5%;
     font-size: 2em;
+
     @media (max-width: $bp-md) {
       top: 66.5%;
       font-size: 1.5em;
     }
+
     @media (max-width: $bp-sm) {
       font-size: 1.25em;
     }
   }
-  &-prev {left: 0px;}
-  &-next {right: 0px;}
+
+  &-prev {
+    left: 0px;
+  }
+
+  &-next {
+    right: 0px;
+  }
+
   &-indicators {
     position: absolute;
     bottom: 0px;
@@ -2053,16 +2121,22 @@ header {
     width: 100%;
     @include list();
     @include flex();
+
     li {
       flex-grow: 1;
       height: .6em;
       background-color: var(--pale-gray);
       border-radius: .3em;
       transition: $transition;
+
       @media (max-width: $bp-sm) {
         height: .4em;
       }
-      &:not(:first-child){margin-left: 2em;}
+
+      &:not(:first-child) {
+        margin-left: 2em;
+      }
+
       &.active {
         background-color: var(--black);
       }
@@ -2833,43 +2907,43 @@ header {
   &-top {
     position: relative;
 
-    .img {
-      position: absolute;
-      bottom: 0px;
-      right: 0px;
-      width: 45%;
-      height: auto;
-      z-index: 1;
+    // .img {
+    //   position: absolute;
+    //   bottom: 0px;
+    //   right: 0px;
+    //   width: 45%;
+    //   height: auto;
+    //   z-index: 1;
 
-      @media (max-width: $bp-xxl) {
-        width: 50%;
-      }
+    //   @media (max-width: $bp-xxl) {
+    //     width: 50%;
+    //   }
 
-      @media (max-width: $bp-xl) {
-        width: 100%;
-      }
+    //   @media (max-width: $bp-xl) {
+    //     width: 100%;
+    //   }
 
-      svg {
-        width: 100%;
-        height: auto;
-      }
+    //   svg {
+    //     width: 100%;
+    //     height: auto;
+    //   }
 
-      &-lots {
-        position: absolute;
-        top: 14%;
-        left: 10.7%;
-        text-align: center;
-        color: var(--white);
+    //   &-lots {
+    //     position: absolute;
+    //     top: 14%;
+    //     left: 10.7%;
+    //     text-align: center;
+    //     color: var(--white);
 
-        .num {
-          font-size: 1.6em;
-        }
+    //     .num {
+    //       font-size: 1.6em;
+    //     }
 
-        @media (max-width: $bp-sm) {
-          font-size: 2.5vw;
-        }
-      }
-    }
+    //     @media (max-width: $bp-sm) {
+    //       font-size: 2.5vw;
+    //     }
+    //   }
+    // }
 
     .categories {
       position: unset;
@@ -2919,7 +2993,7 @@ header {
           font-size: 1em;
         }
 
-        button,
+        .button,
         a {
           background-color: var(--extrapale-gray);
           padding: 0.55em;
@@ -3008,8 +3082,7 @@ header {
     --pad: 15px 20px;
     --serv: 220px;
     --seller: 220px;
-    --availability: 165px;
-    --price: 120px;
+    --price: 140px;
 
     @media (max-width: $bp-xl) {
       background: transparent;
@@ -3028,9 +3101,9 @@ header {
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
-      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+      grid-template-columns: var(--serv) auto var(--seller) var(--price);
       grid-template-rows: 1fr;
-      grid-template-areas: "serv descr seller availability price";
+      grid-template-areas: "serv descr seller price";
 
       @media (max-width: $bp-xl) {
         display: none;
@@ -3053,9 +3126,68 @@ header {
           grid-area: seller;
         }
 
-        &.availability {
-          grid-area: availability;
+        &.price {
+          grid-area: price;
           text-align: center;
+        }
+      }
+    }
+
+    ul {
+      @include list();
+      padding: 2em;
+
+      @media (max-width: $bp-xl) {
+        padding: 0px;
+      }
+    }
+  }
+
+  &-offers-no {
+    background: var(--glass);
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(5px);
+    border-radius: $radius;
+    --pad: 15px 20px;
+    --seller: 220px;
+    --price: 140px;
+
+    @media (max-width: $bp-xl) {
+      background: transparent;
+      border-radius: 0px;
+      box-shadow: none;
+      --pad: 0px 1em;
+    }
+
+    @media (max-width: $bp-md) {
+      --pad: 0px 0.5em;
+      --price: 90px;
+    }
+
+    .top {
+      background-color: var(--extrapale-gray);
+      border-radius: $radius $radius 0px 0px;
+      padding: 0 2em;
+      display: grid;
+      grid-template-columns: auto var(--seller) var(--price);
+      grid-template-rows: 1fr;
+      grid-template-areas: "descr seller price";
+
+      @media (max-width: $bp-xl) {
+        display: none;
+      }
+
+      div {
+        font-size: 1.2em;
+        font-weight: 600;
+        padding: var(--pad);
+
+        &.descr {
+          grid-area: descr;
+        }
+
+        &.seller {
+          grid-area: seller;
         }
 
         &.price {
@@ -3064,6 +3196,7 @@ header {
         }
       }
     }
+
 
     ul {
       @include list();
@@ -3083,9 +3216,9 @@ header {
 
 .offer-line {
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
+  grid-template-columns: var(--serv) auto var(--seller) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "serv descr seller availability price";
+  grid-template-areas: "serv descr seller  price";
   background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
@@ -3094,9 +3227,9 @@ header {
     grid-template-columns: auto var(--price);
     grid-template-rows: 2em auto 3em;
     grid-template-areas:
-      "serv price"
-      "descr descr"
-      "seller availability";
+      "serv serv price"
+      "descr descr descr"
+      "seller seller seller";
     gap: 10px 0px;
     padding: 1em 0;
   }
@@ -3122,9 +3255,10 @@ header {
 
   .descr {
     grid-area: descr;
+    @include clamp(3, 1.2em, true);
 
     @media (max-width: $bp-xl) {
-      @include clamp(3, 1.2em, true);
+      @include clamp(2.5, 1.2em, true);
     }
   }
 
@@ -3150,13 +3284,77 @@ header {
     }
   }
 
-  .availability {
-    grid-area: availability;
+  .price {
+    grid-area: price;
     text-align: center;
 
     @media (max-width: $bp-xl) {
       @include flex(row, flex-end, center, nowrap);
       text-align: right;
+      font-weight: 600;
+    }
+  }
+}
+
+.offer-line-no {
+  display: grid;
+  grid-template-columns: auto var(--seller) var(--price);
+  grid-template-rows: 1fr;
+  grid-template-areas: "descr seller  price";
+  background-color: var(--white);
+  @include boxShadow();
+  border-radius: $radius;
+
+  @media (max-width: $bp-xl) {
+    grid-template-columns: auto var(--price);
+    grid-template-rows: 2em auto 3em;
+    grid-template-areas:
+      "price price price"
+      "descr descr descr"
+      "seller seller seller";
+    gap: 10px 0px;
+    padding: 1em 0;
+  }
+
+  @media (max-width: $bp-md) {
+    padding: 0.5em 0;
+  }
+
+  &>div {
+    grid-column: span 1;
+    grid-row: span 1;
+    padding: var(--pad);
+  }
+
+
+  .descr {
+    grid-area: descr;
+    @include clamp(3, 1.2em, true);
+
+    @media (max-width: $bp-xl) {
+      @include clamp(2.5, 1.2em, true);
+    }
+  }
+
+  .seller {
+    grid-area: seller;
+    @include flex(row, flex-start);
+
+    @media (max-width: $bp-xl) and (min-width: $bp-sm) {
+      font-size: 0.8em;
+    }
+
+    img {
+      width: 50px;
+      height: 50px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-right: 0.75em;
+
+      @media (max-width: $bp-xl) {
+        width: 40px;
+        height: 40px;
+      }
     }
   }
 

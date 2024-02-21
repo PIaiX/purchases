@@ -54,7 +54,7 @@ const Game = () => {
   });
   useEffect(() => {
     setValue("param", (parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null))
-  }, [searchParams.get("param")]);
+  }, [searchParams.get("catId")]);
   useEffect(() => {
     setValue("categoryId", parseInt(id))
   }, [id]);
@@ -240,20 +240,22 @@ const Game = () => {
       </Container>
 
       <section className='page-game pb-2 pb-4 pb-md-5'>
-        <Container className='mb-lg-5'>
+        <Container>
           <div className="page-game-top">
-            <div className='mb-4 mb-xxxl-5 d-flex'>
-              <img src="/imgs/line.svg" alt="" />
-              <h1 className=' my-4 '>{games.items?.category?.title}</h1>
-              <img src="/imgs/line.svg" alt="" />
-              {/* <button type="button">
+            <Row>
+              <div className='mb-4 mb-xxxl-5 d-flex'>
+                <img src="/imgs/line.svg" alt="" />
+                <h1 className=' my-4 '>{games.items?.category?.title}</h1>
+                <img src="/imgs/line.svg" alt="" />
+                {/* <button type="button">
                 {auth && <BtnAddFav favo={fav} onFav={onFav} />}
 
               </button> */}
-            </div>
+              </div>
+            </Row>
             <Row>
               <Col xs={12} xl={7}>
-                {games?.items?.category?.regions?.length > 0 && (
+                {games?.items?.category?.regions?.length > 0 && games?.items?.category?.regions[0].status == 1 && (
                   <ServerSwitcher
                     data={data}
                     active={data.region}
@@ -263,7 +265,7 @@ const Game = () => {
                 )}
                 <ul className='categories'>
                   {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
-                    <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? 'active' : ''}>{param.title}</Link></li>
+                    <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
 
                   ))}
 
@@ -299,7 +301,7 @@ const Game = () => {
 
                         )))} */}
                       {data?.servers && data?.servers.length > 0 && (
-                        <Col>
+                        <Col xs={12} sm={6} md={4} >
                           <Select
                             value={data.server}
                             title="Выбрать"
@@ -359,7 +361,7 @@ const Game = () => {
                                   </Col>
                                 </Row>
                                 :
-                                <Col>
+                                <Col xs={12} sm={6} md={4}>
                                   <Select
                                     value={data?.optionId && data?.optionId[i]}
                                     title={e.title}
@@ -377,7 +379,7 @@ const Game = () => {
                               }
                               {
                                 option?.children?.length > 0 &&
-                                <Col>
+                                <Col xs={12} sm={6} md={4}>
                                   <Select
                                     value={data?.child[i]}
                                     title={option.children[0].title}
@@ -404,12 +406,11 @@ const Game = () => {
             </Row>
           </div>
           {displayedProducts?.items?.length > 0 ?
-            <div className="page-game-offers">
+            <div className={data.servers ? "page-game-offers" : "page-game-offers-no"}>
               <div className="top">
-                <div className="serv">Сервер</div>
-                <div className='descr'>Описание</div>
+                {data.servers && <div className="serv">Сервер</div>}
+                <div className='descr'>{!data.notDesc ? "Описание" : "Доступно"}</div>
                 <div className='seller'>Продавец</div>
-                <div className='availability'>Наличие, шт.</div>
                 <div className='price'>Цена</div>
               </div>
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
