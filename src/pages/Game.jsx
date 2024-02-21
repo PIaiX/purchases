@@ -25,7 +25,7 @@ import Input from '../components/utils/Input';
 
 const Game = () => {
   const { id } = useParams();
-  const isMobileLG = useIsMobile("1109px");
+  const isMobileLG = useIsMobile("991px");
   const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
   const searchParams = new URLSearchParams(location.search);
   const auth = useSelector((state) => state.auth.isAuth);

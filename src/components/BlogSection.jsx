@@ -6,7 +6,7 @@ import Loader from './utils/Loader';
 // import useIsMobile from '../hooks/isMobile';
 
 const BlogSection = ({ articles }) => {
-  // const {isMobile} = useIsMobile('1289px');
+  // const {isMobile} = useIsMobile('1199px');
 
   return (
     <section className='sec-blog mb-6'>

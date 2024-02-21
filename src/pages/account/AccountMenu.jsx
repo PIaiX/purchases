@@ -6,7 +6,7 @@ import { logout } from '../../services/auth';
 
 
 const AccountMenu = (props) => {
-  const isMobileLG = useIsMobile('1109px')
+  const isMobileLG = useIsMobile('991px')
   const dispatch = useDispatch();
   return (
     <nav className='account-nav'>

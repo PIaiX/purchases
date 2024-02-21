@@ -20,8 +20,8 @@ import SalesHistory from '../pages/account/SalesHistory'
 import Settings from '../pages/account/Settings'
 
 const AccountRouter = () => {
-  const isMobileLG = useIsMobile('1109px')
-  const isMobileXL = useIsMobile('1289px')
+  const isMobileLG = useIsMobile('991px')
+  const isMobileXL = useIsMobile('1199px')
 
   return (
     <Routes>

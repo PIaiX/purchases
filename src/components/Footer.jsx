@@ -17,7 +17,7 @@ import SearchIcon from './svg/SearchIcon';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const isMobileLG = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('991px');
 
   const [showMenu, setShowMenu] = useState(false);
   const handleCloseMenu = () => setShowMenu(false);

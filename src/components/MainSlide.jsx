@@ -7,7 +7,7 @@ import useIsMobile from "../hooks/isMobile";
 import { declOfNum } from "../helpers/all";
 
 const MainSlide = (props) => {
-  const isMobileLG = useIsMobile("1109px");
+  const isMobileLG = useIsMobile("991px");
   const declension = declOfNum(props?.length, ['лот', 'лота', 'лотов']);
   return (
     <div

@@ -22,7 +22,7 @@ import { createMessageGeneral, getMessagesGeneral } from "../services/message";
 import { useGetArticlesQuery, useGetGamesQuery, useGetRecommendsQuery, useGetSalesQuery } from "../store/reducers/homeQuery";
 
 const Home = () => {
-  const isMobileLG = useIsMobile('1109px');
+  const isMobileLG = useIsMobile('991px');
   const category = useGetGamesQuery();
   const recommends = useGetRecommendsQuery();
   const articles = useGetArticlesQuery();
