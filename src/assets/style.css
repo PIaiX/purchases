@@ -464,6 +464,10 @@ textarea:-webkit-autofill:active {
   -webkit-text-fill-color: var(--font-color) !important;
 }
 
+input[type=search i]::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
 input[type=checkbox] {
   appearance: none;
   -webkit-appearance: none;
@@ -1366,11 +1370,11 @@ nav.pagination ul li a:active, nav.pagination ul li a.active {
   flex: 1;
 }
 .list-wrapping-top ul.line-2 .price {
-  width: 100px;
+  width: 120px;
   text-align: right;
 }
 .list-wrapping-top ul.line-2 .btns {
-  width: 60px;
+  width: 40px;
 }
 .list-wrapping-top ul.line-3 {
   display: grid;
@@ -2949,6 +2953,7 @@ header .profile-link img {
   --pad: 15px 20px;
   --serv: 220px;
   --seller: 220px;
+  --availability: 165px;
   --price: 140px;
 }
 @media (max-width: 1199.98px) {
@@ -2970,9 +2975,9 @@ header .profile-link img {
   border-radius: 0.67em 0.67em 0px 0px;
   padding: 0 2em;
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--price);
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "serv descr seller price";
+  grid-template-areas: "serv descr seller availability price";
 }
 @media (max-width: 1199.98px) {
   .page-game-offers .top {
@@ -2992,6 +2997,10 @@ header .profile-link img {
 }
 .page-game-offers .top div.seller {
   grid-area: seller;
+}
+.page-game-offers .top div.availability {
+  grid-area: availability;
+  text-align: center;
 }
 .page-game-offers .top div.price {
   grid-area: price;
@@ -3015,6 +3024,7 @@ header .profile-link img {
   border-radius: 0.67em;
   --pad: 15px 20px;
   --seller: 220px;
+  --availability: 165px;
   --price: 140px;
 }
 @media (max-width: 1199.98px) {
@@ -3036,9 +3046,9 @@ header .profile-link img {
   border-radius: 0.67em 0.67em 0px 0px;
   padding: 0 2em;
   display: grid;
-  grid-template-columns: auto var(--seller) var(--price);
+  grid-template-columns: auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "descr seller price";
+  grid-template-areas: "descr seller availability price";
 }
 @media (max-width: 1199.98px) {
   .page-game-offers-no .top {
@@ -3055,6 +3065,10 @@ header .profile-link img {
 }
 .page-game-offers-no .top div.seller {
   grid-area: seller;
+}
+.page-game-offers-no .top div.availability {
+  grid-area: availability;
+  text-align: center;
 }
 .page-game-offers-no .top div.price {
   grid-area: price;
@@ -3078,9 +3092,9 @@ header .profile-link img {
 
 .offer-line {
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--price);
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "serv descr seller  price";
+  grid-template-areas: "serv descr seller availability price";
   background-color: var(--white);
   box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   border-radius: 0.67em;
@@ -3089,7 +3103,7 @@ header .profile-link img {
   .offer-line {
     grid-template-columns: auto var(--price);
     grid-template-rows: 2em auto 3em;
-    grid-template-areas: "serv serv price" "descr descr descr" "seller seller seller";
+    grid-template-areas: "serv serv price" "descr descr descr" "seller seller availability";
     gap: 10px 0px;
     padding: 1em 0;
   }
@@ -3163,6 +3177,20 @@ header .profile-link img {
     height: 40px;
   }
 }
+.offer-line .availability {
+  grid-area: availability;
+  text-align: center;
+}
+@media (max-width: 1199.98px) {
+  .offer-line .availability {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    text-align: right;
+  }
+}
 .offer-line .price {
   grid-area: price;
   text-align: center;
@@ -3181,9 +3209,9 @@ header .profile-link img {
 
 .offer-line-no {
   display: grid;
-  grid-template-columns: auto var(--seller) var(--price);
+  grid-template-columns: auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "descr seller  price";
+  grid-template-areas: "descr seller availability price";
   background-color: var(--white);
   box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   border-radius: 0.67em;
@@ -3192,7 +3220,7 @@ header .profile-link img {
   .offer-line-no {
     grid-template-columns: auto var(--price);
     grid-template-rows: 2em auto 3em;
-    grid-template-areas: "price price price" "descr descr descr" "seller seller seller";
+    grid-template-areas: "price price price" "descr descr descr" "seller seller availability";
     gap: 10px 0px;
     padding: 1em 0;
   }
@@ -3251,6 +3279,20 @@ header .profile-link img {
   .offer-line-no .seller img {
     width: 40px;
     height: 40px;
+  }
+}
+.offer-line-no .availability {
+  grid-area: availability;
+  text-align: center;
+}
+@media (max-width: 1199.98px) {
+  .offer-line-no .availability {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    flex-wrap: nowrap;
+    text-align: right;
   }
 }
 .offer-line-no .price {
@@ -4631,7 +4673,7 @@ ACCOUNT
   }
 }
 .offer-line-2 .price {
-  width: 100px;
+  width: 120px;
   text-align: right;
 }
 @media (max-width: 1199.98px) {
