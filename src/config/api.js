@@ -24,6 +24,9 @@ const apiRoutes = {
   ACCOUNT_EDIT: BASE_URL + "/user/edit",
   ACCOUNT_EDIT_AVATAR: BASE_URL + "/user/editAvatar",
 
+  //FAVORITES 
+  FAVORITES: BASE_URL + "/favorite",
+
   // Order
   ORDERS_GET_ALL: BASE_URL + "/user/order",
   ORDER_GET_ONE: BASE_URL + "/user/order/one",
