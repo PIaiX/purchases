@@ -1596,12 +1596,12 @@ nav.pagination {
         }
 
         .price {
-          width: 100px;
+          width: 120px;
           text-align: right;
         }
 
         .btns {
-          width: 60px;
+          width: 40px;
         }
       }
 
@@ -4647,7 +4647,7 @@ ACCOUNT
   }
 
   .price {
-    width: 100px;
+    width: 120px;
     text-align: right;
 
     @media (max-width: $bp-xl) {

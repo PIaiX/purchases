@@ -1359,11 +1359,11 @@ nav.pagination ul li a:active, nav.pagination ul li a.active {
   flex: 1;
 }
 .list-wrapping-top ul.line-2 .price {
-  width: 100px;
+  width: 120px;
   text-align: right;
 }
 .list-wrapping-top ul.line-2 .btns {
-  width: 60px;
+  width: 40px;
 }
 .list-wrapping-top ul.line-3 {
   display: grid;
@@ -4627,7 +4627,7 @@ ACCOUNT
   }
 }
 .offer-line-2 .price {
-  width: 100px;
+  width: 120px;
   text-align: right;
 }
 @media (max-width: 1199.98px) {

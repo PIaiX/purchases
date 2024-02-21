@@ -3,7 +3,7 @@ import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useForm, useWatch } from 'react-hook-form';
 import { NotificationManager } from "react-notifications";
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import Input from '../../components/utils/Input';
 import Loader from '../../components/utils/Loader';
 import ReturnTitle from '../../components/utils/ReturnTitle';
@@ -23,15 +23,20 @@ const AddOffer = () => {
     reset,
     setValue,
   } = useForm({
-    mode: 'onChange',
+    mode: "onChange",
     reValidateMode: "onSubmit",
+    defaultValues: {
+      count: 1,
+      status: 1,
+    },
   });
-  const [category, setCategory] = useState([]);
-  const [regions, setRegions] = useState([]);
-  const data = useWatch({ control })
+
+  const data = useWatch({ control });
   const [sum, setSum] = useState(0);
-  const onClick = useCallback((data) => {
-    if (!data.category) {
+  const navigate = useNavigate();
+
+  const onSubmit = useCallback((data) => {
+    if (!data.categoryId) {
       return NotificationManager.error(
         "Выберите игру"
       )
@@ -51,18 +56,10 @@ const AddOffer = () => {
         "Выберите объект продажи"
       )
     }
-    if (data?.options && (!data?.option || data?.options?.filter((option) => option.parent === null).length > data?.option?.length)) {
+    if (data?.options && data?.options.length > 0 && (!data?.option || data?.options?.filter((option) => option.parent === null).length > data?.option?.length)) {
       return NotificationManager.error(
         "Выберите характеристики продукта"
       )
-    }
-    if (!data.title) {
-      return NotificationManager.error(
-        "Введите название объявления"
-      )
-    }
-    if (!data.count) {
-      return setValue("count", 1)
     }
     if (!data.price) {
       return NotificationManager.error(
@@ -71,42 +68,49 @@ const AddOffer = () => {
     }
     if (!id) {
       createUserProduct({
-        categoryId: data.category,
+        id: data.id,
+        categoryId: data.categoryId,
         region: data.region,
         server: data.server,
         param: data.param,
         option: data.option,
         title: data.title,
-        desc: data.text,
+        desc: data.desc,
         count: data.count,
-        price: data.price
+        price: data.price,
+        status: data.status
       })
         .then(() => {
           NotificationManager.success("Лот создан");
+          reset();
+          navigate(-1);
         })
-        .catch(
-          (err) =>
-            err &&
-            NotificationManager.error(
-              err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
-            )
+        .catch((error) =>
+          NotificationManager.error(
+            typeof error?.response?.data?.error == "string"
+              ? error.response.data.error
+              : "Неизвестная ошибка при отправке"
+          )
         );
     }
     else {
       editUserProduct({
         id: data.id,
-        categoryId: data.category,
+        categoryId: data.categoryId,
         region: data.region,
         server: data.server,
         param: data.param,
         option: data.option,
         title: data.title,
-        desc: data.text,
+        desc: data.desc,
         count: data.count,
-        price: data.price
+        price: data.price,
+        status: data.status
       })
         .then(() => {
           NotificationManager.success("Лот обновлён");
+          reset();
+          navigate(-1);
         })
         .catch(
           (err) =>
@@ -116,71 +120,162 @@ const AddOffer = () => {
             )
         );
     }
-  }, [])
+  }, []);
 
   useEffect(() => {
     getGames()
       .then((res) => {
-        setGames(prev => ({ ...prev, items: res, loading: false }));
+        setGames((prev) => ({
+          ...prev,
+          items: res.sort((a, b) => {
+            const titleA = a.title.toUpperCase();
+            const titleB = b.title.toUpperCase();
+
+            if (titleA < titleB) {
+              return -1;
+            }
+            if (titleA > titleB) {
+              return 1;
+            }
+            return 0;
+
+          }),
+          loading: false
+        }));
       })
       .catch(() => setGames((prev) => ({ ...prev, loading: false })));
+    if (!id) {
+      setSum(2)
+    }
   }, []);
-
   useEffect(() => {
     if (id) {
       getUserProduct({ id: id })
         .then((res) => {
-          setValue('id', res.id);
-          setValue('category', res.categoryId);
-          setValue('game', res.category);
-          setValue('region', res.regionId);
-          setValue('servers', res.region.servers);
-          setValue('server', res.serverId);
-          setValue('param', res.paramId);
-          setValue('options', res.param.options);
-          for (let i = 0; i < res.options.length; i++) {
-            setValue(`option[${i}]`, res.options[i].optionId);
+          let id = res.id;
+          let categoryId = res.categoryId;
+          let game = res.category;
+          let desc = res.desc;
+          let count = res.count;
+          let price = res.price;
+          let status = res.status;
+          let region;
+          let servers;
+          let server;
+          let param = res.paramId;
+          let one = res.param.data?.one;
+          let currency = res.param.data?.currency;
+          let options;
+          let option = [];
+          let optionId = [];
+          let child = [];
+          if (res?.regionId) {
+            region = res.regionId
+            if (res?.region?.servers) {
+              servers = res.region.servers
+              server = res.serverId
+            }
           }
-          setValue('title', res.title);
-          setValue('text', res.desc);
-          setValue('count', res.count);
-          setValue('price', res.price);
+          if (res?.param?.options?.length > 0) {
+
+            options = createTree(res.param.options, 'id', 'parent', null)
+            for (let i = 0; i < res.options.length; i++) {
+              option[i] = {
+                id: res.options[i].optionId,
+                value: res.options[i].value
+              };
+              let optionsIndex = options[i]?.children?.findIndex((e) => e.id === option[i].id);
+
+              if (optionsIndex < 0) {
+                let optionsInd = res.param.options.findIndex((e) => e.id === option[i].id);
+                child[i] = res.param.options[optionsInd].id
+                optionId[i] = res.param.options[optionsInd].parent
+              }
+              else {
+                optionId[i] = options[i]?.children[optionsIndex].id
+              }
+            }
+
+          }
+
+
+          reset({
+            id: id,
+            categoryId: categoryId,
+            game: game,
+            region: region ? region : null,
+            servers: servers ? servers : null,
+            server: server ? server : null,
+            param: param,
+            notDesc: currency ? currency : null,
+            one: one ? one : null,
+            options: options ? options : null,
+            option: option ? option : null,
+            optionId: optionId ? optionId : null,
+            child: child ? child : null,
+            desc: desc,
+            count: count,
+            price: price,
+            status: status,
+          });
+          setSum(1)
         })
+        .catch((error) => {
+          NotificationManager.error(
+            typeof error?.response?.data?.error == "string"
+              ? error.response.data.error
+              : "Неизвестная ошибка при загрузки страницы"
+          )
+          setSum(1)
+        }
+        );
 
     }
   }, []);
 
-  let i;
+  const createTree = (data, idProp, parentProp, parentId) =>
+    data
+      .filter((n) => parentId === (n[parentProp] ?? null))
+      .map((n) => ({
+        ...n,
+        children: createTree(data, idProp, parentProp, n[idProp]),
+      }));
+
+
 
   useEffect(() => {
     if (data.region && sum > 1) {
-      let serverIndex = data.game.regions.findIndex(e => e.id === data.region)
-      let servers = data.game.regions[serverIndex].servers
+
+      let serverIndex = data.game.regions.findIndex(
+        (e) => e.id === data.region
+      );
+      let servers = data.game.regions[serverIndex].servers;
+
       reset({
         ...data,
-        server: false,
-        servers: servers?.length > 0 ? servers : false
-      })
+        server: null,
+        servers: servers?.length > 0 ? servers : null,
+      });
     }
-    setSum(sum + 1)
-
   }, [data.region]);
-
   useEffect(() => {
     if (data.param && sum > 1) {
-      let optionsIndex = data.game.params.findIndex(e => e.id === data.param)
-      let options = data.game.params[optionsIndex].options
-      i = 0;
+      let optionsIndex = data.game.params.findIndex((e) => e.id === data.param);
+      let one = data.game?.params[optionsIndex]?.data?.one;
+      let currency = data.game?.params[optionsIndex]?.data?.currency;
+      let options = createTree(data.game.params[optionsIndex].options, 'id', 'parent', null);
       reset({
         ...data,
-        option: false,
-        options: options?.length > 0 ? options : false
-      })
+        notDesc: currency ? currency : null,
+        one: one ? one : null,
+        optionId: null,
+        option: null,
+        child: null,
+        options: options?.length > 0 ? options : null,
+      });
     }
-    setSum(sum + 1)
-
   }, [data.param]);
-  if (games.loading) {
+  if (games.loading || id && sum == 0) {
     return <Loader full />;
   }
   return (
@@ -199,16 +294,18 @@ const AddOffer = () => {
                   {games?.items?.length > 0 && (
                     <Col md={6}>
                       <Select
-                        value={data.category}
+                        value={data.categoryId}
                         title="Игра"
-                        onClick={e => {
+                        onClick={(e) => {
                           reset({
-                            title: data.title,
                             text: data.text,
                             count: data.count,
                             price: data.price,
-                            category: e.value,
-                            game: games.items[games.items.findIndex(e2 => e2.id === e.value)]
+                            categoryId: e.value,
+                            game: games.items[
+                              games.items.findIndex((e2) => e2.id === e.value)
+                            ],
+                            region: games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions && games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions[0]?.status == 0 ? games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions[0]?.id : null,
                           })
                         }}
                         data={games.items.map((item) => ({ value: item.id, title: item.title }))}
@@ -223,8 +320,11 @@ const AddOffer = () => {
                       <Select
                         value={data.region}
                         title="Регион"
-                        onClick={e => setValue('region', e.value)}
-                        data={data.game.regions.map((item) => ({ value: item.id, title: item.title }))}
+                        onClick={(e) => {
+                          setSum(2)
+                          setValue("region", e.value)
+                        }}
+                        data={data.game.regions.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </Col>
                   )}
@@ -235,7 +335,7 @@ const AddOffer = () => {
                         value={data.server}
                         title="Сервер"
                         onClick={e => setValue('server', e.value)}
-                        data={data.servers.map((item) => ({ value: item.id, title: item.title }))}
+                        data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </Col>
                   )}
@@ -251,20 +351,69 @@ const AddOffer = () => {
                     </Col>
                   )}
 
-                  {data.options && data.options.map((e, i) => {
-                    let options = data.options.filter(item => (item.parent == e.id));
-                    let name = data.options.find(item => (!item.parent && item.id == e.id));
-                    if (!e.parent) {
-                      return <Col md={6} >
-                        <Select
-                          value={data.option[i]}
-                          title={name.title}
-                          onClick={e => setValue(`option[${i}]`, e.value)}
-                          data={options.map((item) => ({ value: item.id, title: item.title }))}
-                        />
-                      </Col>
-                    }
-                  })}
+                  {data?.options && data?.options?.length > 0 &&
+                    data.options.map((e, i) => {
+                      let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
+                      var option = []
+                      if (optionIndex > -1) {
+                        option = e?.children[optionIndex]
+                      }
+                      return (
+                        <>
+                          {e.data?.max ?
+                            <>
+                              <Col md={6} className="d-flex align-items-center">
+                                <Input
+                                  type={"text"}
+                                  defaultValue={data?.option && data?.option[i]?.value}
+                                  onChange={(g) => { setValue(`option[${i}].value`, g), setValue(`option[${i}].id`, e.id) }}
+                                />
+                              </Col>
+                            </>
+                            :
+                            <>
+                              <Col md={6}>
+                                <Select
+                                  value={data?.optionId && data?.optionId[i]}
+                                  title={e.title}
+                                  onClick={(e) => {
+                                    setValue(`optionId[${i}]`, e.value)
+                                    setValue("child", false)
+                                    setValue(`option[${i}].id`, e.value)
+                                  }}
+                                  data={e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({
+                                    value: item.id,
+                                    title: item.title,
+                                  }))}
+                                />
+                              </Col>
+                              {option?.children?.length > 0 &&
+                                <>
+                                  <Col md={6}>
+                                    <Select
+                                      value={data?.child[i]}
+                                      title={option.children[0].title}
+                                      onClick={(e) => {
+                                        setValue(`child[${i}]`, e.value)
+                                        setValue(`option[${i}].id`, e.value)
+                                      }}
+                                      data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
+                                        value: item.id,
+                                        title: item.title,
+                                      }))}
+                                    />
+                                  </Col>
+                                </>
+
+                              }
+                            </>
+                          }
+                        </>
+
+                      )
+
+
+                    })}
 
                   <Col md={12}>
                     <Input
@@ -278,8 +427,8 @@ const AddOffer = () => {
                     <Textarea
                       type={"text"}
                       label={"Описание"}
-                      defaultValue={data.text}
-                      onChange={e => setValue("text", e)}
+                      defaultValue={data.desc}
+                      onChange={e => setValue("desc", e)}
                     />
                   </Col>
                   <Col md={4}>
@@ -305,13 +454,13 @@ const AddOffer = () => {
               <button
                 type='button'
                 className='btn-1 mt-4 mt-sm-5'
-                onClick={handleSubmit(onClick)}
+                onClick={handleSubmit(onSubmit)}
               >Опубликовать</button>
               :
               <button
                 type='button'
                 className='btn-1 mt-4 mt-sm-5'
-                onClick={handleSubmit(onClick)}
+                onClick={handleSubmit(onSubmit)}
               >Сохранить изменения</button>
             }
           </form>
