@@ -19,6 +19,7 @@ const apiRoutes = {
 
   SESSIONS_GET: BASE_URL + "/user/sessions",
 
+
   // Account
   ACCOUNT_EDIT: BASE_URL + "/user/edit",
   ACCOUNT_EDIT_AVATAR: BASE_URL + "/user/editAvatar",
@@ -130,6 +131,9 @@ const apiRoutes = {
 
   // Options
   OPTIONS: BASE_URL + "/option/",
+
+  // SEARCH
+  SEARCH_GET: BASE_URL + "/search",
 
   // Task
   TASK_GET_ALL: BASE_URL + "/task",

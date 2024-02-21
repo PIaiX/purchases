@@ -365,6 +365,7 @@ const AddOffer = () => {
                               <Col md={6} className="d-flex align-items-center">
                                 <Input
                                   type={"text"}
+                                  label={e.title}
                                   defaultValue={data?.option && data?.option[i]?.value}
                                   onChange={(g) => { setValue(`option[${i}].value`, g), setValue(`option[${i}].id`, e.id) }}
                                 />

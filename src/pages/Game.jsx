@@ -409,8 +409,9 @@ const Game = () => {
             <div className={data.servers ? "page-game-offers" : "page-game-offers-no"}>
               <div className="top">
                 {data.servers && <div className="serv">Сервер</div>}
-                <div className='descr'>{!data.notDesc ? "Описание" : "Доступно"}</div>
+                <div className='descr'>Описание</div>
                 <div className='seller'>Продавец</div>
+                <div className='availability'>Наличие, шт.</div>
                 <div className='price'>Цена</div>
               </div>
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>

@@ -632,6 +632,10 @@ textarea {
   }
 }
 
+input[type="search" i]::-webkit-search-cancel-button {
+  cursor: pointer;
+}
+
 input {
   &[type="checkbox"] {
     @include no-appearance();
@@ -3082,6 +3086,7 @@ header {
     --pad: 15px 20px;
     --serv: 220px;
     --seller: 220px;
+    --availability: 165px;
     --price: 140px;
 
     @media (max-width: $bp-xl) {
@@ -3101,9 +3106,9 @@ header {
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
-      grid-template-columns: var(--serv) auto var(--seller) var(--price);
+      grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
       grid-template-rows: 1fr;
-      grid-template-areas: "serv descr seller price";
+      grid-template-areas: "serv descr seller availability price";
 
       @media (max-width: $bp-xl) {
         display: none;
@@ -3124,6 +3129,11 @@ header {
 
         &.seller {
           grid-area: seller;
+        }
+
+        &.availability {
+          grid-area: availability;
+          text-align: center;
         }
 
         &.price {
@@ -3150,6 +3160,7 @@ header {
     border-radius: $radius;
     --pad: 15px 20px;
     --seller: 220px;
+    --availability: 165px;
     --price: 140px;
 
     @media (max-width: $bp-xl) {
@@ -3169,9 +3180,9 @@ header {
       border-radius: $radius $radius 0px 0px;
       padding: 0 2em;
       display: grid;
-      grid-template-columns: auto var(--seller) var(--price);
+      grid-template-columns: auto var(--seller) var(--availability) var(--price);
       grid-template-rows: 1fr;
-      grid-template-areas: "descr seller price";
+      grid-template-areas: "descr seller availability price";
 
       @media (max-width: $bp-xl) {
         display: none;
@@ -3188,6 +3199,11 @@ header {
 
         &.seller {
           grid-area: seller;
+        }
+
+        &.availability {
+          grid-area: availability;
+          text-align: center;
         }
 
         &.price {
@@ -3216,9 +3232,9 @@ header {
 
 .offer-line {
   display: grid;
-  grid-template-columns: var(--serv) auto var(--seller) var(--price);
+  grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "serv descr seller  price";
+  grid-template-areas: "serv descr seller availability price";
   background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
@@ -3229,7 +3245,7 @@ header {
     grid-template-areas:
       "serv serv price"
       "descr descr descr"
-      "seller seller seller";
+      "seller seller availability";
     gap: 10px 0px;
     padding: 1em 0;
   }
@@ -3284,6 +3300,16 @@ header {
     }
   }
 
+  .availability {
+    grid-area: availability;
+    text-align: center;
+
+    @media (max-width: $bp-xl) {
+      @include flex(row, flex-end, center, nowrap);
+      text-align: right;
+    }
+  }
+
   .price {
     grid-area: price;
     text-align: center;
@@ -3298,9 +3324,9 @@ header {
 
 .offer-line-no {
   display: grid;
-  grid-template-columns: auto var(--seller) var(--price);
+  grid-template-columns: auto var(--seller) var(--availability) var(--price);
   grid-template-rows: 1fr;
-  grid-template-areas: "descr seller  price";
+  grid-template-areas: "descr seller availability price";
   background-color: var(--white);
   @include boxShadow();
   border-radius: $radius;
@@ -3311,7 +3337,7 @@ header {
     grid-template-areas:
       "price price price"
       "descr descr descr"
-      "seller seller seller";
+      "seller seller availability";
     gap: 10px 0px;
     padding: 1em 0;
   }
@@ -3355,6 +3381,16 @@ header {
         width: 40px;
         height: 40px;
       }
+    }
+  }
+
+  .availability {
+    grid-area: availability;
+    text-align: center;
+
+    @media (max-width: $bp-xl) {
+      @include flex(row, flex-end, center, nowrap);
+      text-align: right;
     }
   }
 
@@ -3834,6 +3870,7 @@ header {
 }
 
 .sec-favorites {
+
   ul {
     @include list();
   }
@@ -3843,6 +3880,7 @@ header {
     background-color: var(--white);
     @include lightShadow();
     padding: 0.65em 1.3em;
+
     border-radius: $radius;
 
     @media (max-width: $bp-xxl) {

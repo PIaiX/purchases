@@ -12,7 +12,7 @@ import { getImageURL } from "../helpers/all";
 
 const GameCard = memo(({ param1, param2, onSearch, term }) => {
 
-  const filteredGames = param2.filter(game => game.title.toUpperCase().startsWith(param1));
+  const filteredGames = param1 ? param2.filter(game => game.title.toUpperCase().startsWith(param1)) : param2;
 
   const [regId, setRegId] = useState([]);
   return filteredGames.sort((a, b) => {
@@ -36,7 +36,7 @@ const GameCard = memo(({ param1, param2, onSearch, term }) => {
   }).map((el, i) => (
     <div className="game-card">
       <div>
-        <h4><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el?.regions?.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${el?.params?.length > 0 ? `catId=${[...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}>
+        <h4 onClick={onSearch}><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el?.regions?.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${el?.params?.length > 0 ? `catId=${[...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}>
           {el.title}
         </Link></h4>
 
