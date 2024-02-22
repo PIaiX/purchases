@@ -24,8 +24,6 @@ import { toggleFavorite, getFavorites } from '../services/favorite';
 
 const Game = () => {
   const { id } = useParams();
-  const isMobileLG = useIsMobile("991px");
-  const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
   const searchParams = new URLSearchParams(location.search);
   const auth = useSelector((state) => state.auth.isAuth);
   const [currentPage, setCurrentPage] = useState(1);
@@ -242,7 +240,7 @@ const Game = () => {
         <Container>
           <div className="page-game-top">
             <h1>{games.items?.category?.title}</h1>
-            <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-5'>
+            <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-4 mb-md-5'>
               {
                 (fav)
                 ? <span>В Избранном</span>
@@ -253,7 +251,7 @@ const Game = () => {
             {/* {auth && <BtnAddFav favo={fav} onFav={onFav} />} */}
 
             {games?.items?.category?.regions?.length > 0 && games?.items?.category?.regions[0].status == 1 && (
-              <div className='mb-5'>
+              <div className='mb-4 mb-md-5'>
                 <ServerSwitcher
                   data={data}
                   active={data.region}
@@ -270,126 +268,116 @@ const Game = () => {
             </ul>
             
             <form action="" className='filter mb-4 mb-xxl-5'>
-              {
-                (isMobileLG) &&
-                <button onClick={() => setFilterShow(!filterShow)} type='button' className='dark-blue fs-12 fw-5'>
-                  <span className='me-2'>Фильтры</span>
-                  <FilterIcon className="fs-12" />
-                </button>
-              }
-              {
-                (filterShow) &&
-                <fieldset>
-                  <div className="w-100 d-flex mb-3">
-                    <label className='fs-12 me-sm-4 me-md-5 mb-3'>
-                      <span className='me-2'>Только продавцы онлайн</span>
-                      <input type="checkbox" />
-                    </label>
-                    <input type="search" className='me-sm-4 me-md-5 mb-3' placeholder='Поиск по описанию' />
-                  </div>
-                  
-                  {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
-                    (param.id == regId && param?.servers?.length > 0 &&
-                      <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+              <div className="filter-top">
+                <input type="search" placeholder='Поиск по описанию' />
+                <label className='fs-12'>
+                  <span className='me-2'>Только продавцы онлайн</span>
+                  <input type="checkbox" />
+                </label>
+              </div>
+              
+              {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
+
+                (param.id == regId && param?.servers?.length > 0 &&
+                  <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
+                    {
+                      param.servers.map(item => (
+                        <option key={item.id} value={item.id} >{item.title}</option>
+                      ))
+                    }
+                  </select>
+
+
+                )))} */}
+              {data?.servers && data?.servers.length > 0 && (
+                <Select
+                  value={data.server}
+                  title="Выберите сервер"
+                  onClick={(e) => setValue("server", parseInt(e.value))}
+                  data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
+                    value: item.id,
+                    title: item.title,
+                  }))}
+                />
+              )}
+              {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
+
+                (param.id == catId && param?.options?.length > 0 &&
+                  param.options.map(e => {
+                    let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
+                    if (!e.parent) {
+                      return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
                         {
-                          param.servers.map(item => (
+                          options?.length > 0 && options.map(item => (
                             <option key={item.id} value={item.id} >{item.title}</option>
                           ))
                         }
                       </select>
+                    }
 
-
-                    )))} */}
-                  {data?.servers && data?.servers.length > 0 && (
-                    <Select
-                      value={data.server}
-                      title="Выберите сервер"
-                      onClick={(e) => setValue("server", parseInt(e.value))}
-                      data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
-                        value: item.id,
-                        title: item.title,
-                      }))}
-                    />
-                  )}
-                  {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
-
-                    (param.id == catId && param?.options?.length > 0 &&
-                      param.options.map(e => {
-                        let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
-                        if (!e.parent) {
-                          return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
-                            {
-                              options?.length > 0 && options.map(item => (
-                                <option key={item.id} value={item.id} >{item.title}</option>
-                              ))
-                            }
-                          </select>
-                        }
-
-                      }))))} */}
-                  {data?.options?.length > 0 &&
-                    data.options.map((e, i) => {
-                      let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
-                      var option = []
-                      if (optionIndex > -1) {
-                        option = e?.children[optionIndex]
-                      }
-                      return (
-                        <>
-                          { 
-                            e.data?.max 
-                            ? <div className='d-flex align-items-center me-4'>
-                                <span>{e.title}</span>
-                                <Input
-                                  className="ms-2"
-                                  type={"number"}
-                                  placeholder="От"
-                                  defaultValue={data?.option && data?.option[i]?.min}
-                                  onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                                />
-                                <Input
-                                  className="ms-2"
-                                  type={"number"}
-                                  placeholder="До"
-                                  defaultValue={data?.option && data?.option[i]?.max}
-                                  onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                                />
-                              </div>
-                            : <Select
-                              value={data?.optionId && data?.optionId[i]}
-                              title={e.title}
-                              onClick={(e) => {
-                                setValue(`optionId[${i}]`, parseInt(e.value))
-                                setValue(`child[${i}]`, null)
-                                setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
-                              }}
-                              data={[
-                                ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
-                              ]}
-                            />
-                          }
-                          {
-                            option?.children?.length > 0 &&
-                            <Select
-                              value={data?.child[i]}
-                              title={option.children[0].title}
-                              onClick={(e) => {
-                                setValue(`child[${i}]`, parseInt(e.value))
-                                setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
-                              }}
-                              data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
-                                value: item.id,
-                                title: item.title,
-                              }))}
-                            />
-                          }
-                        </>
-                      );
-                    })
+                  }))))} */}
+              {data?.options?.length > 0 &&
+                data.options.map((e, i) => {
+                  let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
+                  var option = []
+                  if (optionIndex > -1) {
+                    option = e?.children[optionIndex]
                   }
-                </fieldset>
+                  return (
+                    <>
+                      { 
+                        e.data?.max 
+                        ? <div className='d-flex align-items-center me-4'>
+                            <span>{e.title}</span>
+                            <Input
+                              className="ms-2"
+                              type={"number"}
+                              placeholder="От"
+                              defaultValue={data?.option && data?.option[i]?.min}
+                              onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                            />
+                            <Input
+                              className="ms-2"
+                              type={"number"}
+                              placeholder="До"
+                              defaultValue={data?.option && data?.option[i]?.max}
+                              onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
+                            />
+                          </div>
+                        : <Select
+                          value={data?.optionId && data?.optionId[i]}
+                          title={e.title}
+                          onClick={(e) => {
+                            setValue(`optionId[${i}]`, parseInt(e.value))
+                            setValue(`child[${i}]`, null)
+                            setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
+                          }}
+                          data={[
+                            ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
+                          ]}
+                        />
+                      }
+                      {
+                        option?.children?.length > 0 &&
+                        <Select
+                          value={data?.child[i]}
+                          title={option.children[0].title}
+                          onClick={(e) => {
+                            setValue(`child[${i}]`, parseInt(e.value))
+                            setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
+                          }}
+                          data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
+                            value: item.id,
+                            title: item.title,
+                          }))}
+                        />
+                      }
+                    </>
+                  );
+                })
               }
+
             </form>
           </div>
 

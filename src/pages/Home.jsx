@@ -45,10 +45,6 @@ const Home = () => {
   }, [category]);
 
 
-
-
-
-
   const userId = useSelector(state => state.auth?.user?.id);
 
   const { control, reset, setValue } = useForm({
@@ -143,20 +139,23 @@ const Home = () => {
           <Container className="">
             <Row>
               <Col xs={12} md={8}>
-                <section className="sec-chat mb-5">
-                  <h2>Общий чат</h2>
-                  <div className="sec-chat-count">
-                    <div className="num">{messages.count}</div>
-                    <div className="text">{declension} online</div>
+                <section className="sec-chat mb-4 mb-md-5">
+                  <div className="sec-chat-top">
+                    <div className="sec-chat-top-count">
+                      <div className="num">{messages.count}</div>
+                      <div className="text">{declension} online</div>
+                    </div>
+                    <h2>Общий чат</h2>
                   </div>
+                
+                  <Chat
+                    general="general"
+                    messages={messages}
+                    emptyText="Нет сообщений"
+                    onSubmit={(e) => onNewMessage(e)}
+                    onChange={(e) => setValue("text", e)}
+                  />
                 </section>
-                <Chat
-                  general="general"
-                  messages={messages}
-                  emptyText="Нет сообщений"
-                  onSubmit={(e) => onNewMessage(e)}
-                  onChange={(e) => setValue("text", e)}
-                />
 
               </Col>
               <Col xs={12} md={4}>

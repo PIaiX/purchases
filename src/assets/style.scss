@@ -57,6 +57,7 @@ $bp-xxl: 1399.98px;
   --footer-bg: #1B1B1C;
   --font-color: #191F2D;
   --switcher: #F4F4F4;
+  --extrapale-blue: #E5F2FF;
   --pale-blue: #9dc4ef;
   --blue: #4a83dc;
   --dark-blue: #0d59ab;
@@ -66,6 +67,7 @@ $bp-xxl: 1399.98px;
   --pale-green: #94e5a6;
   --white: #ffffff;
   --extrapale-gray: #ecf4fc;
+  --grayish: #eeeeee;
   --pale-gray: #d9d9d9;
   --light-gray: #c1c1c1;
   --gray: #8f8f8f;
@@ -89,6 +91,7 @@ $bp-xxl: 1399.98px;
   --footer-bg: #232B42;
   --font-color: rgb(255 255 255 / 95%);
   --switcher: #262F45;
+  --extrapale-blue: #102250;
   --pale-blue: #0d59ab;
   --blue: #4a83dc;
   --dark-blue: #9dc4ef;
@@ -1195,8 +1198,9 @@ button {
 
 .input-file-simple {
   position: relative;
-  color: var(--gray);
+  color: var(--pale-blue);
   transition: $transition;
+  padding: 1em 1.25em;
 
   &:hover {
     cursor: pointer;
@@ -1216,19 +1220,19 @@ button {
 
   svg {
     color: currentColor;
-    font-size: 1.25em;
+    font-size: 1.5em;
   }
 
   .ind {
     position: absolute;
-    bottom: -0.75em;
-    right: -0.75em;
+    bottom: 0.25em;
+    right: 0.25em;
     color: var(--white);
     line-height: 1em;
     font-size: 0.75em;
     background: var(--blue);
-    width: 1.3em;
-    height: 1.3em;
+    width: 1.4em;
+    height: 1.4em;
     border-radius: 50%;
     @include flex();
 
@@ -2698,14 +2702,18 @@ header {
   background: var(--body-bg);
 }
 
+
 /* Chat */
 .chat {
   position: relative;
+  border: 1px solid var(--extrapale-blue);
+  border-radius: 10px;
+  overflow: hidden;
 
   &-window {
     display: flex;
     flex-direction: column-reverse;
-    height: 698px;
+    height: 500px;
     overflow: auto;
     padding: 1em 1.5em;
 
@@ -2724,10 +2732,7 @@ header {
 
     &-message {
       @include flex(row, flex-start, flex-start);
-
-      &:not(:first-child) {
-        margin-top: 1.5em;
-      }
+      margin-bottom: 1.5em;
 
       img {
         width: 3.34em;
@@ -2746,7 +2751,7 @@ header {
           position: relative;
           width: fit-content;
           min-width: 50%;
-          background: rgba($color: var(--pale-blue), $alpha: 0.2);
+          background: var(--grayish);
           border-radius: $radius;
           padding: 1em;
           font-weight: 400;
@@ -2769,7 +2774,7 @@ header {
 
           .bubble {
             overflow-wrap: anywhere;
-            background: rgba($color: var(--pale-green), $alpha: 0.2);
+            background: var(--extrapale-blue);
             text-align: right;
           }
         }
@@ -2778,52 +2783,67 @@ header {
   }
 
   &-form {
-    @include flex(row, flex-start, center, nowrap);
-    border-top: 1px solid var(--extrapale-gray);
-    padding: 0.5em;
+    @include flex(row, flex-start, stretch, nowrap);
+    border-top: 1px solid var(--extrapale-blue);
 
     input {
       border: none;
       background-color: transparent;
-      height: 100%;
+    }
+
+    button {
+      background-color: var(--extrapale-gray);
+      padding: 1em 1.5em;
+      color: var(--blue);
+      transition: $transition;
+      transition-property: background-color, color;
+      &:hover, &:focus, &:active {
+        background-color: var(--extrapale-blue);
+        color: var(--dark-blue);
+      }
     }
   }
 }
 
 .sec-chat {
   position: relative;
+  box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
 
-  h2 {
-    font-size: 2.85em;
-    margin-left: 3.5em;
-    margin-bottom: 0.1em;
-  }
+  &-top {
+    border: 1px solid var(--extrapale-blue);
+    border-radius: 10px 10px 0px 0px;
+    @include flex(row, flex-start, center, nowrap);
+    padding: 1em;
 
-  &-count {
-    position: absolute;
-    z-index: 10;
-    top: 0px;
-    left: 2em;
-    width: 6em;
-    height: 6em;
-    border-radius: 50%;
-    background-color: var(--font-color);
-    color: var(--body-bg);
-    text-align: center;
-    @include flex(column, center, center, nowrap);
-
-    .num {
-      font-size: 1.34em;
+    h2 {
+      font-size: 2.85em;
+      margin-left: 1em;
+      margin-bottom: 0px;
     }
-
-    .text {
-      font-size: .86em;
+  
+    &-count {
+      width: 6em;
+      height: 6em;
+      border-radius: 50%;
+      background-color: var(--font-color);
+      color: var(--body-bg);
+      text-align: center;
+      @include flex(column, center, center, nowrap);
+      .num {
+        font-size: 1.34em;
+      }
+      .text {
+        font-size: .86em;
+      }
     }
   }
 
   .chat {
-    box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
-    padding-top: 2em;
+    border-top: none;
+    border-radius: 0px 0px 10px 10px;
+    &-window {
+      height: 600px;
+    }
   }
 }
 
@@ -2915,10 +2935,10 @@ header {
 
 /* Game page */
 .page-game {
+  overflow: hidden;
   &-top {
-    position: relative;
-
     h1 {
+      --w: 150px;
       text-align: center;
       position: relative;
       width: fit-content;
@@ -2930,7 +2950,7 @@ header {
         position: absolute;
         right: 100%;
         top: 50%;
-        width: 150px;
+        width: var(--w);
         height: 1px;
         background-color: currentColor;
       }
@@ -2940,9 +2960,17 @@ header {
         position: absolute;
         left: 100%;
         top: 50%;
-        width: 150px;
+        width: var(--w);
         height: 1px;
         background-color: currentColor;
+      }
+
+      @media (max-width: $bp-md) {
+        --w: 85px;
+      }
+
+      @media (max-width: $bp-sm) {
+        --w: 50px;
       }
     }
 
@@ -2953,30 +2981,8 @@ header {
       margin-top: 1em;
       margin-bottom: 2em;
 
-      @media (max-width: $bp-xxl) {
-        margin-bottom: 1em;
-      }
-
-      @media (max-width: $bp-xl) {
-        position: relative;
-        width: 60%;
-        height: 460px;
-        align-content: flex-end;
-        justify-content: center;
-        margin-bottom: 0em;
-      }
-
-      @media (max-width: $bp-lg) {
-        width: 80%;
-      }
-
       @media (max-width: $bp-md) {
-        width: 100%;
-        height: 430px;
-      }
-
-      @media (max-width: $bp-sm) {
-        height: calc(85vw - 24px);
+        margin-bottom: 1em;
       }
 
       li {
@@ -3028,6 +3034,8 @@ header {
     .filter {
       position: relative;
       z-index: 10;
+      @include flex(row, flex-start, center, wrap);
+      gap: 1em;
 
       @media (max-width: $bp-xl) {
         background: var(--body-bg);
@@ -3036,16 +3044,20 @@ header {
         @include shadow();
       }
 
-      fieldset {
-        @include flex(row, flex-start, center, wrap);
+      &-top {
+        width: 100%;
+        @include flex(row-reverse, flex-end, center, wrap);
+        gap: 1em;
 
-        @media (max-width: $bp-lg) {
-          margin-top: 1em;
-        }
-
-        @media (max-width: $bp-sm) {
-          &>* {
-            width: 100% !important;
+        input[type="search"] {
+          width: 340px;
+  
+          @media (max-width: $bp-xxl) {
+            width: 270px;
+          }
+  
+          @media (max-width: $bp-md) {
+            width: 100%;
           }
         }
       }
@@ -3055,18 +3067,6 @@ header {
         @include placeholder(var(--pale-blue));
       }
 
-      input[type="search"] {
-        width: 340px;
-
-        @media (max-width: $bp-xxl) {
-          width: 270px;
-        }
-
-        @media (max-width: $bp-md) {
-          width: 200px;
-        }
-      }
-
       input[type="number"] {
         width: 70px;
         padding: 0.7em 0.75em;
@@ -3074,7 +3074,6 @@ header {
       }
 
       .dropdown {
-        margin-right: 1.5em;
         .select {
           background-color: var(--body-bg);
           padding: 0.7em 1em;
@@ -3547,6 +3546,10 @@ header {
           }
         }
       }
+    }
+
+    .chat {
+      border: none;
     }
   }
 

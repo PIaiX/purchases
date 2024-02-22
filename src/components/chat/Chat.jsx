@@ -5,7 +5,7 @@ import Message from './Message';
 import Loader from "../utils/Loader";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, type, setImage, data }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className="", onSubmit, type, setImage, data }) => {
 
   const userId = useSelector(state => state.auth?.user?.id);
   const [text, setText] = useState("");
@@ -39,9 +39,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
     return <Loader />;
   }
   return (
-    <div className={"chat" + className}>
-
-
+    <div className={"chat " + className}>
       {
         messages.loading ? (
           <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
@@ -78,10 +76,11 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
               onChange={(e) => onChangeText(e.target.value)}
               onKeyPress={onKeyPress}
             />
-            <button onClick={onClick} type='submit' className="btn-1 fs-08 py-2 px-3">Отправить</button>
-            {general != "general" &&
-              <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} className="mx-3" />
+            { general != "general" &&
+              <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} />
             }
+            <button onClick={onClick} type='submit'>Отправить</button>
+           
           </div>
         </>
         : (
