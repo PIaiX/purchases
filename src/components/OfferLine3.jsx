@@ -28,9 +28,9 @@ const OfferLine3 = ({ id, author, user, product, createdAt, status, total, onSta
       </div>
       <div className="descr">{product.title}</div>
       <div className="seller">
-        <Link to={`/profile/${profileId}`}><img src={image} alt="User8name" /></Link>
+        <Link to={`/trader/${profileId}`}><img src={image} alt="User8name" /></Link>
         <div>
-          <h6 className='text-start mb-xl-1'><Link to={`/profile/${profileId}`}>{nickname}</Link></h6>
+          <h6 className='text-start mb-xl-1'><Link to={`/trader/${profileId}`}>{nickname}</Link></h6>
           <StarRating value={rating} />
         </div>
       </div>

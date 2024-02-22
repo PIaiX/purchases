@@ -139,8 +139,8 @@ const apiRoutes = {
   SEARCH_GET: BASE_URL + "/search",
 
   // Task
-  TASK_GET_ALL: BASE_URL + "/task",
-  TASK_CREATE: BASE_URL + "/task",
+  TASK_GET_ALL: BASE_URL + "/user/task",
+  TASK_CREATE: BASE_URL + "/user/task",
 
   //transaction
   TRANSACTION_GET_ALL: BASE_URL + "/user/transaction",

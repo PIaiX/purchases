@@ -10,9 +10,9 @@ const OfferLine = ({ id, uid, title, desc, price, count, server, user, total, no
       {server && <div className="serv"><Link to={`/game/lot/${uid}`}>{server?.title}</Link></div>}
       <div className="descr"><Link to={`/game/lot/${uid}`}>{title}</Link></div>
       <div className="seller">
-        <Link to='/trader'><img src={image} alt={user.nickname} /></Link>
+        <Link to={`/trader/${user.id}`}><img src={image} alt={user.nickname} /></Link>
         <div>
-          <h5 className='mb-xl-1'><Link to='/trader'>{user.nickname}</Link></h5>
+          <h5 className='mb-xl-1'><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
           <StarRating value={user.rating} />
         </div>
       </div>

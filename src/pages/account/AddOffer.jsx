@@ -275,6 +275,7 @@ const AddOffer = () => {
       });
     }
   }, [data.param]);
+  console.log(data)
   if (games.loading || id && sum == 0) {
     return <Loader full />;
   }

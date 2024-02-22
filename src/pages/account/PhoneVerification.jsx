@@ -52,7 +52,7 @@ const PhoneVerification = () => {
   return (
     <section className="mb-3 mb-sm-5">
       <Meta title="Изменение номера телефона" />
-      <ReturnTitle link="/account/profile" title="Изменение номера телефона" />
+      <ReturnTitle link="/account/trader" title="Изменение номера телефона" />
       <h2 className="d-none d-lg-block">Изменение номера телефона</h2>
       {form?.phone?.length > 0 ? (
         <>

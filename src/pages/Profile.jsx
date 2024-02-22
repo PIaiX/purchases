@@ -58,7 +58,7 @@ const Profile = () => {
   const [copied, setCopied] = useState(false);
   const handleCopyLink = () => {
     const textField = document.createElement('textarea');
-    textField.innerText = `${process.env.REACT_APP_SITE_URL} /profile/${user.id}`;
+    textField.innerText = `${process.env.REACT_APP_SITE_URL} /trader/${user.id}`;
     document.body.appendChild(textField);
     textField.select();
     document.execCommand('copy');
@@ -275,7 +275,7 @@ const Profile = () => {
                   <QRCode
                     className="qr-code ms-3 ms-xl-5"
                     size={100}
-                    value={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
+                    value={`${process.env.REACT_APP_SITE_URL}/trader/${user.data.id}`}
                     viewBox={`0 0 256 256`}
                   />
                 </div>
@@ -381,7 +381,7 @@ const Profile = () => {
               <Input
                 onClick={(e) => e.target.select()}
                 readOnly
-                defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${user.id}`}
+                defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${user.data.id}`}
               />
               <Button onClick={handleCopyLink} className="mt-3">Скопировать ссылку</Button>
             </div>

@@ -47,7 +47,7 @@ const EmailVerification = () => {
     <section className="mb-3 mb-sm-5">
       <Meta title="Изменение электронной почты" />
       <ReturnTitle
-        link="/account/profile"
+        link="/account/trader"
         title="Изменение электронной почты"
       />
       <h2 className="d-none d-lg-block">Изменение электронной почты</h2>
