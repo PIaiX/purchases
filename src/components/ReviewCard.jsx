@@ -20,7 +20,7 @@ const ReviewCard = ({ createdAt, text, author, id }) => {
                     </button>
                 </div>
                 <div className='d-flex align-items-center'>
-                    <Link to={`/profile/${author.id}`} className='user'>
+                    <Link to={`/trader/${author.id}`} className='user'>
                         <img src="/imgs/user.jpg" alt="name8user" className='user-photo' />
                         <span>{author.nickname}</span>
                     </Link>

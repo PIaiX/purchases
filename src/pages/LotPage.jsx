@@ -22,6 +22,7 @@ import { createMessage, getMessages } from '../services/message';
 import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
 import { NotificationManager } from 'react-notifications';
+import { refreshAuth } from '../services/auth';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -277,7 +278,7 @@ const LotPage = () => {
 
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
-                                    <button onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.price} ₽</button>
+                                    <button disabled={!userId || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
                                 </div>
 
                                 <div className='text'>
@@ -285,14 +286,14 @@ const LotPage = () => {
                                 </div>
 
                                 <ul className='specifications'>
-                                    {products?.items?.param?.options && products?.items?.param?.options.map(e => {
-                                        let name = products.items.param.options.find(item => (!item.parent && item.id == e.id));
-
+                                    {products?.items?.options && products?.items?.options.map(e => {
+                                        let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
+                                        console.log(products?.items?.options)
+                                        console.log(name)
                                         if (!e.parent) {
-                                            let options = products.items.options.find(item => (item.option.parent == name.id));
                                             return <li>
-                                                <span>{name.title}</span>
-                                                {/* <span>{options.option.title}</span> */}
+                                                <span>{e.value ? e?.option?.title : name?.title ? name.title : "Хакатеристика"}</span>
+                                                {e.value ? <span>{e?.value}</span> : <span>{e?.option?.title}</span>}
                                             </li>
 
                                         }
@@ -303,10 +304,10 @@ const LotPage = () => {
                             <div className="lot-page-box">
                                 <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                     <div className="seller">
-                                        <Link to={`/profile/${products?.items?.userId}`}>
+                                        <Link to={`/trader/${products?.items?.userId}`}>
                                             <img src={getImageURL(products?.items?.user)} alt="Weatherwax" />
                                         </Link>
-                                        <Link to={`/profile/${products?.items?.userId}`}>
+                                        <Link to={`/trader/${products?.items?.userId}`}>
                                             <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>
                                         </Link>
                                         <div className='rating ms-3'>
@@ -399,7 +400,7 @@ const LotPage = () => {
                             <Input
                                 onClick={(e) => e.target.select()}
                                 readOnly
-                                defaultValue={`${process.env.REACT_APP_SITE_URL}/profile/${products.items.userId}`}
+                                defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${products.items.userId}`}
                             />
                         </Modal.Body>
                     </Modal>
