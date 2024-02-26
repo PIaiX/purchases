@@ -25,10 +25,24 @@ const getMessage = async (id) => {
 };
 
 const createMessage = async (data) => {
-  const response = await $authApi.post(apiRoutes.MESSAGES, data);
+  const formData = new FormData();
+  if (data.media) {
+    formData.append(`file`, data.media[0]);
+  }
+  if (data.id) {
+    formData.append('id', data.id);
+  }
+  else {
+    formData.append('fromId', data.fromId);
+    formData.append('toId', data.toId);
+  }
+  if (data.text) {
+    formData.append('text', data?.text);
+  }
+
+  const response = await $authApi.post(apiRoutes.MESSAGES, formData);
   return response?.data;
 };
-
 const viewMessages = async (data) => {
   const response = await $authApi.put(apiRoutes.MESSAGES, data);
   return response?.data;

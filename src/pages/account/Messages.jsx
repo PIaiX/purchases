@@ -113,12 +113,7 @@ const Messages = ({ isMobileXL }) => {
             loading: false,
             items: [
               data,
-              ...prev.items.map((e) => {
-                if (e?.userId) {
-                  e.view = true;
-                }
-                return e;
-              }),
+              ...prev.items,
             ],
           }));
         }
@@ -294,6 +289,8 @@ const Messages = ({ isMobileXL }) => {
                         emptyText="Нет сообщений"
                         onSubmit={(e) => onNewMessage(e)}
                         onChange={(e) => setValue("text", e)}
+                        data={data}
+                        setImage={(e) => setValue("media", Array.from(e))}
                       />
                     </>
                   )}
