@@ -50,7 +50,6 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
         :
         <img src={image} alt={name} />
       }
-
     </div>
 
   ) : (
@@ -76,7 +75,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
     ) : (
       <div className="chat-window-message">
         <div className="chat-box-user">
-          <Link to={"/trader/" + userId}>
+          <Link to={"/profile/" + userId}>
             {type == "system" ?
               <img src="/imgs/system.png" alt={name} />
               :
@@ -88,7 +87,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
         <div className='text'>
           <div className='gray fs-08 d-flex align-items-center mb-2'>
             {general == "general" &&
-              <Link to={"/trader/" + userId}>
+              <Link to={"/profile/" + userId}>
                 <h6 className="name">{user.nickname}</h6>
               </Link>
 

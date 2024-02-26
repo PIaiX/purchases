@@ -6,13 +6,13 @@ import ScrollToTopButton from "../components/utils/ScrollToTopButton";
 
 const AppLayout = () => {
   return (
-    <div>
+    <>
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
       <Outlet />
       <Footer />
-    </div>
+    </>
   );
 };
 

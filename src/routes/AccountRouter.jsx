@@ -18,6 +18,7 @@ import Profile from '../pages/account/Profile'
 import PurchaseHistory from '../pages/account/PurchaseHistory'
 import SalesHistory from '../pages/account/SalesHistory'
 import Settings from '../pages/account/Settings'
+import MessagesDialogue from '../pages/account/MessagesDialogue'
 
 const AccountRouter = () => {
   const isMobileLG = useIsMobile('991px')
@@ -40,9 +41,8 @@ const AccountRouter = () => {
         <Route path="purchase-history" element={<PurchaseHistory />} />
         <Route path="sales-history" element={<SalesHistory />} />
         <Route path="finance" element={<Finance />} />
-        <Route path="messages" element={<Messages isMobileXL={isMobileXL} />}>
-          <Route path=":dialogId" element={<Messages />} />
-        </Route>
+        <Route path="messages" element={<Messages isMobileXL={isMobileXL} />} />
+        <Route path="messages/:dialogId" element={<MessagesDialogue/>} />
         <Route path="feedback" element={<Feedback />} />
         <Route path="feedback/add/:orderId" element={<LeaveFeedback />} />
         <Route path="callback" element={<Callback />} />

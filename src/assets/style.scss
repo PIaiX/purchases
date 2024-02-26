@@ -101,6 +101,7 @@ $bp-xxl: 1399.98px;
   --pale-green: #005a47;
   --white: #000;
   --extrapale-gray: #323847;
+  --grayish: #374050;
   --pale-gray: #4F5D70;
   --light-gray: #7D8999;
   --gray: #B7C0CD;
@@ -1200,7 +1201,7 @@ button {
   position: relative;
   color: var(--pale-blue);
   transition: $transition;
-  padding: 1em 1.25em;
+  padding: .8em 1.25em;
 
   &:hover {
     cursor: pointer;
@@ -2177,6 +2178,22 @@ header {
     width: 60px;
     height: 100%;
 
+    @media (max-width: 1471px) and (min-width: $bp-xxl) {
+      right: calc(100% - 30px);
+    }
+
+    @media (max-width: 1305px) and (min-width: $bp-xl) {
+      right: calc(100% - 30px);
+    }
+
+    @media (max-width: $bp-xl) {
+      right: 100%;
+    }
+
+    @media (max-width: 1060px) and (min-width: $bp-lg) {
+      right: calc(100% - 30px);
+    }
+
     @media (max-width: $bp-lg) {
       position: relative;
       top: unset;
@@ -2794,6 +2811,7 @@ header {
     button {
       background-color: var(--extrapale-gray);
       padding: 1em 1.5em;
+      font-size: .9em;
       color: var(--blue);
       transition: $transition;
       transition-property: background-color, color;
@@ -4177,11 +4195,11 @@ ACCOUNT
     @include safariFix();
 
     &-list {
-      width: 35%;
+      width: 30%;
       border-right: 1px solid var(--extrapale-gray);
 
       @media (max-width: $bp-xxl) {
-        width: 40%;
+        width: 35%;
       }
 
       @media (max-width: $bp-xl) {
@@ -4189,12 +4207,8 @@ ACCOUNT
         border-right: none;
       }
 
-      form {
-        border-bottom: 1px solid var(--extrapale-gray);
-      }
-
       ul {
-        margin-top: 1.5em;
+        margin-top: 1em;
         @include list();
       }
 
@@ -4221,32 +4235,30 @@ ACCOUNT
     }
 
     &-chat {
-      width: 65%;
+      width: 70%;
       position: relative;
 
       @media (max-width: $bp-xxl) {
-        width: 60%;
+        width: 65%;
       }
 
       @media (max-width: $bp-xl) {
         width: 100%;
       }
 
-      .chat-window {
-        height: 600px;
-
-        @media (max-width: $bp-xxl) {
-          padding: 1.5em;
-        }
-
-        @media (max-width: $bp-sm) {
-          height: 400px;
-        }
+      &-top {
+        @include flex(row, flex-start, center, nowrap);
+        padding: 0.75em 1.5em;
+        border-bottom: 1px solid var(--extrapale-blue);
       }
 
-      .chat-form {
-        @media (max-width: $bp-xxl) {
-          padding: 0 1.5em;
+      .chat {
+        border: none;
+        &-window {
+          height: 600px;
+          @media (max-width: $bp-sm) {
+            height: 400px;
+          }
         }
       }
     }
@@ -4328,7 +4340,7 @@ ACCOUNT
     border-radius: 100%;
     overflow: hidden;
     @include safariFix();
-    border: 5px solid var(--white);
+    border: 5px solid var(--body-bg);
     box-sizing: content-box;
 
     @media (max-width: $bp-xxl) {
@@ -4397,7 +4409,7 @@ ACCOUNT
         left: 0px;
         height: 100%;
         width: 70%;
-        background-color: #ebf3fc;
+        background-color: var(--extrapale-gray);
         border-radius: $radius 0 0 $radius;
       }
 
@@ -4409,7 +4421,7 @@ ACCOUNT
         right: 0px;
         height: 100%;
         width: 50%;
-        background-color: #ebf3fc;
+        background-color: var(--extrapale-gray);
         transform: skewX(-25deg);
         border-radius: $radius;
       }
@@ -5000,7 +5012,6 @@ ACCOUNT
 .dialog-preview {
   @include flex(row, flex-start, center, nowrap);
   padding: 0.75em 1.3em;
-  border-radius: $radius;
   position: relative;
 
   &.active {
@@ -5472,20 +5483,25 @@ footer {
     }
   }
 
-  &-top {
+  &-top, &-bottom {
     background-color: transparent;
     height: fit-content !important;
-
+    z-index: 1040 !important;
+  }
+  &-top {
     .offcanvas-body {
       padding: calc(var(--h-height) + 1em) 1em 2em 1em;
       background-color: var(--white);
       border-radius: 0px 0px $radius $radius;
     }
   }
-}
-
-.fav-modal {
-  z-index: 1041;
+  &-bottom {
+    .offcanvas-body {
+      padding: 2em 1em calc(var(--f-height) + 1em) 1em;
+      background-color: var(--white);
+      border-radius: $radius $radius 0px 0px;
+    }
+  }
 }
 
 .notification-container {

@@ -64,6 +64,7 @@
   --pale-green: #005a47;
   --white: #000;
   --extrapale-gray: #323847;
+  --grayish: #374050;
   --pale-gray: #4F5D70;
   --light-gray: #7D8999;
   --gray: #B7C0CD;
@@ -959,7 +960,7 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   position: relative;
   color: var(--pale-blue);
   transition: 300ms ease-in-out;
-  padding: 1em 1.25em;
+  padding: 0.8em 1.25em;
 }
 .input-file-simple:hover {
   cursor: pointer;
@@ -1955,6 +1956,26 @@ header .profile-link img {
   width: 60px;
   height: 100%;
 }
+@media (max-width: 1471px) and (min-width: 1399.98px) {
+  .sec-catalog-nav {
+    right: calc(100% - 30px);
+  }
+}
+@media (max-width: 1305px) and (min-width: 1199.98px) {
+  .sec-catalog-nav {
+    right: calc(100% - 30px);
+  }
+}
+@media (max-width: 1199.98px) {
+  .sec-catalog-nav {
+    right: 100%;
+  }
+}
+@media (max-width: 1060px) and (min-width: 991.98px) {
+  .sec-catalog-nav {
+    right: calc(100% - 30px);
+  }
+}
 @media (max-width: 991.98px) {
   .sec-catalog-nav {
     position: relative;
@@ -2626,6 +2647,7 @@ header .profile-link img {
 .chat-form button {
   background-color: var(--extrapale-gray);
   padding: 1em 1.5em;
+  font-size: 0.9em;
   color: var(--blue);
   transition: 300ms ease-in-out;
   transition-property: background-color, color;
@@ -4130,12 +4152,12 @@ ACCOUNT
   transform: translateZ(0);
 }
 .account .sec-messages-list {
-  width: 35%;
+  width: 30%;
   border-right: 1px solid var(--extrapale-gray);
 }
 @media (max-width: 1399.98px) {
   .account .sec-messages-list {
-    width: 40%;
+    width: 35%;
   }
 }
 @media (max-width: 1199.98px) {
@@ -4144,11 +4166,8 @@ ACCOUNT
     border-right: none;
   }
 }
-.account .sec-messages-list form {
-  border-bottom: 1px solid var(--extrapale-gray);
-}
 .account .sec-messages-list ul {
-  margin-top: 1.5em;
+  margin-top: 1em;
   list-style: none;
   padding-left: 0px;
 }
@@ -4183,12 +4202,12 @@ ACCOUNT
   text-align: left;
 }
 .account .sec-messages-chat {
-  width: 65%;
+  width: 70%;
   position: relative;
 }
 @media (max-width: 1399.98px) {
   .account .sec-messages-chat {
-    width: 60%;
+    width: 65%;
   }
 }
 @media (max-width: 1199.98px) {
@@ -4196,22 +4215,24 @@ ACCOUNT
     width: 100%;
   }
 }
+.account .sec-messages-chat-top {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.75em 1.5em;
+  border-bottom: 1px solid var(--extrapale-blue);
+}
+.account .sec-messages-chat .chat {
+  border: none;
+}
 .account .sec-messages-chat .chat-window {
   height: 600px;
-}
-@media (max-width: 1399.98px) {
-  .account .sec-messages-chat .chat-window {
-    padding: 1.5em;
-  }
 }
 @media (max-width: 575.98px) {
   .account .sec-messages-chat .chat-window {
     height: 400px;
-  }
-}
-@media (max-width: 1399.98px) {
-  .account .sec-messages-chat .chat-form {
-    padding: 0 1.5em;
   }
 }
 .account .sec-callback .box {
@@ -4298,7 +4319,7 @@ ACCOUNT
   -webkit-transform: translate3d(0, 0, 0);
   isolation: isolate;
   transform: translateZ(0);
-  border: 5px solid var(--white);
+  border: 5px solid var(--body-bg);
   box-sizing: content-box;
 }
 @media (max-width: 1399.98px) {
@@ -4375,7 +4396,7 @@ ACCOUNT
     left: 0px;
     height: 100%;
     width: 70%;
-    background-color: #ebf3fc;
+    background-color: var(--extrapale-gray);
     border-radius: 0.67em 0 0 0.67em;
   }
   .user-main::after {
@@ -4386,7 +4407,7 @@ ACCOUNT
     right: 0px;
     height: 100%;
     width: 50%;
-    background-color: #ebf3fc;
+    background-color: var(--extrapale-gray);
     transform: skewX(-25deg);
     border-radius: 0.67em;
   }
@@ -5035,7 +5056,6 @@ ACCOUNT
   align-items: center;
   flex-wrap: nowrap;
   padding: 0.75em 1.3em;
-  border-radius: 0.67em;
   position: relative;
 }
 .dialog-preview.active {
@@ -5481,19 +5501,21 @@ footer .nav-mobile ul li button.active svg path {
 .offcanvas-body .close:hover, .offcanvas-body .close:focus, .offcanvas-body .close:active {
   color: var(--black);
 }
-.offcanvas-top {
+.offcanvas-top, .offcanvas-bottom {
   background-color: transparent;
   height: -moz-fit-content !important;
   height: fit-content !important;
+  z-index: 1040 !important;
 }
 .offcanvas-top .offcanvas-body {
   padding: calc(var(--h-height) + 1em) 1em 2em 1em;
   background-color: var(--white);
   border-radius: 0px 0px 0.67em 0.67em;
 }
-
-.fav-modal {
-  z-index: 1041;
+.offcanvas-bottom .offcanvas-body {
+  padding: 2em 1em calc(var(--f-height) + 1em) 1em;
+  background-color: var(--white);
+  border-radius: 0.67em 0.67em 0px 0px;
 }
 
 .notification-container {

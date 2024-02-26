@@ -2,7 +2,7 @@ import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Link, useLocation, useParams } from 'react-router-dom';
+import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import Meta from "../../components/Meta";
 import Chat from "../../components/chat/Chat";
 import ReturnIcon from '../../components/svg/ReturnIcon';
@@ -25,6 +25,7 @@ const Messages = ({ isMobileXL }) => {
   const { state } = useLocation();
   const timer = useRef(0);
   const userId = useSelector(state => state.auth?.user?.id);
+  const navigate = useNavigate();
   // const message = useSelector((state) => state.notification.message);
 
   const { control, reset, setValue } = useForm({
@@ -206,7 +207,7 @@ const Messages = ({ isMobileXL }) => {
           <form action="" className='p-2 p-sm-3'>
             <input type="search" placeholder='Поиск пользователя' className='p-blue' />
           </form>
-          <ul className=" ms-3 me-3">
+          <ul>
             <li>
               <Link to="general" className='general-chat'>
                 <div className="count">
@@ -231,75 +232,66 @@ const Messages = ({ isMobileXL }) => {
         </div>
         {!isMobileXL &&
           <div className="sec-messages-chat">
-            <Link to='/account/messages' className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
-              <ReturnIcon />
-            </Link>
-            <div className="p-3 pr-0">
-              <div>
-                <div className="p-3 pt-0">
-                  {!data?.id ? (
-                    <div className="chat d-flex align-items-center justify-content-center flex-column">
-                      <h2 className="mb-3">Выберите диалог</h2>
-                      <p className="text-gray">
-                        В данный момент нет диалогов. Возможно вы не выбрали
-                        конкретный диалог.
+            {!data?.id ? (
+              <div className="h-100 d-flex align-items-center justify-content-center flex-column">
+                <h2 className="mb-3">Выберите диалог</h2>
+                <p className="text-center gray">
+                  В данный момент нет диалогов. <br/>Возможно вы не выбрали
+                  конкретный диалог.
+                </p>
+              </div>
+            ) : messages.loading ? (
+              <div className="h-100 d-flex align-items-center justify-content-center flex-column">
+                <Loader />
+              </div>
+            ) : (
+              <>
+                {data?.id == 'general' ? (
+                  <div className="sec-messages-chat-top">
+                    <button type="button" onClick={() => navigate(-1)}  className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
+                      <ReturnIcon />
+                    </button>
+                    <div>
+                      <h5 className="fw-7 mb-0">Общий чат</h5>
+                      <p className="text-muted">
+                        <span className="fw-7 mb-0">{dialogs.count} </span>
+                        <span className="text-success"> Онлайн</span>
                       </p>
                     </div>
-                  ) : messages.loading ? (
-                    <div className="chat d-flex align-items-center justify-content-center flex-column">
-                      <Loader />
+                  </div>
+                ) : (
+                  user && (
+                    <div className="sec-messages-chat-top">
+                      <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
+                        <ReturnIcon />
+                      </button>
+                      <div>
+                        <h5 className="fw-7 mb-0"><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
+                        <p className="fs-08 gray">
+                          {print ? (
+                            "Печатает сообщение..."
+                          ) : user.online?.status ? (
+                            <span className="text-success">Онлайн</span>
+                          ) : user.online?.end ? (
+                            "Был(-а) в сети " +
+                            moment(user.online?.end).fromNow()
+                          ) : (
+                            "Оффлайн"
+                          )}
+                        </p>
+                      </div>
+
                     </div>
-                  ) : (
-                    <>
-                      {data?.id == 'general' ? (
-                        <div className="dialog-preview">
-
-                          <div className="text">
-                            <h5 className="fw-7 mb-0">Общий чат</h5>
-                            <p className="text-muted">
-                              <span className="fw-7 mb-0">{dialogs.count} </span>
-                              <span className="text-success"> Онлайн</span>
-
-                            </p>
-                          </div>
-
-                        </div>
-                      ) : (
-                        user && (
-
-
-                          <div className="dialog-preview">
-                            <Link to={`/trader/${user.id}`}><img src={image} alt="user" /></Link>
-                            <div className="text">
-                              <h5 className="fw-7 mb-0"><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
-                              <p className="text-muted fs-07">
-                                {print ? (
-                                  "Печатает сообщение..."
-                                ) : user.online?.status ? (
-                                  <span className="text-success">Онлайн</span>
-                                ) : user.online?.end ? (
-                                  "Был(-а) в сети " +
-                                  moment(user.online?.end).fromNow()
-                                ) : (
-                                  "Оффлайн"
-                                )}
-                              </p>
-                            </div>
-                          </div>
-
-                        ))}
-                      <Chat
-                        general={data.id}
-                        messages={messages}
-                        emptyText="Нет сообщений"
-                        onSubmit={(e) => onNewMessage(e)}
-                        onChange={(e) => setValue("text", e)}
-                      />
-                    </>
-                  )}
-                </div>
-              </div>
-            </div>
+                  ))}
+                <Chat
+                  general={data.id}
+                  messages={messages}
+                  emptyText="Нет сообщений"
+                  onSubmit={(e) => onNewMessage(e)}
+                  onChange={(e) => setValue("text", e)}
+                />
+              </>
+            )}
           </div>
         }
       </section >
