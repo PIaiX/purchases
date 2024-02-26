@@ -114,12 +114,7 @@ const Messages = ({ isMobileXL }) => {
             loading: false,
             items: [
               data,
-              ...prev.items.map((e) => {
-                if (e?.userId) {
-                  e.view = true;
-                }
-                return e;
-              }),
+              ...prev.items,
             ],
           }));
         }
