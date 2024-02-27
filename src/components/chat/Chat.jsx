@@ -47,9 +47,10 @@ const Chat = memo(({ general, messages, emptyText, onChange, className="", onSub
           </div>
         ) : messages?.items?.length > 0 ? (
           <div className="chat-window">
-            {messages.items.map((item) => (
+            {messages.items.map((item, index) => (
 
               <Message
+                key={index}
                 {...item}
                 my={item.userId === userId}
                 general={general}

@@ -30,6 +30,7 @@ const MainSlider = ({ data }) => {
       <div className={"main-slider-box pos-" + (activeSlide + 1)}>
         {data?.map((e, index) => (
           <MainSlide
+            key={index}
             isActive={activeSlide === index}
             title={e.title ? e.title : "Название"}
             imgFull={getImageURL({
@@ -65,7 +66,7 @@ const MainSlider = ({ data }) => {
       {isMobileLG && (
         <ul className="main-slider-indicators">
           {data.map((e, index) => (
-            <li className={activeSlide === index ? "active" : ""}></li>
+            <li key={index} className={activeSlide === index ? "active" : ""}></li>
           ))}
         </ul>
       )}

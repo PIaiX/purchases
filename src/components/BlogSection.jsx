@@ -18,8 +18,8 @@ const BlogSection = ({ articles }) => {
         } */}
       </div>
       <ul className='blog-list row row-cols-1 row-cols-lg-4 row-cols-xl-5 g-4 g-xxl-5'>
-        {articles?.items?.length > 0 && articles.items.map((item) => (
-          <li>
+        {articles?.items?.length > 0 && articles.items.map((item, index) => (
+          <li key={index}>
             <BlogCard {...item} />
           </li>
         ))}

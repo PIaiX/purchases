@@ -2196,7 +2196,7 @@ header .profile-link img {
   margin-right: 0.5em;
 }
 .game-card h4 {
-  padding: 0 0 0.6em 0.65em;
+  margin-bottom: 0.6em;
 }
 .game-card .categories {
   list-style: none;
@@ -5448,10 +5448,7 @@ footer .nav-mobile ul li button.active svg path {
   background-color: var(--body-bg);
   color: var(--font-color);
 }
-.offcanvas-body {
-  position: relative;
-}
-.offcanvas-body ul {
+.offcanvas-mobile-menu {
   list-style: none;
   padding-left: 0px;
   background: var(--glass);
@@ -5462,13 +5459,16 @@ footer .nav-mobile ul li button.active svg path {
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
 }
-.offcanvas-body ul li a {
+.offcanvas-mobile-menu li a {
   display: block;
   padding: 0.75em 0;
   color: inherit;
 }
-.offcanvas-body ul li:not(:first-child) {
+.offcanvas-mobile-menu li:not(:first-child) {
   border-top: 1px solid var(--light-gray);
+}
+.offcanvas-body {
+  position: relative;
 }
 .offcanvas-body .sec-promo h1 {
   font-size: 2.2em;
@@ -5506,6 +5506,10 @@ footer .nav-mobile ul li button.active svg path {
   height: -moz-fit-content !important;
   height: fit-content !important;
   z-index: 1040 !important;
+}
+.offcanvas-top .offcanvas-body, .offcanvas-bottom .offcanvas-body {
+  max-height: 100vh;
+  overflow: auto;
 }
 .offcanvas-top .offcanvas-body {
   padding: calc(var(--h-height) + 1em) 1em 2em 1em;

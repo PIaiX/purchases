@@ -34,7 +34,7 @@ const GameCard = memo(({ param1, param2, onSearch, term }) => {
     }
     return 0;
   }).map((el, i) => (
-    <div className="game-card">
+    <div key={i} className="game-card">
       <div>
         <h4 onClick={onSearch}><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el?.regions?.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${el?.params?.length > 0 ? `catId=${[...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}>
           {el.title}

@@ -90,7 +90,6 @@ const Header = () => {
   const handleSearchChange = (event) => {
     setSearchTerm(event.target.value);
   };
-  console.log(games.items)
 
   return (
     <>
@@ -140,14 +139,17 @@ const Header = () => {
 
             </div>
             <div className="d-none d-lg-flex align-items-center">
-              <input
-                type="search"
-                className="d-none d-lg-flex ms-4 ms-xxl-5"
-                placeholder="Поиск по описанию"
-                onChange={(event) => {
-                  handleSearchChange(event);
-                }}
-              />
+              <div className="d-flex">
+                <input
+                  type="search"
+                  className="d-none d-lg-flex ms-4 ms-xxl-5"
+                  placeholder="Поиск по описанию"
+                  onChange={(event) => {
+                    handleSearchChange(event);
+                  }}
+                />
+              </div>
+              
               {isAuth ? (
                 <>
                   {/* <span className="ms-4">
@@ -194,7 +196,7 @@ const Header = () => {
               <img src={Joystick} alt="Joystick" />
             </Link>
             <ul>
-              <li><Link to='/'><SearchIcon/></Link></li>
+              <li><button type="button" onClick={handleShowSearch}><SearchIcon/></button></li>
               <li><button type="button" onClick={handleShowFav}><HeartIcon/></button></li>
               <li><NavLink to='/account' end onClick={()=>setShowMobileMenu(false)}><SupportIcon/></NavLink></li>
               <li><NavLink to='/account/messages' end onClick={()=>setShowMobileMenu(false)}><ChatIcon/></NavLink></li>
@@ -245,31 +247,31 @@ const Header = () => {
         show={showSearch}
         onHide={handleCloseSearch}
         onEscapeKeyDown={handleCloseSearch}
-        placement="top"
+        placement={isMobileLG ? "bottom" : "top"}
         autoFocus={false}
         scroll={true}
       >
-        <Offcanvas.Body className="p-0">
-          <Container className="px-0">
-            <section className='sec-favorites'>
-              {/* {games.items.length > 0 ?
-                <ul className='list-unstyled row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-xl-4 g-3 g-md-4 g-xxxl-5'>
+        <Container className="px-0">
+          <Offcanvas.Body>
+            <input
+              type="search"
+              className="d-lg-none mb-3"
+              placeholder="Поиск по описанию"
+              onChange={(event) => {
+                handleSearchChange(event);
+              }}
+            />
+            <section className='sec-favorites px-3'>
+              {games.items.length > 0 ?
+                <ul className="list-unstyled gy-3 gx-3 gx-xl-5 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
                   <GameCard param2={games.items} term={searchTerm} onSearch={() => { handleCloseSearch() }} />
-                  <li key={item.id}>
-                    <div className="fav-item">
-                      <h5><Link to={`/${item?.categoryId}/?${item.regionId ? `region=${item.regionId}&` : ''}${item.paramId ? `param=${item.paramId}` : ''}`} className='title'>{item?.category?.title}</Link></h5>
-                      <button type="button" onClick={() => onFav(item.categoryId)} >
-                        <FiTrash />
-                      </button>
-                    </div>
-                  </li>
                 </ul>
                 :
                 <h5 className="text-center">Мы не смогли найти такую игру</h5>
-              } */}
+              }
             </section>
-          </Container>
-        </Offcanvas.Body>
+          </Offcanvas.Body>
+        </Container>
       </Offcanvas>
 
       {/* Mobile Menu */}
@@ -279,7 +281,7 @@ const Header = () => {
             <RxCross1/>
           </button>
           <div className='text-center title-font fs-20 mb-4'>LOGO-RUSH2PLAY</div>
-          <ul onClick={()=>setShowMobileMenu(false)}>
+          <ul className="offcanvas-mobile-menu" onClick={()=>setShowMobileMenu(false)}>
             <li>
               <Link to="/">Главная</Link>
             </li>
