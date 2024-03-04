@@ -27,22 +27,6 @@ const Home = () => {
   const recommends = useGetRecommendsQuery();
   const articles = useGetArticlesQuery();
   const sales = useGetSalesQuery();
-  const [games, setGames] = useState({ items: [], data: [], loading: true });
-
-  useEffect(() => {
-    var uniqueLetters = new Set();
-
-    category?.data?.forEach(word => {
-      let firstLetter = word.title.charAt(0).toUpperCase();
-
-      if (!uniqueLetters.has(firstLetter)) {
-        uniqueLetters.add(firstLetter);
-      }
-    });
-
-    const alphabet = Array.from(uniqueLetters).sort();
-    setGames(prev => ({ ...prev, items: category.data, data: alphabet, loading: false }));
-  }, [category]);
 
 
   const userId = useSelector(state => state.auth?.user?.id);
@@ -121,16 +105,19 @@ const Home = () => {
   return (
     <main>
       <Meta title="Rush2Play" />
-      <Container>
-        <section className="mb-5">
-          <MainSlider data={sales?.data?.home?.items} />
-        </section>
-      </Container>
-      <CatalogSection games={games} />
-      {articles?.data?.pagination?.totalItems > 0 && (
-        <Container>
-          <BlogSection articles={articles.data} />
-        </Container>)
+      {sales?.data?.home && sales?.data?.home?.items?.length > 0 &&
+        < Container >
+          <section className="mb-5">
+            <MainSlider data={sales?.data?.home?.items} />
+          </section>
+        </Container>
+      }
+      <CatalogSection games={category.data} />
+      {
+        articles?.data?.pagination?.totalItems > 0 && (
+          <Container>
+            <BlogSection articles={articles.data} />
+          </Container>)
 
       }
       {
@@ -147,7 +134,7 @@ const Home = () => {
                     </div>
                     <h2>Общий чат</h2>
                   </div>
-                
+
                   <Chat
                     general="general"
                     messages={messages}
@@ -183,7 +170,7 @@ const Home = () => {
         </section>
       }
 
-    </main>
+    </main >
   );
 };
 

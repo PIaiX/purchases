@@ -11,11 +11,7 @@ import { useLocation } from 'react-router-dom';
 import { getImageURL } from "../helpers/all";
 
 const GameCard = memo(({ param1, param2, onSearch, term }) => {
-
-  const filteredGames = param1 ? param2.filter(game => game.title.toUpperCase().startsWith(param1)) : param2;
-
-  const [regId, setRegId] = useState([]);
-  return filteredGames.sort((a, b) => {
+  const filteredGames = param1 ? param2[param1] : term ? param2.sort((a, b) => {
     const titleA = a.title.toUpperCase();
     const titleB = b.title.toUpperCase();
 
@@ -33,7 +29,9 @@ const GameCard = memo(({ param1, param2, onSearch, term }) => {
       return 1;
     }
     return 0;
-  }).map((el, i) => (
+  }) : param2;
+  const [regId, setRegId] = useState([]);
+  return filteredGames.map((el, i) => (
     <div key={i} className="game-card">
       <div>
         <h4 onClick={onSearch}><Link to={`/game/${el.id}/?${regId[i] ? `regId=${regId[i]}&` : (el?.regions?.length > 0 ? `regId=${[...el.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${el?.params?.length > 0 ? `catId=${[...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}>

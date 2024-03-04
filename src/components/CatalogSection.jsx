@@ -35,12 +35,12 @@ const CatalogSection = ({ games }) => {
         <div className="sec-catalog-box">
 
           <div>
-            {games.data && games.items && games.data.map((letter) => (
+            {games.data && games.letters && games.letters.map((letter) => (
               <Element key={letter} name={`section-${letter}`} className="sec-catalog-part">
 
                 <div className="letter">{letter}</div>
                 <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
-                  <GameCard param1={letter} param2={games.items} />
+                  <GameCard param1={letter} param2={games.data} />
 
                 </ul>
 
@@ -70,7 +70,7 @@ const CatalogSection = ({ games }) => {
               <input type="text" placeholder='Поиск' className='p-blue' />
             </form> */}
             <ul>
-              {games.data && games.items && games.data.map((letter) => (
+              {games.data && games.letters && games.letters.map((letter) => (
                 <li key={letter}><Link to={`section-${letter}`}>{letter}</Link></li>
               ))}
             </ul>

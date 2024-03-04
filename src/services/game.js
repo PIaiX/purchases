@@ -8,6 +8,12 @@ const getGames = async () => {
     return response?.data
 
 }
+const getGamesList = async () => {
+
+    const response = await $api.get(apiRoutes.CATEGORIESLIST)
+    return response?.data
+
+}
 const getGame = async (data) => {
 
     const response = await $api.get(apiRoutes.CATEGORY, { params: data })
@@ -15,4 +21,4 @@ const getGame = async (data) => {
 
 }
 
-export { getGames, getGame }
+export { getGames, getGame, getGamesList }

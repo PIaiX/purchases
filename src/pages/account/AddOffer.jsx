@@ -9,7 +9,7 @@ import Loader from '../../components/utils/Loader';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
-import { getGames } from '../../services/game';
+import { getGamesList } from '../../services/game';
 import { createUserProduct, editUserProduct, getUserProduct } from '../../services/product';
 
 const AddOffer = () => {
@@ -123,23 +123,11 @@ const AddOffer = () => {
   }, []);
 
   useEffect(() => {
-    getGames()
+    getGamesList()
       .then((res) => {
         setGames((prev) => ({
           ...prev,
-          items: res.sort((a, b) => {
-            const titleA = a.title.toUpperCase();
-            const titleB = b.title.toUpperCase();
-
-            if (titleA < titleB) {
-              return -1;
-            }
-            if (titleA > titleB) {
-              return 1;
-            }
-            return 0;
-
-          }),
+          items: res,
           loading: false
         }));
       })
