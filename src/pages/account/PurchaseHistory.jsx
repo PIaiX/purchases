@@ -19,7 +19,7 @@ const PurchaseHistory = () => {
   });
 
   const getPage = (currentPage) => {
-    getOrders({ page: currentPage, authorId: 0 })
+    getOrders({ page: currentPage, authorId: 0, size: 10 })
       .then((res) => {
         setOrders((prev) => ({
           ...prev,

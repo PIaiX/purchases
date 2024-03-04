@@ -19,7 +19,7 @@ const Finance = () => {
     items: [],
   });
   useEffect(() => {
-    getTransactions({ page: currentPage })
+    getTransactions({ page: currentPage, size: 10 })
       .then((res) => {
         setTransactions((prev) => ({
           prev,

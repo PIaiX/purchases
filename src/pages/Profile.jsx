@@ -226,7 +226,7 @@ const Profile = () => {
                       <div className="d-flex align-items-center">
                         <StarRating value={user?.data?.rating ?? 0} />
                         <span className="fs-13 fw-7 ms-2">
-                          {user?.data?.rating ?? 0}
+                          {user?.data?.rating != null ? parseFloat(user?.data?.rating).toFixed(1) : "0.0"}
                         </span>
                       </div>
                       <div>
@@ -255,7 +255,7 @@ const Profile = () => {
                         <TbHeartHandshake className="svg" />
                         <span>Сделок:</span>
                       </div>
-                      <span>{user.data?.order ?? 0}</span>
+                      <span>{user.data?.orderSale ?? 0}</span>
                     </li>
                     <li>
                       <div>

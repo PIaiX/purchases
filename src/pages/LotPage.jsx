@@ -8,7 +8,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
 import Chat from '../components/chat/Chat';
@@ -34,7 +34,8 @@ const LotPage = () => {
         loading: true,
         items: [],
     });
-
+    const [isPaymentPending, setPaymentPending] = useState(false);
+    const navigate = useNavigate();
     const getPage = () => {
         getProduct({ id: lotId })
             .then((res) => {
@@ -168,9 +169,11 @@ const LotPage = () => {
                     "У продавца недостаточно кол-ва данного товара"
                 );
             }
+            setPaymentPending(true);
             createOrder(pay)
                 .then((res) => {
-                    resetPay({ count: "" });
+                    resetPay({ ...pay, count: 1, type: null });
+                    setPaymentPending(false);
                     getPage();
                     dispatch(refreshAuth());
                     NotificationManager.success("Куплено");
@@ -218,11 +221,10 @@ const LotPage = () => {
             <Meta title="Лот" />
             <section className='lot-page mb-6'>
                 <Container>
-                    <Link to={`/game/${products.items.categoryId}`} className='blue d-flex align-items-center mb-3'>
+                    <button type="button" onClick={() => navigate(-1)} className='blue d-flex align-items-center mb-3'>
                         <PiCaretLeftLight className='fs-15' />
                         <span className='ms-2'>Назад в каталог</span>
-                    </Link>
-
+                    </button>
                     <Row>
                         <Col xs={12} lg={8}>
                             <div className="lot-page-box lot-page-grid mb-4">
@@ -278,7 +280,7 @@ const LotPage = () => {
 
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
-                                    <button disabled={!userId || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
+                                    <button disabled={!userId || isPaymentPending || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
                                 </div>
 
                                 <div className='text'>
@@ -313,14 +315,14 @@ const LotPage = () => {
                                         <div className='rating ms-3'>
                                             <StarIcon />
                                             {/* <StarRating value={products?.items?.user?.rating} /> */}
-                                            <span>{products?.items?.user?.rating ?? "0.0"}</span>
+                                            <span>{products?.items?.user?.rating != null ? parseFloat(products?.items?.user?.rating).toFixed(1) : "0.0"}</span>
                                         </div>
                                     </div>
                                     <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
                                         <div className="d-flex">
                                             <div className="d-flex flex-column align-items-center">
                                                 <p className='fs-09 mb-1 mb-sm-2'>Сделки</p>
-                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.order}</p>
+                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.orderSale}</p>
                                             </div>
                                             <div className='d-flex flex-column align-items-center ms-4'>
                                                 <p className='fs-09 mb-1 mb-sm-2'>Лоты</p>

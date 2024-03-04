@@ -745,6 +745,7 @@ input {
   }
 
   &[type="number"] {
+
     &::-webkit-inner-spin-button,
     &::-webkit-outer-spin-button {
       @include no-appearance();
@@ -2360,6 +2361,7 @@ header {
     backdrop-filter: blur(5px);
     border-radius: 10px;
 
+
     &:not(:last-child) {
       margin-bottom: 3.33em;
     }
@@ -2374,6 +2376,7 @@ header {
     font-weight: 700;
     color: rgba(67, 185, 198, 0.26);
     margin-bottom: 1rem;
+
 
     @media (max-width: $bp-sm) {
       line-height: 100%;
@@ -2815,7 +2818,10 @@ header {
       color: var(--blue);
       transition: $transition;
       transition-property: background-color, color;
-      &:hover, &:focus, &:active {
+
+      &:hover,
+      &:focus,
+      &:active {
         background-color: var(--extrapale-blue);
         color: var(--dark-blue);
       }
@@ -2838,7 +2844,7 @@ header {
       margin-left: 1em;
       margin-bottom: 0px;
     }
-  
+
     &-count {
       width: 6em;
       height: 6em;
@@ -2847,9 +2853,11 @@ header {
       color: var(--body-bg);
       text-align: center;
       @include flex(column, center, center, nowrap);
+
       .num {
         font-size: 1.34em;
       }
+
       .text {
         font-size: .86em;
       }
@@ -2859,6 +2867,7 @@ header {
   .chat {
     border-top: none;
     border-radius: 0px 0px 10px 10px;
+
     &-window {
       height: 600px;
     }
@@ -2954,6 +2963,7 @@ header {
 /* Game page */
 .page-game {
   overflow: hidden;
+
   &-top {
     h1 {
       --w: 150px;
@@ -2962,6 +2972,7 @@ header {
       width: fit-content;
       margin: 0em auto .25em;
       padding: 0em .6em;
+
       &::before {
         content: "";
         display: block;
@@ -2972,6 +2983,7 @@ header {
         height: 1px;
         background-color: currentColor;
       }
+
       &::after {
         content: "";
         display: block;
@@ -3069,11 +3081,11 @@ header {
 
         input[type="search"] {
           width: 340px;
-  
+
           @media (max-width: $bp-xxl) {
             width: 270px;
           }
-  
+
           @media (max-width: $bp-md) {
             width: 100%;
           }
@@ -3519,9 +3531,11 @@ header {
         @include textEllipsis();
         width: fit-content;
         max-width: 48%;
+
         &:first-child {
           color: var(--gray);
         }
+
         &:last-child {
           color: var(--blue);
         }
@@ -3668,6 +3682,7 @@ header {
 
       .labeled-input {
         width: 100px;
+
         label {
           padding: 0 0.35em;
           font-size: .8em;
@@ -3745,6 +3760,18 @@ header {
         fill: var(--blue);
       }
     }
+  }
+
+
+
+  p {
+    cursor: pointer;
+    @include clamp(3, 1.3em, false);
+    overflow-wrap: anywhere;
+  }
+
+  .clamp-off {
+    @include clamp(910, 1.3em, false);
   }
 }
 
@@ -4254,8 +4281,10 @@ ACCOUNT
 
       .chat {
         border: none;
+
         &-window {
           height: 600px;
+
           @media (max-width: $bp-sm) {
             height: 400px;
           }
@@ -4846,6 +4875,16 @@ ACCOUNT
     border-radius: $radius;
     padding: 1em 1em 1.3em 60px;
     font-weight: 300;
+    cursor: pointer;
+
+    p {
+      @include clamp(3, 1.3em, false);
+      overflow-wrap: anywhere;
+    }
+
+    .clamp-off {
+      @include clamp(910, 1.3em, false);
+    }
 
     @media (max-width: $bp-sm) {
       padding: 1em 1em 1.3em 45px;
@@ -5483,16 +5522,18 @@ footer {
     }
   }
 
-  &-top, &-bottom {
+  &-top,
+  &-bottom {
     background-color: transparent;
     height: fit-content !important;
     z-index: 1040 !important;
-    
+
     .offcanvas-body {
       max-height: 100vh;
       overflow: auto;
     }
   }
+
   &-top {
     .offcanvas-body {
       padding: calc(var(--h-height) + 1em) 1em 2em 1em;
@@ -5500,6 +5541,7 @@ footer {
       border-radius: 0px 0px $radius $radius;
     }
   }
+
   &-bottom {
     .offcanvas-body {
       padding: 2em 1em calc(var(--f-height) + 1em) 1em;

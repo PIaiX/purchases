@@ -4,11 +4,12 @@ import { Link, Element, Events, animateScroll as scroll } from 'react-scroll';
 import Arrow from '../assets/imgs/arrow.svg';
 import GameCard from './GameCard';
 import SearchIcon from './svg/SearchIcon';
+import useIsMobile from '../hooks/isMobile';
 
 const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
-
+  const isMobileLG = useIsMobile('991px');
   useEffect(() => {
     Events.scrollEvent.register('begin', function (to, element) {
       // Действия при начале прокрутки
@@ -35,7 +36,7 @@ const CatalogSection = ({ games }) => {
         <div className="sec-catalog-box">
 
           <div>
-            {games.data && games.letters && games.letters.map((letter) => (
+            {games?.data && games?.letters && games.letters.map((letter) => (
               <Element key={letter} name={`section-${letter}`} className="sec-catalog-part">
 
                 <div className="letter">{letter}</div>
@@ -70,8 +71,8 @@ const CatalogSection = ({ games }) => {
               <input type="text" placeholder='Поиск' className='p-blue' />
             </form> */}
             <ul>
-              {games.data && games.letters && games.letters.map((letter) => (
-                <li key={letter}><Link to={`section-${letter}`}>{letter}</Link></li>
+              {games?.data && games?.letters && games?.letters.map((letter) => (
+                <li key={letter}><Link to={`section-${letter}`} smooth={true} duration={300} offset={isMobileLG ? 0 : -100}>{letter}</Link></li>
               ))}
             </ul>
             <div ref={cut} id="cut" className={(full) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>

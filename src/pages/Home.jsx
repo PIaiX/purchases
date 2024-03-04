@@ -112,7 +112,7 @@ const Home = () => {
           </section>
         </Container>
       }
-      <CatalogSection games={category.data} />
+      <CatalogSection games={category?.data} />
       {
         articles?.data?.pagination?.totalItems > 0 && (
           <Container>

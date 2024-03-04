@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import StarRating from './utils/StarRating';
 import moment from "moment";
 import { getImageURL } from '../helpers/all';
@@ -6,6 +6,11 @@ import { Link } from 'react-router-dom';
 
 
 const FeedbackLine = ({ text, value, createdAt, author, user }) => {
+  const [clampOff, setClampOff] = useState(false);
+
+  const toggleClamp = () => {
+    setClampOff(!clampOff);
+  };
   const data = moment(createdAt).fromNow();
   const image = getImageURL({ path: author, type: "user" })
   return (
@@ -21,7 +26,7 @@ const FeedbackLine = ({ text, value, createdAt, author, user }) => {
           <h5><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
         </div>
         <div className='feedback-line-text'>
-          <p>{text}</p>
+          <p className={clampOff ? 'clamp-off' : ''} onClick={toggleClamp}>{text}</p>
 
         </div>
 

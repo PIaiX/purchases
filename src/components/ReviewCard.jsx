@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { PiDotsThreeBold } from "react-icons/pi"
 import StarIcon from './svg/StarIcon'
@@ -6,6 +6,11 @@ import { getImageURL } from '../helpers/all'
 import moment from 'moment'
 
 const ReviewCard = ({ createdAt, text, author, id }) => {
+    const [clampOff, setClampOff] = useState(false);
+
+    const toggleClamp = () => {
+        setClampOff(!clampOff);
+    };
     const image = getImageURL({ path: author, type: "user" })
     return (
         <div className='review-card'>
@@ -26,12 +31,12 @@ const ReviewCard = ({ createdAt, text, author, id }) => {
                     </Link>
                     <div className='rating ms-3'>
                         <StarIcon />
-                        <span>{author.rating}</span>
+                        <span>{author?.rating != null ? parseFloat(author?.rating).toFixed(1) : "0.0"}</span>
                     </div>
                 </div>
             </div>
             <div className="text">
-                <p>{text}</p>
+                <p className={clampOff ? 'clamp-off' : ''} onClick={toggleClamp}>{text}</p>
             </div>
         </div>
     )

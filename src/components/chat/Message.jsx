@@ -88,7 +88,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
           <div className='gray fs-08 d-flex align-items-center mb-2'>
             {general == "general" &&
               <Link to={"/profile/" + userId}>
-                <h6 className="name">{user.nickname}</h6>
+                <h6 className="name me-2">{user.nickname}</h6>
               </Link>
 
             }

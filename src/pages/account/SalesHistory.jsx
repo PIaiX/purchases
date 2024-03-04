@@ -18,7 +18,7 @@ const SalesHistory = () => {
     items: [],
   });
   const getPage = (currentPage) => {
-    getOrders({ page: currentPage, authorId: 1 })
+    getOrders({ page: currentPage, authorId: 1, size: 10 })
       .then((res) => {
         setOrders((prev) => ({
           ...prev,

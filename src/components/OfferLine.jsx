@@ -17,8 +17,10 @@ const OfferLine = ({ id, uid, title, desc, price, count, server, user, total, no
         </div>
       </div>
       <div className="availability">
-        <span>{count}</span>
-        <span className='gray d-inline d-xl-none ms-1'>шт.</span>
+        <Link to={`/game/lot/${uid}`}>
+          <span>{count}</span>
+          <span className='gray d-inline d-xl-none ms-1'>шт.</span>
+        </Link>
       </div>
       <div className='price'><Link to={`/game/lot/${uid}`}>{total}&nbsp;<span className='rouble ms-1'>₽</span></Link></div>
     </div>

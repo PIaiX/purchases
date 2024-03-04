@@ -3669,6 +3669,24 @@ header .profile-link img {
 .review-card .rating svg path {
   fill: var(--blue);
 }
+.review-card p {
+  cursor: pointer;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3em;
+  max-height: 3.9em;
+  overflow-wrap: anywhere;
+}
+.review-card .clamp-off {
+  display: -webkit-box;
+  -webkit-line-clamp: 910;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3em;
+  max-height: 1183em;
+}
 
 /* Registration page */
 .sec-registration {
@@ -4880,6 +4898,24 @@ ACCOUNT
   border-radius: 0.67em;
   padding: 1em 1em 1.3em 60px;
   font-weight: 300;
+  cursor: pointer;
+}
+.feedback-line-text p {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3em;
+  max-height: 3.9em;
+  overflow-wrap: anywhere;
+}
+.feedback-line-text .clamp-off {
+  display: -webkit-box;
+  -webkit-line-clamp: 910;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3em;
+  max-height: 1183em;
 }
 @media (max-width: 575.98px) {
   .feedback-line-text {
