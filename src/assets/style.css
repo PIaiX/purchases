@@ -2664,7 +2664,13 @@ header .profile-link img {
   font-weight: 400;
   overflow-wrap: anywhere;
   font-size: 0.9em;
-  text-align: left;
+  text-align: center;
+}
+.chat-window-message .text .bubble-system-img, .chat-window-message-mine .text .bubble-system-img {
+  height: auto;
+  width: 150px;
+  color: #eee !important;
+  border-radius: 0%;
 }
 .chat-window-message .text .bubble-ban, .chat-window-message-mine .text .bubble-ban {
   position: relative;
@@ -2693,15 +2699,20 @@ header .profile-link img {
   text-align: right;
 }
 .chat-window-message-mine .text .bubble-admin {
-  color: black;
   overflow-wrap: anywhere;
-  background: #FFE9D5;
+  background: var(--mess-admin);
   text-align: right;
 }
 .chat-window-message-mine .text .bubble-system {
   overflow-wrap: anywhere;
   background: var(--mess-system);
-  text-align: right;
+  text-align: center;
+}
+.chat-window-message-mine .text .bubble-system-img {
+  height: auto;
+  width: 150px;
+  color: var(--gray) !important;
+  border-radius: 0%;
 }
 .chat-window-message-mine .text .bubble-ban {
   background: var(--mess-ban);

@@ -2822,7 +2822,14 @@ header {
                         font-weight: 400;
                         overflow-wrap: anywhere;
                         font-size: 0.9em;
-                        text-align: left;
+                        text-align: center;
+
+                        &-img {
+                            height: auto;
+                            width: 150px;
+                            color: #eee !important;
+                            border-radius: 0%;
+                        }
                     }
 
                     &-ban {
@@ -2858,16 +2865,23 @@ header {
                         text-align: right;
 
                         &-admin {
-                            color: black;
                             overflow-wrap: anywhere;
-                            background: #FFE9D5;
+                            background: var(--mess-admin);
                             text-align: right;
                         }
 
                         &-system {
                             overflow-wrap: anywhere;
                             background: var(--mess-system);
-                            text-align: right;
+                            text-align: center;
+
+                            &-img {
+                                height: auto;
+                                width: 150px;
+                                color: var(--gray) !important;
+
+                                border-radius: 0%;
+                            }
                         }
 
                         &-ban {

@@ -39,7 +39,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
             {status ?
               <div className={type == "system" ? "bubble-system" : "bubble"}>
                 {type == "system" &&
-                  <img src="/imgs/logo-mess.svg" />
+                  <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
                 }
                 {text && <p>{text}</p>}
                 {media &&
@@ -104,7 +104,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
               {status ?
                 <div className={type == "system" ? "bubble-system" : "bubble"}>
                   {type == "system" &&
-                    <img src="/imgs/logo-mess.svg" onClick={setShowShare} />
+                    <img src="/imgs/logo-mess.svg" onClick={setShowShare} className='bubble-system-img' />
                   }
                   {text && <p>{text}</p>}
                   {media &&
