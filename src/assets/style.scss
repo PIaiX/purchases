@@ -2824,6 +2824,12 @@ header {
                         font-size: 0.9em;
                         text-align: center;
 
+                        .system-border {
+                            border: 1px solid #212B360D;
+                            padding: 1em;
+                            border-radius: $radius;
+                        }
+
                         &-img {
                             height: auto;
                             width: 150px;
@@ -2874,6 +2880,12 @@ header {
                             overflow-wrap: anywhere;
                             background: var(--mess-system);
                             text-align: center;
+
+                            .system-border {
+                                border: 1px solid #212B360D;
+                                padding: 1em;
+                                border-radius: $radius;
+                            }
 
                             &-img {
                                 height: auto;

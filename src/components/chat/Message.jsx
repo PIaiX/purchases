@@ -38,12 +38,18 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
             </div>
             {status ?
               <div className={type == "system" ? "bubble-system" : "bubble"}>
-                {type == "system" &&
-                  <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
-                }
-                {text && <p>{text}</p>}
-                {media &&
-                  <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
+                {type == "system" ?
+                  <div className='system-border'>
+                    <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
+                    {text && <p>{text}</p>}
+                  </div>
+                  :
+                  <div>
+                    {text && <p>{text}</p>}
+                    {media &&
+                      <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
+                    }
+                  </div>
                 }
               </div>
               :
@@ -103,12 +109,18 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
               </div>
               {status ?
                 <div className={type == "system" ? "bubble-system" : "bubble"}>
-                  {type == "system" &&
-                    <img src="/imgs/logo-mess.svg" onClick={setShowShare} className='bubble-system-img' />
-                  }
-                  {text && <p>{text}</p>}
-                  {media &&
-                    <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
+                  {type == "system" ?
+                    <div className='system-border'>
+                      <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
+                      {text && <p>{text}</p>}
+                    </div>
+                    :
+                    <div>
+                      {text && <p>{text}</p>}
+                      {media &&
+                        <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
+                      }
+                    </div>
                   }
                 </div>
                 :
