@@ -6,6 +6,8 @@ import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
 import { getImageURL } from '../../helpers/all';
 import { Modal } from 'react-bootstrap';
+import Logo from '../svg/Logo';
+import LogoMess from '../svg/LogoMess';
 
 
 const Message = ({ my, userId, general, createdAt, media, text, name, admin, user, view, type, status }) => {
@@ -40,7 +42,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
               <div className={type == "system" ? "bubble-system" : "bubble"}>
                 {type == "system" ?
                   <div className='system-border'>
-                    <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
+                    <LogoMess />
                     {text && <p>{text}</p>}
                   </div>
                   :
@@ -111,7 +113,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
                 <div className={type == "system" ? "bubble-system" : "bubble"}>
                   {type == "system" ?
                     <div className='system-border'>
-                      <img src="/imgs/logo-mess.svg" className='bubble-system-img' />
+                      <LogoMess />
                       {text && <p>{text}</p>}
                     </div>
                     :

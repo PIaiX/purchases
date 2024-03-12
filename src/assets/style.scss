@@ -69,6 +69,7 @@ $bp-xxl: 1399.98px;
     --mess-user: #EBF3FC;
     --mess-admin: #FFE9D5;
     --mess-system: #F4F6F8;
+    --mess-system-border: #212B360D;
     --mess-ban: #FF5630;
     --white: #ffffff;
     --extrapale-gray: #ecf4fc;
@@ -108,6 +109,7 @@ $bp-xxl: 1399.98px;
     --mess-user: #919EAB29;
     --mess-admin: #FFFCFA4F;
     --mess-system: #919EAB29;
+    --mess-system-border: #FFFFFF0D;
     --mess-ban: #EE2A2338;
     --white: #000;
     --extrapale-gray: #323847;
@@ -2825,7 +2827,7 @@ header {
                         text-align: center;
 
                         .system-border {
-                            border: 1px solid #212B360D;
+                            border: 1px solid var(--mess-system-border);
                             padding: 1em;
                             border-radius: $radius;
                         }
@@ -2882,7 +2884,7 @@ header {
                             text-align: center;
 
                             .system-border {
-                                border: 1px solid #212B360D;
+                                border: 1px solid var(--mess-system-border);
                                 padding: 1em;
                                 border-radius: $radius;
                             }

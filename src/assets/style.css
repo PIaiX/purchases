@@ -33,6 +33,7 @@
   --mess-user: #EBF3FC;
   --mess-admin: #FFE9D5;
   --mess-system: #F4F6F8;
+  --mess-system-border: #212B360D;
   --mess-ban: #FF5630;
   --white: #ffffff;
   --extrapale-gray: #ecf4fc;
@@ -71,6 +72,7 @@
   --mess-user: #919EAB29;
   --mess-admin: #FFFCFA4F;
   --mess-system: #919EAB29;
+  --mess-system-border: #FFFFFF0D;
   --mess-ban: #EE2A2338;
   --white: #000;
   --extrapale-gray: #323847;
@@ -2667,7 +2669,7 @@ header .profile-link img {
   text-align: center;
 }
 .chat-window-message .text .bubble-system .system-border, .chat-window-message-mine .text .bubble-system .system-border {
-  border: 1px solid rgba(33, 43, 54, 0.0509803922);
+  border: 1px solid var(--mess-system-border);
   padding: 1em;
   border-radius: 0.67em;
 }
@@ -2714,7 +2716,7 @@ header .profile-link img {
   text-align: center;
 }
 .chat-window-message-mine .text .bubble-system .system-border {
-  border: 1px solid rgba(33, 43, 54, 0.0509803922);
+  border: 1px solid var(--mess-system-border);
   padding: 1em;
   border-radius: 0.67em;
 }
