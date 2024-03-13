@@ -204,7 +204,7 @@ const Messages = ({ isMobileXL }) => {
           </form>
           <ul>
             <li>
-              <Link to="general" className='general-chat'>
+              <Link to="/account/messages/general" className='general-chat'>
                 <div className="count">
                   <div class="fs-13">{dialogs.count}</div>
                   <div>online</div>
@@ -231,7 +231,7 @@ const Messages = ({ isMobileXL }) => {
               <div className="h-100 d-flex align-items-center justify-content-center flex-column">
                 <h2 className="mb-3">Выберите диалог</h2>
                 <p className="text-center gray">
-                  В данный момент нет диалогов. <br/>Возможно вы не выбрали
+                  В данный момент нет диалогов. <br />Возможно вы не выбрали
                   конкретный диалог.
                 </p>
               </div>
@@ -243,7 +243,7 @@ const Messages = ({ isMobileXL }) => {
               <>
                 {data?.id == 'general' ? (
                   <div className="sec-messages-chat-top">
-                    <button type="button" onClick={() => navigate(-1)}  className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
+                    <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
                       <ReturnIcon />
                     </button>
                     <div>

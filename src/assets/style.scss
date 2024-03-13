@@ -71,6 +71,7 @@ $bp-xxl: 1399.98px;
     --mess-system: #F4F6F8;
     --mess-system-border: #212B360D;
     --mess-ban: #FF5630;
+    --count: #1B1B1C;
     --white: #ffffff;
     --extrapale-gray: #ecf4fc;
     --grayish: #eeeeee;
@@ -79,6 +80,7 @@ $bp-xxl: 1399.98px;
     --gray: #8f8f8f;
     --black: #191F2D;
     --total-black: #000;
+    --btn-1: #4a83dc;
 
     --glass: linear-gradient(92.32deg,
             rgba(255, 255, 255, 0) 16.31%,
@@ -111,6 +113,7 @@ $bp-xxl: 1399.98px;
     --mess-system: #919EAB29;
     --mess-system-border: #FFFFFF0D;
     --mess-ban: #EE2A2338;
+    --count: #9DC4EF33;
     --white: #000;
     --extrapale-gray: #323847;
     --grayish: #374050;
@@ -119,6 +122,8 @@ $bp-xxl: 1399.98px;
     --gray: #B7C0CD;
     --black: #fff;
     --total-black: #fff;
+    --btn-1: #323847;
+
 
     --glass: linear-gradient(137deg,
             rgba(35, 43, 66, 0.09) 15.10%,
@@ -265,29 +270,25 @@ $bp-xxl: 1399.98px;
     overflow: hidden;
 }
 
-/*****************
-SCROLL STYLIZATION
-******************/
-html {
-    scrollbar-color: var(--pale-blue) transparent;
-    scrollbar-width: thin;
-}
+
+
 
 ::-webkit-scrollbar {
     width: 5px;
     height: 5px;
-    background-color: var(--white);
+    background-color: var(--switcher);
+    border-radius: 6px;
     @include shadow();
 
     &:hover,
     &:active {
-        background: rgba($color: var(--pale-blue), $alpha: 0.2);
+        background: rgba($color: var(--switcher), $alpha: 0.8);
     }
 }
 
 ::-webkit-scrollbar-thumb {
     background-color: var(--pale-blue);
-    border-radius: 5px;
+    border-radius: 6px;
     transition: 0.2s;
 
     &:hover {
@@ -2738,7 +2739,8 @@ header {
 /* Chat */
 .chat {
     position: relative;
-    border: 1px solid var(--extrapale-blue);
+    background: var(--glass);
+    box-shadow: var(--shadow);
     border-radius: 10px;
     overflow: hidden;
 
@@ -2748,6 +2750,7 @@ header {
         height: 500px;
         overflow: auto;
         padding: 1em 1.5em;
+
 
         @media (max-width: $bp-lg) {
             padding: 1em 1.5em;
@@ -2782,7 +2785,6 @@ header {
                 .bubble {
                     position: relative;
                     width: fit-content;
-                    min-width: 50%;
                     background: var(--mess-user);
                     border-radius: $radius;
                     padding: 1em;
@@ -2799,6 +2801,9 @@ header {
                         object-fit: cover;
                         border-radius: 3%;
                         cursor: pointer;
+                        margin-left: 0px;
+                        margin-right: 0em;
+                        margin-top: 1em;
                     }
 
                     &-admin {
@@ -2861,7 +2866,7 @@ header {
 
                 img {
                     margin-left: 1em;
-                    margin-right: 0px;
+                    margin-right: 1em;
                 }
 
                 .text {
@@ -2906,12 +2911,16 @@ header {
                         }
 
                         &-img {
+                            margin-left: 0px;
+                            margin-right: 0em;
+                            margin-top: 1em;
                             cursor: pointer;
                             max-height: 228px;
                             max-width: 304px;
                             height: 228px;
                             width: 100%;
                             object-fit: cover;
+                            object-position: center;
                             border-radius: 3%;
                         }
                     }
@@ -2922,7 +2931,7 @@ header {
 
     &-form {
         @include flex(row, flex-start, stretch, nowrap);
-        border-top: 1px solid var(--extrapale-blue);
+        border-top: 1px solid #9DC4EF4D;
 
         input {
             border: none;
@@ -2930,17 +2939,19 @@ header {
         }
 
         button {
-            background-color: var(--extrapale-gray);
+            background-color: var(--btn-1);
             padding: 1em 1.5em;
             font-size: .9em;
-            color: var(--blue);
+            color: white;
             transition: $transition;
             transition-property: background-color, color;
+            border-radius: 8px;
+
 
             &:hover,
             &:focus,
             &:active {
-                background-color: var(--extrapale-blue);
+                background-color: var(--pale-blue);
                 color: var(--dark-blue);
             }
         }
@@ -2952,8 +2963,10 @@ header {
     box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
 
     &-top {
-        border: 1px solid var(--extrapale-blue);
+        background: var(--glass);
+        box-shadow: var(--shadow);
         border-radius: 10px 10px 0px 0px;
+        border-bottom: 1px solid #9DC4EF4D;
         @include flex(row, flex-start, center, nowrap);
         padding: 1em;
 
@@ -2967,8 +2980,8 @@ header {
             width: 6em;
             height: 6em;
             border-radius: 50%;
-            background-color: var(--font-color);
-            color: var(--body-bg);
+            background-color: var(--count);
+            color: white;
             text-align: center;
             @include flex(column, center, center, nowrap);
 

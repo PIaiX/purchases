@@ -42,7 +42,11 @@ const AccountRouter = () => {
         <Route path="sales-history" element={<SalesHistory />} />
         <Route path="finance" element={<Finance />} />
         <Route path="messages" element={<Messages isMobileXL={isMobileXL} />} />
-        <Route path="messages/:dialogId" element={<MessagesDialogue/>} />
+        {
+          (!isMobileXL)
+            ? <Route path="messages/:dialogId" element={<Messages isMobileXL={isMobileXL} />} />
+            : <Route path="messages/:dialogId" element={<MessagesDialogue />} />
+        }
         <Route path="feedback" element={<Feedback />} />
         <Route path="feedback/add/:orderId" element={<LeaveFeedback />} />
         <Route path="callback" element={<Callback />} />
