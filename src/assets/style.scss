@@ -81,6 +81,7 @@ $bp-xxl: 1399.98px;
     --black: #191F2D;
     --total-black: #000;
     --btn-1: #4a83dc;
+    --letter: #fff;
 
     --glass: linear-gradient(92.32deg,
             rgba(255, 255, 255, 0) 16.31%,
@@ -123,7 +124,7 @@ $bp-xxl: 1399.98px;
     --black: #fff;
     --total-black: #fff;
     --btn-1: #323847;
-
+    --letter: #47567B;
 
     --glass: linear-gradient(137deg,
             rgba(35, 43, 66, 0.09) 15.10%,
@@ -2437,7 +2438,8 @@ header {
 
     &-mini {
         @include flex(row, flex-start, center, nowrap);
-        background-color: var(--white);
+        background: var(--glass);
+        box-shadow: var(--shadow);
         border-radius: $radius;
         @include lightShadow();
         padding: 1.6em 1.2em;
@@ -3402,7 +3404,7 @@ header {
     grid-template-columns: var(--serv) auto var(--seller) var(--availability) var(--price);
     grid-template-rows: 1fr;
     grid-template-areas: "serv descr seller availability price";
-    background-color: var(--white);
+    background-color: var(--letter);
     @include boxShadow();
     border-radius: $radius;
 
@@ -3494,7 +3496,7 @@ header {
     grid-template-columns: auto var(--seller) var(--availability) var(--price);
     grid-template-rows: 1fr;
     grid-template-areas: "descr seller availability price";
-    background-color: var(--white);
+    background-color: var(--letter);
     @include boxShadow();
     border-radius: $radius;
 
@@ -3579,7 +3581,7 @@ header {
     grid-template-columns: 160px auto 120px;
     grid-template-rows: 1fr;
     grid-template-areas: "serv descr price";
-    background-color: var(--white);
+    background-color: var(--letter);
     @include boxShadow();
     border-radius: $radius;
     border-bottom: none;
@@ -4652,7 +4654,8 @@ ACCOUNT
                     left: 0px;
                     height: 100%;
                     width: 50%;
-                    background-color: var(--white);
+                    background: var(--glass);
+                    box-shadow: var(--shadow);
                     transform: skewX(-25deg);
                     border-radius: $radius;
                 }
@@ -4665,13 +4668,15 @@ ACCOUNT
                     right: 0px;
                     height: 100%;
                     width: 70%;
-                    background-color: var(--white);
+                    background: var(--glass);
+                    box-shadow: var(--shadow);
                     border-radius: 0 $radius $radius 0;
                 }
             }
 
             @media (max-width: $bp-md) {
-                background-color: var(--white);
+                background: var(--glass);
+                box-shadow: var(--shadow);
                 border-radius: $radius;
                 flex-direction: column;
                 height: auto;
