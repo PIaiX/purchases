@@ -37,15 +37,17 @@
   --mess-ban: #FF5630;
   --count: #1B1B1C;
   --white: #ffffff;
-  --extrapale-gray: #ecf4fc;
+  --extrapale-gray: #9DC4EF33;
   --grayish: #eeeeee;
   --pale-gray: #d9d9d9;
   --light-gray: #c1c1c1;
   --gray: #8f8f8f;
   --black: #191F2D;
   --total-black: #000;
-  --btn-1: #4a83dc;
+  --btn-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
   --letter: #fff;
+  --search-game-border: #9DC4EF;
+  --search-game-text: #9DC4EF;
   --glass: linear-gradient(92.32deg,
           rgba(255, 255, 255, 0) 16.31%,
           rgba(245, 251, 255, 0.3) 97.01%),
@@ -79,7 +81,7 @@
   --mess-ban: #EE2A2338;
   --count: #9DC4EF33;
   --white: #000;
-  --extrapale-gray: #323847;
+  --extrapale-gray: #43536A;
   --grayish: #374050;
   --pale-gray: #4F5D70;
   --light-gray: #7D8999;
@@ -88,6 +90,8 @@
   --total-black: #fff;
   --btn-1: #323847;
   --letter: #47567B;
+  --search-game-border: rgba(0, 0, 0, 0);
+  --search-game-text: #FFFFFFF2;
   --glass: linear-gradient(137deg,
           rgba(35, 43, 66, 0.09) 15.10%,
           rgba(22, 30, 49, 0.30) 100%),
@@ -1537,14 +1541,15 @@ header {
   }
 }
 header input {
-  border-color: var(--pale-blue);
+  background: var(--glass);
+  border-color: var(--search-game-border);
 }
 header input::-moz-placeholder {
-  color: var(--pale-blue);
+  color: var(--search-game-text);
   font-weight: 400;
 }
 header input::placeholder {
-  color: var(--pale-blue);
+  color: var(--search-game-text);
   font-weight: 400;
 }
 header .profile-link {
@@ -2763,7 +2768,7 @@ header .profile-link img {
   background-color: transparent;
 }
 .chat-form button {
-  background-color: var(--btn-1);
+  background: var(--btn-1);
   padding: 1em 1.5em;
   font-size: 0.9em;
   color: white;
@@ -3058,6 +3063,16 @@ header .profile-link img {
 }
 .page-game-top .filter-top input[type=search] {
   width: 340px;
+  border-color: var(--search-game-border);
+  background: var(--glass);
+}
+.page-game-top .filter-top input[type=search]::-moz-placeholder {
+  color: var(--search-game-text);
+  font-weight: 400;
+}
+.page-game-top .filter-top input[type=search]::placeholder {
+  color: var(--search-game-text);
+  font-weight: 400;
 }
 @media (max-width: 1399.98px) {
   .page-game-top .filter-top input[type=search] {
@@ -3073,11 +3088,11 @@ header .profile-link img {
   border-color: var(--pale-blue);
 }
 .page-game-top .filter input:not([type=checkbox])::-moz-placeholder {
-  color: var(--pale-blue);
+  color: var(--search-game-text);
   font-weight: 400;
 }
 .page-game-top .filter input:not([type=checkbox])::placeholder {
-  color: var(--pale-blue);
+  color: var(--search-game-text);
   font-weight: 400;
 }
 .page-game-top .filter input[type=number] {
@@ -4487,7 +4502,7 @@ ACCOUNT
   position: relative;
   z-index: 0;
 }
-.user-photo::after {
+.user-photo:hover::after, .user-photo:focus::after {
   content: "";
   position: absolute;
   top: 50%;
@@ -4498,7 +4513,7 @@ ACCOUNT
   background: linear-gradient(to bottom, transparent, var(--total-black) 50%);
   background-size: cover;
 }
-.user-photo label {
+.user-photo:hover label, .user-photo:focus label {
   cursor: pointer;
   position: absolute;
   left: 50%;
@@ -4509,7 +4524,7 @@ ACCOUNT
   font-size: 1.34em;
   transition: 300ms ease-in-out;
 }
-.user-photo label:hover {
+.user-photo:hover label:hover, .user-photo:focus label:hover {
   color: var(--green) !important;
 }
 .user-main {
@@ -4629,9 +4644,9 @@ ACCOUNT
     top: 0px;
     left: 0px;
     height: 100%;
-    width: 50%;
-    background: var(--glass);
+    width: 94%;
     box-shadow: var(--shadow);
+    background: var(--glass);
     transform: skewX(-25deg);
     border-radius: 0.67em;
   }
@@ -4642,9 +4657,9 @@ ACCOUNT
     top: 0px;
     right: 0px;
     height: 100%;
-    width: 70%;
-    background: var(--glass);
+    width: 89%;
     box-shadow: var(--shadow);
+    background: var(--glass);
     border-radius: 0 0.67em 0.67em 0;
   }
 }

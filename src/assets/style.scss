@@ -73,15 +73,18 @@ $bp-xxl: 1399.98px;
     --mess-ban: #FF5630;
     --count: #1B1B1C;
     --white: #ffffff;
-    --extrapale-gray: #ecf4fc;
+    --extrapale-gray: #9DC4EF33;
     --grayish: #eeeeee;
     --pale-gray: #d9d9d9;
     --light-gray: #c1c1c1;
     --gray: #8f8f8f;
     --black: #191F2D;
     --total-black: #000;
-    --btn-1: #4a83dc;
+    --btn-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
+
     --letter: #fff;
+    --search-game-border: #9DC4EF;
+    --search-game-text: #9DC4EF;
 
     --glass: linear-gradient(92.32deg,
             rgba(255, 255, 255, 0) 16.31%,
@@ -116,7 +119,7 @@ $bp-xxl: 1399.98px;
     --mess-ban: #EE2A2338;
     --count: #9DC4EF33;
     --white: #000;
-    --extrapale-gray: #323847;
+    --extrapale-gray: #43536A;
     --grayish: #374050;
     --pale-gray: #4F5D70;
     --light-gray: #7D8999;
@@ -125,6 +128,9 @@ $bp-xxl: 1399.98px;
     --total-black: #fff;
     --btn-1: #323847;
     --letter: #47567B;
+    --search-game-border: rgba(0, 0, 0, 0);
+    --search-game-text: #FFFFFFF2;
+
 
     --glass: linear-gradient(137deg,
             rgba(35, 43, 66, 0.09) 15.10%,
@@ -1799,8 +1805,9 @@ header {
     }
 
     input {
-        border-color: var(--pale-blue);
-        @include placeholder(var(--pale-blue));
+        background: var(--glass);
+        border-color: var(--search-game-border);
+        @include placeholder(var(--search-game-text));
     }
 
     .profile-link {
@@ -2941,7 +2948,7 @@ header {
         }
 
         button {
-            background-color: var(--btn-1);
+            background: var(--btn-1);
             padding: 1em 1.5em;
             font-size: .9em;
             color: white;
@@ -3214,6 +3221,9 @@ header {
 
                 input[type="search"] {
                     width: 340px;
+                    border-color: var(--search-game-border);
+                    background: var(--glass);
+                    @include placeholder(var(--search-game-text));
 
                     @media (max-width: $bp-xxl) {
                         width: 270px;
@@ -3227,7 +3237,7 @@ header {
 
             input:not([type="checkbox"]) {
                 border-color: var(--pale-blue);
-                @include placeholder(var(--pale-blue));
+                @include placeholder(var(--search-game-text));
             }
 
             input[type="number"] {
@@ -4528,28 +4538,40 @@ ACCOUNT
             z-index: 0;
         }
 
-        &::after {
-            content: "";
-            @include absBG(1, 50%, 50%);
-            background: linear-gradient(to bottom, transparent, var(--total-black) 50%);
-            background-size: cover;
-        }
 
-        label {
-            cursor: pointer;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2;
-            bottom: 0.25em;
-            color: var(--white);
-            font-size: 1.34em;
-            transition: $transition;
 
-            &:hover {
-                color: var(--green) !important;
+
+        &:hover,
+        &:focus {
+            &::after {
+                content: "";
+                @include absBG(1, 50%, 50%);
+                background: linear-gradient(to bottom, transparent, var(--total-black) 50%);
+                background-size: cover;
+
+
+            }
+
+            label {
+                cursor: pointer;
+                position: absolute;
+                left: 50%;
+                transform: translateX(-50%);
+                z-index: 2;
+                bottom: 0.25em;
+                color: var(--white);
+                font-size: 1.34em;
+                transition: $transition;
+
+                &:hover {
+                    color: var(--green) !important;
+                }
             }
         }
+
+
+
+
     }
 
     &-main {
@@ -4635,9 +4657,13 @@ ACCOUNT
             color: var(--black);
             font-weight: 600;
             width: 100%;
+
+
             @include flex(row, space-between, center, nowrap);
 
             @media (min-width: $bp-md) {
+
+
                 &:first-child {
                     width: 79%;
                 }
@@ -4653,9 +4679,9 @@ ACCOUNT
                     top: 0px;
                     left: 0px;
                     height: 100%;
-                    width: 50%;
-                    background: var(--glass);
+                    width: 94%;
                     box-shadow: var(--shadow);
+                    background: var(--glass);
                     transform: skewX(-25deg);
                     border-radius: $radius;
                 }
@@ -4667,9 +4693,10 @@ ACCOUNT
                     top: 0px;
                     right: 0px;
                     height: 100%;
-                    width: 70%;
-                    background: var(--glass);
+                    width: 89%;
                     box-shadow: var(--shadow);
+
+                    background: var(--glass);
                     border-radius: 0 $radius $radius 0;
                 }
             }
