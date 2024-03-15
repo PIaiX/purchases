@@ -89,13 +89,12 @@ const Home = () => {
 
   }, [userId]);
 
-  const onNewMessage = useCallback(
-    (text) => {
-      createMessageGeneral({ ...data, text });
-    },
+  const onNewMessage = useCallback((text) => {
+    createMessageGeneral({ ...data, text });
+  },
     [data]
   );
-
+  console.log(data)
   const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
   // if (articles.isLoading || sales.isLoading || category.isLoading || recommends.isLoading) {

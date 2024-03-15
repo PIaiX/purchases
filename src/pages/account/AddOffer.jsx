@@ -284,7 +284,8 @@ const AddOffer = () => {
                     <Col md={6}>
                       <Select
                         value={data.categoryId}
-                        title="Игра"
+                        title="Выбрать"
+                        label="Игра"
                         onClick={(e) => {
                           reset({
                             text: data.text,
@@ -308,7 +309,8 @@ const AddOffer = () => {
                     <Col md={6} >
                       <Select
                         value={data.region}
-                        title="Регион"
+                        title="Выбрать"
+                        label="Регион"
                         onClick={(e) => {
                           setSum(2)
                           setValue("region", e.value)
@@ -322,7 +324,8 @@ const AddOffer = () => {
                     <Col md={6} >
                       <Select
                         value={data.server}
-                        title="Сервер"
+                        title="Выбрать"
+                        label="Сервер"
                         onClick={e => setValue('server', e.value)}
                         data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title }))}
                       />
@@ -333,7 +336,8 @@ const AddOffer = () => {
                     <Col md={6} >
                       <Select
                         value={data.param}
-                        title="Что вы продаете?"
+                        title="Выбрать"
+                        label="Что вы продаете?"
                         onClick={e => setValue('param', e.value)}
                         data={data.game.params.map((item) => ({ value: item.id, title: item.title }))}
                       />
@@ -365,7 +369,8 @@ const AddOffer = () => {
                               <Col md={6}>
                                 <Select
                                   value={data?.optionId && data?.optionId[i]}
-                                  title={e.title}
+                                  title="Выбрать"
+                                  label={e.title}
                                   onClick={(e) => {
                                     setValue(`optionId[${i}]`, e.value)
                                     setValue("child", false)
@@ -382,7 +387,8 @@ const AddOffer = () => {
                                   <Col md={6}>
                                     <Select
                                       value={data?.child[i]}
-                                      title={option.children[0].title}
+                                      title="Выбрать"
+                                      label={option.children[0].title}
                                       onClick={(e) => {
                                         setValue(`child[${i}]`, e.value)
                                         setValue(`option[${i}].id`, e.value)

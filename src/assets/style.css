@@ -45,9 +45,14 @@
   --black: #191F2D;
   --total-black: #000;
   --btn-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
+  --region: #48D868CC;
+  --param: #9DC4EF33;
+  --param-active: #9dc4ef;
+  --param-hover: #191F2D;
   --letter: #fff;
   --search-game-border: #9DC4EF;
   --search-game-text: #9DC4EF;
+  --label: #ffffff;
   --glass: linear-gradient(92.32deg,
           rgba(255, 255, 255, 0) 16.31%,
           rgba(245, 251, 255, 0.3) 97.01%),
@@ -66,7 +71,7 @@
   --font-color: rgb(255 255 255 / 95%);
   --switcher: #262F45;
   --extrapale-blue: #102250;
-  --pale-blue: #0d59ab;
+  --pale-blue: #9DC4EF;
   --blue: #4a83dc;
   --dark-blue: #9dc4ef;
   --light-blue: #0F86AC;
@@ -92,6 +97,15 @@
   --letter: #47567B;
   --search-game-border: rgba(0, 0, 0, 0);
   --search-game-text: #FFFFFFF2;
+  --region: #7D8999;
+  --param: linear-gradient(0deg, rgba(50, 62, 94, 0.8), rgba(50, 62, 94, 0.8)),
+      linear-gradient(92.32deg, rgba(35, 43, 66, 0.09) 16.31%, rgba(22, 30, 49, 0.3) 97.01%);
+  --param-active: #47567B;
+  --param-hover: #E5F2FF;
+  --label: linear-gradient(137deg,
+          rgba(35, 43, 66, 0.09) 15.10%,
+          rgba(22, 30, 49, 0.30) 100%),
+      rgba(50, 62, 94);
   --glass: linear-gradient(137deg,
           rgba(35, 43, 66, 0.09) 15.10%,
           rgba(22, 30, 49, 0.30) 100%),
@@ -847,8 +861,7 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 }
 .btn-1, .btn-primary {
   color: #ffffff !important;
-  background-color: var(--blue) !important;
-  background-image: linear-gradient(150deg, var(--blue) 25%, #3266b8 50%, var(--blue) 75%) !important;
+  background: var(--btn-1);
   background-size: 200% 100% !important;
   background-position: left center !important;
 }
@@ -2279,16 +2292,17 @@ header .profile-link img {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
-  background: rgba(72, 216, 104, 0.8);
+  background: var(--region);
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
   width: -moz-fit-content;
   width: fit-content;
   border-radius: 0.67em;
   padding: 0 0.5em;
+  box-shadow: var(--shadow);
 }
 .servers li {
   position: relative;
-  color: var(--white);
+  color: white;
   width: -moz-fit-content;
   width: fit-content;
   text-transform: uppercase;
@@ -2319,7 +2333,7 @@ header .profile-link img {
   filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
 }
 .servers li.active {
-  color: var(--dark-green);
+  color: black;
 }
 
 .sec-promo {
@@ -2776,9 +2790,11 @@ header .profile-link img {
   transition-property: background-color, color;
   border-radius: 8px;
 }
-.chat-form button:hover, .chat-form button:focus, .chat-form button:active {
-  background-color: var(--pale-blue);
-  color: var(--dark-blue);
+.chat-form button:hover {
+  border: 1px solid var(--param-hover);
+}
+.chat-form button:active {
+  background: var(--param-active);
 }
 
 .sec-chat {
@@ -3007,29 +3023,33 @@ header .profile-link img {
 }
 .page-game-top .categories li .button,
 .page-game-top .categories li a {
-  background-color: var(--extrapale-gray);
+  background: var(--param);
   padding: 0.55em;
   box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   border-radius: 0.335em;
   transition: 300ms ease-in-out;
   color: var(--font-color);
 }
-.page-game-top .categories li .button:hover, .page-game-top .categories li .button:focus, .page-game-top .categories li .button:active, .page-game-top .categories li .button.active,
-.page-game-top .categories li a:hover,
-.page-game-top .categories li a:focus,
+.page-game-top .categories li .button:hover,
+.page-game-top .categories li a:hover {
+  border: 1px solid var(--param-hover);
+}
+.page-game-top .categories li .button:active, .page-game-top .categories li .button.active,
 .page-game-top .categories li a:active,
 .page-game-top .categories li a.active {
-  background-color: var(--pale-blue);
-  color: var(--white);
+  background: var(--param-active);
+  color: white;
 }
 @media (max-width: 1199.98px) {
-  .page-game-top .categories li .button:hover, .page-game-top .categories li .button:focus, .page-game-top .categories li .button:active, .page-game-top .categories li .button.active,
-  .page-game-top .categories li a:hover,
-  .page-game-top .categories li a:focus,
+  .page-game-top .categories li .button:hover,
+  .page-game-top .categories li a:hover {
+    border: 1px solid var(--param-hover);
+  }
+  .page-game-top .categories li .button:active, .page-game-top .categories li .button.active,
   .page-game-top .categories li a:active,
   .page-game-top .categories li a.active {
-    background-color: var(--blue);
-    color: var(--white);
+    background: var(--param-active);
+    color: white;
   }
 }
 .page-game-top .filter {
@@ -3101,10 +3121,25 @@ header .profile-link img {
   text-align: center;
 }
 .page-game-top .filter .dropdown .select {
-  background-color: var(--body-bg);
+  background: var(--glass);
   padding: 0.7em 1em;
   border-radius: 0.67em;
   box-shadow: var(--shadow);
+}
+.page-game-top .filter .dropdown .select:hover {
+  border: 1px solid var(--param-hover);
+}
+.page-game-top .filter .dropdown .select:active, .page-game-top .filter .dropdown .select-active {
+  background: var(--param-active);
+  color: white;
+}
+.page-game-top .filter .dropdown .dropdown-item {
+  display: block !important;
+  width: 100%;
+}
+.page-game-top .filter .dropdown .dropdown-item:active, .page-game-top .filter .dropdown .dropdown-item.active {
+  background: var(--param-active);
+  color: white;
 }
 .page-game-offers {
   background: var(--glass);
@@ -4214,6 +4249,32 @@ ACCOUNT
   box-shadow: var(--shadow);
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
+}
+.account .add-offer .dropdown .select {
+  border-radius: 0.67em;
+  width: 100%;
+  border: 1px solid var(--light-gray);
+  box-shadow: none;
+  min-width: 150px;
+  padding: 0.725em 1.65em;
+}
+.account .add-offer .dropdown .select-label {
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  left: 1em;
+  transform: translateY(-60%);
+  width: -moz-fit-content;
+  width: fit-content;
+  background: var(--label);
+  color: var(--gray);
+  padding: 0 0.67em;
+}
+.account .add-offer .dropdown .select:hover, .account .add-offer .dropdown .select:focus, .account .add-offer .dropdown .select:active {
+  border: 1px solid var(--blue);
+}
+.account .add-offer .dropdown:hover label, .account .add-offer .dropdown:focus label, .account .add-offer .dropdown:active label {
+  color: var(--blue);
 }
 @media (max-width: 575.98px) {
   .account .add-offer {
@@ -5724,10 +5785,10 @@ footer .nav-mobile ul li button.active svg path {
 .notification {
   box-sizing: border-box;
   padding: 13px 20px;
-  box-shadow: 0px 0px 2px rgba(145, 158, 171, 0.1215686275), 0px 8px 24px -4px rgba(145, 158, 171, 0.2) !important;
+  box-shadow: var(--shadow);
   border-radius: 12px;
   color: var(--font-color);
-  background-color: var(--body-bg);
+  background: var(--glass);
   cursor: pointer;
   font-size: 0.9em;
   position: relative;

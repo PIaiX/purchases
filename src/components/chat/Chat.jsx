@@ -3,9 +3,10 @@ import { useSelector } from "react-redux";
 import SimpleInputFile from '../utils/SimpleInputFile';
 import Message from './Message';
 import Loader from "../utils/Loader";
+import { NotificationManager } from "react-notifications";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className="", onSubmit, type, setImage, data }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className = "", onSubmit, type, setImage, data }) => {
 
   const userId = useSelector(state => state.auth?.user?.id);
   const [text, setText] = useState("");
@@ -30,9 +31,24 @@ const Chat = memo(({ general, messages, emptyText, onChange, className="", onSub
   };
 
   const onClick = useCallback(() => {
-    if (text.length > 0 || data?.media?.length > 0) {
+    if (data?.media?.length > 0) {
       onSubmit(text);
       setText("");
+    }
+    else {
+      if (text.length > 0) {
+        if (text.trim() === '') {
+          return NotificationManager.error(
+            "Пожалуйста, введите текст."
+          )
+        } else if (text.replace(/\s/g, '') === '') {
+          return NotificationManager.error(
+            "Пожалуйста, введите текст, отличный от пробелов."
+          )
+        }
+        onSubmit(text);
+        setText("");
+      }
     }
   }, [text, data]);
   if (messages.loading) {
@@ -76,12 +92,13 @@ const Chat = memo(({ general, messages, emptyText, onChange, className="", onSub
               placeholder='Ваше сообщение'
               onChange={(e) => onChangeText(e.target.value)}
               onKeyPress={onKeyPress}
+              maxLength={250}
             />
-            { general != "general" &&
+            {general != "general" &&
               <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} />
             }
             <button onClick={onClick} type='submit'>Отправить</button>
-           
+
           </div>
         </>
         : (

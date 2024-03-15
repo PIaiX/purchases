@@ -42,7 +42,9 @@ const Select = memo(
           }}
           className={
             "select d-flex align-items-center justify-content-between " +
-            className
+            (!data?.find((e) => e.value === value || e.title === value)
+              ? ""
+              : "select-active")
           }
         >
           {label && <span className="select-label">{label}</span>}
@@ -50,7 +52,7 @@ const Select = memo(
             className={
               "d-flex align-items-center flex-row " +
               (!data?.find((e) => e.value === value || e.title === value)
-                ? "gray"
+                ? ""
                 : "")
             }
           >
@@ -59,7 +61,9 @@ const Select = memo(
             )}
             {titleFind}
           </span>
-          <BsChevronDown className="pale-blue fs-12 ms-2"/>
+          <BsChevronDown className={(!data?.find((e) => e.value === value || e.title === value)
+            ? "pale-blue fs-12 ms-2"
+            : "glass fs-12 ms-2")} />
         </button>
       );
     });

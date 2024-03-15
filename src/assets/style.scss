@@ -81,11 +81,15 @@ $bp-xxl: 1399.98px;
     --black: #191F2D;
     --total-black: #000;
     --btn-1: linear-gradient(120.98deg, #4A83DC 48.77%, #3266B8 85.89%);
+    --region: #48D868CC;
+    --param: #9DC4EF33;
+    --param-active: #9dc4ef;
+    --param-hover: #191F2D;
 
     --letter: #fff;
     --search-game-border: #9DC4EF;
     --search-game-text: #9DC4EF;
-
+    --label: #ffffff;
     --glass: linear-gradient(92.32deg,
             rgba(255, 255, 255, 0) 16.31%,
             rgba(245, 251, 255, 0.3) 97.01%),
@@ -104,7 +108,7 @@ $bp-xxl: 1399.98px;
     --font-color: rgb(255 255 255 / 95%);
     --switcher: #262F45;
     --extrapale-blue: #102250;
-    --pale-blue: #0d59ab;
+    --pale-blue: #9DC4EF;
     --blue: #4a83dc;
     --dark-blue: #9dc4ef;
     --light-blue: #0F86AC;
@@ -130,7 +134,15 @@ $bp-xxl: 1399.98px;
     --letter: #47567B;
     --search-game-border: rgba(0, 0, 0, 0);
     --search-game-text: #FFFFFFF2;
-
+    --region: #7D8999;
+    --param: linear-gradient(0deg, rgba(50, 62, 94, 0.8), rgba(50, 62, 94, 0.8)),
+        linear-gradient(92.32deg, rgba(35, 43, 66, 0.09) 16.31%, rgba(22, 30, 49, 0.3) 97.01%);
+    --param-active: #47567B;
+    --param-hover: #E5F2FF;
+    --label: linear-gradient(137deg,
+            rgba(35, 43, 66, 0.09) 15.10%,
+            rgba(22, 30, 49, 0.30) 100%),
+        rgba(50, 62, 94);
 
     --glass: linear-gradient(137deg,
             rgba(35, 43, 66, 0.09) 15.10%,
@@ -948,6 +960,8 @@ select {
     }
 }
 
+
+
 .files {
     &-label {
         position: relative;
@@ -1045,11 +1059,7 @@ button {
     &-primary {
         @extend .btn;
         color: $white !important;
-        background-color: var(--blue) !important;
-        background-image: linear-gradient(150deg,
-                var(--blue) 25%,
-                #3266b8 50%,
-                var(--blue) 75%) !important;
+        background: var(--btn-1);
         background-size: 200% 100% !important;
         background-position: left center !important;
 
@@ -2478,15 +2488,16 @@ header {
     position: relative;
     @include list();
     @include flex(row, flex-start, center, nowrap);
-    background: rgba($color: $green, $alpha: 0.8);
+    background: var(--region);
     @include btnStyle();
     width: fit-content;
     border-radius: $radius;
     padding: 0 0.5em;
+    box-shadow: var(--shadow);
 
     li {
         position: relative;
-        color: var(--white);
+        color: white;
         width: fit-content;
         text-transform: uppercase;
         padding: 0.6em 0.5em;
@@ -2514,7 +2525,7 @@ header {
         }
 
         &.active {
-            color: var(--dark-green);
+            color: black;
         }
     }
 }
@@ -2957,11 +2968,12 @@ header {
             border-radius: 8px;
 
 
-            &:hover,
-            &:focus,
+            &:hover {
+                border: 1px solid var(--param-hover);
+            }
+
             &:active {
-                background-color: var(--pale-blue);
-                color: var(--dark-blue);
+                background: var(--param-active);
             }
         }
     }
@@ -3172,29 +3184,34 @@ header {
 
                 .button,
                 a {
-                    background-color: var(--extrapale-gray);
+                    background: var(--param);
                     padding: 0.55em;
                     @include boxShadow();
                     border-radius: $radius * 0.5;
                     transition: $transition;
                     color: var(--font-color);
 
-                    &:hover,
-                    &:focus,
+                    &:hover {
+                        border: 1px solid var(--param-hover);
+                    }
+
                     &:active,
                     &.active {
-                        background-color: var(--pale-blue);
-                        color: var(--white);
+                        background: var(--param-active);
+                        color: white;
+
                     }
 
                     @media (max-width: $bp-xl) {
 
-                        &:hover,
-                        &:focus,
+                        &:hover {
+                            border: 1px solid var(--param-hover);
+                        }
+
                         &:active,
                         &.active {
-                            background-color: var(--blue);
-                            color: var(--white);
+                            background: var(--param-active);
+                            color: white;
                         }
                     }
                 }
@@ -3248,11 +3265,41 @@ header {
 
             .dropdown {
                 .select {
-                    background-color: var(--body-bg);
+                    background: var(--glass);
                     padding: 0.7em 1em;
                     border-radius: $radius;
                     box-shadow: var(--shadow);
+
+                    &:hover {
+                        border: 1px solid var(--param-hover);
+                    }
+
+                    &:active,
+                    &-active {
+                        background: var(--param-active);
+                        color: white;
+
+                    }
+
+
+
                 }
+
+
+
+                .dropdown-item {
+                    display: block !important;
+                    width: 100%;
+
+                    &:active,
+                    &.active {
+                        background: var(--param-active);
+                        color: white;
+
+                    }
+                }
+
+
             }
         }
     }
@@ -4286,6 +4333,45 @@ ACCOUNT
         background: var(--glass);
         box-shadow: var(--shadow);
         backdrop-filter: blur(5px);
+
+
+
+        .dropdown {
+            .select {
+                border-radius: 0.67em;
+                width: 100%;
+                border: 1px solid var(--light-gray);
+                box-shadow: none;
+                min-width: 150px;
+                padding: 0.725em 1.65em;
+
+                &-label {
+                    position: absolute;
+                    z-index: 10;
+                    top: 0px;
+                    left: 1em;
+                    transform: translateY(-60%);
+                    width: fit-content;
+                    background: var(--label);
+                    color: var(--gray);
+                    padding: 0 0.67em;
+                }
+
+                &:hover,
+                &:focus,
+                &:active {
+                    border: 1px solid var(--blue);
+                }
+            }
+
+            &:hover,
+            &:focus,
+            &:active {
+                label {
+                    color: var(--blue);
+                }
+            }
+        }
 
         @media (max-width: $bp-sm) {
             padding: 1.5em;
@@ -5746,10 +5832,10 @@ footer {
 .notification {
     box-sizing: border-box;
     padding: 13px 20px;
-    box-shadow: 0px 0px 2px #919eab1f, 0px 8px 24px -4px #919eab33 !important;
+    box-shadow: var(--shadow);
     border-radius: 12px;
     color: var(--font-color);
-    background-color: var(--body-bg);
+    background: var(--glass);
     cursor: pointer;
     font-size: 0.9em;
     position: relative;
