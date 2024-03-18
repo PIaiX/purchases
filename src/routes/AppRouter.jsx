@@ -27,6 +27,7 @@ import LotPage from "../pages/LotPage";
 import AuthRoute from "../layouts/AuthRoute";
 import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
 
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<AppLayout />}>

@@ -1,15 +1,15 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import useIsMobile from '../../hooks/isMobile';
 import { useDispatch } from 'react-redux';
-import { logout } from '../../services/auth';
+import useIsMobile from '../hooks/isMobile';
+import { logout } from '../services/auth';
 
 
-const AccountMenu = (props) => {
+const Menu = (props) => {
   const isMobileLG = useIsMobile('991px')
   const dispatch = useDispatch();
   return (
-    <nav className='account-nav'>
+    <nav className='menu-nav'>
       <ul>
         <li>
           <NavLink to="account/profile">
@@ -77,4 +77,4 @@ const AccountMenu = (props) => {
   );
 };
 
-export default AccountMenu;
+export default Menu;

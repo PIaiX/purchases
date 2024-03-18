@@ -5727,7 +5727,7 @@ footer {
 }
 
 .offcanvas {
-    background-color: var(--body-bg);
+    background: var(--glass);
     color: var(--font-color);
 
     &-mobile-menu {
@@ -5803,7 +5803,7 @@ footer {
     &-top {
         .offcanvas-body {
             padding: calc(var(--h-height) + 1em) 1em 2em 1em;
-            background-color: var(--white);
+            background: var(--glass);
             border-radius: 0px 0px $radius $radius;
         }
     }
@@ -5811,7 +5811,7 @@ footer {
     &-bottom {
         .offcanvas-body {
             padding: 2em 1em calc(var(--f-height) + 1em) 1em;
-            background-color: var(--white);
+            background: var(--glass);
             border-radius: $radius $radius 0px 0px;
         }
     }
@@ -5915,5 +5915,96 @@ footer {
     &:active {
         // background-color: var(--body-bg);
         color: var(--green);
+    }
+}
+
+.menu-nav {
+    padding-right: calc(1.5re* .5);
+    margin-right: auto;
+    position: sticky;
+    top: var(--h-height);
+
+    &-balance {
+        background-color: var(--blue);
+        color: var(--white);
+        padding: 1em;
+        border-radius: $radius;
+        text-align: center;
+        margin-bottom: 1em;
+
+        div {
+            @include flex();
+
+            span {
+                font-family: $title-font;
+                font-size: 2em;
+                margin-right: 0.34em;
+                line-height: 90%;
+            }
+
+            svg {
+                font-size: 1.5em;
+                padding: 0.1em;
+                border: 1px solid var(--white);
+                border-radius: 50%;
+            }
+        }
+    }
+
+    &-block {
+        background: var(--glass);
+        box-shadow: var(--shadow);
+    }
+
+    ul {
+        @include list();
+
+        li {
+            &:not(:first-child) {
+                margin-top: 1em;
+
+                @media (max-width: $bp-lg) {
+                    margin-top: 0.5em;
+                }
+            }
+
+            a {
+                color: var(--gray);
+                @include flex(row, flex-start, center, nowrap);
+                padding: 0.67em 1em;
+                border-radius: $radius;
+                transition: $transition;
+
+                @media (max-width: $bp-lg) {
+                    font-size: 1.2em;
+                }
+
+                svg {
+                    font-size: 1.6em;
+                }
+
+                div {
+                    margin-left: 0.5em;
+                    flex: 1;
+                }
+
+                .badge {
+                    background-color: var(--extrapale-gray);
+                    padding: 0.34em;
+                    border-radius: $radius;
+                    color: var(--total-black);
+                }
+
+                &:hover,
+                &:focus {
+                    color: var(--blue);
+                }
+
+                &.active {
+                    background-color: var(--extrapale-gray);
+                    color: var(--blue);
+                }
+            }
+        }
     }
 }

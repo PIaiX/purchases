@@ -11,7 +11,7 @@ const AccountLayout = ({ isMobile }) => {
       <img src={bgImg} alt="bgImg" className='account-bg' />
       <Container>
         <ScrollToTopButton />
-        {
+        {/* {
 
           (isMobile)
             ? <Outlet />
@@ -21,7 +21,8 @@ const AccountLayout = ({ isMobile }) => {
               </div>
               <div className="col-9 col-xl-9"><Outlet /></div>
             </div>
-        }
+        } */}
+        <Outlet />
       </Container>
     </main>
   );

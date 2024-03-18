@@ -5693,7 +5693,7 @@ footer .nav-mobile ul li button.active svg path {
 }
 
 .offcanvas {
-  background-color: var(--body-bg);
+  background: var(--glass);
   color: var(--font-color);
 }
 .offcanvas-mobile-menu {
@@ -5761,12 +5761,12 @@ footer .nav-mobile ul li button.active svg path {
 }
 .offcanvas-top .offcanvas-body {
   padding: calc(var(--h-height) + 1em) 1em 2em 1em;
-  background-color: var(--white);
+  background: var(--glass);
   border-radius: 0px 0px 0.67em 0.67em;
 }
 .offcanvas-bottom .offcanvas-body {
   padding: 2em 1em calc(var(--f-height) + 1em) 1em;
-  background-color: var(--white);
+  background: var(--glass);
   border-radius: 0.67em 0.67em 0px 0px;
 }
 
@@ -5866,4 +5866,90 @@ footer .nav-mobile ul li button.active svg path {
 }
 .scroll-to-top:hover, .scroll-to-top:active {
   color: var(--green);
+}
+
+.menu-nav {
+  padding-right: 0.75re;
+  margin-right: auto;
+  position: sticky;
+  top: var(--h-height);
+}
+.menu-nav-balance {
+  background-color: var(--blue);
+  color: var(--white);
+  padding: 1em;
+  border-radius: 0.67em;
+  text-align: center;
+  margin-bottom: 1em;
+}
+.menu-nav-balance div {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+.menu-nav-balance div span {
+  font-family: "Bebas";
+  font-size: 2em;
+  margin-right: 0.34em;
+  line-height: 90%;
+}
+.menu-nav-balance div svg {
+  font-size: 1.5em;
+  padding: 0.1em;
+  border: 1px solid var(--white);
+  border-radius: 50%;
+}
+.menu-nav-block {
+  background: var(--glass);
+  box-shadow: var(--shadow);
+}
+.menu-nav ul {
+  list-style: none;
+  padding-left: 0px;
+}
+.menu-nav ul li:not(:first-child) {
+  margin-top: 1em;
+}
+@media (max-width: 991.98px) {
+  .menu-nav ul li:not(:first-child) {
+    margin-top: 0.5em;
+  }
+}
+.menu-nav ul li a {
+  color: var(--gray);
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.67em 1em;
+  border-radius: 0.67em;
+  transition: 300ms ease-in-out;
+}
+@media (max-width: 991.98px) {
+  .menu-nav ul li a {
+    font-size: 1.2em;
+  }
+}
+.menu-nav ul li a svg {
+  font-size: 1.6em;
+}
+.menu-nav ul li a div {
+  margin-left: 0.5em;
+  flex: 1;
+}
+.menu-nav ul li a .badge {
+  background-color: var(--extrapale-gray);
+  padding: 0.34em;
+  border-radius: 0.67em;
+  color: var(--total-black);
+}
+.menu-nav ul li a:hover, .menu-nav ul li a:focus {
+  color: var(--blue);
+}
+.menu-nav ul li a.active {
+  background-color: var(--extrapale-gray);
+  color: var(--blue);
 }/*# sourceMappingURL=style.css.map */

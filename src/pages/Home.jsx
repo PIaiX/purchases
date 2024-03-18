@@ -94,7 +94,7 @@ const Home = () => {
   },
     [data]
   );
-  console.log(data)
+
   const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
   // if (articles.isLoading || sales.isLoading || category.isLoading || recommends.isLoading) {
