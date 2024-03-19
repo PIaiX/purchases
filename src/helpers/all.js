@@ -6,7 +6,7 @@ const customPrice = (value, currency = true) => {
   if (!value) {
     return 0 + "\u00A0₽";
   }
-  value = parseInt(value).toLocaleString();
+  value = parseFloat(value).toLocaleString();
   if (currency) {
     value = (
       <>

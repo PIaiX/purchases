@@ -5727,12 +5727,12 @@ footer {
 }
 
 .offcanvas {
-    background: var(--glass);
+    background: var(--label);
     color: var(--font-color);
 
     &-mobile-menu {
         @include list();
-        background: var(--glass);
+        background: var(--label);
         border-radius: $radius;
         padding: 0 1em;
         font-size: 1.2em;
@@ -5803,7 +5803,7 @@ footer {
     &-top {
         .offcanvas-body {
             padding: calc(var(--h-height) + 1em) 1em 2em 1em;
-            background: var(--glass);
+            background: var(--label);
             border-radius: 0px 0px $radius $radius;
         }
     }
@@ -5811,7 +5811,7 @@ footer {
     &-bottom {
         .offcanvas-body {
             padding: 2em 1em calc(var(--f-height) + 1em) 1em;
-            background: var(--glass);
+            background: var(--label);
             border-radius: $radius $radius 0px 0px;
         }
     }
@@ -5919,18 +5919,49 @@ footer {
 }
 
 .menu-nav {
-    padding-right: calc(1.5re* .5);
+    margin: 1em;
     margin-right: auto;
     position: sticky;
     top: var(--h-height);
+    width: 86px;
+    height: 100%;
+    transition: $transition;
+
+    .wrap {
+        backdrop-filter: blur(5px);
+        border-radius: $radius;
+        position: sticky;
+        top: 6em;
+        left: 0;
+        width: 100%;
+        height: fit-content;
+        max-height: calc(100vh - 2em);
+        padding: 0.5em;
+        transition: $transition;
+
+        @media (max-width: $bp-lg) {
+            float: right;
+        }
+
+        @media (max-width: $bp-sm) {
+            padding: 0;
+        }
+
+        &.full {
+            width: 300px;
+        }
+    }
 
     &-balance {
+        display: flex;
         background-color: var(--blue);
-        color: var(--white);
-        padding: 1em;
+        color: white;
+        padding: 0.5em 1em 0.5em 1em;
         border-radius: $radius;
-        text-align: center;
-        margin-bottom: 1em;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 1em;
+        transition: $transition;
 
         div {
             @include flex();
@@ -5952,12 +5983,102 @@ footer {
     }
 
     &-block {
+        transition: $transition;
         background: var(--glass);
         box-shadow: var(--shadow);
+        border-radius: $radius;
     }
+
+    &-top {
+        background: var(--glass);
+        box-shadow: var(--shadow);
+        border-radius: $radius;
+        padding: 1em;
+        transition: $transition;
+
+        hr {
+            transition: $transition;
+            opacity: 1;
+            width: 100%;
+            height: 1px;
+            color: var(--extrapale-gray);
+            margin: 0 0 .5em 0;
+        }
+
+        .user {
+            display: flex;
+            text-align: center;
+            padding-bottom: 1em;
+            transition: $transition;
+            // border-bottom: 1px solid var(--extrapale-gray);
+
+
+            img {
+                position: relative;
+                z-index: 2;
+                width: 70px;
+                height: 70px;
+                border-radius: 100%;
+                box-sizing: content-box;
+                transition: $transition;
+
+            }
+
+            .img-small {
+                width: 58px;
+                height: 58px;
+                transition: $transition;
+            }
+
+            .rating {
+                font-size: 1.2em;
+                font-weight: 700;
+                @include flex();
+                transition: $transition;
+
+                svg {
+                    color: var(--blue);
+                    font-size: 1.1em;
+
+                    path {
+                        fill: var(--blue);
+                    }
+                }
+            }
+
+            .nickname {
+                font-family: "Bebas";
+                font-size: 1.4em;
+                line-height: 100%;
+                display: -webkit-box;
+                -webkit-line-clamp: 2;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                line-height: 1em;
+                max-height: 2em;
+                transition: $transition;
+            }
+        }
+
+        .info {
+            padding-top: .5em;
+            display: flex;
+            justify-content: space-between;
+            transition: $transition;
+
+            span {
+                font-family: "Bebas";
+                font-size: 1.4em;
+                transition: $transition;
+            }
+
+        }
+    }
+
 
     ul {
         @include list();
+        margin-top: 1em;
 
         li {
             &:not(:first-child) {
@@ -5985,7 +6106,10 @@ footer {
 
                 div {
                     margin-left: 0.5em;
-                    flex: 1;
+                    display: flex;
+                    align-items: center;
+                    transition: $transition;
+
                 }
 
                 .badge {
@@ -6007,4 +6131,56 @@ footer {
             }
         }
     }
+
+    #cut {
+        // padding-right: calc(1.5rem* .5);
+        top: 2em;
+
+        font-size: 1.3em;
+        position: absolute;
+        right: -0.5em;
+        width: 1.5em;
+        height: 1.5em;
+        transform: translateY(0.25em);
+        @include flex();
+        border-radius: 50%;
+        overflow: hidden;
+        border: 5px solid var(--body-bg);
+
+        @media (max-width: $bp-lg) {
+            right: unset;
+            left: -0.5em;
+        }
+
+        img {
+            width: 100%;
+            height: 100%;
+            transition: $transition;
+
+            @media (max-width: $bp-lg) {
+                transform: rotate(-180deg);
+            }
+        }
+
+        &.opened {
+            img {
+                transform: rotate(-180deg);
+
+                @media (max-width: $bp-lg) {
+                    transform: rotate(0deg);
+                }
+            }
+        }
+    }
+
+}
+
+.panel-open {
+    margin-left: 275px;
+    transition: $transition;
+}
+
+.panel-closed {
+    margin-left: 60px;
+    transition: $transition;
 }

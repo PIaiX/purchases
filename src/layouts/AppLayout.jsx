@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Outlet, ScrollRestoration } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -10,6 +10,7 @@ import { Col, Container, Row } from "react-bootstrap";
 
 const AppLayout = () => {
   const isMobile = useIsMobile('991px')
+  const [full, setFull] = useState(true);
   return (
     <>
       <ScrollRestoration />
@@ -20,10 +21,12 @@ const AppLayout = () => {
         (isMobile)
           ? <Outlet />
           : <Row className="justify-content-between">
-            <Col xl={2} xxl={2}>
-              <Menu />
+            <Col md={1}>
+              <Menu full={full} setFull={setFull} />
             </Col>
-            <Col xl={10}><Outlet /></Col>
+            <Col className={full ? "panel-open" : "panel-closed"}>
+              <Outlet />
+            </Col>
           </Row>
       }
       <Footer />
