@@ -6,6 +6,7 @@ import ScrollToTopButton from "../components/utils/ScrollToTopButton";
 import Menu from "../components/Menu"
 import useIsMobile from '../hooks/isMobile'
 import { Col, Container, Row } from "react-bootstrap";
+import MenuChat from "../components/MenuChat";
 
 
 const AppLayout = () => {
@@ -16,6 +17,7 @@ const AppLayout = () => {
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
+      <MenuChat />
       {
 
         (isMobile)

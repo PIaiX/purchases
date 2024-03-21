@@ -85,6 +85,9 @@ $bp-xxl: 1399.98px;
     --param: #9DC4EF33;
     --param-active: #9dc4ef;
     --param-hover: #191F2D;
+    --menu: #637381;
+    --menu-active: #9DC4EF33;
+    --menu-text: #4A83DC;
 
     --letter: #fff;
     --search-game-border: #9DC4EF;
@@ -99,6 +102,7 @@ $bp-xxl: 1399.98px;
     --shadowMobile: 0px 1px 0px rgba(255, 255, 255, 0.5),
         1px 1px 10px rgba(100, 100, 100, 0.15);
     --subtract: url(imgs/Subtract.svg);
+    --menu-substract: url(imgs/MenuSubtract.svg);
 }
 
 :root[data-theme='dark'] {
@@ -131,6 +135,10 @@ $bp-xxl: 1399.98px;
     --black: #fff;
     --total-black: #fff;
     --btn-1: #323847;
+    --menu: #E2EDFA;
+    --menu-active: #47567B;
+    --menu-text: #FFFFFF;
+
     --letter: #47567B;
     --search-game-border: rgba(0, 0, 0, 0);
     --search-game-text: #FFFFFFF2;
@@ -151,6 +159,7 @@ $bp-xxl: 1399.98px;
     --shadow: 0px 2px 0px 0px #38435C, 0px 4px 10px 0px rgba(48, 57, 79, 0.50);
     --shadowMobile: 0px 1px 0px 0px rgba(56, 67, 92, .75), 1px 1px 5px 0px rgba(48, 57, 79, 0.25);
     --subtract: url(imgs/SubtractDark.svg);
+    --menu-substract: url(imgs/MenuSubtractDark.svg);
 }
 
 
@@ -5896,7 +5905,7 @@ footer {
     z-index: 1042;
     position: fixed;
     bottom: 6vh;
-    right: 4vh;
+    right: 8vh;
     background: var(--glass);
     opacity: 0.6;
     font-size: 1.5em;
@@ -5925,7 +5934,8 @@ footer {
     top: var(--h-height);
     width: 86px;
     height: 100%;
-    transition: $transition;
+
+
 
     .wrap {
         backdrop-filter: blur(5px);
@@ -5936,8 +5946,6 @@ footer {
         width: 100%;
         height: fit-content;
         max-height: calc(100vh - 2em);
-        padding: 0.5em;
-        transition: $transition;
 
         @media (max-width: $bp-lg) {
             float: right;
@@ -5960,8 +5968,7 @@ footer {
         border-radius: $radius;
         justify-content: space-between;
         align-items: center;
-        margin-top: 1em;
-        transition: $transition;
+        // margin-top: 1em;
 
         div {
             @include flex();
@@ -5983,34 +5990,63 @@ footer {
     }
 
     &-block {
-        transition: $transition;
         background: var(--glass);
         box-shadow: var(--shadow);
         border-radius: $radius;
+
+    }
+
+    &-login {
+        background: var(--glass);
+        box-shadow: var(--shadow);
+        border-radius: $radius;
+        padding: 1em;
+        min-height: 86px;
+        justify-content: center;
+
+        h6 {
+            text-align: left;
+        }
+
+        .button {
+            height: auto;
+            width: 250px;
+            margin-top: 1em;
+            margin-bottom: 1em;
+        }
+
+        .icon {
+            display: flex;
+            width: 58px;
+            height: 58px;
+            border-radius: 50%;
+            background-color: #44F06A;
+            justify-content: center;
+            position: relative;
+            align-items: center;
+        }
     }
 
     &-top {
         background: var(--glass);
         box-shadow: var(--shadow);
         border-radius: $radius;
-        padding: 1em;
-        transition: $transition;
+        padding: .67em;
+        text-align: center;
 
         hr {
-            transition: $transition;
             opacity: 1;
             width: 100%;
             height: 1px;
             color: var(--extrapale-gray);
-            margin: 0 0 .5em 0;
+            margin: 1em 0 .5em 0;
         }
 
         .user {
             display: flex;
             text-align: center;
-            padding-bottom: 1em;
-            transition: $transition;
-            // border-bottom: 1px solid var(--extrapale-gray);
+            // margin-right: 1em;
+            min-height: 66px;
 
 
             img {
@@ -6019,22 +6055,20 @@ footer {
                 width: 70px;
                 height: 70px;
                 border-radius: 100%;
+
                 box-sizing: content-box;
-                transition: $transition;
 
             }
 
             .img-small {
                 width: 58px;
                 height: 58px;
-                transition: $transition;
             }
 
             .rating {
                 font-size: 1.2em;
                 font-weight: 700;
                 @include flex();
-                transition: $transition;
 
                 svg {
                     color: var(--blue);
@@ -6056,20 +6090,21 @@ footer {
                 overflow: hidden;
                 line-height: 1em;
                 max-height: 2em;
-                transition: $transition;
             }
+
         }
 
         .info {
             padding-top: .5em;
+            padding-left: 1em;
+            padding-right: 1em;
             display: flex;
             justify-content: space-between;
-            transition: $transition;
 
             span {
                 font-family: "Bebas";
                 font-size: 1.4em;
-                transition: $transition;
+                font-weight: 400;
             }
 
         }
@@ -6080,21 +6115,23 @@ footer {
         @include list();
         margin-top: 1em;
 
-        li {
-            &:not(:first-child) {
-                margin-top: 1em;
+        // padding-top: .5em;
 
-                @media (max-width: $bp-lg) {
-                    margin-top: 0.5em;
-                }
+        li {
+            padding-top: 1em;
+            padding-left: 1em;
+            padding-right: 1em;
+
+            @media (max-width: $bp-lg) {
+                margin-top: 0.5em;
             }
 
+
             a {
-                color: var(--gray);
+                color: var(--menu);
                 @include flex(row, flex-start, center, nowrap);
                 padding: 0.67em 1em;
                 border-radius: $radius;
-                transition: $transition;
 
                 @media (max-width: $bp-lg) {
                     font-size: 1.2em;
@@ -6106,9 +6143,9 @@ footer {
 
                 div {
                     margin-left: 0.5em;
+
                     display: flex;
                     align-items: center;
-                    transition: $transition;
 
                 }
 
@@ -6125,27 +6162,31 @@ footer {
                 }
 
                 &.active {
-                    background-color: var(--extrapale-gray);
-                    color: var(--blue);
+                    background-color: var(--menu-active);
+                    color: var(--menu-text);
                 }
             }
         }
     }
 
     #cut {
-        // padding-right: calc(1.5rem* .5);
-        top: 2em;
 
-        font-size: 1.3em;
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 1000;
+        justify-content: left;
+        align-items: center;
+        padding: 0px;
         position: absolute;
-        right: -0.5em;
-        width: 1.5em;
-        height: 1.5em;
-        transform: translateY(0.25em);
+        right: -1.5em;
+        top: 1.5em;
+        width: 40px;
+        height: 30px;
+        filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
+        background: var(--menu-substract) no-repeat center bottom;
+        transform: rotate(90deg);
+        background-size: 100% 50%;
         @include flex();
         border-radius: 50%;
-        overflow: hidden;
-        border: 5px solid var(--body-bg);
 
         @media (max-width: $bp-lg) {
             right: unset;
@@ -6153,21 +6194,26 @@ footer {
         }
 
         img {
-            width: 100%;
-            height: 100%;
+            width: 20px;
+            height: 20px;
+            left: -1em;
             transition: $transition;
+            transform: rotate(-90deg);
+
 
             @media (max-width: $bp-lg) {
-                transform: rotate(-180deg);
+                transform: rotate(-90deg);
             }
         }
 
         &.opened {
+
             img {
-                transform: rotate(-180deg);
+                transform: rotate(90deg);
+                left: -1em;
 
                 @media (max-width: $bp-lg) {
-                    transform: rotate(0deg);
+                    transform: rotate(90deg);
                 }
             }
         }
@@ -6177,10 +6223,117 @@ footer {
 
 .panel-open {
     margin-left: 275px;
-    transition: $transition;
 }
 
 .panel-closed {
     margin-left: 60px;
-    transition: $transition;
+}
+
+.menu-chat {
+    margin: 1em;
+    margin-right: auto;
+    z-index: 1042;
+    position: fixed;
+    bottom: 0;
+    right: 1em;
+    width: 86px;
+    height: auto;
+
+
+
+    &-block {
+        background: var(--glass);
+        box-shadow: var(--shadow);
+        border-radius: $radius;
+
+
+    }
+
+
+
+    ul {
+        @include list();
+        margin-top: 1em;
+
+        // padding-top: .5em;
+
+        li {
+            hr {
+                margin: 0.5em 1em;
+            }
+
+            a {
+                color: var(--menu);
+                @include flex(row, center, center, nowrap);
+                padding: 0.67em 1em;
+                border-radius: $radius;
+
+                @media (max-width: $bp-lg) {
+                    font-size: 1.2em;
+                }
+
+                svg {
+                    font-size: 2em;
+                }
+
+                img {
+                    width: 58px;
+                    height: 58px;
+                }
+
+
+
+                &:hover,
+                &:focus {
+                    color: var(--blue);
+                }
+
+                &.active {
+                    background-color: var(--menu-active);
+                    color: var(--menu-text);
+                }
+            }
+        }
+    }
+
+    #cut {
+
+        transform: translateY(-50%) translateX(-50%);
+        z-index: 1000;
+        justify-content: left;
+        align-items: center;
+        padding: 0px;
+        position: absolute;
+        right: -1.5em;
+        top: 1.5em;
+        width: 40px;
+        height: 30px;
+        filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
+        background: var(--menu-substract) no-repeat center bottom;
+        transform: rotate(90deg);
+        background-size: 100% 50%;
+        @include flex();
+        border-radius: 50%;
+
+        @media (max-width: $bp-lg) {
+            right: unset;
+            left: -0.5em;
+        }
+
+        img {
+            width: 20px;
+            height: 20px;
+            left: -1em;
+            transition: $transition;
+            transform: rotate(-90deg);
+
+
+            @media (max-width: $bp-lg) {
+                transform: rotate(-90deg);
+            }
+        }
+
+
+    }
+
 }
