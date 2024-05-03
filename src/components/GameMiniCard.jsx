@@ -9,7 +9,6 @@ const GameMiniCard = ({ id, media, title, onGameChange }) => {
   };
   return (
     <button className={`game-card-mini ${isActive ? 'bg-gray' : ''}`} onClick={handleGameChange}>
-      <img src={getImageURL({ path: media })} alt="ArcheAge" className='img' />
       <h6>{title}</h6>
     </button>
   );

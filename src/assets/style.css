@@ -1876,8 +1876,8 @@ header .profile-link img {
 }
 .main-slider-item-active .lots {
   display: flex;
-  top: 2.6em;
-  left: 6.25%;
+  top: 18%;
+  left: 5%;
   bottom: unset;
   right: unset;
   font-size: 0.9em;
@@ -2264,11 +2264,11 @@ header .profile-link img {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
-  background: var(--glass);
-  box-shadow: var(--shadow);
+  background: var(--label);
   border-radius: 0.67em;
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   padding: 1.6em 1.2em;
+  width: 100%;
 }
 @media (max-width: 575.98px) {
   .game-card-mini {

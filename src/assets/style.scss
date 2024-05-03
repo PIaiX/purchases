@@ -2106,8 +2106,8 @@ header {
 
             .lots {
                 display: flex;
-                top: 2.6em;
-                left: 6.25%;
+                top: 18%;
+                left: 5%;
                 bottom: unset;
                 right: unset;
                 font-size: .9em;
@@ -2467,11 +2467,11 @@ header {
 
     &-mini {
         @include flex(row, flex-start, center, nowrap);
-        background: var(--glass);
-        box-shadow: var(--shadow);
+        background: var(--label);
         border-radius: $radius;
         @include lightShadow();
         padding: 1.6em 1.2em;
+        width: 100%;
 
         @media (max-width: $bp-sm) {
             padding: 1em 0.75em;
