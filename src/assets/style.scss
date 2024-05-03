@@ -41,6 +41,9 @@ $bp-xxl: 1399.98px;
     --h-height: 85px;
     --f-height: 80px;
 
+    --s-menu-width: 86px;
+    --l-menu-width: 300px;
+
     @media (max-width: 767px) {
         --h-height: 70px;
     }
@@ -73,7 +76,7 @@ $bp-xxl: 1399.98px;
     --mess-ban: #FF5630;
     --count: #1B1B1C;
     --white: #ffffff;
-    --extrapale-gray: #9DC4EF33;
+    --extrapale-gray: #ecf4fc;
     --grayish: #eeeeee;
     --pale-gray: #d9d9d9;
     --light-gray: #c1c1c1;
@@ -4775,8 +4778,7 @@ ACCOUNT
                     left: 0px;
                     height: 100%;
                     width: 94%;
-                    box-shadow: var(--shadow);
-                    background: var(--glass);
+                    background: var(--label);
                     transform: skewX(-25deg);
                     border-radius: $radius;
                 }
@@ -4789,9 +4791,8 @@ ACCOUNT
                     right: 0px;
                     height: 100%;
                     width: 89%;
-                    box-shadow: var(--shadow);
 
-                    background: var(--glass);
+                    background: var(--label);
                     border-radius: 0 $radius $radius 0;
                 }
             }
