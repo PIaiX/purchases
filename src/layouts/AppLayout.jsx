@@ -23,7 +23,7 @@ const AppLayout = () => {
         (isMobile)
           ? <Outlet />
           : <Row className="justify-content-between">
-            <Col md={1}>
+            <Col md={2}>
               <Menu full={full} setFull={setFull} />
             </Col>
             <Col className={full ? "panel-open" : "panel-closed"}>

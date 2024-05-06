@@ -5933,20 +5933,42 @@ footer {
     margin-right: auto;
     position: sticky;
     top: var(--h-height);
-    width: 86px;
-    height: 100%;
+    height: 100vh;
+    bottom: var(--f-height);
+    width: 100%;
+
+    .scroll {
+        backdrop-filter: blur(5px);
+        border-radius: $radius;
+        position: sticky;
+        top: 6em;
+        margin-right: 2em;
+        left: 0;
+        width: 96px;
+        height: fit-content;
+        max-height: calc(100vh - var(--h-height));
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 0;
+            /* Скрываем полосу прокрутки */
+        }
 
 
+        &.full {
+            width: 330px;
+        }
+    }
 
     .wrap {
         backdrop-filter: blur(5px);
         border-radius: $radius;
         position: sticky;
         top: 6em;
+        margin-right: 2em;
         left: 0;
-        width: 100%;
+        width: 86px;
         height: fit-content;
-        max-height: calc(100vh - 2em);
 
         @media (max-width: $bp-lg) {
             float: right;
@@ -6178,7 +6200,7 @@ footer {
         align-items: center;
         padding: 0px;
         position: absolute;
-        right: -1.5em;
+        right: 1em;
         top: 1.5em;
         width: 40px;
         height: 30px;
