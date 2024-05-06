@@ -5302,6 +5302,7 @@ ACCOUNT
   flex-wrap: nowrap;
   padding: 0.75em 1.3em;
   position: relative;
+  width: 100%;
 }
 .dialog-preview.active {
   background-color: var(--extrapale-gray);
@@ -5330,6 +5331,7 @@ ACCOUNT
 }
 .dialog-preview .text {
   flex: 1;
+  width: 80%;
 }
 .dialog-preview .text h6 {
   display: -webkit-box;
@@ -5345,14 +5347,14 @@ ACCOUNT
   font-size: 0.7em;
 }
 .dialog-preview .text p {
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.2em;
-  height: 1.2em;
+  display: block;
   font-weight: 300;
   color: var(--gray);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  width: 90%;
+  margin-top: 0.5em;
 }
 
 /***********

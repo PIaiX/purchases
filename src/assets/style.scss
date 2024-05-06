@@ -5311,6 +5311,7 @@ ACCOUNT
     @include flex(row, flex-start, center, nowrap);
     padding: 0.75em 1.3em;
     position: relative;
+    width: 100%;
 
     &.active {
         background-color: var(--extrapale-gray);
@@ -5339,6 +5340,7 @@ ACCOUNT
 
     .text {
         flex: 1;
+        width: 80%;
 
         h6 {
             @include clamp(1, 1.2em, true);
@@ -5351,9 +5353,15 @@ ACCOUNT
         }
 
         p {
-            @include clamp(1, 1.2em, true);
+            // @include clamp(1, 1.2em, true);
+            display: block;
             font-weight: 300;
             color: var(--gray);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            width: 90%;
+            margin-top: .5em;
         }
     }
 }

@@ -11,7 +11,7 @@ import LogoMess from '../svg/LogoMess';
 
 
 const Message = ({ my, userId, general, createdAt, media, text, name, admin, user, view, type, status }) => {
-  const image = getImageURL({ path: user, type: "user" })
+  const image = getImageURL({ path: user?.media, size: "mini", type: "user" })
   const [showShare, setShowShare] = useState(false);
   const time = createdAt
     ? moment(createdAt).format("DD.MM.YYYY kk:mm")
