@@ -3012,7 +3012,12 @@ header .profile-link img {
 }
 @media (max-width: 767.98px) {
   .page-game-top .categories {
-    margin-bottom: 1em;
+    margin-bottom: 1em !important;
+  }
+}
+@media (max-width: 1199.98px) {
+  .page-game-top .categories {
+    margin-bottom: 0;
   }
 }
 .page-game-top .categories li {
@@ -3022,7 +3027,7 @@ header .profile-link img {
 }
 @media (max-width: 1199.98px) {
   .page-game-top .categories li {
-    margin-bottom: 0.6em;
+    margin-bottom: 2em;
     position: relative;
     z-index: 10;
   }
@@ -3040,6 +3045,7 @@ header .profile-link img {
   border-radius: 0.335em;
   transition: 300ms ease-in-out;
   color: var(--font-color);
+  border: 1px solid transparent;
 }
 .page-game-top .categories li .button:hover,
 .page-game-top .categories li a:hover {
@@ -6165,11 +6171,11 @@ footer .nav-mobile ul li button.active svg path {
 }
 
 .panel-open {
-  margin-left: 275px;
+  max-width: calc(100vw - var(--l-menu-width) - 6em);
 }
 
 .panel-closed {
-  margin-left: 60px;
+  max-width: calc(100vw - var(--s-menu-width) - 6em);
 }
 
 .menu-chat {

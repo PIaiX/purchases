@@ -17,13 +17,13 @@ const AppLayout = () => {
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
-      <MenuChat />
+      {!isMobile && <MenuChat />}
       {
 
         (isMobile)
           ? <Outlet />
           : <Row className="justify-content-between">
-            <Col md={2}>
+            <Col md={1}>
               <Menu full={full} setFull={setFull} />
             </Col>
             <Col className={full ? "panel-open" : "panel-closed"}>
