@@ -30,7 +30,7 @@ const CatalogSection = ({ games }) => {
 
 
   return (
-    <section className='sec-catalog mb-6'>
+    <section className='sec-catalog mb-6 ms-6'>
       <Container><h2>Выбери одну из {games?.items?.length} игр</h2></Container>
       <Container>
         <div className="sec-catalog-box">

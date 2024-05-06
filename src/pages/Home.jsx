@@ -24,7 +24,8 @@ import { useGetArticlesQuery, useGetGamesQuery, useGetRecommendsQuery, useGetSal
 const Home = () => {
   const isMobileLG = useIsMobile('991px');
   const category = useGetGamesQuery();
-  const recommends = useGetRecommendsQuery();
+  const recommends = [];
+  // useGetRecommendsQuery();
   const articles = useGetArticlesQuery();
   const sales = useGetSalesQuery();
 
