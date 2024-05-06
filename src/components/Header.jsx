@@ -25,6 +25,7 @@ import Joystick from '../assets/imgs/joystick.svg';
 import ChatIcon from './svg/ChatIcon';
 import HeartIcon from './svg/HeartIcon';
 import SearchIcon from './svg/SearchIcon';
+import { getImageURL } from "../helpers/all";
 
 const Header = () => {
   const userId = useSelector(state => state.auth?.user?.id);
@@ -99,89 +100,16 @@ const Header = () => {
             <Link to="/">
               <Logo />
             </Link>
-            <div className="d-flex align-items-center">
-              <Dropdown>
-                <Dropdown.Toggle as="a">
-                  <span>Информация</span>
-                  <RxChevronDown className="fs-12 ms-1" />
-                </Dropdown.Toggle>
-                <Dropdown.Menu>
-                  {userId &&
-                    <Dropdown.Item
-                      as="button"
-                      onClick={handleShowFav}
-                      className="d-xl-none"
-                    >
-                      <Link to="/">Избранное</Link>
-                    </Dropdown.Item>
-                  }
-                  <Dropdown.Item as="div">
-                    <Link to="/">Информация</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item as="div">
-                    <Link to="/help">Помощь</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item as="div">
-                    <Link to="/rules">Правила</Link>
-                  </Dropdown.Item>
-                  <Dropdown.Item as="div">
-                    <Link to="/feedback">Обратная связь</Link>
-                  </Dropdown.Item>
-                </Dropdown.Menu>
-              </Dropdown>
-              <button
-                type="button"
-                onClick={(isAuth) ? handleShowFav : handleShowAdvice}
-                className="d-flex align-items-center ms-lg-4 ms-xxl-5"
-              >
-                <span className="d-none d-xl-inline">Избранное</span>
-              </button>
 
-            </div>
-            <div className="d-none d-lg-flex align-items-center">
-              <div className="d-flex">
-                <input
-                  type="search"
-                  className="d-none d-lg-flex ms-4 ms-xxl-5"
-                  placeholder="Поиск по описанию"
-                  onChange={(event) => {
-                    handleSearchChange(event);
-                  }}
-                />
-              </div>
-              
-              {isAuth ? (
-                <>
-                  {/* <span className="ms-4">
-                    <LanguageSwitcher />
-                  </span> */}
-                  <Link
-                    to="/account"
-                    className="profile-link ms-4 ms-xxl-5"
-                  // onClick={handleShowAdvice}
-                  >
-                    <img src="/imgs/user.jpg" alt="user" />
-                    <span>{user?.nickname}</span>
-                  </Link>
-                  <button
-                    type="button"
-                    onClick={() => dispatch(logout())}
-                    className="blue fs-15 ms-4"
-                  >
-                    <Exit />
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link to="/registration" className="ms-4">
-                    Регистрация
-                  </Link>
-                  <Link to="/login" className="btn-1 ms-4">
-                    Войти
-                  </Link>
-                </>
-              )}
-            </div>
+            <input
+              type="search"
+              className="d-none d-lg-flex ms-4 ms-xxl-5 w-50"
+              placeholder="Поиск по описанию"
+              onChange={(event) => {
+                handleSearchChange(event);
+              }}
+            />
+
             <ThemeToggler />
           </div>
         </Container>
@@ -190,21 +118,21 @@ const Header = () => {
       {
         isMobileLG
         && <footer>
-        <Container className='h-100'>
-          <nav className='nav-mobile'>
-            <Link to='/' onClick={()=>setShowMobileMenu(false)} className='logo'>
-              <img src={Joystick} alt="Joystick" />
-            </Link>
-            <ul>
-              <li><button type="button" onClick={handleShowSearch}><SearchIcon/></button></li>
-              <li><button type="button" onClick={handleShowFav}><HeartIcon/></button></li>
-              <li><NavLink to='/account' end onClick={()=>setShowMobileMenu(false)}><SupportIcon/></NavLink></li>
-              <li><NavLink to='/account/messages' end onClick={()=>setShowMobileMenu(false)}><ChatIcon/></NavLink></li>
-              <li><button type='button' onClick={()=>setShowMobileMenu(true)}><MenuIcon/></button></li>
-            </ul>
-          </nav>
-        </Container>
-      </footer>
+          <Container className='h-100'>
+            <nav className='nav-mobile'>
+              <Link to='/' onClick={() => setShowMobileMenu(false)} className='logo'>
+                <img src={Joystick} alt="Joystick" />
+              </Link>
+              <ul>
+                <li><button type="button" onClick={handleShowSearch}><SearchIcon /></button></li>
+                <li><button type="button" onClick={handleShowFav}><HeartIcon /></button></li>
+                <li><NavLink to='/account' end onClick={() => setShowMobileMenu(false)}><SupportIcon /></NavLink></li>
+                <li><NavLink to='/account/messages' end onClick={() => setShowMobileMenu(false)}><ChatIcon /></NavLink></li>
+                <li><button type='button' onClick={() => setShowMobileMenu(true)}><MenuIcon /></button></li>
+              </ul>
+            </nav>
+          </Container>
+        </footer>
       }
 
       <Modal show={showAdvice} onHide={handleCloseAdvice} size={"lg"} centered>
@@ -275,13 +203,13 @@ const Header = () => {
       </Offcanvas>
 
       {/* Mobile Menu */}
-      <Offcanvas show={showMobileMenu} onHide={()=>setShowMobileMenu(false)} placement='end'>
+      <Offcanvas show={showMobileMenu} onHide={() => setShowMobileMenu(false)} placement='end'>
         <Offcanvas.Body>
-          <button type='button' className='close' onClick={()=>setShowMobileMenu(false)}>
-            <RxCross1/>
+          <button type='button' className='close' onClick={() => setShowMobileMenu(false)}>
+            <RxCross1 />
           </button>
           <div className='text-center title-font fs-20 mb-4'>LOGO-RUSH2PLAY</div>
-          <ul className="offcanvas-mobile-menu" onClick={()=>setShowMobileMenu(false)}>
+          <ul className="offcanvas-mobile-menu" onClick={() => setShowMobileMenu(false)}>
             <li>
               <Link to="/">Главная</Link>
             </li>
@@ -303,14 +231,14 @@ const Header = () => {
           </ul>
           <div className='sec-promo mb-5'>
             <div className='text'>
-              <h1 className='mb-0'>Играй в свое <br className='d-sm-none'/>удовольствие</h1>
+              <h1 className='mb-0'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
             </div>
             <img src="/imgs/head.png" alt="head" />
           </div>
           <a href="/" className='dev-link mx-auto'>
-            <PLaixIcon/>
+            <PLaixIcon />
             <span className='mx-2'>Создано в</span>
-            <Plaix/>
+            <Plaix />
           </a>
         </Offcanvas.Body>
       </Offcanvas>

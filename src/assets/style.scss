@@ -6200,11 +6200,11 @@ footer {
         align-items: center;
         padding: 0px;
         position: absolute;
-        right: 1em;
-        top: 1.5em;
+        right: -1.5em;
+        top: 2em;
         width: 40px;
         height: 30px;
-        filter: drop-shadow(0px 1px 3px rgba(70, 67, 118, 0.2));
+        // filter: drop-shadow(0px 0px 3px rgba(70, 67, 118, 0.2));
         background: var(--menu-substract) no-repeat center bottom;
         transform: rotate(90deg);
         background-size: 100% 50%;
