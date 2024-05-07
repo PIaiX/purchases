@@ -7,17 +7,19 @@ import Menu from "../components/Menu"
 import useIsMobile from '../hooks/isMobile'
 import { Col, Container, Row } from "react-bootstrap";
 import MenuChat from "../components/MenuChat";
+import { useSelector } from "react-redux";
 
 
 const AppLayout = () => {
   const isMobile = useIsMobile('991px')
+  const isAuth = useSelector((state) => state.auth.isAuth);
   const [full, setFull] = useState(true);
   return (
     <>
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
-      {!isMobile && <MenuChat />}
+      {!isMobile && isAuth && <MenuChat />}
       {
 
         (isMobile)
