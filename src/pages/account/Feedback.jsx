@@ -53,7 +53,7 @@ const Feedback = () => {
             <div className='title'>{user.nickname}</div>
             <div className="d-flex align-items-center">
               <StarRating value={user.rating} />
-              <span className='fs-13 fw-7 ms-2'>{user.rating}</span>
+              <span className='fs-13 fw-7 ms-2'>{user?.rating != null ? parseFloat(user?.rating).toFixed(1) : "0.0"}</span>
             </div>
           </div>
         </div>

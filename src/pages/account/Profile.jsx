@@ -191,7 +191,7 @@ const Profile = () => {
             <div className="title">{user?.nickname ?? "Никнейм"}</div>
             <div className="d-flex align-items-center">
               <StarRating value={user?.rating ?? 0} />
-              <span className="fs-13 fw-7 ms-2">{user?.rating ?? 0}</span>
+              <span className="fs-13 fw-7 ms-2">{user?.rating != null ? parseFloat(user?.rating).toFixed(1) : "0.0"}</span>
             </div>
             <p className="mt-2">
               {user?.createdAt ? moment(user.createdAt).fromNow(1) : ""} на платформе

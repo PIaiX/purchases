@@ -5918,8 +5918,14 @@ footer {
 .scroll-to-top {
     z-index: 1042;
     position: fixed;
-    bottom: 6vh;
-    right: 8vh;
+    bottom: calc(var(--f-height) + 1em);
+    right: calc(var(--s-menu-width) + 1em);
+
+    @media (max-width: $bp-lg) {
+        right: 1em;
+    }
+
+
     background: var(--glass);
     opacity: 0.6;
     font-size: 1.5em;
@@ -6272,7 +6278,7 @@ footer {
     margin-right: auto;
     z-index: 1042;
     position: fixed;
-    bottom: 0;
+    bottom: calc(var(--f-height) - 1em);
     right: 1em;
     width: 86px;
     height: auto;

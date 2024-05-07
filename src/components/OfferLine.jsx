@@ -22,7 +22,7 @@ const OfferLine = ({ id, uid, title, desc, price, count, server, user, total, no
           <span className='gray d-inline d-xl-none ms-1'>шт.</span>
         </Link>
       </div>
-      <div className='price'><Link to={`/game/lot/${uid}`}>{total}&nbsp;<span className='rouble ms-1'>₽</span></Link></div>
+      <div className='price'><Link to={`/game/lot/${uid}`}> {Math.round(parseFloat(total) * 10000) / 10000}&nbsp;<span className='rouble ms-1'>₽</span></Link></div>
     </div>
   );
 };
