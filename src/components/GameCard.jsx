@@ -38,9 +38,12 @@ const GameCard = memo(({ param1, param2, onSearch, term }) => {
           {el.title}
         </Link></h4>
 
-        {el.regions && el.regions.length > 0 && el.regions[0].status == 1 && (
+        {el.regions && el.regions.length > 0 && [...el.regions].sort((a, b) => a.priority - b.priority)[0].status ? (
           <ServerSwitcher serversArr={el.regions} onChange={(e) => setRegId(prevState => ({ ...prevState, [i]: e }))} />
-        )}
+        )
+          :
+          ""
+        }
 
         <ul onClick={onSearch} className='categories'>
           {[...el.params].sort((a, b) => a.priority - b.priority).map((param) => (

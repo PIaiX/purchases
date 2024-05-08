@@ -1461,6 +1461,18 @@ button {
     }
 }
 
+.ps-6 {
+    padding-left: 6em;
+
+    @media (max-width: $bp-md) {
+        padding-left: 5em;
+    }
+
+    @media (max-width: $bp-sm) {
+        padding-left: 4em;
+    }
+}
+
 /* Breadcrumbs */
 .breadcrumbs {
     margin-bottom: 2em;
@@ -5337,6 +5349,27 @@ ACCOUNT
         }
     }
 
+    .count {
+
+
+        span {
+            display: flex;
+            background-color: #66c6e4 !important;
+            align-items: center;
+            justify-content: center;
+            color: #0d59ab;
+            font-size: 16px;
+            font-weight: 400;
+            width: 1.5em;
+            height: 1.5em;
+            border-radius: 50%;
+
+            @media (max-width: 767px) {
+                font-size: 13px;
+            }
+        }
+    }
+
     .text {
         flex: 1;
         width: 80%;
@@ -6267,7 +6300,6 @@ footer {
 }
 
 .menu-chat {
-    margin: 1em;
     margin-right: auto;
     z-index: 1042;
     position: fixed;
@@ -6279,10 +6311,9 @@ footer {
 
 
     &-block {
-        background: var(--glass);
+        background: var(--label);
         box-shadow: var(--shadow);
         border-radius: $radius;
-
 
     }
 
@@ -6290,7 +6321,6 @@ footer {
 
     ul {
         @include list();
-        margin-top: 1em;
         // padding-top: .5em;
 
         li {
@@ -6308,6 +6338,14 @@ footer {
                     font-size: 1.2em;
                 }
 
+                .count {
+                    position: absolute;
+                    top: 1em;
+                    right: 1em;
+                    z-index: 10;
+                    opacity: 0.9;
+                }
+
                 svg {
                     font-size: 2em;
                 }
@@ -6315,6 +6353,7 @@ footer {
                 img {
                     width: 58px;
                     height: 58px;
+                    margin: 0;
                 }
 
 

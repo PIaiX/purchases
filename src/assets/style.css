@@ -1217,6 +1217,20 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   }
 }
 
+.ps-6 {
+  padding-left: 6em;
+}
+@media (max-width: 767.98px) {
+  .ps-6 {
+    padding-left: 5em;
+  }
+}
+@media (max-width: 575.98px) {
+  .ps-6 {
+    padding-left: 4em;
+  }
+}
+
 /* Breadcrumbs */
 .breadcrumbs {
   margin-bottom: 2em;
@@ -5319,6 +5333,23 @@ ACCOUNT
 .dialog-preview .indicator.green {
   background-color: var(--green);
 }
+.dialog-preview .count span {
+  display: flex;
+  background-color: #66c6e4 !important;
+  align-items: center;
+  justify-content: center;
+  color: #0d59ab;
+  font-size: 16px;
+  font-weight: 400;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+}
+@media (max-width: 767px) {
+  .dialog-preview .count span {
+    font-size: 13px;
+  }
+}
 .dialog-preview .text {
   flex: 1;
   width: 80%;
@@ -6167,7 +6198,6 @@ footer .nav-mobile ul li button.active svg path {
 }
 
 .menu-chat {
-  margin: 1em;
   margin-right: auto;
   z-index: 1042;
   position: fixed;
@@ -6177,14 +6207,13 @@ footer .nav-mobile ul li button.active svg path {
   height: auto;
 }
 .menu-chat-block {
-  background: var(--glass);
+  background: var(--label);
   box-shadow: var(--shadow);
   border-radius: 0.67em;
 }
 .menu-chat ul {
   list-style: none;
   padding-left: 0px;
-  margin-top: 1em;
 }
 .menu-chat ul li hr {
   margin: 0.5em 1em;
@@ -6204,12 +6233,20 @@ footer .nav-mobile ul li button.active svg path {
     font-size: 1.2em;
   }
 }
+.menu-chat ul li a .count {
+  position: absolute;
+  top: 1em;
+  right: 1em;
+  z-index: 10;
+  opacity: 0.9;
+}
 .menu-chat ul li a svg {
   font-size: 2em;
 }
 .menu-chat ul li a img {
   width: 58px;
   height: 58px;
+  margin: 0;
 }
 .menu-chat ul li a:hover, .menu-chat ul li a:focus {
   color: var(--blue);

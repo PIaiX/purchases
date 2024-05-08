@@ -38,7 +38,7 @@ const MainSlider = ({ data }) => {
               type: "sale",
               size: "full",
             })}
-            id={e.categoryId}
+            id={`${e?.category?.uid ? e?.category?.uid : e?.category?.id}/?${(e?.category?.regions.length > 0 ? `regId=${[...e?.category?.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${e?.category.params.length > 0 ? `catId=${[...e?.category.params].sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}
             btn={e.btn}
             imgMini={getImageURL({ path: e.mediaMini, type: "sale" })}
             onClick={() => setActiveSlide(index)}

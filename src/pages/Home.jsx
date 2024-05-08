@@ -30,18 +30,6 @@ const Home = () => {
   const sales = useGetSalesQuery();
 
 
-  const userId = useSelector(state => state.auth?.user?.id);
-
-  const { control, reset, setValue } = useForm({
-    mode: "all",
-    reValidateMode: "onChange",
-    defaultValues: {
-      id: "general",
-    },
-  });
-
-  const data = useWatch({ control });
-
   const [messages, setMessages] = useState({
     loading: true,
     items: [],
@@ -58,50 +46,70 @@ const Home = () => {
         }))
       )
       .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-
-
   }, []);
+
+  const userId = useSelector(state => state.auth?.user?.id);
+
+  const { control, reset, setValue } = useForm({
+    mode: "all",
+    reValidateMode: "onChange",
+    defaultValues: {
+      id: "general",
+    },
+  });
+
+  const data = useWatch({ control });
+
 
   useEffect(() => {
     socket.emit("createRoom", "message/" + data.id);
 
     socket.on("message", (data) => {
-      if (data) {
-        setMessages((prev) => ({
-          ...prev,
-          loading: false,
-          items: [
-            data,
-            ...prev.items.map((e) => {
-              if (e?.userId) {
-                e.view = true;
-              }
-              return e;
-            }),
-          ],
-        }));
-      }
+      setMessages(prev => {
+        if (data.status) {
+          return {
+            ...prev,
+            loading: false,
+            items: [data, ...prev.items],
+          };
+        } else {
+          const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+          if (messageIndex !== -1) {
+            const updatedMessages = [...prev.items];
+            updatedMessages[messageIndex] = data;
+
+            return {
+              ...prev,
+              loading: false,
+              items: updatedMessages,
+            };
+          }
+
+          return prev;
+        }
+      });
     });
 
     return () => {
+      socket.emit("removeRoom", "message/" + data.id);
       socket.off("message");
     };
 
 
   }, [userId]);
 
-  const onNewMessage = useCallback((text) => {
-    createMessageGeneral({ ...data, text });
-  },
+  const onNewMessage = useCallback(
+    (text) => {
+      createMessageGeneral({ ...data, text });
+    },
     [data]
   );
-
   const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
-  // if (articles.isLoading || sales.isLoading || category.isLoading || recommends.isLoading) {
-  //   return <Loader full />;
-  // }
-
+  if (category?.isLoading || articles.isLoading || sales.isLoading) {
+    return <Loader />;
+  }
   return (
     <main>
       <Meta title="Rush2Play" />
