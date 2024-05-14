@@ -17,6 +17,7 @@ import favoriteSlice from "./reducers/favoriteSlice";
 import settingsSlice from "./reducers/settingsSlice";
 import { homeQuery } from "./reducers/homeQuery";
 import themeSlice from "./reducers/themeSlice"
+import notificationSlice from "./reducers/notificationSlice";
 
 const rootReducer = combineReducers({
   settings: settingsSlice,
@@ -24,6 +25,7 @@ const rootReducer = combineReducers({
   cart: cartSlice,
   favorite: favoriteSlice,
   checkout: checkoutSlice,
+  notification: notificationSlice,
   theme: themeSlice,
   [homeQuery.reducerPath]: homeQuery.reducer,
 });

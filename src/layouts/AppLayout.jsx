@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Outlet, ScrollRestoration } from "react-router-dom";
+import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ScrollToTopButton from "../components/utils/ScrollToTopButton";
@@ -8,18 +8,22 @@ import useIsMobile from '../hooks/isMobile'
 import { Col, Container, Row } from "react-bootstrap";
 import MenuChat from "../components/MenuChat";
 import { useSelector } from "react-redux";
+import MenuChatOpen from "../components/MenuChatOpen";
 
 
 const AppLayout = () => {
   const isMobile = useIsMobile('991px')
   const isAuth = useSelector((state) => state.auth.isAuth);
   const [full, setFull] = useState(true);
+  const [chatOpen, setChatOpen] = useState(true);
+  const location = useLocation();
   return (
     <>
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton />
-      {!isMobile && isAuth && <MenuChat />}
+      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} />}
+      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && chatOpen && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} />}
       {
 
         (isMobile)

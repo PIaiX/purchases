@@ -8,11 +8,10 @@ import useIsMobile from '../hooks/isMobile';
 import { getDialogs } from '../services/message';
 import { Badge } from 'react-bootstrap';
 
-const MenuChat = () => {
+const MenuChat = ({ chatOpen, setChatOpen }) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const userId = useSelector((state) => state.auth?.user?.id);
   const cut = useRef(null);
-  const [full, setFull] = useState(false);
   const [dialogs, setDialogs] = useState({
     loading: true,
     items: [],
@@ -77,7 +76,7 @@ const MenuChat = () => {
           </NavLink>
         </li>
       </ul>
-      <div><img src={Arrow} alt="arrow" /></div>
+      <div ref={cut} id="cut" onClick={() => setChatOpen(!chatOpen)} className={(chatOpen) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
     </nav >
   );
 };

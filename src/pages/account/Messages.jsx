@@ -1,7 +1,7 @@
 import moment from "moment";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useForm, useWatch } from "react-hook-form";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useParams, useNavigate } from 'react-router-dom';
 import Meta from "../../components/Meta";
 import Chat from "../../components/chat/Chat";
@@ -18,6 +18,8 @@ import {
 } from "../../services/message";
 import DialogPreview from './DialogPreview';
 import { getImageURL } from "../../helpers/all";
+import { updateNotification } from "../../store/reducers/notificationSlice";
+import InfiniteScroll from "react-infinite-scroller";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -27,6 +29,7 @@ const Messages = ({ isMobileXL }) => {
   const userId = useSelector(state => state.auth?.user?.id);
   const navigate = useNavigate();
   // const message = useSelector((state) => state.notification.message);
+  const [search, setSearch] = useState('');
 
   const { control, reset, setValue } = useForm({
     mode: "all",
@@ -49,22 +52,25 @@ const Messages = ({ isMobileXL }) => {
     loading: true,
     items: [],
   });
-
-  const onLoadDialogs = () => {
-    getDialogs()
-      .then((res) =>
+  const dispatch = useDispatch();
+  const onLoadDialogs = (data) => {
+    dispatch(updateNotification({ message: -1 }))
+    getDialogs({ page: data, search: search, size: 7 })
+      .then((res) => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
-          items: res.dialogs,
+          items: [...prev.items, ...res.dialogs],
+          hasMore: res.dialogs.length > 6 ? true : false,
           count: res.countOnline,
         }))
+      }
       )
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
   };
   useEffect(() => {
     onLoadDialogs();
-  }, [messages]);
+  }, []);
 
   useEffect(() => {
     (state?.dialogId || dialogId) &&
@@ -186,6 +192,16 @@ const Messages = ({ isMobileXL }) => {
     },
     [data, state, dialogId]
   );
+  const onKeyPress1 = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      setDialogs((prev) => ({
+        ...prev,
+        items: "",
+      }))
+      onLoadDialogs();
+    }
+  };
   const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
   const image = getImageURL({ path: user, type: "user" })
 
@@ -195,36 +211,57 @@ const Messages = ({ isMobileXL }) => {
 
   return (
     <>
+
       <Meta title="Сообщения" />
       <ReturnTitle link={'/account'} title={'Сообщения'} />
       <section className='sec-messages'>
+
         <div className='sec-messages-list'>
-          <form action="" className='p-2 p-sm-3'>
-            <input type="search" placeholder='Поиск пользователя' className='p-blue' />
-          </form>
-          <ul>
-            <li>
-              <Link to="/account/messages/general" className='general-chat'>
-                <div className="count">
-                  <div class="fs-13">{dialogs.count}</div>
-                  <div>online</div>
-                </div>
-                <h6>Общий чат</h6>
-              </Link>
-            </li>
-            {dialogs?.items?.length > 0 ? (
-              dialogs.items.map((dialog) => (
-                <li>
-                  <DialogPreview {...dialog} userId={userId} />
-                </li>
-              ))) : (
-              <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                В данный момент нет диалогов
-              </p>
-            )
-            }
-          </ul>
+          <InfiniteScroll
+            pageStart={1}
+            loadMore={onLoadDialogs}
+            hasMore={dialogs.hasMore}
+            loader={<Loader />}
+          >
+            <form action="" className='p-2 p-sm-3'>
+              <input
+                type="search"
+                placeholder="Поиск пользователя"
+                className="p-blue"
+                onChange={e => setSearch(e.target.value)}
+                onKeyPress={(e) => onKeyPress1(e)}
+              />
+            </form>
+            <ul>
+
+
+
+              <li>
+                <Link to="/account/messages/general" className='general-chat'>
+                  <div className="count">
+                    <div class="fs-13">{dialogs.count}</div>
+                    <div>online</div>
+                  </div>
+                  <h6>Общий чат</h6>
+                </Link>
+              </li>
+              {dialogs?.items?.length > 0 ? (
+                dialogs.items.map((dialog) => (
+                  <li>
+                    <DialogPreview {...dialog} userId={userId} />
+                  </li>
+                ))) : (
+                <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                  В данный момент нет диалогов
+                </p>
+              )
+              }
+
+            </ul>
+
+          </InfiniteScroll>
         </div>
+
         {!isMobileXL &&
           <div className="sec-messages-chat">
             {!data?.id ? (
@@ -289,6 +326,7 @@ const Messages = ({ isMobileXL }) => {
             )}
           </div>
         }
+
       </section >
     </>
   );
