@@ -25,7 +25,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
           <div className='text'>
             <div className='gray fs-08 d-flex align-items-center mb-2'>
               {type == "system" &&
-                <h6 className="name ms-3 me-2">Системное сообщение</h6>
+                <h6 className="name me-2">Системное сообщение</h6>
 
               }
               <time className='me-2'>

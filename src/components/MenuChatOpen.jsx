@@ -15,6 +15,9 @@ import { updateNotification } from '../store/reducers/notificationSlice';
 import DialogPreview from '../pages/account/DialogPreview';
 import DialogPreviewMini from '../pages/account/DialogPreviewMini';
 import socket from '../config/socket';
+import ReturnIcon from './svg/ReturnIcon';
+import Chat from './chat/Chat';
+import moment from 'moment';
 
 const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   const timer = useRef(0);
@@ -64,8 +67,13 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   }, []);
 
   useEffect(() => {
-    (id) &&
+    if (id) {
       setValue("id", id);
+    }
+    else {
+      reset();
+      setMessages(() => ({ items: [], loading: true }))
+    }
   }, [id]);
 
   useEffect(() => {
@@ -205,36 +213,64 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
           loader={<Loader />}
         >
           <div className='top'>
-            <form action="" className='p-2 p-sm-3'>
-              <input
-                type="search"
-                placeholder="Поиск пользователя"
-                className="p-blue"
-                onChange={e => setSearch(e.target.value)}
-                onKeyPress={(e) => onKeyPress1(e)}
-              />
-            </form>
+            {id ?
+              <div className="d-flex mt-2 mb-2">
+                <button type="button" onClick={() => setId(false)} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
+                  <ReturnIcon />
+                </button>
+                <div>
+                  <h5 className="fw-7 mb-0"><Link to={`/trader/${user?.id}`}>{user?.nickname}</Link></h5>
+                  <p className="fs-08 gray">
+                    {print ? (
+                      "Печатает сообщение..."
+                    ) : user?.online?.status ? (
+                      <span className="text-success">Онлайн</span>
+                    ) : user?.online?.end ? (
+                      "Был(-а) в сети " +
+                      moment(user?.online?.end).fromNow()
+                    ) : (
+                      "Оффлайн"
+                    )}
+                  </p>
+                </div>
+
+              </div>
+
+              :
+              <form action="" className='p-2 p-sm-3'>
+                <input
+                  type="search"
+                  placeholder="Поиск пользователя"
+                  className="p-blue"
+                  onChange={e => setSearch(e.target.value)}
+                  onKeyPress={(e) => onKeyPress1(e)}
+                />
+              </form>
+            }
             <button type='button'><img src={close} alt="" /></button>
           </div>
 
-          <ul>
-
-
-
-
-            {dialogs?.items?.length > 0 ? (
-              dialogs.items.map((dialog) => (
-                <li>
-                  <DialogPreviewMini {...dialog} userId={userId} setId={setId} />
-                </li>
-              ))) : (
-              <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                В данный момент нет диалогов
-              </p>
-            )
-            }
-
-          </ul>
+          {id ?
+            <Chat
+              general={data.id}
+              messages={messages}
+              emptyText="Нет сообщений"
+              onSubmit={(e) => onNewMessage(e)}
+              onChange={(e) => setValue("text", e)}
+            />
+            :
+            <ul>
+              {dialogs?.items?.length > 0 ? (
+                dialogs.items.map((dialog) => (
+                  <li>
+                    <DialogPreviewMini {...dialog} userId={userId} setId={setId} />
+                  </li>
+                ))) : (
+                <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                  В данный момент нет диалогов
+                </p>
+              )}
+            </ul>}
 
         </InfiniteScroll>
       </div >

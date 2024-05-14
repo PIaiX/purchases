@@ -6569,6 +6569,13 @@ footer {
         }
     }
 
+    .chat {
+        &-window {
+            max-height: 475px;
+        }
+
+        width: 100%;
+    }
 
     ul {
         @include list();

@@ -6425,6 +6425,12 @@ footer .nav-mobile ul li button.active svg path {
   width: 22px;
   height: 22px;
 }
+.full-menu-chat .chat {
+  width: 100%;
+}
+.full-menu-chat .chat-window {
+  max-height: 475px;
+}
 .full-menu-chat ul {
   list-style: none;
   padding-left: 0px;

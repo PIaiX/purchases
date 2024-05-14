@@ -3,12 +3,12 @@ import { NavLink } from 'react-router-dom';
 import moment from "moment";
 import { getImageURL } from '../../helpers/all';
 
-const DialogPreviewMini = ({ id, to, from, message, userId }) => {
+const DialogPreviewMini = ({ id, to, from, message, userId, setId }) => {
 
   const user = (userId == to.id ? from : to);
   const imag = getImageURL({ path: user?.media, size: "mini", type: "user" })
   return (
-    <div to={`/account/messages/${id}`} className="preview">
+    <div onClick={() => setId(id)} className="preview">
       <img src={imag} alt="user" className='me-3' />
 
       <div className="text">
