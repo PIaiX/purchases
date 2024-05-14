@@ -8,7 +8,7 @@ import useIsMobile from '../hooks/isMobile';
 import { getDialogs } from '../services/message';
 import { Badge } from 'react-bootstrap';
 
-const MenuChat = ({ chatOpen, setChatOpen }) => {
+const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const userId = useSelector((state) => state.auth?.user?.id);
   const cut = useRef(null);
@@ -52,7 +52,7 @@ const MenuChat = ({ chatOpen, setChatOpen }) => {
         <li>
           {dialogs?.items?.length > 0 && (
             dialogs.items.map((dialog) => (
-              <NavLink key={dialog.id} to={`/account/messages/${dialog?.id}`} className="dialog-preview">
+              <div key={dialog.id} onClick={() => setId(dialog?.id)} className="preview">
                 <img
                   src={getImageURL({
                     path: (userId == dialog.to?.id ? dialog.from?.media : dialog.to?.media),
@@ -64,7 +64,7 @@ const MenuChat = ({ chatOpen, setChatOpen }) => {
                 />
                 <div className="indicator green"></div>
                 {dialog?.messagecount > 0 && <div className="count"><span>{dialog?.messagecount}</span></div>}
-              </NavLink>
+              </div>
             ))
           )}
 

@@ -3,6 +3,7 @@ import { LuMails } from "react-icons/lu";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import Arrow from '../assets/imgs/2arrow.svg';
+import close from '../assets/imgs/close.svg';
 import { getImageURL } from '../helpers/all';
 import useIsMobile from '../hooks/isMobile';
 import { createMessage, createMessageGeneral, getDialogs, getMessages, getMessagesGeneral } from '../services/message';
@@ -12,6 +13,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import Loader from './utils/Loader';
 import { updateNotification } from '../store/reducers/notificationSlice';
 import DialogPreview from '../pages/account/DialogPreview';
+import DialogPreviewMini from '../pages/account/DialogPreviewMini';
+import socket from '../config/socket';
 
 const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   const timer = useRef(0);
@@ -201,32 +204,28 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
           hasMore={dialogs.hasMore}
           loader={<Loader />}
         >
-          <form action="" className='p-2 p-sm-3'>
-            <input
-              type="search"
-              placeholder="Поиск пользователя"
-              className="p-blue"
-              onChange={e => setSearch(e.target.value)}
-              onKeyPress={(e) => onKeyPress1(e)}
-            />
-          </form>
+          <div className='top'>
+            <form action="" className='p-2 p-sm-3'>
+              <input
+                type="search"
+                placeholder="Поиск пользователя"
+                className="p-blue"
+                onChange={e => setSearch(e.target.value)}
+                onKeyPress={(e) => onKeyPress1(e)}
+              />
+            </form>
+            <button type='button'><img src={close} alt="" /></button>
+          </div>
+
           <ul>
 
 
 
-            <li>
-              <Link to="/account/messages/general" className='general-chat'>
-                <div className="count">
-                  <div class="fs-13">{dialogs.count}</div>
-                  <div>online</div>
-                </div>
-                <h6>Общий чат</h6>
-              </Link>
-            </li>
+
             {dialogs?.items?.length > 0 ? (
               dialogs.items.map((dialog) => (
                 <li>
-                  <DialogPreview {...dialog} userId={userId} />
+                  <DialogPreviewMini {...dialog} userId={userId} setId={setId} />
                 </li>
               ))) : (
               <p className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">

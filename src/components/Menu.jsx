@@ -1,21 +1,21 @@
 import React, { useRef, useState } from 'react';
 import { FiList, FiMessageCircle, FiUser } from 'react-icons/fi';
-import { LuCoins, LuFileClock, LuMails } from "react-icons/lu";
+import { LuCoins, LuFileClock, LuLogOut, LuMails } from "react-icons/lu";
 import { RiHistoryLine } from "react-icons/ri";
-import { useSelector } from 'react-redux';
-import { NavLink } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, NavLink } from 'react-router-dom';
 import Arrow from '../assets/imgs/arrow.svg';
 import { customPrice, getImageURL } from '../helpers/all';
 import useIsMobile from '../hooks/isMobile';
 import HeadPhones from './svg/HeadPhones';
 import StarIcon from './svg/StarIcon';
 import Key from './svg/Key';
+import { logout } from '../services/auth';
 
 const Menu = ({ full, setFull }) => {
-  const isMobileLG = useIsMobile('991px')
   const { user, isAuth } = useSelector((state) => state.auth);
   const cut = useRef(null);
-
+  const dispatch = useDispatch();
   return (
     <nav className='menu-nav'>
       <div className={(full) ? 'scroll full' : 'wrap'}>
@@ -140,6 +140,15 @@ const Menu = ({ full, setFull }) => {
                       {full && <span>Обратная связь</span>}
                     </div>
                   </NavLink>
+                </li>
+                <li>
+                  <Link to="/" onClick={() => dispatch(logout())} className={!full && "justify-content-center"}>
+                    <div >
+                      <LuLogOut className="svg me-2" />
+                      {full && <span>Выйти</span>}
+                    </div>
+                  </Link>
+
                 </li>
               </ul>
             </>
