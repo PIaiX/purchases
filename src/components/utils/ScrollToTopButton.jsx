@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { FaArrowUp } from 'react-icons/fa';
 
-const ScrollToTopButton = () => {
+const ScrollToTopButton = ({ mini, maxi }) => {
     const [isVisible, setIsVisible] = useState(false);
 
     // Показывать кнопку, когда скролл превышает 100 пикселей
@@ -32,7 +32,7 @@ const ScrollToTopButton = () => {
     return (
         <>
             {isVisible && (
-                <div className="scroll-to-top" onClick={scrollToTop}>
+                <div className={`scroll-to-top ${mini ? 'mini' : ''} ${maxi ? 'maxi' : ''}`} onClick={scrollToTop}>
                     <FaArrowUp />
                 </div>
             )}

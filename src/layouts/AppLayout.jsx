@@ -18,13 +18,15 @@ const AppLayout = () => {
   const [id, setId] = useState(false);
   const [chatOpen, setChatOpen] = useState(false);
   const location = useLocation();
+  const mini = !isMobile && isAuth && !location.pathname.startsWith('/account/messages');
+  const maxi = !isMobile && isAuth && !location.pathname.startsWith('/account/messages') && (chatOpen || id);
   return (
     <>
       <ScrollRestoration />
       <Header />
-      <ScrollToTopButton />
-      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
-      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && (chatOpen || id) && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
+      <ScrollToTopButton maxi={maxi} mini={mini} />
+      {mini && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
+      {maxi && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
       {
 
         (isMobile)

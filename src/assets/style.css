@@ -55,6 +55,7 @@
   --menu: #637381;
   --menu-active: #9DC4EF33;
   --menu-text: #4A83DC;
+  --arrow: #4A83DC;
   --letter: #fff;
   --search-game-border: #9DC4EF;
   --search-game-text: #9DC4EF;
@@ -104,6 +105,7 @@
   --menu: #E2EDFA;
   --menu-active: #47567B;
   --menu-text: #FFFFFF;
+  --arrow: #43536A;
   --letter: #47567B;
   --search-game-border: rgba(0, 0, 0, 0);
   --search-game-text: #FFFFFFF2;
@@ -2791,8 +2793,12 @@ header .profile-link img {
   border: none;
   background-color: transparent;
 }
+.chat-form .input-file-simple {
+  padding-right: 0;
+}
 .chat-form button {
   background: var(--btn-1);
+  margin-left: 1.25em;
   padding: 1em 1.5em;
   font-size: 0.9em;
   color: white;
@@ -5885,8 +5891,11 @@ footer .nav-mobile ul li button.active svg path {
   z-index: 1042;
   position: fixed;
   bottom: calc(var(--f-height) + 1em);
-  right: calc(var(--s-menu-width) + 1em);
-  background: var(--glass);
+  right: 1em;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
+  background: var(--label);
   opacity: 0.6;
   font-size: 1.5em;
   color: var(--gray);
@@ -5897,8 +5906,13 @@ footer .nav-mobile ul li button.active svg path {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  box-shadow: var(--shadowMobile);
   transition: color 0.3s ease-in;
+}
+.scroll-to-top.mini {
+  right: 5em;
+}
+.scroll-to-top.maxi {
+  right: 24em;
 }
 @media (max-width: 991.98px) {
   .scroll-to-top {
@@ -5906,6 +5920,7 @@ footer .nav-mobile ul li button.active svg path {
   }
 }
 .scroll-to-top:hover, .scroll-to-top:active {
+  opacity: 1;
   color: var(--green);
 }
 
@@ -6179,25 +6194,26 @@ footer .nav-mobile ul li button.active svg path {
     left: -0.5em;
   }
 }
-.menu-nav #cut img {
+.menu-nav #cut .img {
   width: 20px;
   height: 20px;
   left: -1em;
   transition: 300ms ease-in-out;
   transform: rotate(-90deg);
   cursor: pointer;
+  color: var(--arrow);
 }
 @media (max-width: 991.98px) {
-  .menu-nav #cut img {
+  .menu-nav #cut .img {
     transform: rotate(-90deg);
   }
 }
-.menu-nav #cut.opened img {
+.menu-nav #cut.opened .img {
   transform: rotate(90deg);
   left: -1em;
 }
 @media (max-width: 991.98px) {
-  .menu-nav #cut.opened img {
+  .menu-nav #cut.opened .img {
     transform: rotate(90deg);
   }
 }

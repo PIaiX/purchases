@@ -91,6 +91,7 @@ $bp-xxl: 1399.98px;
     --menu: #637381;
     --menu-active: #9DC4EF33;
     --menu-text: #4A83DC;
+    --arrow: #4A83DC;
 
     --letter: #fff;
     --search-game-border: #9DC4EF;
@@ -141,6 +142,7 @@ $bp-xxl: 1399.98px;
     --menu: #E2EDFA;
     --menu-active: #47567B;
     --menu-text: #FFFFFF;
+    --arrow: #43536A;
 
     --letter: #47567B;
     --search-game-border: rgba(0, 0, 0, 0);
@@ -2976,8 +2978,13 @@ header {
             background-color: transparent;
         }
 
+        .input-file-simple {
+            padding-right: 0;
+        }
+
         button {
             background: var(--btn-1);
+            margin-left: 1.25em;
             padding: 1em 1.5em;
             font-size: .9em;
             color: white;
@@ -5949,14 +5956,24 @@ footer {
     z-index: 1042;
     position: fixed;
     bottom: calc(var(--f-height) + 1em);
-    right: calc(var(--s-menu-width) + 1em);
+    right: 1em;
+    @include btnStyle();
+    backdrop-filter: blur(5px);
+
+    &.mini {
+        right: 5em;
+    }
+
+    &.maxi {
+        right: 24em;
+    }
 
     @media (max-width: $bp-lg) {
         right: 1em;
     }
 
 
-    background: var(--glass);
+    background: var(--label);
     opacity: 0.6;
     font-size: 1.5em;
     color: var(--gray);
@@ -5967,12 +5984,13 @@ footer {
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    box-shadow: var(--shadowMobile);
+    // box-shadow: var(--shadowMobile);
     transition: color 0.3s ease-in;
 
     &:hover,
     &:active {
         // background-color: var(--body-bg);
+        opacity: 1;
         color: var(--green);
     }
 }
@@ -6274,13 +6292,16 @@ footer {
             left: -0.5em;
         }
 
-        img {
+        .img {
             width: 20px;
             height: 20px;
             left: -1em;
             transition: $transition;
             transform: rotate(-90deg);
             cursor: pointer;
+
+            color: var(--arrow);
+
 
             @media (max-width: $bp-lg) {
                 transform: rotate(-90deg);
@@ -6289,7 +6310,7 @@ footer {
 
         &.opened {
 
-            img {
+            .img {
                 transform: rotate(90deg);
                 left: -1em;
 

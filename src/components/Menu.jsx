@@ -4,13 +4,13 @@ import { LuCoins, LuFileClock, LuLogOut, LuMails } from "react-icons/lu";
 import { RiHistoryLine } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import Arrow from '../assets/imgs/arrow.svg';
 import { customPrice, getImageURL } from '../helpers/all';
 import useIsMobile from '../hooks/isMobile';
 import HeadPhones from './svg/HeadPhones';
 import StarIcon from './svg/StarIcon';
 import Key from './svg/Key';
 import { logout } from '../services/auth';
+import Arrow from './svg/Arrow';
 
 const Menu = ({ full, setFull }) => {
   const { user, isAuth } = useSelector((state) => state.auth);
@@ -196,7 +196,7 @@ const Menu = ({ full, setFull }) => {
               </li>
             </ul>
           }
-          <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
+          <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
         </div>
       </div>
     </nav >
