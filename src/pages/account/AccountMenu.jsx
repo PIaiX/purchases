@@ -12,58 +12,58 @@ const AccountMenu = (props) => {
     <nav className='account-nav'>
       <ul>
         <li>
-          <NavLink to="account/profile">
+          <NavLink to="/account/profile">
             <div>Профиль</div>
           </NavLink>
         </li>
         {
           (isMobileLG) &&
           <li>
-            <NavLink to="account/favs">
+            <NavLink to="/account/favs">
               <div>Избранное</div>
             </NavLink>
           </li>
         }
         <li>
-          <NavLink to="account/offers">
+          <NavLink to="/account/offers">
             <div>Мои объявления</div>
           </NavLink>
         </li>
         <li>
-          <NavLink to="account/purchase-history">
+          <NavLink to="/account/purchase-history">
             <div>История покупок</div>
           </NavLink>
         </li>
         <li>
-          <NavLink to="account/sales-history">
+          <NavLink to="/account/sales-history">
             <div>История продаж</div>
           </NavLink>
         </li>
         <li>
-          <NavLink to="account/finance">
+          <NavLink to="/account/finance">
             <div>Финансы</div>
           </NavLink>
         </li>
 
         <li className='mt-sm-4 mt-lg-5'>
-          <NavLink to="account/messages">
+          <NavLink to="/account/messages">
             <div>Сообщения</div>
             {/* <span className='badge'></span> */}
           </NavLink>
         </li>
         <li>
-          <NavLink to="account/feedback">
+          <NavLink to="/account/feedback">
             <div>Отзывы</div>
           </NavLink>
         </li>
 
         <li className='mt-sm-4 mt-lg-5'>
-          <NavLink to="account/callback">
+          <NavLink to="/account/callback">
             <div>Обратная связь</div>
           </NavLink>
         </li>
         <li>
-          <NavLink to="account/settings">
+          <NavLink to="/account/settings">
             <div>Настройки</div>
           </NavLink>
         </li>

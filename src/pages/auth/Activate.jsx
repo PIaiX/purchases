@@ -1,35 +1,37 @@
-import React, { useLayoutEffect } from "react";
+import React, { useCallback, useState } from "react";
 import Container from "react-bootstrap/Container";
-import { useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
 import Meta from "../../components/Meta";
 import Loader from "../../components/utils/Loader";
 import { authActivate } from "../../services/auth";
-import { useState } from "react";
+import { Col, Row } from "react-bootstrap";
 
 const Activate = () => {
-  const { key } = useParams();
-  const auth = useSelector((state) => state?.auth);
+  const [key, setKey] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const [loading, setLoading] = useState(false);
 
-  const [loading, setLoading] = useState(true);
-  const [status, setStatus] = useState(false);
+  const onKey = useCallback((key) => {
+    setLoading(true);
+    authActivate(key)
+      .then(() => {
+        NotificationManager.success("Ваш аккаунт подтвержден");
 
-  useLayoutEffect(() => {
-    if (auth.isAuth) {
-      navigate("/account");
-    } else {
-      authActivate(key)
-        .then(() => {
-          setStatus(true);
-          setLoading(false);
-        })
-        .catch(() => {
-          setStatus(false);
-          setLoading(false);
-        });
-    }
-  }, [auth.isAuth]);
+        setLoading(false);
+        dispatch(refreshAuth());
+        navigate("/")
+      })
+      .catch((error) => {
+        NotificationManager.error(
+          typeof error?.response?.data?.error === "string"
+            ? error.response.data.error
+            : "Неизвестная ошибка"
+        )
+        setLoading(false);
+      });
+  }, []);
 
   if (loading) {
     return <Loader full />;
@@ -39,16 +41,30 @@ const Activate = () => {
     <main>
       <Meta title="Подтверждение почты" />
       <Container>
-        <section className="hv-100 sec-login d-flex flex-column align-items-center justify-content-center">
+        <section className="sec-login mb-6">
           <h1 className="h2 text-center">
-            {status
-              ? "Вы успешно подтвердили почту"
-              : "Ошибка при подтверждении почты"}
+            Потверждение почты
           </h1>
-          <Link to="/login" className="btn btn-primary">
-            Войти в профиль
-          </Link>
+          <Row className="justify-content-center">
+            <Col xs={12} md={8} lg={6} xl={5}>
+              <div className="wrap">
+                <div className="mini">
+                  <p className='mb-3'>Введите код, отправленный на указанную электронную почту</p>
+                  <Row className='g-3 g-md-4 justify-content-center'>
+                    <Col md={4}>
+                      <input className='code' type="number" placeholder='0000' value={key} onChange={(e) => { e.target.value.length < 5 && setKey(e.target.value) }} />
+
+                    </Col>
+                    <Col md={4}>
+                      <button type='button' className='btn-1 h-100 w-100' disabled={!key || key?.length < 4 || loading} onClick={() => onKey(key)}>Отправить</button>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </section>
+
       </Container>
     </main>
   );

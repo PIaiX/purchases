@@ -1,4 +1,4 @@
-import React, { useCallback, useLayoutEffect, useState } from "react";
+import React, { useCallback, useEffect, useLayoutEffect, useState } from "react";
 import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
@@ -13,11 +13,14 @@ import { NotificationManager } from "react-notifications";
 import ReCAPTCHA from "react-google-recaptcha";
 
 const Registration = () => {
-  const { isAuth } = useSelector((state) => state?.auth);
+  const isAuth = useSelector((state) => state?.auth.isAuth);
   const [captcha, setCaptcha] = useState(false);
   const navigate = useNavigate();
-
-  useLayoutEffect(() => {
+  const [isChecked, setIsChecked] = useState(false);
+  const handleCheckboxChange = (e) => {
+    setIsChecked(e);
+  };
+  useEffect(() => {
     if (isAuth) {
       return navigate("/");
     }
@@ -177,16 +180,15 @@ const Registration = () => {
       let domain = data.email.split("@")[1];
       if (!domain || !successDomain.includes(domain)) {
         NotificationManager.error(
-          "Разрешены только популярные почтовые сервисы"
+          "Пожалуйста, введите адрес электронной почты известного нам почтового клиента"
         );
         return false;
       }
     }
-
     authRegister(data)
       .then(() => {
         NotificationManager.success("Завершите регистрацию, подтвердив почту");
-        navigate("/");
+        navigate("/login");
       })
       .catch(
         (err) =>
@@ -196,7 +198,6 @@ const Registration = () => {
           )
       );
   }, []);
-
   return (
     <main>
       <Meta title="Регистрация" />
@@ -209,7 +210,7 @@ const Registration = () => {
                 <form className="midi" onSubmit={handleSubmit(onSubmit)}>
                   <div className="mb-4">
                     <Input
-                      autoFocus
+                      autoComplete="new-password"
                       type="text"
                       label="Имя пользователя"
                       placeholder="Введите имя пользователя"
@@ -223,8 +224,8 @@ const Registration = () => {
                           message: "Минимально 3 символа",
                         },
                         maxLength: {
-                          value: 250,
-                          message: "Максимально 250 символов",
+                          value: 20,
+                          message: "Максимально 20 символов",
                         },
                         pattern: {
                           value: /^[a-z0-9_]+$/,
@@ -235,6 +236,7 @@ const Registration = () => {
                   </div>
                   <div className="mb-4">
                     <Input
+                      autoComplete="new-password"
                       type="email"
                       label="Email"
                       placeholder="Введите Email"
@@ -260,6 +262,7 @@ const Registration = () => {
                   </div>
                   <div className="mb-4">
                     <Input
+                      autoComplete="new-password"
                       type="password"
                       label="Пароль"
                       placeholder="Придумайте пароль"
@@ -273,8 +276,8 @@ const Registration = () => {
                           message: "Минимальное кол-во символов 6",
                         },
                         maxLength: {
-                          value: 250,
-                          message: "Максимальное кол-во символов 250",
+                          value: 30,
+                          message: "Максимальное кол-во символов 30",
                         },
                         pattern: {
                           value: /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,
@@ -286,6 +289,7 @@ const Registration = () => {
                   </div>
                   <div className="mb-4">
                     <Input
+                      autoComplete="new-password"
                       type="password"
                       label="Подтверждение пароля"
                       placeholder="Повторите пароль"
@@ -299,8 +303,8 @@ const Registration = () => {
                           message: "Минимальное кол-во символов 6",
                         },
                         maxLength: {
-                          value: 250,
-                          message: "Максимальное кол-во символов 250",
+                          value: 30,
+                          message: "Максимальное кол-во символов 30",
                         },
                         pattern: {
                           value: /(?=.*[0-9])(?=.*[a-z])[0-9a-zA-Z]{6,}/g,

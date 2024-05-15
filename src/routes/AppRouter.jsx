@@ -34,6 +34,7 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="game/:id" element={<Game />} />
       <Route path="game/lot/:lotId" element={<LotPage />} />
+      <Route path="order/:lotId" element={<LotPage />} />
       <Route path="trader/:userId" element={<Profile />} />
       <Route path="blog" element={<Blog />} />
       <Route path="blog/:id" element={<Article />} />
@@ -49,7 +50,7 @@ const router = createBrowserRouter(
         }
       />
       <Route path="activate-email/:key" element={<ActivateEditEmail />} />
-      <Route path="activate/:key" element={<Activate />} />
+      <Route path="activate" element={<Activate />} />
       <Route path="help" element={<FAQ />} />
       <Route path="help/:id" element={<QuestionPage />} />
       <Route path="privacy" element={<PrivacyPolicy />} />

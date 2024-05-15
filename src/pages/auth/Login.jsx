@@ -10,12 +10,17 @@ import { login } from "../../services/auth";
 import Meta from "../../components/Meta";
 import { Button } from "react-bootstrap";
 import ReCAPTCHA from "react-google-recaptcha";
+import { toggleRememberMe } from "../../store/reducers/rememberMeSlice";
 
 const Login = () => {
   const auth = useSelector((state) => state?.auth);
   const [captcha, setCaptcha] = useState(false);
   const navigate = useNavigate();
 
+  const rememberMe = useSelector(state => state.rememberMe.value);
+  const handleCheckboxChange = (e) => {
+    dispatch(toggleRememberMe(e.target.checked));
+  };
   useLayoutEffect(() => {
     if (auth.isAuth) {
       return navigate("/");
@@ -81,7 +86,20 @@ const Login = () => {
                       },
                     }}
                   />
-
+                  <div className="mt-4 d-flex align-items-center justify-content-between">
+                    <label>
+                      <input
+                        type="checkbox"
+                        className="checkbox me-3"
+                        checked={rememberMe}
+                        onChange={e => handleCheckboxChange(e)}
+                      />
+                      <span>Чужой компьютер</span>
+                    </label>
+                    <Link to="/password" className="fw-5">
+                      Забыли пароль?
+                    </Link>
+                  </div>
                   <ReCAPTCHA
                     className="mt-4 d-flex justify-content-center w-100"
                     sitekey={process.env.REACT_APP_CAPTCHA}
