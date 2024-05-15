@@ -24,7 +24,6 @@ const MessagesDialogue = () => {
   const timer = useRef(0);
   const userId = useSelector((state) => state.auth?.user?.id);
 
-  const navigate = useNavigate();
 
   const { control, reset, setValue } = useForm({
     mode: "all",
@@ -43,7 +42,6 @@ const MessagesDialogue = () => {
     loading: true,
     items: [],
   });
-
 
   useEffect(() => {
     (state?.dialogId || dialogId) &&
@@ -80,84 +78,57 @@ const MessagesDialogue = () => {
   }, [data?.id]);
 
   useEffect(() => {
+    const handleMessage = (data) => {
+      setPrint(false);
+
+      setMessages(prev => {
+        if (data.status) {
+          return {
+            ...prev,
+            loading: false,
+            items: [data, ...prev.items],
+          };
+        } else {
+          const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+          if (messageIndex !== -1) {
+            const updatedMessages = [...prev.items];
+            updatedMessages[messageIndex] = data;
+
+            return {
+              ...prev,
+              loading: false,
+              items: updatedMessages,
+            };
+          }
+
+          return prev;
+        }
+      });
+    };
+
+
     if (data?.id) {
       socket.emit("createRoom", "message/" + data.id);
+      socket.on("message", handleMessage);
+      socket.on("report", handleMessage);
 
-      socket.on("message", (data) => {
-        if (data) {
-          setPrint(false);
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            items: [
-              data,
-              ...prev.items,
-            ],
-          }));
-        }
-      });
-      // socket.on("message/view/" + data.id, (data) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     loading: false,
-      //     items: prev.items.map((e) => {
-      //       if (e?.memberId && data == "client") {
-      //         e.view = true;
-      //       }
-      //       return e;
-      //     }),
-      //   }));
-      // });
-      // socket.on("message/online/" + data.id, (online) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     user: {
-      //       ...prev.user,
-      //       online,
-      //     },
-      //   }));
-      //   onLoadDialogs();
-      // });
-      // socket.on("message/print/" + data.id, () => {
-      //   setPrint(true);
-      //   if (timer.current === 0) {
-      //     timer.current = 1;
-      //     setTimeout(() => {
-      //       timer.current = 0;
-      //       setPrint(false);
-      //     }, 5000);
-      //     return () => clearTimeout(timer.current);
-      //   }
-      // });
-      socket.on("report", (data) => {
-        if (data) {
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            items: [
-              data,
-              ...prev.items,
-            ],
-          }));
-        }
-      });
       return () => {
-        socket.off("message");
-        socket.off("report");
-        // socket.off("message/print/" + data.id);
+        socket.emit("removeRoom", "message/" + data.id);
+        socket.off("message", handleMessage);
+        socket.off("report", handleMessage);
       };
     }
   }, [data?.id]);
 
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
-      timer.current = 1;
+      timer.current = setTimeout(() => {
+        setPrint(false);
+        timer.current = null;
+      }, 5000);
       setPrint(true);
       socket.emit("message/print", { adminId: data.id });
-      setTimeout(() => {
-        timer.current = 0;
-        setPrint(false);
-      }, 5000);
       return () => clearTimeout(timer.current);
     }
   }, [data?.text]);
@@ -199,10 +170,10 @@ const MessagesDialogue = () => {
       <Meta title="Сообщения" />
       <div className="d-flex">
         <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center return-icon me-4 mb-2'>
-            <ReturnIcon />
+          <ReturnIcon />
         </button>
         <h5>{
-            (user)
+          (user)
             ? user.nickname
             : "Общий чат"
         }</h5>

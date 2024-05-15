@@ -2,13 +2,18 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { $api, $authApi } from ".";
 import { apiRoutes } from "../config/api";
 import socket from "../config/socket";
+import { toggleRememberMe } from "../store/reducers/rememberMeSlice";
+import { resetFavoriteSync } from "../store/reducers/favoriteSlice";
+import { clearNotification } from "../store/reducers/notificationSlice";
+// import socket from "../config/socket";
 
 const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
   try {
     const response = await $api.post(apiRoutes.AUTH_LOGIN, payloads);
     if (response?.data) {
       socket.io.opts.query = { userId: response?.data?.user?.id }
-      socket.connect()
+      socket.disconnect().connect()
+      sessionStorage.setItem('myKey', 'myValue');
     }
     return response?.data;
   } catch (error) {
@@ -18,17 +23,25 @@ const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
 
 const logout = createAsyncThunk("auth/logout", async (_, thunkAPI) => {
   socket.io.opts.query = false
-  socket.disconnect().connect()
+  socket.disconnect()
   try {
-    const response = await $api.post(apiRoutes.AUTH_LOGOUT);
+    const response = await $authApi.post(apiRoutes.AUTH_LOGOUT);
+    thunkAPI.dispatch(toggleRememberMe(false));
+    thunkAPI.dispatch(resetFavoriteSync());
+    thunkAPI.dispatch(clearNotification());
+    socket.connect()
     return response?.data;
   } catch (error) {
-    return thunkAPI.rejectWithValue(error.message);
+    return thunkAPI.rejectWithValue(error);
   }
 });
 
 const checkAuth = async () => {
   const response = await $authApi.post(apiRoutes.AUTH_CHECK);
+  if (response?.data) {
+    socket.io.opts.query = { userId: response?.data?.id }
+    socket.disconnect().connect()
+  }
   return response?.data;
 };
 
@@ -47,7 +60,7 @@ const authRegister = async (params) => {
 };
 
 const authActivate = async (key) => {
-  const response = await $api.post(apiRoutes.AUTH_ACTIVATE, { key });
+  const response = await $authApi.post(apiRoutes.AUTH_ACTIVATE, { key });
   return response?.data;
 };
 

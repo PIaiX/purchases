@@ -76,7 +76,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
           </NavLink>
         </li>
       </ul>
-      <div ref={cut} id="cut" onClick={() => setChatOpen(!chatOpen)} className={(chatOpen) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
+      <div ref={cut} id="cut" onClick={() => (setChatOpen(!chatOpen), setId(false))} className={(chatOpen) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
     </nav >
   );
 };

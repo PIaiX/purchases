@@ -6,6 +6,7 @@ const initialState = {
   isLoadingLogin: false,
   loginError: null,
   isAuth: false,
+  token: false,
   user: {},
 };
 
@@ -18,6 +19,9 @@ const authSlice = createSlice({
     },
     setAuth: (state, action) => {
       state.isAuth = action.payload;
+    },
+    setToken: (state, action) => {
+      state.token = action.payload;
     },
     setLoadingLogin: (state, action) => {
       state.isLoadingLogin = action.payload;
@@ -33,7 +37,7 @@ const authSlice = createSlice({
     },
     [login.fulfilled]: (state, action) => {
       if (action?.payload?.token) {
-        localStorage.setItem("token", action.payload.token);
+        state.token = action.payload.token;
       }
       state.isLoadingLogin = false;
       state.isAuth = true;
@@ -49,12 +53,12 @@ const authSlice = createSlice({
 
     [logout.fulfilled]: (state) => {
       NotificationManager.success("Вы вышли из аккаунта");
-      localStorage.removeItem("token");
+      state.token = false;
       state.isAuth = false;
       state.user = {};
     },
     [logout.rejected]: (state, action) => {
-      localStorage.removeItem("token");
+      state.token = false;
       state.isAuth = false;
       state.user = {};
     },
@@ -70,21 +74,21 @@ const authSlice = createSlice({
 
     [refreshAuth.fulfilled]: (state, action) => {
       if (action?.payload?.token) {
-        localStorage.setItem("token", action.payload.token);
+        state.token = action.payload.token;
       }
       state.isAuth = true;
       state.user = action?.payload?.user;
     },
     [refreshAuth.rejected]: (state, action) => {
       NotificationManager.success("Вы вышли из аккаунта");
-      localStorage.removeItem("token");
+      state.token = false;
       state.isAuth = false;
       state.user = {};
     },
   },
 });
 
-export const { setLoadingLogin, setUser, setAuth, setLoginError } =
+export const { setLoadingLogin, setUser, setAuth, setLoginError, setToken } =
   authSlice.actions;
 
 export default authSlice.reducer;

@@ -14,9 +14,9 @@ import MenuChatOpen from "../components/MenuChatOpen";
 const AppLayout = () => {
   const isMobile = useIsMobile('991px')
   const isAuth = useSelector((state) => state.auth.isAuth);
-  const [full, setFull] = useState(true);
-  const [id, setId] = useState(true);
-  const [chatOpen, setChatOpen] = useState(true);
+  const [full, setFull] = useState(false);
+  const [id, setId] = useState(false);
+  const [chatOpen, setChatOpen] = useState(false);
   const location = useLocation();
   return (
     <>
@@ -24,7 +24,7 @@ const AppLayout = () => {
       <Header />
       <ScrollToTopButton />
       {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
-      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && chatOpen && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
+      {!isMobile && isAuth && !location.pathname.startsWith('/account/messages') && (chatOpen || id) && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
       {
 
         (isMobile)

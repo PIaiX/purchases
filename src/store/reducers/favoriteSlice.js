@@ -1,4 +1,4 @@
-import {createSlice} from '@reduxjs/toolkit'
+import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
     items: [],
@@ -15,7 +15,7 @@ const favoriteSlice = createSlice({
                 if (isFavorite) {
                     state.items = state.items.filter((item) => item?.id !== isFavorite?.id) || []
                 } else {
-                    state.items.push({...action?.payload})
+                    state.items.push({ ...action?.payload })
                 }
             }
         },
@@ -26,10 +26,9 @@ const favoriteSlice = createSlice({
         },
         resetFavoriteSync: (state) => {
             state.items = []
-            state.pagination = {}
         },
     },
 })
 
-export const {toggleFavoriteSync, updateFavoriteAll, resetFavoriteSync} = favoriteSlice.actions
+export const { toggleFavoriteSync, updateFavoriteAll, resetFavoriteSync } = favoriteSlice.actions
 export default favoriteSlice.reducer

@@ -4,53 +4,40 @@ import SimpleInputFile from '../utils/SimpleInputFile';
 import Message from './Message';
 import Loader from "../utils/Loader";
 import { NotificationManager } from "react-notifications";
+import { getImageURL } from "../../helpers/all";
+import { useNavigate } from "react-router-dom";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className = "", onSubmit, type, setImage, data }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask }) => {
+  const userId = useSelector((state) => state.auth?.user?.id);
+  const [text, setText] = useState();
+  const [rows, setRows] = useState(1);
 
-  const userId = useSelector(state => state.auth?.user?.id);
-  const [text, setText] = useState("");
+  const navigate = useNavigate();
 
   const onChangeText = (e) => {
     setText(e);
     onChange(e);
   };
   const onKeyPress = (e) => {
-    if (e.key === 'Enter' && e.shiftKey) {
+    if (e.key === "Enter" && e.shiftKey) {
+      const textarea = e.target;
+      setRows(Math.min(Math.max(textarea.value.split('\n').length, 1), 4));
+    } else if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
-      const textarea = e.target.value;
-      const cursorPosition = textarea.selectionStart;
-      const textBefore = textarea.value.substring(0, cursorPosition);
-      const textAfter = textarea.value.substring(cursorPosition, textarea.value.length);
-      textarea.value = textBefore + '\n' + textAfter;
-      textarea.selectionStart = cursorPosition + 1;
-      textarea.selectionEnd = cursorPosition + 1;
-    } else if (e.key === 'Enter' && !e.shiftKey) {
       onClick();
     }
   };
 
   const onClick = useCallback(() => {
-    if (data?.media?.length > 0) {
+    if (text && text?.length > 0 || data?.media?.length > 0) {
       onSubmit(text);
       setText("");
-    }
-    else {
-      if (text.length > 0) {
-        if (text.trim() === '') {
-          return NotificationManager.error(
-            "Пожалуйста, введите текст."
-          )
-        } else if (text.replace(/\s/g, '') === '') {
-          return NotificationManager.error(
-            "Пожалуйста, введите текст, отличный от пробелов."
-          )
-        }
-        onSubmit(text);
-        setText("");
-      }
+      setRows(1);
     }
   }, [text, data]);
+
+
   if (messages.loading) {
     return <Loader />;
   }
@@ -86,13 +73,13 @@ const Chat = memo(({ general, messages, emptyText, onChange, className = "", onS
       {userId ?
         <>
           <div className='chat-form'>
-            <input
+            <textarea
+              rows={rows}
               value={text}
               type="text"
-              placeholder='Ваше сообщение'
+              placeholder={general == "general" ? "Начните общаться" : "Ваше сообщение"}
               onChange={(e) => onChangeText(e.target.value)}
               onKeyPress={onKeyPress}
-              maxLength={250}
             />
             {general != "general" &&
               <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} />

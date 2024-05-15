@@ -97,85 +97,67 @@ const Messages = ({ isMobileXL }) => {
               ...prev,
               loading: false,
               items: res.messages.items,
-              dialog: res.dialog
-            }))
-          }
-          )
+              dialog: res.dialog,
+              dialog: res.dialog,
+            }));
+          })
           .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
       }
     }
   }, [data?.id]);
 
   useEffect(() => {
-    if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
+    const handleMessage = (data) => {
+      setPrint(false);
 
-      socket.on("message", (data) => {
-
-        if (data) {
-          setPrint(false);
-
-          setMessages((prev) => ({
+      setMessages(prev => {
+        if (data.status) {
+          return {
             ...prev,
             loading: false,
-            items: [
-              data,
-              ...prev.items,
-            ],
-          }));
+            items: [data, ...prev.items],
+          };
+        } else {
+          const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+          if (messageIndex !== -1) {
+            const updatedMessages = [...prev.items];
+            updatedMessages[messageIndex] = data;
+
+            return {
+              ...prev,
+              loading: false,
+              items: updatedMessages,
+            };
+          }
+
+          return prev;
         }
       });
-      // socket.on("message/view/" + data.id, (data) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     loading: false,
-      //     items: prev.items.map((e) => {
-      //       if (e?.memberId && data == "client") {
-      //         e.view = true;
-      //       }
-      //       return e;
-      //     }),
-      //   }));
-      // });
-      // socket.on("message/online/" + data.id, (online) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     user: {
-      //       ...prev.user,
-      //       online,
-      //     },
-      //   }));
-      //   onLoadDialogs();
-      // });
-      socket.on("message/print/" + data.id, () => {
-        setPrint(true);
-        if (timer.current === 0) {
-          timer.current = 1;
-          setTimeout(() => {
-            timer.current = 0;
-            setPrint(false);
-          }, 5000);
-          return () => clearTimeout(timer.current);
-        }
-      });
+    };
+
+
+    if (data?.id) {
+      socket.emit("createRoom", "message/" + data.id);
+      socket.on("message", handleMessage);
+      socket.on("report", handleMessage);
+
       return () => {
-        socket.off("message");
-        // socket.off("message/view/" + data.id);
-        socket.off("message/print/" + data.id);
+        socket.emit("removeRoom", "message/" + data.id);
+        socket.off("message", handleMessage);
+        socket.off("report", handleMessage);
       };
     }
-
   }, [data?.id]);
 
   useEffect(() => {
     if (timer.current === 0 && data?.text?.length > 0) {
-      timer.current = 1;
+      timer.current = setTimeout(() => {
+        setPrint(false);
+        timer.current = null;
+      }, 5000);
       setPrint(true);
       socket.emit("message/print", { adminId: data.id });
-      setTimeout(() => {
-        timer.current = 0;
-        setPrint(false);
-      }, 5000);
       return () => clearTimeout(timer.current);
     }
   }, [data?.text]);
@@ -185,13 +167,32 @@ const Messages = ({ isMobileXL }) => {
       if (data?.id === "general" || dialogId === "general") {
         createMessageGeneral({ ...data, text });
       } else {
-        createMessage({ ...data, text });
+        createMessage(data);
       }
 
       reset({ id: data.id ?? dialogId });
     },
     [data, state, dialogId]
   );
+  const user =
+    userId == messages?.dialog?.to?.id
+      ? messages?.dialog?.from
+      : messages?.dialog?.to;
+
+  const onTask = useCallback(() => {
+    createTask({ type: "report", userId: user.id })
+      .then(() => {
+        NotificationManager.success("Жалоба отправлена");
+
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Ошибка при отправке"
+        );
+      });
+  }, [user]);
+
+
   const onKeyPress1 = (e) => {
     if (e.key === "Enter") {
       e.preventDefault();
@@ -202,8 +203,6 @@ const Messages = ({ isMobileXL }) => {
       onLoadDialogs();
     }
   };
-  const user = (userId == messages?.dialog?.to?.id ? messages?.dialog?.from : messages?.dialog?.to);
-  const image = getImageURL({ path: user, type: "user" })
 
   if (dialogs.loading) {
     return <Loader full />;
@@ -316,11 +315,17 @@ const Messages = ({ isMobileXL }) => {
                     </div>
                   ))}
                 <Chat
+                  print={print}
+                  onTask={(e) => onTask(e)}
+                  account="true"
                   general={data.id}
+                  user={user}
                   messages={messages}
                   emptyText="Нет сообщений"
                   onSubmit={(e) => onNewMessage(e)}
                   onChange={(e) => setValue("text", e)}
+                  data={data}
+                  setImage={(e) => setValue("media", Array.from(e))}
                 />
               </>
             )}

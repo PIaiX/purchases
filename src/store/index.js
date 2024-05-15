@@ -15,9 +15,10 @@ import cartSlice from "./reducers/cartSlice";
 import checkoutSlice from "./reducers/checkoutSlice";
 import favoriteSlice from "./reducers/favoriteSlice";
 import settingsSlice from "./reducers/settingsSlice";
-import { homeQuery } from "./reducers/homeQuery";
+import notificationSlice from "./reducers/notificationSlice"
 import themeSlice from "./reducers/themeSlice"
-import notificationSlice from "./reducers/notificationSlice";
+import { homeQuery } from "./reducers/homeQuery";
+import rememberMeSlice from "./reducers/rememberMeSlice";
 
 const rootReducer = combineReducers({
   settings: settingsSlice,
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   checkout: checkoutSlice,
   notification: notificationSlice,
   theme: themeSlice,
+  rememberMe: rememberMeSlice,
   [homeQuery.reducerPath]: homeQuery.reducer,
 });
 

@@ -1319,7 +1319,7 @@ nav.pagination ul li a {
 nav.pagination ul li a svg {
   font-size: 1.2em;
 }
-nav.pagination ul li a:hover, nav.pagination ul li a:focus {
+nav.pagination ul li a:hover {
   background-color: var(--extrapale-gray);
 }
 nav.pagination ul li a:active, nav.pagination ul li a.active {
@@ -2644,6 +2644,7 @@ header .profile-link img {
   justify-content: flex-start;
   align-items: flex-start;
   flex-wrap: nowrap;
+  white-space: pre-wrap;
 }
 .chat-window-message .text .bubble, .chat-window-message-mine .text .bubble {
   position: relative;
@@ -2695,6 +2696,7 @@ header .profile-link img {
   overflow-wrap: anywhere;
   font-size: 0.9em;
   text-align: center;
+  white-space: normal;
 }
 .chat-window-message .text .bubble-system .system-border, .chat-window-message-mine .text .bubble-system .system-border {
   border: 1px solid var(--mess-system-border);
@@ -2727,6 +2729,7 @@ header .profile-link img {
 }
 .chat-window-message-mine .text {
   align-items: flex-end;
+  white-space: pre-wrap;
 }
 .chat-window-message-mine .text .bubble {
   overflow-wrap: anywhere;
@@ -2742,6 +2745,7 @@ header .profile-link img {
   overflow-wrap: anywhere;
   background: var(--mess-system);
   text-align: center;
+  white-space: normal;
 }
 .chat-window-message-mine .text .bubble-system .system-border {
   border: 1px solid var(--mess-system-border);
@@ -6233,6 +6237,7 @@ footer .nav-mobile ul li button.active svg path {
   padding: 0.67em 1em;
   position: relative;
   width: 100%;
+  cursor: pointer;
 }
 .menu-chat ul li .preview:hover, .menu-chat ul li .preview:focus {
   color: var(--blue);
@@ -6410,10 +6415,12 @@ footer .nav-mobile ul li button.active svg path {
 }
 .full-menu-chat .top {
   display: flex;
-  width: 90%;
+  width: 100%;
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  margin-bottom: 0.8em;
 }
 .full-menu-chat .top form {
-  width: 100%;
+  width: 90%;
 }
 .full-menu-chat .top button img {
   transform: translateY(-50%) translateX(-50%);
@@ -6429,7 +6436,7 @@ footer .nav-mobile ul li button.active svg path {
   width: 100%;
 }
 .full-menu-chat .chat-window {
-  max-height: 475px;
+  max-height: 465px;
 }
 .full-menu-chat ul {
   list-style: none;

@@ -25,11 +25,11 @@ const getFavorites = createAsyncThunk('favorite/getFavorites', async (payloads, 
 const toggleFavorite = createAsyncThunk('favorite/toggleFavorite', async (payloads, thunkAPI) => {
     const isAuth = thunkAPI.getState()?.auth?.isAuth;
 
-    thunkAPI.dispatch(toggleFavoriteSync(payloads));
 
     if (isAuth) {
         try {
             const response = await $authApi.put(apiRoutes.FAVORITES, payloads);
+            thunkAPI.dispatch(getFavorites());
             return response?.data;
         } catch (error) {
             return thunkAPI.rejectWithValue(error.message);

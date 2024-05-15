@@ -1552,8 +1552,7 @@ nav.pagination {
                     font-size: 1.2em;
                 }
 
-                &:hover,
-                &:focus {
+                &:hover {
                     background-color: var(--extrapale-gray);
                 }
 
@@ -2816,6 +2815,7 @@ header {
             .text {
                 flex: 1;
                 @include flex(column, flex-start, flex-start, nowrap);
+                white-space: pre-wrap;
 
                 .bubble {
                     position: relative;
@@ -2865,6 +2865,7 @@ header {
                         overflow-wrap: anywhere;
                         font-size: 0.9em;
                         text-align: center;
+                        white-space: normal;
 
                         .system-border {
                             border: 1px solid var(--mess-system-border);
@@ -2906,6 +2907,7 @@ header {
 
                 .text {
                     align-items: flex-end;
+                    white-space: pre-wrap;
 
                     .bubble {
                         overflow-wrap: anywhere;
@@ -2922,6 +2924,7 @@ header {
                             overflow-wrap: anywhere;
                             background: var(--mess-system);
                             text-align: center;
+                            white-space: normal;
 
                             .system-border {
                                 border: 1px solid var(--mess-system-border);
@@ -6339,6 +6342,7 @@ footer {
                 padding: 0.67em 1em;
                 position: relative;
                 width: 100%;
+                cursor: pointer;
 
                 &:hover,
                 &:focus {
@@ -6548,10 +6552,12 @@ footer {
 
     .top {
         display: flex;
-        width: 90%;
+        width: 100%;
+        @include btnStyle();
+        margin-bottom: 0.8em;
 
         form {
-            width: 100%;
+            width: 90%;
         }
 
         button {
@@ -6571,7 +6577,7 @@ footer {
 
     .chat {
         &-window {
-            max-height: 475px;
+            max-height: 465px;
         }
 
         width: 100%;

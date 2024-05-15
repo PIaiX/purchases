@@ -247,16 +247,22 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
                 />
               </form>
             }
-            <button type='button'><img src={close} alt="" /></button>
+            <button type='button' onClick={() => (setId(false), setChatOpen(false))}><img src={close} alt="" /></button>
           </div>
 
           {id ?
             <Chat
+              print={print}
+              onTask={(e) => onTask(e)}
+              account="true"
               general={data.id}
+              user={user}
               messages={messages}
               emptyText="Нет сообщений"
               onSubmit={(e) => onNewMessage(e)}
               onChange={(e) => setValue("text", e)}
+              data={data}
+              setImage={(e) => setValue("media", Array.from(e))}
             />
             :
             <ul>

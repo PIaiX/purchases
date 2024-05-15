@@ -1,5 +1,5 @@
 import { apiRoutes } from '../config/api'
-import { $api } from './index'
+import { $api, $authApi } from './index'
 import axios from 'axios';
 
 const getGames = async () => {
@@ -14,6 +14,12 @@ const getGamesList = async () => {
     return response?.data
 
 }
+const getUserGame = async (data) => {
+
+    const response = await $authApi.get(apiRoutes.USER_CATEGORY, { params: data })
+    return response?.data
+
+}
 const getGame = async (data) => {
 
     const response = await $api.get(apiRoutes.CATEGORY, { params: data })
@@ -21,4 +27,4 @@ const getGame = async (data) => {
 
 }
 
-export { getGames, getGame, getGamesList }
+export { getGames, getGame, getGamesList, getUserGame }

@@ -43,6 +43,7 @@ const createMessage = async (data) => {
   const response = await $authApi.post(apiRoutes.MESSAGES, formData);
   return response?.data;
 };
+
 const viewMessages = async (data) => {
   const response = await $authApi.put(apiRoutes.MESSAGES, data);
   return response?.data;

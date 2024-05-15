@@ -3,6 +3,7 @@ import { BASE_URL } from "../config/api";
 import store from "../store";
 import { refreshAuth } from "./auth";
 import { ClientJS } from "clientjs";
+import { setToken } from "../store/reducers/authSlice";
 
 const $api = axios.create({
   baseURL: BASE_URL,
@@ -39,11 +40,11 @@ const $authApi = axios.create({
 $authApi.interceptors.request.use(
   async (config) => {
     // config.headers["Content-Type"] = "application/json";
-    const token = localStorage.getItem("token");
+    const state = store.getState();
+    const token = state?.auth?.token;
     if (token) {
       config.headers.authorization = `Bearer ${token}`;
     }
-    const state = store.getState();
     config.headers.device = DEVICE;
     config.headers.ip = state?.settings?.ip ?? "0.0.0.0";
     return config;
@@ -67,7 +68,8 @@ $authApi.interceptors.response.use(
         error?.response?.data?.message?.type == "REFRESH_TOKEN_EXPIRED" ||
         error?.response?.data?.message?.type == "ACCESS_TOKEN_EXPIRED"
       ) {
-        localStorage.removeItem("token");
+        store
+          .dispatch(setToken(false))
       }
       return store
         .dispatch(refreshAuth())
