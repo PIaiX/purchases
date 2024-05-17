@@ -1,33 +1,86 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link, Element, Events, animateScroll as scroll } from 'react-scroll';
-import Arrow from '../assets/imgs/arrow.svg';
+import { Link } from 'react-scroll';
 import GameCard from './GameCard';
 import SearchIcon from './svg/SearchIcon';
 import useIsMobile from '../hooks/isMobile';
+import Arrow from './svg/Arrow';
+import 'swiper/css';
+import 'swiper/css/free-mode';
+import 'swiper/css/mousewheel';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { FreeMode, Mousewheel } from 'swiper';
 
 const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
-  const isMobileLG = useIsMobile('991px');
-  useEffect(() => {
-    Events.scrollEvent.register('begin', function (to, element) {
-      // Действия при начале прокрутки
-    });
-
-    return () => {
-      Events.scrollEvent.remove('begin');
-    };
-  }, []);
-
-  const onScroll = (id) => {
-    scroll.scrollTo(id, {
-      duration: 800,
-      delay: 0,
-      smooth: 'easeInOutQuart',
-    });
+  const [sortSwiper, setSortSwiper] = useState()
+  const [currentSection, setCurrentSection] = useState();
+  const updateSlider = (i) => {
+    if (sortSwiper) {
+      sortSwiper?.slideTo(i, 300);
+      setCurrentSection(i);
+    }
   }
 
+  const menuRef = useRef(null)
+  const offsetT = -100
+  const SortNav = <nav className="sort">
+    <Swiper
+      direction={"vertical"}
+      loop={false}
+      spaceBetween={0}
+      slidesPerView={'auto'}
+      watchSlidesProgress={true}
+      modules={[FreeMode, Mousewheel]}
+      initialSlide={currentSection}
+      freeMode={{
+        enabled: true,
+        sticky: true,
+      }}
+      mousewheel={true}
+      onSwiper={setSortSwiper}
+    >
+      {games?.letters && games?.letters?.map((letter, i) => {
+        return (
+          <SwiperSlide key={letter.id} >
+            <Link
+              activeClass="active"
+              to={`section-${i}`}
+              spy={true}
+              smooth={true}
+              offset={offsetT}
+              duration={300}
+              onSetActive={() => updateSlider(i)}
+            >
+              {letter}
+            </Link>
+          </SwiperSlide>
+        )
+      })}
+    </Swiper>
+  </nav>
+  function updateSort() {
+    const menuNode = menuRef.current;
+    if (menuNode) {
+      const rect = menuNode.getBoundingClientRect();
+      const offsetElem = rect.top + window.pageYOffset;
+      const scrollTop = window.pageYOffset;
+      if (scrollTop > offsetElem) {
+        setCurrentSection(true);
+      } else {
+        setCurrentSection(false);
+      }
+      if (sortSwiper && currentSection !== null) {
+        sortSwiper.slideTo(currentSection, 300);
+      }
+    }
+  }
+  useEffect(() => {
+
+    window.addEventListener("scroll", updateSort);
+    return () => window.removeEventListener("scroll", updateSort);
+  }, []);
 
   return (
     <section className='sec-catalog mb-6 ps-6'>
@@ -36,16 +89,16 @@ const CatalogSection = ({ games }) => {
         <div className="sec-catalog-box">
 
           <div>
-            {games?.data && games?.letters && games.letters.map((letter) => (
-              <Element key={letter} name={`section-${letter}`} className="sec-catalog-part">
+            {games?.data && games?.letters && games.letters.map((letter, i) => (
+              <section key={letter} id={`section-${i}`} className="sec-catalog-part">
+                <div className='element'>
+                  <div className="letter">{letter}</div>
+                  <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
+                    <GameCard param1={letter} param2={games.data} />
 
-                <div className="letter">{letter}</div>
-                <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
-                  <GameCard param1={letter} param2={games.data} />
-
-                </ul>
-
-              </Element>
+                  </ul>
+                </div>
+              </section>
             ))}
             <div className='sec-promo mb-5'>
               <div className='text'>
@@ -60,22 +113,32 @@ const CatalogSection = ({ games }) => {
 
         <nav className='sec-catalog-nav'>
           <div
-            onMouseEnter={() => setFull(true)}
-            onMouseLeave={() => setFull(false)}
             className={(full) ? 'wrap full' : 'wrap'}
           >
-            {/* <form action="">
-              <button type='submit'>
-                <SearchIcon />
-              </button>
-              <input type="text" placeholder='Поиск' className='p-blue' />
-            </form> */}
             <ul>
-              {games?.data && games?.letters && games?.letters.map((letter) => (
-                <li key={letter}><Link to={`section-${letter}`} smooth={true} duration={300} offset={isMobileLG ? 0 : -100}>{letter}</Link></li>
-              ))}
+              {games?.data && games?.letters && games?.letters.map((letter, i) => {
+                return (
+                  <li key={letter}>
+                    <Link
+                      activeClass="active"
+                      to={`section-${i}`}
+                      spy={true}
+                      smooth={true}
+                      offset={offsetT}
+                      duration={300}
+                      onSetActive={() => updateSlider(i)}
+                    >
+                      {letter}
+                    </Link>
+                  </li>
+                )
+              })}
             </ul>
-            <div ref={cut} id="cut" className={(full) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div>
+            <div id="sort" ref={menuRef} className='scroll'>
+              {SortNav}
+            </div>
+
+            <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
           </div>
         </nav>
       </Container>
