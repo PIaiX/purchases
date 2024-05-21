@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Container from 'react-bootstrap/Container';
-import { Link } from 'react-scroll';
 import GameCard from './GameCard';
 import SearchIcon from './svg/SearchIcon';
 import useIsMobile from '../hooks/isMobile';
@@ -10,74 +9,35 @@ import 'swiper/css/free-mode';
 import 'swiper/css/mousewheel';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Mousewheel } from 'swiper';
+import { Link } from 'react-scroll';
 
 const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
   const cut = useRef(null);
   const [sortSwiper, setSortSwiper] = useState()
   const [currentSection, setCurrentSection] = useState();
+  console.log(currentSection)
   const updateSlider = (i) => {
     if (sortSwiper) {
-      sortSwiper?.slideTo(i, 300);
+      sortSwiper?.slideTo(i);
       setCurrentSection(i);
     }
   }
 
   const menuRef = useRef(null)
   const offsetT = -100
-  const SortNav = <nav className="sort">
-    <Swiper
-      direction={"vertical"}
-      loop={false}
-      spaceBetween={0}
-      slidesPerView={'auto'}
-      watchSlidesProgress={true}
-      modules={[FreeMode, Mousewheel]}
-      initialSlide={currentSection}
-      freeMode={{
-        enabled: true,
-        sticky: true,
-      }}
-      mousewheel={true}
-      onSwiper={setSortSwiper}
-    >
-      {games?.letters && games?.letters?.map((letter, i) => {
-        return (
-          <SwiperSlide key={letter.id} >
-            <Link
-              activeClass="active"
-              to={`section-${i}`}
-              spy={true}
-              smooth={true}
-              offset={offsetT}
-              duration={300}
-              onSetActive={() => updateSlider(i)}
-            >
-              {letter}
-            </Link>
-          </SwiperSlide>
-        )
-      })}
-    </Swiper>
-  </nav>
-  function updateSort() {
-    const menuNode = menuRef.current;
-    if (menuNode) {
-      const rect = menuNode.getBoundingClientRect();
-      const offsetElem = rect.top + window.pageYOffset;
-      const scrollTop = window.pageYOffset;
-      if (scrollTop > offsetElem) {
-        setCurrentSection(true);
-      } else {
-        setCurrentSection(false);
-      }
-      if (sortSwiper && currentSection !== null) {
-        sortSwiper.slideTo(currentSection, 300);
+
+
+  useEffect(() => {
+    function updateSort() {
+      const menuNode = menuRef.current;
+      if (menuNode) {
+        const rect = menuNode.getBoundingClientRect();
+        const offsetElem = rect.top + window.pageYOffset;
+        const scrollTop = window.pageYOffset;
+
       }
     }
-  }
-  useEffect(() => {
-
     window.addEventListener("scroll", updateSort);
     return () => window.removeEventListener("scroll", updateSort);
   }, []);
@@ -121,7 +81,7 @@ const CatalogSection = ({ games }) => {
                   <li key={letter}>
                     <Link
                       activeClass="active"
-                      to={`section-${i}`}
+                      to={"section-" + i}
                       spy={true}
                       smooth={true}
                       offset={offsetT}
@@ -135,7 +95,41 @@ const CatalogSection = ({ games }) => {
               })}
             </ul>
             <div id="sort" ref={menuRef} className='scroll'>
-              {SortNav}
+              <nav className="sort">
+                <Swiper
+                  direction="vertical"
+                  loop={false}
+                  spaceBetween={0}
+
+                  watchSlidesProgress={true}
+                  modules={[FreeMode, Mousewheel]}
+                  initialSlide={currentSection}
+                  freeMode={{
+                    enabled: true,
+                    sticky: true,
+                  }}
+                  mousewheel={true}
+                  onSwiper={setSortSwiper}
+                >
+                  {games?.letters && games?.letters?.map((letter, i) => {
+                    return (
+                      <SwiperSlide key={letter.id} >
+                        <Link
+                          activeClass="active"
+                          to={"section-" + i}
+                          spy={true}
+                          smooth={true}
+                          offset={offsetT}
+                          duration={300}
+                          onSetActive={() => updateSlider(i)}
+                        >
+                          {letter}
+                        </Link>
+                      </SwiperSlide>
+                    )
+                  })}
+                </Swiper>
+              </nav>
             </div>
 
             <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>

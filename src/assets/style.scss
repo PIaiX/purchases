@@ -92,6 +92,8 @@ $bp-xxl: 1399.98px;
     --menu-active: #9DC4EF33;
     --menu-text: #4A83DC;
     --arrow: #4A83DC;
+    --login-icon: #44F06A;
+    --login-key: #000;
 
     --letter: #fff;
     --search-game-border: #9DC4EF;
@@ -143,6 +145,8 @@ $bp-xxl: 1399.98px;
     --menu-active: #47567B;
     --menu-text: #FFFFFF;
     --arrow: #43536A;
+    --login-icon: #47567B;
+    --login-key: #2B3651;
 
     --letter: #47567B;
     --search-game-border: rgba(0, 0, 0, 0);
@@ -2235,6 +2239,7 @@ header {
     }
 }
 
+
 /* Catalog */
 .sec-catalog {
     .container {
@@ -2309,9 +2314,10 @@ header {
                     font-size: 1.3em;
                     text-align: center;
                     width: 100%;
+                    height: 100%;
 
                     &-slide {
-                        height: auto;
+                        height: auto !important;
                         padding: .2em;
 
                         a {
@@ -2339,43 +2345,6 @@ header {
                     }
                 }
 
-                ul {
-                    // column-count: auto;
-                    // column-gap: 20px;
-                    list-style: none;
-
-
-                    li {
-
-                        break-inside: avoid;
-                        font-size: 1.3em;
-                        text-align: center;
-                        margin: 0.4em;
-
-                        a {
-                            @include flex();
-                            color: var(--font-color);
-                            position: relative;
-                            background-color: transparent;
-                            transition: $transition;
-                            width: 1.9em;
-                            height: 1.9em;
-                            border-radius: $radius;
-                            white-space: nowrap;
-
-
-                            &:hover {
-                                background-color: var(--menu-active);
-                                color: var(--menu-text);
-                            }
-
-                            &.active {
-                                background-color: var(--menu-active);
-                                color: var(--menu-text);
-                            }
-                        }
-                    }
-                }
 
             }
 
@@ -2442,24 +2411,22 @@ header {
                 @include btnStyle();
 
                 ul {
-                    display: block;
-                    column-count: auto;
-                    column-gap: 20px;
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
+                    height: 100vh;
+                    gap: .1em;
                     overflow: hidden;
                     list-style: none;
                     padding-left: 0px;
-                    max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
-                    justify-content: flex-start;
+                    padding-top: 0px;
+                    max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
                     align-items: center;
                     transition: max-height var(--transition);
-                    column-fill: auto;
 
                     li {
-                        break-inside: avoid;
                         font-size: 1.3em;
                         text-align: center;
                         margin: 0.4em;
-                        display: block;
 
                         a {
                             @include flex();
@@ -6224,7 +6191,8 @@ footer {
             width: 58px;
             height: 58px;
             border-radius: 50%;
-            background-color: #44F06A;
+            background-color: var(--login-icon);
+            color: var(--login-key);
             justify-content: center;
             position: relative;
             align-items: center;
