@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import StarRating from './utils/StarRating';
 import moment from "moment";
 import { getImageURL } from '../helpers/all';
@@ -7,13 +7,32 @@ import { Dropdown } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { IoEllipsisVertical } from 'react-icons/io5';
 
-const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, onStatus, price }) => {
+const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, onStatus, price, }) => {
   const userId = useSelector(state => state.auth?.user?.id);
   const profileId = (user.id == userId) ? author.id : user.id;
   const nickname = (user.id == userId) ? author.nickname : user.nickname;
   const rating = (user.id == userId) ? author.rating : user.rating;
   const image = getImageURL({ path: ((user.id == userId) ? author : user), type: "user" })
   const coly = user.id == userId ? total : price;
+  const renderOptions = useMemo(() => {
+
+    return product.options?.map((item, i) => {
+      const option = item.option;
+      if (!option || !option.data || !option.data.desc) return null; // Проверка наличия данных
+      const key = option.id || i; // Использование уникального идентификатора или индекса
+      const titleOpt = option.title || '';
+      const value = item.value || '';
+
+      return (
+        <React.Fragment key={key}>
+          <span className={value && 'me-2'}>{titleOpt}</span>
+          {value && <span>{value}</span>}
+          {/* {options?.length != (i + 1) && options[i + 1]?.option?.data?.desc &&  */}
+          < span className="me-2">,</span>
+        </React.Fragment >
+      );
+    });
+  }, [product]);
   return (
     <div className="offer-line-3">
       <div className="date">
@@ -26,7 +45,11 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
         <span className='d-xl-none me-2'>ID заказа:</span>
         <div>{uid.toUpperCase()}</div>
       </div>
-      <div className="descr"><Link to={`/game/lot/${product.uid}`}>{product.title}</Link></div>
+      <div className="descr"><Link to={`/game/lot/${product.uid}`}>
+        {product.serverTitle && <span className='me-2'>{product.serverTitle},</span>}
+        {product.title && <span className='me-2'>{product.title},</span>}
+        {product.options && product.options?.length > 0 && renderOptions}
+      </Link></div>
       <div className="seller">
         <Link to={`/trader/${profileId}`}><img src={image} alt="User8name" /></Link>
         <div>

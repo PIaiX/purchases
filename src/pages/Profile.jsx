@@ -304,7 +304,7 @@ const Profile = () => {
                 <div className='flex-1'>
                   <ul className='list-unstyled g-2 g-sm-4 row row-cols-sm-2 row-cols-md-3 row-cols-xxl-4'>
                     {user?.categories?.length > 0 && user.categories.map(item => (
-                      <li><GameMiniCard {...item} onGameChange={onGameChange} /></li>
+                      <li><GameMiniCard {...item} onGameChange={onGameChange} currentGame={currentGame} /></li>
                     ))}
                   </ul>
                   {/* <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5' onClick={handleShowAll}>

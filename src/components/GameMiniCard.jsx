@@ -1,14 +1,12 @@
 import React, { useState } from 'react';
 import { getImageURL } from '../helpers/all';
 
-const GameMiniCard = ({ id, media, title, onGameChange }) => {
-  const [isActive, setIsActive] = useState(false);
+const GameMiniCard = ({ id, media, title, onGameChange, currentGame }) => {
   const handleGameChange = () => {
     onGameChange(id);
-    setIsActive(true);
   };
   return (
-    <button className={`game-card-mini ${isActive ? 'bg-gray' : ''}`} onClick={handleGameChange}>
+    <button className={`game-card-mini ${currentGame == id ? 'active' : ''}`} onClick={handleGameChange}>
       <h6>{title}</h6>
     </button>
   );

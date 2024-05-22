@@ -34,7 +34,7 @@ const Feedback = () => {
       })
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
   }, [currentPage, isMyFeedback]);
-  const totalItems = review?.reviews?.pagination?.totalItems ?? 0;
+  const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   if (review.loading) {
     return <Loader full />;
@@ -109,11 +109,11 @@ const Feedback = () => {
               <div className="list-wrapping-top">
                 <h5 className='fw-6'>Мои отзывы</h5>
               </div>
-              {review?.reviews?.items?.length > 0 ? (
+              {review?.items?.length > 0 ? (
                 <>
                   <div className="list-wrapping-main p-3">
                     <ul className='row row-cols-1 g-4'>
-                      {review.reviews.items.map((item) => (
+                      {review.items.map((item) => (
                         <li>
                           <FeedbackLine  {...item} />
                         </li>
@@ -121,7 +121,7 @@ const Feedback = () => {
                     </ul>
                   </div>
                   <div className="list-wrapping-bottom">
-                    <NavPagination totalPages={review?.reviews.pagination?.totalPages} onPageChange={onPageChange} />
+                    <NavPagination totalPages={review?.pagination?.totalPages} onPageChange={onPageChange} />
                   </div>
                 </>
               ) : (
@@ -139,13 +139,13 @@ const Feedback = () => {
               <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
                 Загрузка отзывов...
               </div>
-            ) : (review?.reviews?.items?.length > 0 ? (<>
+            ) : (review?.items?.length > 0 ? (<>
               <div className="list-wrapping-top">
                 <h5 className='fw-6'>Всего {totalItems} {declension}</h5>
               </div>
               <div className="list-wrapping-main p-sm-4">
                 <ul className='row row-cols-1 g-3'>
-                  {review.reviews.items.map((item) => (
+                  {review.items.map((item) => (
                     <li>
                       <FeedbackLine  {...item} />
                     </li>

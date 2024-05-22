@@ -15,7 +15,8 @@ const FeedbackLine = ({ text, value, createdAt, author, user }) => {
   const image = getImageURL({ path: author, type: "user" })
   return (
     <div className="feedback-line">
-      <Link to={`/trader/${author.id}`}><img src={image} alt="user" /></Link>
+
+      <Link to={`/trader/${author.id}`}><div className='photo'> <img src={image} alt="user" /></div></Link>
       <div className='feedback-line-main'>
         <div className='feedback-line-top'>
           <h5><Link to={`/trader/${author.id}`}>{author.nickname}</Link></h5>

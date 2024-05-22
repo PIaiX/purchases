@@ -1102,19 +1102,18 @@ button {
     &-2,
     &-light {
         @extend .btn;
-        background: var(--glass);
+        background: var(--label);
         color: var(--font-color);
-        box-shadow: var(--shadow);
+        @include lightShadow();
         backdrop-filter: blur(5px);
         border-radius: $radius;
 
         &:hover,
-        &:focus,
         &:active,
         &.active {
-            color: var(--font-color);
-            background: var(--second-bg);
+            background-color: var(--menu-active);
         }
+
 
         &[disabled] {
             background: (--gray-bg) !important;
@@ -1548,6 +1547,8 @@ button {
 
 /* Pagination */
 nav.pagination {
+    justify-content: center;
+
     ul {
         @include list();
         @include flex();
@@ -2569,6 +2570,12 @@ header {
 
         @media (max-width: $bp-sm) {
             padding: 1em 0.75em;
+        }
+
+        &:hover,
+        &:active,
+        &.active {
+            background-color: var(--menu-active);
         }
 
         .img {
@@ -4230,9 +4237,9 @@ header {
 
     .fav-item {
         @include flex(row, flex-start, center, nowrap);
-        background-color: var(--white);
+        background: var(--label);
         @include lightShadow();
-        padding: 0.65em 1.3em;
+        padding: 1.35em;
 
         border-radius: $radius;
 
@@ -4439,6 +4446,7 @@ ACCOUNT
         &:hover,
         &:focus,
         &:active {
+            background: var(--menu-active);
             color: var(--blue);
         }
 
@@ -5072,6 +5080,7 @@ ACCOUNT
     @include flex(row, space-between, center, nowrap);
     padding: 1em;
     color: var(--total-black);
+    border-bottom: 1px solid var(--extrapale-blue);
 
     @media (max-width: $bp-xl) {
         flex-direction: column;
@@ -5082,11 +5091,20 @@ ACCOUNT
 
     .descr {
         flex: 1;
-        @include clamp(2, 1.2em);
+        display: block;
+        max-width: 920px;
+        overflow: hidden;
+        text-overflow: clip;
+        word-wrap: break-word;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        display: -webkit-box;
+        box-orient: vertical;
+        text-overflow: ellipsis;
 
-        @media (max-width: $bp-xl) {
-            margin-bottom: 1em;
-            @include clamp(4, 1.2em);
+        span {
+            display: inline-block;
         }
     }
 
@@ -5128,6 +5146,7 @@ ACCOUNT
     grid-template-columns: 145px 110px 1fr 200px 130px 80px;
     grid-template-rows: 1fr;
     grid-template-areas: "date id descr seller status price";
+    border-bottom: 1px solid var(--extrapale-blue);
 
     @media (max-width: $bp-xxl) {
         grid-template-columns: 85px 90px 1fr 200px 130px 80px;
@@ -5175,6 +5194,22 @@ ACCOUNT
 
     .descr {
         grid-area: descr;
+        flex: 1;
+        display: block;
+        max-width: 920px;
+        overflow: hidden;
+        text-overflow: clip;
+        word-wrap: break-word;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        line-clamp: 2;
+        display: -webkit-box;
+        box-orient: vertical;
+        text-overflow: ellipsis;
+
+        span {
+            display: inline-block;
+        }
     }
 
     .seller {
@@ -5212,15 +5247,28 @@ ACCOUNT
     position: relative;
     @include flex(row, flex-start, flex-start, nowrap);
 
-    img {
-        --w: 50px;
-        @include rounedImg(var(--w));
-        border: 5px solid #fdfdfd;
-        box-sizing: content-box;
+    .photo {
         position: relative;
         z-index: 2;
-        margin-top: 0.25em;
+        width: 60px;
+        height: 60px;
+        border-radius: 100%;
+
+        background: var(--glass);
+
+
+
+        img {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            --w: 50px;
+            @include rounedImg(var(--w));
+            object-fit: cover;
+        }
+
     }
+
 
     &-main {
         position: relative;
@@ -5241,7 +5289,7 @@ ACCOUNT
     }
 
     &-text {
-        background-color: var(--white);
+        background-color: var(--letter);
         @include lightShadow();
         border-radius: $radius;
         padding: 1em 1em 1.3em 60px;
@@ -5322,6 +5370,7 @@ ACCOUNT
     grid-template-columns: 21% 21% 21% 21% 16%;
     grid-template-rows: 1fr;
     grid-template-areas: "date id type stat sum";
+    border-bottom: 1px solid var(--extrapale-blue);
 
     @media (max-width: $bp-xl) {
         grid-template-columns: repeat(5, 1fr);

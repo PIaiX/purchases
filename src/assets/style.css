@@ -894,16 +894,15 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   background: var(--light-gray) !important;
 }
 .btn-2, .btn-light {
-  background: var(--glass);
+  background: var(--label);
   color: var(--font-color);
-  box-shadow: var(--shadow);
+  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   -webkit-backdrop-filter: blur(5px);
           backdrop-filter: blur(5px);
   border-radius: 0.67em;
 }
-.btn-2:hover, .btn-2:focus, .btn-2:active, .btn-2.active, .btn-light:hover, .btn-light:focus, .btn-light:active, .btn-light.active {
-  color: var(--font-color);
-  background: var(--second-bg);
+.btn-2:hover, .btn-2:active, .btn-2.active, .btn-light:hover, .btn-light:active, .btn-light.active {
+  background-color: var(--menu-active);
 }
 .btn-2[disabled], .btn-light[disabled] {
   background: --gray-bg !important;
@@ -1311,6 +1310,9 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 }
 
 /* Pagination */
+nav.pagination {
+  justify-content: center;
+}
 nav.pagination ul {
   list-style: none;
   padding-left: 0px;
@@ -2324,6 +2326,9 @@ header .profile-link img {
   .game-card-mini {
     padding: 1em 0.75em;
   }
+}
+.game-card-mini:hover, .game-card-mini:active, .game-card-mini.active {
+  background-color: var(--menu-active);
 }
 .game-card-mini .img {
   width: 50px;
@@ -4093,9 +4098,9 @@ header .profile-link img {
   justify-content: flex-start;
   align-items: center;
   flex-wrap: nowrap;
-  background-color: var(--white);
+  background: var(--label);
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
-  padding: 0.65em 1.3em;
+  padding: 1.35em;
   border-radius: 0.67em;
 }
 @media (max-width: 1399.98px) {
@@ -4308,6 +4313,7 @@ ACCOUNT
   transition: 300ms ease-in-out;
 }
 .account .btn-add-offer:hover, .account .btn-add-offer:focus, .account .btn-add-offer:active {
+  background: var(--menu-active);
   color: var(--blue);
 }
 @media (max-width: 767.98px) {
@@ -4965,6 +4971,7 @@ ACCOUNT
   flex-wrap: nowrap;
   padding: 1em;
   color: var(--total-black);
+  border-bottom: 1px solid var(--extrapale-blue);
 }
 @media (max-width: 1199.98px) {
   .offer-line-2 {
@@ -4976,23 +4983,20 @@ ACCOUNT
 }
 .offer-line-2 .descr {
   flex: 1;
-  display: -webkit-box;
+  display: block;
+  max-width: 920px;
+  overflow: hidden;
+  text-overflow: clip;
+  word-wrap: break-word;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  overflow: hidden;
-  line-height: 1.2em;
-  max-height: 2.4em;
+  line-clamp: 2;
+  display: -webkit-box;
+  box-orient: vertical;
+  text-overflow: ellipsis;
 }
-@media (max-width: 1199.98px) {
-  .offer-line-2 .descr {
-    margin-bottom: 1em;
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    line-height: 1.2em;
-    max-height: 4.8em;
-  }
+.offer-line-2 .descr span {
+  display: inline-block;
 }
 .offer-line-2 .price {
   width: 120px;
@@ -5035,6 +5039,7 @@ ACCOUNT
   grid-template-columns: 145px 110px 1fr 200px 130px 80px;
   grid-template-rows: 1fr;
   grid-template-areas: "date id descr seller status price";
+  border-bottom: 1px solid var(--extrapale-blue);
 }
 @media (max-width: 1399.98px) {
   .offer-line-3 {
@@ -5087,6 +5092,21 @@ ACCOUNT
 }
 .offer-line-3 .descr {
   grid-area: descr;
+  flex: 1;
+  display: block;
+  max-width: 920px;
+  overflow: hidden;
+  text-overflow: clip;
+  word-wrap: break-word;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  line-clamp: 2;
+  display: -webkit-box;
+  box-orient: vertical;
+  text-overflow: ellipsis;
+}
+.offer-line-3 .descr span {
+  display: inline-block;
 }
 .offer-line-3 .seller {
   grid-area: seller;
@@ -5130,18 +5150,25 @@ ACCOUNT
   align-items: flex-start;
   flex-wrap: nowrap;
 }
-.feedback-line img {
+.feedback-line .photo {
+  position: relative;
+  z-index: 2;
+  width: 60px;
+  height: 60px;
+  border-radius: 100%;
+  background: var(--glass);
+}
+.feedback-line .photo img {
+  position: absolute;
+  top: 5px;
+  left: 5px;
   --w: 50px;
   width: var(--w);
   height: var(--w);
   border-radius: 50%;
   -o-object-fit: cover;
      object-fit: cover;
-  border: 5px solid #fdfdfd;
-  box-sizing: content-box;
-  position: relative;
-  z-index: 2;
-  margin-top: 0.25em;
+  object-fit: cover;
 }
 .feedback-line-main {
   position: relative;
@@ -5169,7 +5196,7 @@ ACCOUNT
   }
 }
 .feedback-line-text {
-  background-color: var(--white);
+  background-color: var(--letter);
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   border-radius: 0.67em;
   padding: 1em 1em 1.3em 60px;
@@ -5268,6 +5295,7 @@ ACCOUNT
   grid-template-columns: 21% 21% 21% 21% 16%;
   grid-template-rows: 1fr;
   grid-template-areas: "date id type stat sum";
+  border-bottom: 1px solid var(--extrapale-blue);
 }
 @media (max-width: 1199.98px) {
   .operation-line {
