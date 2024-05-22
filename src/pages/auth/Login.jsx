@@ -86,8 +86,8 @@ const Login = () => {
                       },
                     }}
                   />
-                  <div className="mt-4 d-flex align-items-center justify-content-between">
-                    <label>
+                  <div className="mt-4 d-flex align-items-center justify-content-end">
+                    {/* <label>
                       <input
                         type="checkbox"
                         className="checkbox me-3"
@@ -95,7 +95,7 @@ const Login = () => {
                         onChange={e => handleCheckboxChange(e)}
                       />
                       <span>Чужой компьютер</span>
-                    </label>
+                    </label> */}
                     <Link to="/password" className="fw-5">
                       Забыли пароль?
                     </Link>

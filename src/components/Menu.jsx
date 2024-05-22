@@ -1,6 +1,6 @@
 import React, { useRef, useState } from 'react';
-import { FiList, FiMessageCircle, FiUser } from 'react-icons/fi';
-import { LuCoins, LuFileClock, LuLogOut, LuMails } from "react-icons/lu";
+import { FiList, FiMessageCircle, FiSettings, FiUser } from 'react-icons/fi';
+import { LuCoins, LuFileClock, LuLogOut, LuMails, LuSettings } from "react-icons/lu";
 import { RiHistoryLine } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
@@ -138,6 +138,14 @@ const Menu = ({ full, setFull }) => {
                     <div>
                       <HeadPhones className="svg me-2" />
                       {full && <span>Обратная связь</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/account/settings" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiSettings className="svg me-2" />
+                      {full && <span>Настройки</span>}
                     </div>
                   </NavLink>
                 </li>
