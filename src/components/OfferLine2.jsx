@@ -2,7 +2,8 @@ import React, { useMemo } from 'react';
 import { FiEdit } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
-const OfferLine2 = ({ category, uid, status, title, price, server, options }) => {
+const OfferLine2 = ({ category, uid, status, title, desc, price, server, options }) => {
+  console.log(options)
   const renderOptions = useMemo(() => {
 
     return options.map((item, i) => {
@@ -27,6 +28,7 @@ const OfferLine2 = ({ category, uid, status, title, price, server, options }) =>
       <div className="descr">
         {server && <span className='me-2'>{server.title},</span>}
         {title && <span className='me-2'>{title},</span>}
+        {desc && <span className='me-2'>{desc},</span>}
         {options && options?.length > 0 && renderOptions}
       </div>
       <div className='d-flex align-items-center'>

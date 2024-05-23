@@ -5090,22 +5090,8 @@ ACCOUNT
     }
 
     .descr {
-        flex: 1;
-        display: block;
-        max-width: 920px;
-        overflow: hidden;
-        text-overflow: clip;
-        word-wrap: break-word;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-clamp: 2;
-        display: -webkit-box;
-        box-orient: vertical;
-        text-overflow: ellipsis;
-
-        span {
-            display: inline-block;
-        }
+        overflow-wrap: anywhere;
+        @include clamp(2, 1.4em, false);
     }
 
     .price {
@@ -5193,23 +5179,8 @@ ACCOUNT
     }
 
     .descr {
-        grid-area: descr;
-        flex: 1;
-        display: block;
-        max-width: 920px;
-        overflow: hidden;
-        text-overflow: clip;
-        word-wrap: break-word;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
-        line-clamp: 2;
-        display: -webkit-box;
-        box-orient: vertical;
-        text-overflow: ellipsis;
-
-        span {
-            display: inline-block;
-        }
+        overflow-wrap: anywhere;
+        @include clamp(3, 1.4em, false);
     }
 
     .seller {
@@ -5414,6 +5385,7 @@ ACCOUNT
 
     .sum {
         grid-area: sum;
+        font-weight: 700;
 
         @media (max-width: $bp-xl) {
             text-align: right;

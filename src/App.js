@@ -18,23 +18,15 @@ function App() {
   const { isAuth, token, user } = useSelector((state) => state.auth);
 
   const theme = useSelector((state) => state.theme.value);
-  const rememberMe = useSelector(state => state.rememberMe.value);
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
 
   }, [theme]);
-  const sessionExists = !!sessionStorage.getItem('myKey');
-  useEffect(() => {
-    if (!sessionExists && rememberMe && isAuth) {
-      console.log(sessionExists)
-      console.log(rememberMe)
-      // dispatch(logout());
 
-    }
-  }, [sessionExists, rememberMe, dispatch, isAuth]);
   useEffect(() => {
     if (isAuth) {
       socket.on('notification', (data) => {
+        console.log(data)
         if (data?.user) {
           dispatch(setUser(data.user))
         }
@@ -46,7 +38,6 @@ function App() {
       socket.on('logout/' + user.id, (data) => {
         if (data) {
           dispatch(logout())
-          window.location.reload();
 
         }
       })

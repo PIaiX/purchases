@@ -145,9 +145,9 @@ const Finance = () => {
                 </div>
               ) : (
                 <ul className="row row-cols-1 row-cols-md-2 row-cols-xl-1 g-4 g-xl-0">
-                  {transactions?.items.map((item) => (
+                  {transactions?.items.map((item, index) => (
                     <li>
-                      <Operation {...item} />
+                      <Operation key={index} {...item} />
                     </li>
                   ))}
                 </ul>

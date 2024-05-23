@@ -48,6 +48,7 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
       <div className="descr"><Link to={`/game/lot/${product.uid}`}>
         {product.serverTitle && <span className='me-2'>{product.serverTitle},</span>}
         {product.title && <span className='me-2'>{product.title},</span>}
+        {product.desc && <span className='me-2'>{product.desc},</span>}
         {product.options && product.options?.length > 0 && renderOptions}
       </Link></div>
       <div className="seller">
@@ -65,8 +66,8 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
             <div className='blue'>Отменено</div>
             :
             (user.id == userId ?
-              <button className='btn-5 py-1 px-2' onClick={() => onStatus({ id: id, status: "ok" })}>Подтвердить</button>
-              : <button className='btn-3 py-1 px-2' onClick={() => onStatus({ id: id, status: "cancel" })}>Отменить</button>
+              <button className='btn-5 py-1 px-2' onClick={() => onStatus({ id: id, status: "ok", authorId: 0 })}>Подтвердить</button>
+              : <button className='btn-3 py-1 px-2' onClick={() => onStatus({ id: id, status: "cancel", authorId: 1 })}>Отменить</button>
             )
         }
       </div>

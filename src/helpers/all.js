@@ -10,8 +10,7 @@ const customPrice = (value, currency = true) => {
   if (currency) {
     value = (
       <>
-        {value}
-        <LiaRubleSignSolid className="ruble ms-2" />
+        {value}&nbsp;₽
       </>
     );
   }

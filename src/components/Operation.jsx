@@ -1,7 +1,8 @@
 import React from 'react';
 import moment from "moment";
+import { customPrice } from '../helpers/all';
 
-const Operation = ({ createdAt, orderId, id, status, price, className }) => {
+const Operation = ({ createdAt, orderId, id, status, price, total, className }) => {
   return (
     <div className={"operation-line"}>
       <div className="date">
@@ -32,7 +33,12 @@ const Operation = ({ createdAt, orderId, id, status, price, className }) => {
 
         }
       </div>
-      <div className="sum">{price}</div>
+      {price < 0 ?
+        <div className="sum">{customPrice(total)}</div>
+        :
+        <div className="sum">{customPrice(price)}</div>
+      }
+
     </div >
   );
 };

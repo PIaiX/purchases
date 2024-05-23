@@ -46,6 +46,7 @@ const apiRoutes = {
   CATEGORIES: BASE_URL + "/category",
   CATEGORIESLIST: BASE_URL + "/category/list",
   CATEGORY: BASE_URL + "/category/one",
+  USER_CATEGORY: BASE_URL + "/user/category/one",
 
   // MESSAGES
   MESSAGES: BASE_URL + "/message",

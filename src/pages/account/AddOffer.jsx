@@ -9,7 +9,7 @@ import Loader from '../../components/utils/Loader';
 import ReturnTitle from '../../components/utils/ReturnTitle';
 import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
-import { getGamesList } from '../../services/game';
+import { getGamesList, getUserGame } from '../../services/game';
 import { createUserProduct, editUserProduct, getUserProduct } from '../../services/product';
 
 const AddOffer = () => {
@@ -61,9 +61,24 @@ const AddOffer = () => {
         "Выберите характеристики продукта"
       )
     }
-    if (!data.price) {
+    if (!data.price || data.price == 0) {
       return NotificationManager.error(
         "Введите цену объявления"
+      )
+    }
+    if (!data.count || data.count < 1) {
+      return NotificationManager.error(
+        "Введите количество товара"
+      )
+    }
+    if (!data.notDesc && data.price < 1) {
+      return NotificationManager.error(
+        "Стоимость не ниже 1 рубля"
+      )
+    }
+    if (data.notDesc && (!data?.price || !data?.minCount || data?.price * data?.minCount < 1)) {
+      return NotificationManager.error(
+        "Продаваемый обьем валюты должен стоит не менее 1 рубля"
       )
     }
     if (!id) {
@@ -78,7 +93,11 @@ const AddOffer = () => {
         desc: data.desc,
         count: data.count,
         price: data.price,
-        status: data.status
+        status: data.status,
+        data: {
+          minCount: data.minCount,
+          typeCount: data.typeCount
+        }
       })
         .then(() => {
           NotificationManager.success("Лот создан");
@@ -105,7 +124,11 @@ const AddOffer = () => {
         desc: data.desc,
         count: data.count,
         price: data.price,
-        status: data.status
+        status: data.status,
+        data: {
+          minCount: data.minCount,
+          typeCount: data.typeCount
+        }
       })
         .then(() => {
           NotificationManager.success("Лот обновлён");
@@ -123,61 +146,94 @@ const AddOffer = () => {
   }, []);
 
   useEffect(() => {
-    getGamesList()
-      .then((res) => {
-        setGames((prev) => ({
-          ...prev,
-          items: res,
-          loading: false
-        }));
-      })
-      .catch(() => setGames((prev) => ({ ...prev, loading: false })));
+    if (!id) {
+      getGamesList()
+        .then((res) => {
+          setGames((prev) => ({
+            ...prev,
+            items: res,
+            loading: false
+          }));
+        })
+        .catch(() => setGames((prev) => ({ ...prev, loading: false })));
+    }
     if (!id) {
       setSum(2)
     }
   }, []);
   useEffect(() => {
+    if (data.categoryId && sum > 1) {
+      getUserGame({ id: data.categoryId })
+        .then((res) => {
+          reset({
+            title: data.title,
+            text: data.text,
+            count: data.count,
+            price: data.price,
+            categoryId: data.categoryId,
+            game: res,
+            region: res?.regions && res?.regions[0]?.status == 0 ? res?.regions[0]?.id : null,
+          })
+        })
+        .catch(() => setGames((prev) => ({ ...prev, loading: false })));
+    }
+  }, [data.categoryId]);
+  useEffect(() => {
     if (id) {
       getUserProduct({ id: id })
         .then((res) => {
-          let id = res.id;
-          let categoryId = res.categoryId;
+          setGames((prev) => ({
+            ...prev,
+            items: res.categories,
+            loading: false
+          }));
+          let id = res.product.id;
+          let categoryId = res.product.categoryId;
           let game = res.category;
-          let desc = res.desc;
-          let count = res.count;
-          let price = res.price;
-          let status = res.status;
+          let title = res.product.title;
+          let desc = res.product.desc;
+          let count = res.product.count;
+          let price = res.product.price;
+          let status = res.product.status;
           let region;
           let servers;
           let server;
-          let param = res.paramId;
-          let one = res.param.data?.one;
-          let currency = res.param.data?.currency;
+          let param = res.product.paramId;
+          let minCount = res.product.data?.minCount;
+          let typeCount = res.product.data?.typeCount;
+          let one = res.product.param.data?.one;
+          let currency = res.product.param.data?.currency;
+          let serverView = res.product.param.data?.serverView;
           let options;
           let option = [];
           let optionId = [];
           let child = [];
-          if (res?.regionId) {
-            region = res.regionId
-            if (res?.region?.servers) {
-              servers = res.region.servers
-              server = res.serverId
+          let sortOptions = res.product.options.sort((a, b) => a.optionId - b.optionId);
+          if (res?.product?.regionId) {
+            region = res.product.regionId
+            if (!serverView) {
+              let regionIndex = res?.category?.regions.findIndex((e) => e.id === region);
+              if (res?.category?.regions[regionIndex]?.servers) {
+                servers = res.category.regions[regionIndex].servers
+                server = res.product.serverId
+              }
             }
           }
-          if (res?.param?.options?.length > 0) {
+          let paramIndex = res?.category?.params.findIndex((e) => e.id === param);
+          if (res?.category?.params[paramIndex]?.options?.length > 0) {
 
-            options = createTree(res.param.options, 'id', 'parent', null)
-            for (let i = 0; i < res.options.length; i++) {
+            options = createTree(res.category.params[paramIndex].options, 'id', 'parent', null).sort((a, b) => a.id - b.id);
+            for (let i = 0; i < sortOptions.length; i++) {
               option[i] = {
-                id: res.options[i].optionId,
-                value: res.options[i].value
+                id: sortOptions[i].optionId,
+                value: sortOptions[i]?.value
               };
               let optionsIndex = options[i]?.children?.findIndex((e) => e.id === option[i].id);
 
               if (optionsIndex < 0) {
-                let optionsInd = res.param.options.findIndex((e) => e.id === option[i].id);
-                child[i] = res.param.options[optionsInd].id
-                optionId[i] = res.param.options[optionsInd].parent
+                let optionsInd = res.category.params[paramIndex].options.findIndex((e) => e.id === option[i].id);
+                child[i] = res.category.params[paramIndex].options[optionsInd].id
+                optionId[i] = res.category.params[paramIndex].options[optionsInd].parent
               }
               else {
                 optionId[i] = options[i]?.children[optionsIndex].id
@@ -197,10 +253,14 @@ const AddOffer = () => {
             param: param,
             notDesc: currency ? currency : null,
             one: one ? one : null,
+            serverView: serverView ? serverView : null,
+            minCount: minCount ? minCount : null,
+            typeCount: typeCount ? typeCount : null,
             options: options ? options : null,
             option: option ? option : null,
             optionId: optionId ? optionId : null,
             child: child ? child : null,
+            title: title,
             desc: desc,
             count: count,
             price: price,
@@ -220,25 +280,35 @@ const AddOffer = () => {
 
     }
   }, []);
-
   const createTree = (data, idProp, parentProp, parentId) =>
-    data
-      .filter((n) => parentId === (n[parentProp] ?? null))
+    data.filter((n) => parentId === (n[parentProp] ?? null))
       .map((n) => ({
         ...n,
         children: createTree(data, idProp, parentProp, n[idProp]),
       }));
 
+  useEffect(() => {
+    if (data?.serverView) {
 
+
+      reset({
+        ...data,
+        server: null,
+        servers: null,
+      });
+
+    }
+  }, [data?.serverView]);
 
   useEffect(() => {
     if (data.region && sum > 1) {
-
-      let serverIndex = data.game.regions.findIndex(
-        (e) => e.id === data.region
-      );
-      let servers = data.game.regions[serverIndex].servers;
-
+      let servers = null;
+      if (!data?.serverView) {
+        let serverIndex = data.game.regions.findIndex(
+          (e) => e.id === data.region
+        );
+        servers = data.game.regions[serverIndex].servers;
+      }
       reset({
         ...data,
         server: null,
@@ -251,11 +321,13 @@ const AddOffer = () => {
       let optionsIndex = data.game.params.findIndex((e) => e.id === data.param);
       let one = data.game?.params[optionsIndex]?.data?.one;
       let currency = data.game?.params[optionsIndex]?.data?.currency;
-      let options = createTree(data.game.params[optionsIndex].options, 'id', 'parent', null);
+      let serverView = data.game?.params[optionsIndex]?.data?.serverView;
+      let options = data?.game?.params[optionsIndex]?.options ? createTree(data?.game?.params[optionsIndex]?.options, 'id', 'parent', null) : null;
       reset({
         ...data,
         notDesc: currency ? currency : null,
         one: one ? one : null,
+        serverView: serverView ? serverView : null,
         optionId: null,
         option: null,
         child: null,
@@ -263,7 +335,7 @@ const AddOffer = () => {
       });
     }
   }, [data.param]);
-  console.log(data)
+
   if (games.loading || id && sum == 0) {
     return <Loader full />;
   }
@@ -286,26 +358,18 @@ const AddOffer = () => {
                         value={data.categoryId}
                         title="Выбрать"
                         label="Игра"
-                        onClick={(e) => {
-                          reset({
-                            text: data.text,
-                            count: data.count,
-                            price: data.price,
-                            categoryId: e.value,
-                            game: games.items[
-                              games.items.findIndex((e2) => e2.id === e.value)
-                            ],
-                            region: games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions && games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions[0]?.status == 0 ? games.items[games.items.findIndex((e2) => e2.id === e.value)]?.regions[0]?.id : null,
-                          })
-                        }}
-                        data={games.items.map((item) => ({ value: item.id, title: item.title }))}
+                        onClick={(e) => { setValue("categoryId", e.value), setSum(2) }}
+                        data={games.items.map((item) => ({
+                          value: item.id,
+                          title: item.title,
+                        }))}
                       />
                     </Col>
                   )}
 
 
 
-                  {data?.game?.regions?.length > 0 && (
+                  {data?.game?.regions?.length > 0 && data?.game?.regions[0].status != 0 && (
                     <Col md={6} >
                       <Select
                         value={data.region}

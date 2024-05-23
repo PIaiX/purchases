@@ -8,43 +8,42 @@ import Meta from '../../components/Meta';
 import { NotificationManager } from 'react-notifications';
 
 const PurchaseHistory = () => {
-  const [currentPage, setCurrentPage] = useState(1)
+  const [currentPage, setCurrentPage] = useState(1);
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
-  const [status, setStatus] = useState([]);
   const [orders, setOrders] = useState({
     loading: true,
     items: [],
   });
-
-  const getPage = (currentPage) => {
+  const getPage = () => {
     getOrders({ page: currentPage, authorId: 0, size: 10 })
       .then((res) => {
         setOrders((prev) => ({
-          ...prev,
+          prev,
           loading: false,
           ...res,
-        }))
-        setCurrentPage(res.pagination.currentPage)
+        }));
+        setCurrentPage(res.pagination.currentPage);
       })
       .catch(() => setOrders((prev) => ({ ...prev, loading: false })));
   };
   useEffect(() => {
-    getPage(currentPage);
+    getPage();
   }, [currentPage]);
   const onStatus = useCallback((status) => {
     editOrder(status)
       .then((res) => {
-        NotificationManager.success("Покупка подтвержден");
+        getPage();
+        NotificationManager.success("Покупка подтверждена");
+
       })
       .catch((err) => {
         NotificationManager.error(
-          err?.response?.data?.error ?? "Покупка отменена"
+          err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
         );
       });
-    setStatus(status);
-    getPage(currentPage);
+
   }, []);
   if (orders.loading) {
     return <Loader full />;
