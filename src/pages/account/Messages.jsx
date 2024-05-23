@@ -264,8 +264,8 @@ const Messages = ({ isMobileXL }) => {
         {!isMobileXL &&
           <div className="sec-messages-chat">
             {!data?.id ? (
-              <div className="h-100 d-flex align-items-center justify-content-center flex-column">
-                <h2 className="mb-3">Выберите диалог</h2>
+              <div className="d-flex align-items-center flex-column">
+                <h2 className="mb-3 mt-5">Выберите диалог</h2>
                 <p className="text-center gray">
                   В данный момент нет диалогов. <br />Возможно вы не выбрали
                   конкретный диалог.

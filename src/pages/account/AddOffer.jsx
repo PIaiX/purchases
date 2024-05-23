@@ -402,7 +402,10 @@ const AddOffer = () => {
                         value={data.param}
                         title="Выбрать"
                         label="Что вы продаете?"
-                        onClick={e => setValue('param', e.value)}
+                        onClick={(e) => {
+                          setValue("param", e.value)
+                          setSum(2)
+                        }}
                         data={data.game.params.map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </Col>
@@ -424,7 +427,7 @@ const AddOffer = () => {
                                   type={"text"}
                                   label={e.title}
                                   defaultValue={data?.option && data?.option[i]?.value}
-                                  onChange={(g) => { setValue(`option[${i}].value`, g), setValue(`option[${i}].id`, e.id) }}
+                                  onChange={(g) => { if (parseInt(g) >= e.data.min && parseInt(g) <= e.data.max || g == "") setValue(`option[${i}].id`, e.id), setValue(`option[${i}].value`, parseInt(g)) }}
                                 />
                               </Col>
                             </>
@@ -437,7 +440,7 @@ const AddOffer = () => {
                                   label={e.title}
                                   onClick={(e) => {
                                     setValue(`optionId[${i}]`, e.value)
-                                    setValue("child", false)
+                                    setValue(`child[${i}]`, null)
                                     setValue(`option[${i}].id`, e.value)
                                   }}
                                   data={e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({
