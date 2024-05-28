@@ -44,6 +44,10 @@ $bp-xxl: 1399.98px;
     --s-menu-width: 86px;
     --l-menu-width: 300px;
 
+    @media (max-width: $bp-xxl) {
+        --h-height: 70px;
+    }
+
     @media (max-width: 767px) {
         --h-height: 70px;
     }
@@ -665,6 +669,11 @@ textarea {
     display: block;
     transition: $transition;
     @include placeholder(var(--light-gray), 400);
+
+    @media (max-width: $bp-xxl) {
+        padding: .6em 1.2em;
+        padding-right: 2.4em;
+    }
 
     &.p-blue {
         border: 1px solid var(--pale-blue);
@@ -1877,6 +1886,7 @@ header {
         background: var(--glass);
         border-color: var(--search-game-border);
         @include placeholder(var(--search-game-text));
+
     }
 
     .profile-link {
@@ -3083,13 +3093,13 @@ header {
         button {
             background: var(--btn-1);
             margin-left: 1.25em;
-            padding: 1em 1.5em;
+            padding: .9em 1.4em;
             font-size: .9em;
             color: white;
             transition: $transition;
             transition-property: background-color, color;
             border-radius: 8px;
-
+            border: 1px solid transparent;
 
             &:hover {
                 border: 1px solid var(--param-hover);
@@ -6451,9 +6461,9 @@ footer {
     margin-right: auto;
     z-index: 1042;
     position: fixed;
-    bottom: calc(var(--f-height) - 1em);
+    bottom: 0;
     right: 1em;
-    width: 86px;
+    width: 52px;
     height: auto;
 
 
@@ -6474,7 +6484,7 @@ footer {
         li {
             .preview {
                 @include flex(row, center, center, nowrap);
-                padding: 0.67em 1em;
+                padding: 0.4em 0em;
                 position: relative;
                 width: 100%;
                 cursor: pointer;
@@ -6494,7 +6504,7 @@ footer {
                 }
 
                 img {
-                    @include rounedImg(3.9em);
+                    @include rounedImg(2.67em);
 
                     position: relative;
                     z-index: 1;
@@ -6503,7 +6513,7 @@ footer {
                 .indicator {
                     position: absolute;
                     bottom: 0.5em;
-                    left: 3.5em;
+                    right: 0.5em;
                     width: 0.67em;
                     height: 0.67em;
                     border-radius: 50%;
@@ -6569,7 +6579,7 @@ footer {
             }
 
             hr {
-                margin: 0.5em 1em;
+                margin: 0.3em 0.67em;
             }
 
             a {
@@ -6680,8 +6690,8 @@ footer {
     margin-right: auto;
     z-index: 1042;
     position: fixed;
-    bottom: calc(var(--f-height) + 2em);
-    right: 6em;
+    bottom: 0;
+    right: 4em;
 
 
 
@@ -6689,8 +6699,8 @@ footer {
     &-block {
         background: var(--label);
         border-radius: $radius;
-        width: 400px;
-        height: 580px;
+        width: 350px;
+        height: 460px;
         position: sticky;
         top: 6em;
         margin-right: 2em;
@@ -6712,6 +6722,8 @@ footer {
             width: 90%;
 
             input {
+                padding: .6em 1em;
+                padding-right: 2.4em;
                 background-color: transparent;
             }
         }
@@ -6733,7 +6745,7 @@ footer {
 
     .chat {
         &-window {
-            max-height: 465px;
+            max-height: 340px;
         }
 
         width: 100%;
@@ -6744,7 +6756,7 @@ footer {
         // padding-top: .5em;
         position: sticky;
         width: 100%;
-        max-height: 480px;
+        max-height: 370px;
         overflow-y: auto;
 
         li {
@@ -6765,7 +6777,7 @@ footer {
                 }
 
                 img {
-                    @include rounedImg(3.9em);
+                    @include rounedImg(2.67em);
 
                     position: relative;
                     z-index: 1;
