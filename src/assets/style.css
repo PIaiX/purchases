@@ -6012,14 +6012,13 @@ footer .nav-mobile ul li button.active svg path {
   width: 100%;
 }
 .menu-nav .scroll {
-  position: sticky;
-  top: 6em;
+  border-radius: 0.67em;
   margin-right: 2em;
   left: 0;
-  width: 96px;
+  width: 86px;
   height: -moz-fit-content;
   height: fit-content;
-  max-height: calc(100vh - var(--h-height));
+  max-height: calc(100vh - var(--h-height) - 100px);
   overflow-y: auto;
 }
 .menu-nav .scroll::-webkit-scrollbar {
@@ -6027,11 +6026,10 @@ footer .nav-mobile ul li button.active svg path {
   /* Скрываем полосу прокрутки */
 }
 .menu-nav .scroll.full {
-  width: 330px;
+  max-height: calc(100vh - var(--h-height) - 200px);
+  width: 300px;
 }
 .menu-nav .wrap {
-  -webkit-backdrop-filter: blur(5px);
-          backdrop-filter: blur(5px);
   position: sticky;
   top: 6em;
   margin-right: 2em;
@@ -6051,6 +6049,24 @@ footer .nav-mobile ul li button.active svg path {
   }
 }
 .menu-nav .wrap.full {
+  width: 300px;
+}
+.menu-nav .content {
+  width: 86px;
+  height: -moz-fit-content;
+  height: fit-content;
+}
+@media (max-width: 991.98px) {
+  .menu-nav .content {
+    float: right;
+  }
+}
+@media (max-width: 575.98px) {
+  .menu-nav .content {
+    padding: 0;
+  }
+}
+.menu-nav .content.full {
   width: 300px;
 }
 .menu-nav-balance {
@@ -6123,6 +6139,7 @@ footer .nav-mobile ul li button.active svg path {
   box-shadow: var(--shadow);
   border-radius: 0.67em;
   padding: 0.67em;
+  margin-bottom: 1em;
   text-align: center;
 }
 .menu-nav-top hr {
@@ -6191,7 +6208,7 @@ footer .nav-mobile ul li button.active svg path {
 .menu-nav ul {
   list-style: none;
   padding-left: 0px;
-  margin-top: 1em;
+  margin-bottom: 1em;
 }
 .menu-nav ul li {
   padding-top: 1em;

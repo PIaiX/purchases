@@ -85,127 +85,129 @@ const Menu = ({ full, setFull }) => {
           </div>
         }
 
-        <div className={(full) ? 'scroll full' : 'wrap'}>
-          {isAuth &&
-            <ul className='menu-nav-block'>
-              {full &&
+        <div className={(full) ? 'scroll full' : 'scroll'}>
+          <div className={(full) ? 'content full' : 'content'}>
+            {isAuth &&
+              <ul className='menu-nav-block'>
+                {full &&
+                  <li>
+                    <div className="menu-nav-balance">
+                      <span className="fw-6 me-2 me-xxl-3">Баланс</span>
+                      <span className="title-font fs-13">
+                        {customPrice(user.cash)}
+                      </span>
+                    </div>
+                  </li>
+                }
                 <li>
-                  <div className="menu-nav-balance">
-                    <span className="fw-6 me-2 me-xxl-3">Баланс</span>
-                    <span className="title-font fs-13">
-                      {customPrice(user.cash)}
-                    </span>
-                  </div>
+                  <NavLink to="account/profile" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiUser className={"svg me-2"} />
+                      {full && <span>Профиль</span>}
+                    </div>
+                  </NavLink>
                 </li>
-              }
-              <li>
-                <NavLink to="account/profile" className={!full && "justify-content-center"}>
-                  <div>
-                    <FiUser className={"svg me-2"} />
-                    {full && <span>Профиль</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/offers" className={!full && "justify-content-center"}>
-                  <div>
-                    <FiList className="svg me-2" />
-                    {full && <span>Мои объявления</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/purchase-history" className={!full && "justify-content-center"}>
-                  <div>
-                    <RiHistoryLine className="svg me-2" />
-                    {full && <span>История покупок</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/sales-history" className={!full && "justify-content-center"}>
-                  <div>
-                    <LuFileClock className="svg me-2" />
-                    {full && <span>История продаж</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/finance" className={!full && "justify-content-center"}>
-                  <div>
-                    <LuCoins className="svg me-2" />
-                    {full && <span>Финансы</span>}
-                  </div>
-                </NavLink>
-              </li>
+                <li>
+                  <NavLink to="account/offers" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiList className="svg me-2" />
+                      {full && <span>Мои объявления</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="account/purchase-history" className={!full && "justify-content-center"}>
+                    <div>
+                      <RiHistoryLine className="svg me-2" />
+                      {full && <span>История покупок</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="account/sales-history" className={!full && "justify-content-center"}>
+                    <div>
+                      <LuFileClock className="svg me-2" />
+                      {full && <span>История продаж</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="account/finance" className={!full && "justify-content-center"}>
+                    <div>
+                      <LuCoins className="svg me-2" />
+                      {full && <span>Финансы</span>}
+                    </div>
+                  </NavLink>
+                </li>
 
-              <li className='mt-sm-4 mt-lg-5'>
-                <NavLink to="account/messages" className={!full && "justify-content-center"}>
-                  <div>
-                    <LuMails className="svg me-2" />
-                    {full && <span>Сообщения</span>}
-                  </div>
-                  {/* <span className='badge'></span> */}
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/feedback" className={!full && "justify-content-center"}>
-                  <div>
-                    <FiMessageCircle className="svg me-2" />
-                    {full && <span>Отзывы</span>}
-                  </div>
-                </NavLink>
-              </li>
+                <li className='mt-sm-4 mt-lg-5'>
+                  <NavLink to="account/messages" className={!full && "justify-content-center"}>
+                    <div>
+                      <LuMails className="svg me-2" />
+                      {full && <span>Сообщения</span>}
+                    </div>
+                    {/* <span className='badge'></span> */}
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="account/feedback" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiMessageCircle className="svg me-2" />
+                      {full && <span>Отзывы</span>}
+                    </div>
+                  </NavLink>
+                </li>
 
-              <li>
-                <NavLink to="account/callback" className={!full && "justify-content-center"}>
-                  <div>
-                    <HeadPhones className="svg me-2" />
-                    {full && <span>Обратная связь</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/account/settings" className={!full && "justify-content-center"}>
-                  <div>
-                    <FiSettings className="svg me-2" />
-                    {full && <span>Настройки</span>}
-                  </div>
-                </NavLink>
-              </li>
-              <li>
-                <Link to="/" onClick={() => dispatch(logout())} className={!full && "justify-content-center"}>
-                  <div >
-                    <LuLogOut className="svg me-2" />
-                    {full && <span>Выйти</span>}
-                  </div>
-                </Link>
+                <li>
+                  <NavLink to="account/callback" className={!full && "justify-content-center"}>
+                    <div>
+                      <HeadPhones className="svg me-2" />
+                      {full && <span>Обратная связь</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/account/settings" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiSettings className="svg me-2" />
+                      {full && <span>Настройки</span>}
+                    </div>
+                  </NavLink>
+                </li>
+                <li>
+                  <Link to="/" onClick={() => dispatch(logout())} className={!full && "justify-content-center"}>
+                    <div >
+                      <LuLogOut className="svg me-2" />
+                      {full && <span>Выйти</span>}
+                    </div>
+                  </Link>
 
-              </li>
-            </ul>
+                </li>
+              </ul>
 
-          }
-          {full &&
-            <ul className='menu-nav-block'>
-              <li>
-                <NavLink to="/help">
-                  <div>Информация</div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="account/favs">
-                  <div>Избранное</div>
-                </NavLink>
-              </li>
-              <li>
-                <NavLink to="/privacy">
-                  <div>Политика</div>
-                </NavLink>
-              </li>
-            </ul>
-          }
-          <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
+            }
+            {full &&
+              <ul className='menu-nav-block'>
+                <li>
+                  <NavLink to="/help">
+                    <div>Информация</div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="account/favs">
+                    <div>Избранное</div>
+                  </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/privacy">
+                    <div>Политика</div>
+                  </NavLink>
+                </li>
+              </ul>
+            }
+          </div>
         </div>
+        <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
       </div>
     </nav >
   );

@@ -6127,13 +6127,12 @@ footer {
     width: 100%;
 
     .scroll {
-        position: sticky;
-        top: 6em;
+        border-radius: $radius;
         margin-right: 2em;
         left: 0;
-        width: 96px;
+        width: 86px;
         height: fit-content;
-        max-height: calc(100vh - var(--h-height));
+        max-height: calc(100vh - var(--h-height) - 100px);
         overflow-y: auto;
 
         &::-webkit-scrollbar {
@@ -6143,16 +6142,33 @@ footer {
 
 
         &.full {
-            width: 330px;
+            max-height: calc(100vh - var(--h-height) - 200px);
+            width: 300px;
         }
     }
 
     .wrap {
-        backdrop-filter: blur(5px);
         position: sticky;
         top: 6em;
         margin-right: 2em;
         left: 0;
+        width: 86px;
+        height: fit-content;
+
+        @media (max-width: $bp-lg) {
+            float: right;
+        }
+
+        @media (max-width: $bp-sm) {
+            padding: 0;
+        }
+
+        &.full {
+            width: 300px;
+        }
+    }
+
+    .content {
         width: 86px;
         height: fit-content;
 
@@ -6246,6 +6262,7 @@ footer {
         box-shadow: var(--shadow);
         border-radius: $radius;
         padding: .67em;
+        margin-bottom: 1em;
         text-align: center;
 
         hr {
@@ -6327,7 +6344,7 @@ footer {
 
     ul {
         @include list();
-        margin-top: 1em;
+        margin-bottom: 1em;
 
         // padding-top: .5em;
 
