@@ -6011,6 +6011,12 @@ footer .nav-mobile ul li button.active svg path {
   bottom: var(--f-height);
   width: 100%;
 }
+.menu-nav-conteiner {
+  max-width: 90px;
+}
+.menu-nav-conteiner.full {
+  max-width: 310px;
+}
 .menu-nav .scroll {
   border-radius: 0.67em;
   margin-right: 2em;
@@ -6316,11 +6322,11 @@ footer .nav-mobile ul li button.active svg path {
 }
 
 .panel-open {
-  max-width: calc(100vw - var(--l-menu-width));
+  max-width: calc(100vw - var(--l-menu-width) - 70px);
 }
 
 .panel-closed {
-  max-width: calc(100vw - var(--s-menu-width));
+  max-width: calc(100vw - var(--s-menu-width) - 70px);
 }
 
 .menu-chat {
@@ -6331,6 +6337,9 @@ footer .nav-mobile ul li button.active svg path {
   right: 1em;
   width: 52px;
   height: auto;
+}
+.menu-chat-conteiner {
+  max-width: 60px;
 }
 .menu-chat-block {
   background: var(--label);

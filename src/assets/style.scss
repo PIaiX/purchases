@@ -6126,6 +6126,14 @@ footer {
     bottom: var(--f-height);
     width: 100%;
 
+    &-conteiner {
+        max-width: 90px;
+
+        &.full {
+            max-width: 310px;
+        }
+    }
+
     .scroll {
         border-radius: $radius;
         margin-right: 2em;
@@ -6465,12 +6473,12 @@ footer {
 }
 
 .panel-open {
-    max-width: calc(100vw - var(--l-menu-width));
+    max-width: calc(100vw - var(--l-menu-width) - 70px);
     // z-index: 1000;
 }
 
 .panel-closed {
-    max-width: calc(100vw - var(--s-menu-width));
+    max-width: calc(100vw - var(--s-menu-width) - 70px);
     // z-index: 1;
 }
 
@@ -6483,6 +6491,9 @@ footer {
     width: 52px;
     height: auto;
 
+    &-conteiner {
+        max-width: 60px;
+    }
 
 
     &-block {

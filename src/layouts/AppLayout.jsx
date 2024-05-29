@@ -25,18 +25,20 @@ const AppLayout = () => {
       <ScrollRestoration />
       <Header />
       <ScrollToTopButton maxi={maxi} mini={mini} />
-      {mini && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
       {maxi && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
       {
 
         (isMobile)
           ? <Outlet />
           : <Row className="justify-content-between">
-            <Col md={1}>
+            <Col className={full ? "menu-nav-conteiner full" : "menu-nav-conteiner"}>
               <Menu full={full} setFull={setFull} />
             </Col>
             <Col className={full ? "panel-open" : "panel-closed"}>
               <Outlet />
+            </Col>
+            <Col className="menu-chat-conteiner">
+              {mini && <MenuChat chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
             </Col>
           </Row>
       }
