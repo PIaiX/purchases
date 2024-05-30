@@ -1659,6 +1659,9 @@ header .profile-link img {
 }
 
 /* Slider */
+.main-slider {
+  margin-right: 1em;
+}
 @media (max-width: 991.98px) {
   .main-slider {
     overflow: hidden;

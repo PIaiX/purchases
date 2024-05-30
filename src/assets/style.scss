@@ -1907,6 +1907,8 @@ header {
         padding-bottom: 2em;
     }
 
+    margin-right: 1em;
+
     @media (max-width: $bp-sm) {
         padding-bottom: 1.5em;
     }
@@ -1937,6 +1939,7 @@ header {
         width: var(--w);
         position: relative;
         transition: 400ms ease-in-out;
+
 
         @media (max-width: $bp-xl) {
             --w: 16.5%;
