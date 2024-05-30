@@ -290,8 +290,6 @@ const LotPage = () => {
                                 <ul className='specifications'>
                                     {products?.items?.options && products?.items?.options.map(e => {
                                         let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
-                                        console.log(products?.items?.options)
-                                        console.log(name)
                                         if (!e.parent) {
                                             return <li>
                                                 <span>{e.value ? e?.option?.title : name?.title ? name.title : "Хакатеристика"}</span>

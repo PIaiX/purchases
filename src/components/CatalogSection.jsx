@@ -16,7 +16,6 @@ const CatalogSection = ({ games }) => {
   const cut = useRef(null);
   const [sortSwiper, setSortSwiper] = useState()
   const [currentSection, setCurrentSection] = useState();
-  console.log(currentSection)
   const updateSlider = (i) => {
     if (sortSwiper) {
       sortSwiper?.slideTo(i);

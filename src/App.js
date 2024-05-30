@@ -26,7 +26,6 @@ function App() {
   useEffect(() => {
     if (isAuth) {
       socket.on('notification', (data) => {
-        console.log(data)
         if (data?.user) {
           dispatch(setUser(data.user))
         }

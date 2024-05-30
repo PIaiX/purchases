@@ -270,7 +270,6 @@ const Game = () => {
   const handleNavigate = () => {
     navigate('/account/offers/add', { state: data });
   };
-  console.log(data)
   if (games.loading) {
     return <Loader full />;
   }

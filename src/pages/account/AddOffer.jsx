@@ -15,6 +15,7 @@ import { createUserProduct, editUserProduct, getUserProduct } from '../../servic
 const AddOffer = () => {
   const { id } = useParams();
   const [games, setGames] = useState({ items: [], loading: true });
+
   const {
     control,
     register,
@@ -34,6 +35,8 @@ const AddOffer = () => {
   const data = useWatch({ control });
   const [sum, setSum] = useState(0);
   const navigate = useNavigate();
+  const [selectedValues, setSelectedValues] = useState({}); // Хранение выбранных значений
+
 
   const onSubmit = useCallback((data) => {
     if (!data.categoryId) {
@@ -89,7 +92,6 @@ const AddOffer = () => {
         server: data.server,
         param: data.param,
         option: data.option,
-        title: data.title,
         desc: data.desc,
         count: data.count,
         price: data.price,
@@ -97,7 +99,9 @@ const AddOffer = () => {
         data: {
           minCount: data.minCount,
           typeCount: data.typeCount
-        }
+        },
+        protectedData: data.protectedData,
+
       })
         .then(() => {
           NotificationManager.success("Лот создан");
@@ -120,7 +124,6 @@ const AddOffer = () => {
         server: data.server,
         param: data.param,
         option: data.option,
-        title: data.title,
         desc: data.desc,
         count: data.count,
         price: data.price,
@@ -128,7 +131,8 @@ const AddOffer = () => {
         data: {
           minCount: data.minCount,
           typeCount: data.typeCount
-        }
+        },
+        protectedData: data.protectedData,
       })
         .then(() => {
           NotificationManager.success("Лот обновлён");
@@ -166,7 +170,6 @@ const AddOffer = () => {
       getUserGame({ id: data.categoryId })
         .then((res) => {
           reset({
-            title: data.title,
             text: data.text,
             count: data.count,
             price: data.price,
@@ -190,7 +193,6 @@ const AddOffer = () => {
           let id = res.product.id;
           let categoryId = res.product.categoryId;
           let game = res.category;
-          let title = res.product.title;
           let desc = res.product.desc;
           let count = res.product.count;
           let price = res.product.price;
@@ -202,12 +204,15 @@ const AddOffer = () => {
           let minCount = res.product.data?.minCount;
           let typeCount = res.product.data?.typeCount;
           let one = res.product.param.data?.one;
+          let auto = res.product.param.data?.auto;
+          let protectedData;
+          if (auto) {
+            protectedData = res.product.protectedData
+          }
           let currency = res.product.param.data?.currency;
           let serverView = res.product.param.data?.serverView;
           let options;
           let option = [];
-          let optionId = [];
-          let child = [];
           let sortOptions = res.product.options.sort((a, b) => a.optionId - b.optionId);
           if (res?.product?.regionId) {
             region = res.product.regionId
@@ -228,15 +233,20 @@ const AddOffer = () => {
                 id: sortOptions[i].optionId,
                 value: sortOptions[i]?.value
               };
-              let optionsIndex = options[i]?.children?.findIndex((e) => e.id === option[i].id);
 
-              if (optionsIndex < 0) {
-                let optionsInd = res.category.params[paramIndex].options.findIndex((e) => e.id === option[i].id);
-                child[i] = res.category.params[paramIndex].options[optionsInd].id
-                optionId[i] = res.category.params[paramIndex].options[optionsInd].parent
-              }
-              else {
-                optionId[i] = options[i]?.children[optionsIndex].id
+              if (!sortOptions[i]?.value) {
+                let optionsIndex = res.category.params[paramIndex].options.findIndex((e) => e.id === option[i].id);
+                let hug = res.category.params[paramIndex].options[optionsIndex].parent;
+                let opt = {};
+                while (hug) {
+                  opt[hug] = res.category.params[paramIndex].options[optionsIndex].id;
+                  optionsIndex = res.category.params[paramIndex].options.findIndex((e) => e.id === hug);
+                  hug = res.category.params[paramIndex].options[optionsIndex].parent;
+                }
+                setSelectedValues((prevSelectedValues) => ({
+                  ...prevSelectedValues,
+                  [i]: opt
+                }));
               }
             }
 
@@ -253,14 +263,13 @@ const AddOffer = () => {
             param: param,
             notDesc: currency ? currency : null,
             one: one ? one : null,
+            auto: auto ? auto : null,
             serverView: serverView ? serverView : null,
             minCount: minCount ? minCount : null,
             typeCount: typeCount ? typeCount : null,
             options: options ? options : null,
             option: option ? option : null,
-            optionId: optionId ? optionId : null,
-            child: child ? child : null,
-            title: title,
+            protectedData: protectedData ? protectedData : null,
             desc: desc,
             count: count,
             price: price,
@@ -280,13 +289,63 @@ const AddOffer = () => {
 
     }
   }, []);
+
+
+  const handleSelectChange = (nodeId, selectedValue, i) => {
+    setSelectedValues((prevSelectedValues) => {
+      let hug = {};
+
+      if (prevSelectedValues && prevSelectedValues[i]) {
+        hug = { ...prevSelectedValues[i] };
+      }
+      if (hug[nodeId]) {
+        let del = hug[nodeId]
+        while (hug[del]) {
+          let uda = hug[del];
+          delete hug[del];
+          del = uda;
+        }
+      }
+      hug[nodeId] = selectedValue;
+
+      return {
+        ...prevSelectedValues,
+        [i]: hug
+      };
+    });
+
+
+    setValue(`option[${i}].id`, selectedValue)
+  };
   const createTree = (data, idProp, parentProp, parentId) =>
     data.filter((n) => parentId === (n[parentProp] ?? null))
       .map((n) => ({
         ...n,
         children: createTree(data, idProp, parentProp, n[idProp]),
       }));
-
+  const renderSelects = (tree, i) => {
+    if (tree.children && tree.children.length > 0) {
+      return (
+        <>
+          <Col md={6}>
+            <Select
+              value={selectedValues && selectedValues[i] && selectedValues[i][tree.id]}
+              title="Выбрать"
+              label={tree?.title}
+              onClick={(e) => handleSelectChange(tree.id, e.value, i)}
+              data={tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({
+                value: item.id,
+                title: item.title,
+              }))}
+            />
+          </Col>
+          {selectedValues && selectedValues[i] && selectedValues[i][tree.id] &&
+            renderSelects(tree.children.find((child) => child.id === selectedValues[i][tree.id]), i)}
+        </>
+      );
+    }
+    return null;
+  };
   useEffect(() => {
     if (data?.serverView) {
 
@@ -320,22 +379,22 @@ const AddOffer = () => {
     if (data.param && sum > 1) {
       let optionsIndex = data.game.params.findIndex((e) => e.id === data.param);
       let one = data.game?.params[optionsIndex]?.data?.one;
+      let auto = data.game?.params[optionsIndex]?.data?.auto;
       let currency = data.game?.params[optionsIndex]?.data?.currency;
       let serverView = data.game?.params[optionsIndex]?.data?.serverView;
-      let options = data?.game?.params[optionsIndex]?.options ? createTree(data?.game?.params[optionsIndex]?.options, 'id', 'parent', null) : null;
+      let options = data?.game?.params[optionsIndex]?.options ? createTree(data?.game?.params[optionsIndex]?.options, 'id', 'parent', null).sort((a, b) => a.id - b.id) : null;
       reset({
         ...data,
         notDesc: currency ? currency : null,
         one: one ? one : null,
+        auto: auto ? auto : null,
         serverView: serverView ? serverView : null,
-        optionId: null,
         option: null,
-        child: null,
         options: options?.length > 0 ? options : null,
       });
+      setSelectedValues({});
     }
   }, [data.param]);
-
   if (games.loading || id && sum == 0) {
     return <Loader full />;
   }
@@ -413,70 +472,27 @@ const AddOffer = () => {
 
                   {data?.options && data?.options?.length > 0 &&
                     data.options.map((e, i) => {
-                      let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
-                      var option = []
-                      if (optionIndex > -1) {
-                        option = e?.children[optionIndex]
-                      }
                       return (
                         <>
-                          {e.data?.max ?
-                            <>
-                              <Col md={6} className="d-flex align-items-center">
-                                <Input
-                                  type={"text"}
-                                  label={e.title}
-                                  defaultValue={data?.option && data?.option[i]?.value}
-                                  onChange={(g) => { if (parseInt(g) >= e.data.min && parseInt(g) <= e.data.max || g == "") setValue(`option[${i}].id`, e.id), setValue(`option[${i}].value`, parseInt(g)) }}
-                                />
-                              </Col>
-                            </>
-                            :
-                            <>
-                              <Col md={6}>
-                                <Select
-                                  value={data?.optionId && data?.optionId[i]}
-                                  title="Выбрать"
-                                  label={e.title}
-                                  onClick={(e) => {
-                                    setValue(`optionId[${i}]`, e.value)
-                                    setValue(`child[${i}]`, null)
-                                    setValue(`option[${i}].id`, e.value)
-                                  }}
-                                  data={e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({
-                                    value: item.id,
-                                    title: item.title,
-                                  }))}
-                                />
-                              </Col>
-                              {option?.children?.length > 0 &&
-                                <>
-                                  <Col md={6}>
-                                    <Select
-                                      value={data?.child[i]}
-                                      title="Выбрать"
-                                      label={option.children[0].title}
-                                      onClick={(e) => {
-                                        setValue(`child[${i}]`, e.value)
-                                        setValue(`option[${i}].id`, e.value)
-                                      }}
-                                      data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
-                                        value: item.id,
-                                        title: item.title,
-                                      }))}
-                                    />
-                                  </Col>
-                                </>
-
-                              }
-                            </>
+                          {
+                            e.data?.max ?
+                              <>
+                                <Col md={6} className="d-flex align-items-center">
+                                  <Input
+                                    type={"text"}
+                                    label={e.title}
+                                    defaultValue={data?.option && data?.option[i]?.value}
+                                    onChange={(g) => { if (parseInt(g) >= e.data.min && parseInt(g) <= e.data.max || g == "") setValue(`option[${i}].id`, e.id), setValue(`option[${i}].value`, parseInt(g)) }}
+                                  />
+                                </Col>
+                              </>
+                              :
+                              renderSelects(e, i)
                           }
                         </>
-
                       )
-
-
-                    })}
+                    })
+                  }
 
                   <Col md={12}>
                     <Input

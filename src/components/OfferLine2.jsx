@@ -3,7 +3,6 @@ import { FiEdit } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
 const OfferLine2 = ({ category, uid, status, title, desc, price, server, options }) => {
-  console.log(options)
   const renderOptions = useMemo(() => {
 
     return options.map((item, i) => {
