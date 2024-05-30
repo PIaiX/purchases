@@ -100,7 +100,7 @@ const CatalogSection = ({ games }) => {
                   direction="vertical"
                   loop={false}
                   spaceBetween={0}
-
+                  slidesPerView={1}
                   watchSlidesProgress={true}
                   modules={[FreeMode, Mousewheel]}
                   initialSlide={currentSection}

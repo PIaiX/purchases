@@ -3222,6 +3222,7 @@ header .profile-link img {
   padding: 0.7em 1em;
   border-radius: 0.67em;
   box-shadow: var(--shadow);
+  border: 1px solid transparent;
 }
 .page-game-top .filter .dropdown .select:hover {
   border: 1px solid var(--param-hover);

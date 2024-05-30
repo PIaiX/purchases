@@ -3411,6 +3411,7 @@ header {
                     padding: 0.7em 1em;
                     border-radius: $radius;
                     box-shadow: var(--shadow);
+                    border: 1px solid transparent;
 
                     &:hover {
                         border: 1px solid var(--param-hover);

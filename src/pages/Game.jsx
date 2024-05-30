@@ -8,7 +8,7 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
 import { declOfNum, getImageURL } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
@@ -24,12 +24,15 @@ import { toggleFavorite, getFavorites } from '../services/favorite';
 
 const Game = () => {
   const { id } = useParams();
+  const isMobileLG = useIsMobile("1109px");
+  const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
   const searchParams = new URLSearchParams(location.search);
   const auth = useSelector((state) => state.auth.isAuth);
   const [currentPage, setCurrentPage] = useState(1);
   const dispatch = useDispatch();
   const favorite = useSelector((state) => state.favorite.items);
   const [sum, setSum] = useState(0);
+  const [fav, setFav] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 900);
   const {
@@ -45,19 +48,18 @@ const Game = () => {
     defaultValues: {
       param: parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null,
       region: parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null,
-      categoryId: parseInt(id),
     },
 
   });
   useEffect(() => {
     setValue("param", (parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null))
+    setSelectedValues({});
   }, [searchParams.get("catId")]);
-  useEffect(() => {
-    setValue("categoryId", parseInt(id))
-  }, [id]);
+
 
   useEffect(() => {
     setValue("region", (parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null))
+
   }, [searchParams.get("regId")]);
 
   const data = useWatch({ control });
@@ -67,36 +69,107 @@ const Game = () => {
     pagesCount: [],
   });
   const [games, setGames] = useState({ items: [], loading: true });
+  const [selectedValues, setSelectedValues] = useState({});
+  const [opt, setOpt] = useState();
+  const handleSelectChange = (nodeId, selectedValue, i) => {
+    setSelectedValues((prevSelectedValues) => {
+      let hug = {};
+
+      if (prevSelectedValues && prevSelectedValues[i]) {
+        hug = { ...prevSelectedValues[i] };
+      }
+      if (hug[nodeId]) {
+        let del = hug[nodeId]
+        while (hug[del]) {
+          let uda = hug[del];
+          delete hug[del];
+          del = uda;
+        }
+      }
+      hug[nodeId] = selectedValue;
+
+      return {
+        ...prevSelectedValues,
+        [i]: hug
+      };
+    });
+
+    if (selectedValue) {
+      setValue(`option[${i}].id`, selectedValue)
+    }
+    else {
+      if (nodeId == data.options[i].id) {
+        setValue(`option[${i}].id`, null)
+      }
+      else {
+        setValue(`option[${i}].id`, nodeId)
+      }
+    }
+
+  };
+  const renderSelects = (tree, i) => {
+    if (tree.children && tree.children.length > 0) {
+      return (
+        <>
+          <Select
+            value={selectedValues && selectedValues[i] && selectedValues[i][tree.id] != null && selectedValues[i][tree.id]}
+            title={tree?.title}
+            onClick={(e) => handleSelectChange(tree.id, e.value, i)}
+            data={[
+              { value: null, title: tree.title },
+              ...(tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
+            ]}
+          />
+          {selectedValues && selectedValues[i] && selectedValues[i][tree.id] && selectedValues[i][tree.id] &&
+            renderSelects(tree.children.find((child) => child.id === selectedValues[i][tree.id]), i)}
+        </>
+      );
+    }
+    return null;
+  };
   useEffect(() => {
 
     getGame({ param: data.param, region: data.region, server: data.server, id, })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
-        if (sum == 0) {
+
+        let servers;
+        if (!data.param) {
+          const sortedParams = [...res?.category?.params]?.sort((a, b) => a.priority - b.priority);
+          const firstParamId = sortedParams[0]?.id;
+          const regionId = res.category.regions?.length > 0 ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0].id : '';
+          navigate(`/${id}/?${regionId ? `region=${regionId}&` : ''}${firstParamId ? `param=${firstParamId}` : ''}`);
+        }
+        let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
+        let param = res.category.params[optionsIndex];
+        let one = param.data?.one;
+        let currency = param.data?.currency;
+        let serverView = param.data?.serverView;
+        let options = createTree(param.options, 'id', 'parent', null).sort((a, b) => a.id - b.id);
+
+
+        if (!serverView) {
           let serverIndex = res.category.regions.findIndex(
             (e) => e.id === data.region
           );
-          let servers;
+
           if (serverIndex > -1) {
             servers = res.category.regions[serverIndex].servers.sort((a, b) => a.priority - b.priority);
           }
-          let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
-          let one = res.category.params[optionsIndex].data?.one;
-          let currency = res.category.params[optionsIndex].data?.currency;
-          let options;
-          if (optionsIndex > -1) {
-            options = createTree(res.category.params[optionsIndex].options, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
-          }
-          reset({
-            ...data,
-            game: res.category,
-            notDesc: currency ? currency : null,
-            one: one ? one : null,
-            servers: servers ? servers : null,
-            options: options ? options : null,
-          });
         }
-        setSum(1)
+
+        reset({
+          ...data,
+          categoryId: res.category.id,
+          uid: res.category.uid,
+          game: res.category,
+          notDesc: currency ? currency : null,
+          serverView: serverView ? serverView : null,
+          one: one ? one : null,
+          servers: servers ? servers : null,
+          options: options ? options : null,
+        });
+        setOpt(param.options);
       })
       .catch(() => setGames(prev => ({ ...prev, loading: false })));
   }, [data.param, data.region, data.server, id]);
@@ -104,7 +177,6 @@ const Game = () => {
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
-
 
   const getPage = () => {
     var onlineData
@@ -136,10 +208,14 @@ const Game = () => {
                 if (dataItem.optionId === optionId.id) {
                   return true;
                 } else {
-                  return data.options.some(item => {
-                    const selectedOption = item.children.find(child => child.id == optionId.id);
-                    return selectedOption && selectedOption.children.some(subOption => subOption.id === dataItem.optionId.id);
-                  });
+                  let parent = opt.find((e) => e.id === dataItem.optionId);
+                  while (parent.parent) {
+                    if (parent.parent === optionId.id) {
+                      return true;
+                    }
+                    parent = opt.find((e) => e.id === parent.parent);
+                  }
+                  return false;
                 }
               });
             }
@@ -161,11 +237,18 @@ const Game = () => {
     var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     setDisplayedProducts({ pagesCount: Math.ceil(totalProducts.length / productsPerPage), items: totalProducts.slice(indexOfFirstProduct, indexOfLastProduct) });
   }
+
   useEffect(() => {
     if (games?.items?.products) {
       getPage()
     }
   }, [games?.items?.products, currentPage, data.option, debouncedSearchTerm, data.online]);
+
+  useEffect(() => {
+    if (selectedValues) {
+      setValue("selectedValues", selectedValues)
+    }
+  }, [selectedValues]);
 
   const createTree = (data, idProp, parentProp, parentId) =>
     data
@@ -175,56 +258,18 @@ const Game = () => {
         children: createTree(data, idProp, parentProp, n[idProp]),
       }));
 
-  useEffect(() => {
-    if (data.region && data.game) {
-      let serverIndex = games.items.category.regions.findIndex(
-        (e) => e.id === data.region
-      );
-      let servers = null;
-      if (serverIndex > -1 && games.items.category.regions[serverIndex].servers.length > 0) {
-        servers = games.items.category.regions[serverIndex].servers;
-      }
-
-      reset({
-        ...data,
-        server: null,
-        servers: servers ? servers : null,
-      });
-
-    }
-  }, [data.region]);
-  useEffect(() => {
-    if (data.param && data.game) {
-      let optionsIndex = games.items.category.params.findIndex((e) => e.id === data.param);
-      let one = games.items.category.params[optionsIndex]?.data?.one;
-      let currency = games.items.category.params[optionsIndex]?.data?.currency;
-      let options = null;
-      if (optionsIndex > -1) {
-        options = createTree(games.items.category.params[optionsIndex].options, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
-      }
-      reset({
-        ...data,
-        notDesc: currency ? currency : null,
-        one: one ? one : null,
-        optionId: null,
-        option: null,
-        child: null,
-        options: options ? options : null,
-      });
-    }
-  }, [data.param]);
-
   const onFav = useCallback(() => {
-    dispatch(toggleFavorite({ categoryId: data.categoryId, regionId: data.region, paramId: data.param }));
-    dispatch(getFavorites());
-  }, [data]);
+    dispatch(toggleFavorite({ categoryId: data?.categoryId, regionId: [...data?.game?.regions].sort((a, b) => a.priority - b.priority)[0]?.id, paramId: [...data?.game?.params].sort((a, b) => a.priority - b.priority)[0]?.id }));
+  }, [data, id]);
 
-  const fav = favorite.find(el => el.categoryId == games?.items?.category?.id) ? 1 : 0;
+  useEffect(() => {
+    setFav(favorite?.find(el => el.categoryId == games?.items?.category?.id) ? 1 : 0);
+  }, [favorite, data.game]);
+  const navigate = useNavigate();
 
-  const image = getImageURL({ path: games?.items?.category, size: "max", type: "category" })
-  const totalItems = games?.items?.category?.productCount ?? 0;
-  const declension = declOfNum(totalItems, ['лот', 'лота', 'лотов']);
-
+  const handleNavigate = () => {
+    navigate('/account/offers/add', { state: data });
+  };
   console.log(data)
   if (games.loading) {
     return <Loader full />;
@@ -243,30 +288,30 @@ const Game = () => {
             <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-4 mb-md-5'>
               {
                 (fav)
-                ? <span>В Избранном</span>
-                : <span>Добавить в Избранное</span>
+                  ? <span>В Избранном</span>
+                  : <span>Добавить в Избранное</span>
               }
-              <HiHeart className='ms-2 fs-12'/>
+              <HiHeart className='ms-2 fs-12' />
             </button>
             {/* {auth && <BtnAddFav favo={fav} onFav={onFav} />} */}
 
-            {games?.items?.category?.regions?.length > 0 && games?.items?.category?.regions[0].status == 1 && (
+            {games?.items?.category?.regions?.length > 0 && [...games?.items?.category?.regions].sort((a, b) => a.priority - b.priority)[0].status ? (
               <div className='mb-4 mb-md-5'>
                 <ServerSwitcher
                   data={data}
+                  id={id}
                   active={data.region}
-                  serversArr={games.items.category.regions}
-                  onChange={(e) => setValue("region", e)}
+                  serversArr={games.items.category.regions.sort((a, b) => a.priority - b.priority)}
                 />
               </div>
-            )}
-            
+            ) : ""}
+
             <ul className='categories'>
               {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
                 <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
               ))}
             </ul>
-            
+
             <form action="" className='filter mb-4 mb-xxl-5'>
 
               <div className="filter-top">
@@ -276,7 +321,7 @@ const Game = () => {
                   <input type="checkbox" />
                 </label>
               </div>
-              
+
               {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
                 (param.id == regId && param?.servers?.length > 0 &&
@@ -326,9 +371,9 @@ const Game = () => {
                   }
                   return (
                     <>
-                      { 
-                        e.data?.max 
-                        ? <div className='d-flex align-items-center me-4'>
+                      {
+                        e.data?.max
+                          ? <div className='d-flex align-items-center me-4'>
                             <span>{e.title}</span>
                             <Input
                               className="ms-2"
@@ -345,18 +390,7 @@ const Game = () => {
                               onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
                             />
                           </div>
-                        : <Select
-                          value={data?.optionId && data?.optionId[i]}
-                          title={e.title}
-                          onClick={(e) => {
-                            setValue(`optionId[${i}]`, parseInt(e.value))
-                            setValue(`child[${i}]`, null)
-                            setValue(`option[${i}].id`, e.value != 'false' ? parseInt(e.value) : null)
-                          }}
-                          data={[
-                            ...(e?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
-                          ]}
-                        />
+                          : renderSelects(e, i)
                       }
                       {
                         option?.children?.length > 0 &&
