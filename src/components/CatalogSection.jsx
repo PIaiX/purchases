@@ -24,7 +24,7 @@ const CatalogSection = ({ games }) => {
   }
 
   const menuRef = useRef(null)
-  const offsetT = -100
+  const offsetT = -50
 
 
   useEffect(() => {
@@ -42,7 +42,7 @@ const CatalogSection = ({ games }) => {
   }, []);
 
   return (
-    <section className='sec-catalog mb-6 ps-6'>
+    <section className='sec-catalog mb-6'>
       <Container><h2>Выбери одну из {games?.items?.length} игр</h2></Container>
       <Container>
         <div className="sec-catalog-box">
@@ -74,32 +74,35 @@ const CatalogSection = ({ games }) => {
           <div
             className={(full) ? 'wrap full' : 'wrap'}
           >
-            <ul>
-              {games?.data && games?.letters && games?.letters.map((letter, i) => {
-                return (
-                  <li key={letter}>
-                    <Link
-                      activeClass="active"
-                      to={"section-" + i}
-                      spy={true}
-                      smooth={true}
-                      offset={offsetT}
-                      duration={300}
-                      onSetActive={() => updateSlider(i)}
-                    >
-                      {letter}
-                    </Link>
-                  </li>
-                )
-              })}
-            </ul>
-            <div id="sort" ref={menuRef} className='scroll'>
+            <div>
+              <ul>
+                {games?.data && games?.letters && games?.letters.map((letter, i) => {
+                  return (
+                    <li key={letter}>
+                      <Link
+                        activeClass="active"
+                        to={"section-" + i}
+                        spy={true}
+                        smooth={true}
+                        offset={offsetT}
+                        duration={300}
+                        onSetActive={() => updateSlider(i)}
+                      >
+                        {letter}
+                      </Link>
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+            <div id="sort" className='scroll'>
               <nav className="sort">
                 <Swiper
-                  direction="vertical"
+                  ref={menuRef}
+                  direction={'vertical'}
                   loop={false}
                   spaceBetween={0}
-                  slidesPerView={1}
+                  slidesPerView={'auto'}
                   watchSlidesProgress={true}
                   modules={[FreeMode, Mousewheel]}
                   initialSlide={currentSection}
@@ -109,6 +112,7 @@ const CatalogSection = ({ games }) => {
                   }}
                   mousewheel={true}
                   onSwiper={setSortSwiper}
+                // centeredSlides={true}
                 >
                   {games?.letters && games?.letters?.map((letter, i) => {
                     return (

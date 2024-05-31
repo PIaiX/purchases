@@ -2035,6 +2035,14 @@ header .profile-link img {
 }
 
 /* Catalog */
+.sec-catalog {
+  padding-left: 6em;
+}
+@media (max-width: 991.98px) {
+  .sec-catalog {
+    padding-left: 0em;
+  }
+}
 .sec-catalog .container {
   position: relative;
 }
@@ -2112,6 +2120,7 @@ header .profile-link img {
   text-align: center;
   width: 100%;
   height: 100%;
+  max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
 }
 .sec-catalog-nav .wrap .sort .swiper-slide {
   height: auto !important;
@@ -2199,22 +2208,51 @@ header .profile-link img {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
 }
 .sec-catalog-nav .wrap.full ul {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(auto, 1fr));
-  height: 100vh;
-  gap: 0.1em;
+  width: 210px;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  flex-grow: 1;
+  height: 100%;
   overflow: hidden;
   list-style: none;
-  padding-left: 0px;
-  padding-top: 0px;
+  padding: 0;
   max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
   align-items: center;
   transition: max-height var(--transition);
+}
+@media (max-width: 1399.98px) {
+  .sec-catalog-nav .wrap.full ul {
+    width: 210px;
+  }
+}
+@media (max-width: 1199.98px) {
+  .sec-catalog-nav .wrap.full ul {
+    width: 260px;
+  }
+}
+@media (max-width: 991.98px) {
+  .sec-catalog-nav .wrap.full ul {
+    width: 70vw;
+  }
+}
+@media (max-width: 767.98px) {
+  .sec-catalog-nav .wrap.full ul {
+    width: 80vw;
+  }
+}
+@media (max-width: 575.98px) {
+  .sec-catalog-nav .wrap.full ul {
+    width: 90vw;
+  }
 }
 .sec-catalog-nav .wrap.full ul li {
   font-size: 1.3em;
   text-align: center;
   margin: 0.4em;
+  display: flex;
+  width: -moz-fit-content;
+  width: fit-content;
 }
 .sec-catalog-nav .wrap.full ul li a {
   display: flex;
@@ -2241,11 +2279,6 @@ header .profile-link img {
 }
 .sec-catalog-nav .wrap.full .scroll {
   display: none;
-}
-@media (max-width: 575.98px) {
-  .sec-catalog-nav .wrap.full {
-    width: 130px;
-  }
 }
 .sec-catalog-nav .wrap.full form input {
   opacity: 1;
