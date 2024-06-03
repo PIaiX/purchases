@@ -74,7 +74,7 @@ const CatalogSection = ({ games }) => {
           <div
             className={(full) ? 'wrap full' : 'wrap'}
           >
-            <div>
+            <div className='alfabet'>
               <ul>
                 {games?.data && games?.letters && games?.letters.map((letter, i) => {
                   return (

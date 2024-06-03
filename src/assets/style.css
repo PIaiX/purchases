@@ -2079,7 +2079,7 @@ header .profile-link img {
 }
 .sec-catalog-nav .scroll {
   width: 100%;
-  max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
+  max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
   overflow-y: scroll;
   padding: 0;
 }
@@ -2203,58 +2203,38 @@ header .profile-link img {
   }
 }
 .sec-catalog-nav .wrap.full {
+  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  display: block;
+  width: auto;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+.sec-catalog-nav .wrap.full .alfabet {
   width: -moz-fit-content;
   width: fit-content;
-  box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
+  display: inline-block;
 }
-.sec-catalog-nav .wrap.full ul {
-  width: 210px;
+.sec-catalog-nav .wrap.full .alfabet ul {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  flex-grow: 1;
   height: 100%;
   overflow: hidden;
   list-style: none;
   padding: 0;
-  max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
+  max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
   align-items: center;
-  transition: max-height var(--transition);
+  transition: var(--transition);
 }
-@media (max-width: 1399.98px) {
-  .sec-catalog-nav .wrap.full ul {
-    width: 210px;
-  }
-}
-@media (max-width: 1199.98px) {
-  .sec-catalog-nav .wrap.full ul {
-    width: 260px;
-  }
-}
-@media (max-width: 991.98px) {
-  .sec-catalog-nav .wrap.full ul {
-    width: 70vw;
-  }
-}
-@media (max-width: 767.98px) {
-  .sec-catalog-nav .wrap.full ul {
-    width: 80vw;
-  }
-}
-@media (max-width: 575.98px) {
-  .sec-catalog-nav .wrap.full ul {
-    width: 90vw;
-  }
-}
-.sec-catalog-nav .wrap.full ul li {
+.sec-catalog-nav .wrap.full .alfabet ul li {
   font-size: 1.3em;
   text-align: center;
-  margin: 0.4em;
+  margin: 0.2em;
   display: flex;
   width: -moz-fit-content;
   width: fit-content;
 }
-.sec-catalog-nav .wrap.full ul li a {
+.sec-catalog-nav .wrap.full .alfabet ul li a {
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -2269,11 +2249,11 @@ header .profile-link img {
   border-radius: 0.67em;
   white-space: nowrap;
 }
-.sec-catalog-nav .wrap.full ul li a:hover {
+.sec-catalog-nav .wrap.full .alfabet ul li a:hover {
   background-color: var(--menu-active);
   color: var(--menu-text);
 }
-.sec-catalog-nav .wrap.full ul li a.active {
+.sec-catalog-nav .wrap.full .alfabet ul li a.active {
   background-color: var(--menu-active);
   color: var(--menu-text);
 }

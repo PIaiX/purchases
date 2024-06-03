@@ -2302,7 +2302,7 @@ header {
 
         .scroll {
             width: 100%;
-            max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
+            max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
             overflow-y: scroll;
             padding: 0;
 
@@ -2437,72 +2437,56 @@ header {
             }
 
             &.full {
-                width: fit-content;
                 @include btnStyle();
+                display: block;
+                width: auto;
+                min-width: max-content;
 
+                .alfabet {
+                    width: fit-content;
+                    display: inline-block;
 
-                ul {
-                    width: 210px;
-                    display: flex;
-                    flex-direction: column;
-                    flex-wrap: wrap;
-                    flex-grow: 1;
-
-                    height: 100%;
-                    overflow: hidden;
-                    list-style: none;
-                    padding: 0;
-                    max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
-                    align-items: center;
-                    transition: max-height var(--transition);
-
-                    @media (max-width: $bp-xxl) {
-                        width: 210px;
-                    }
-
-                    @media (max-width: $bp-xl) {
-                        width: 260px;
-                    }
-
-                    @media (max-width: $bp-lg) {
-                        width: 70vw;
-                    }
-
-                    @media (max-width: $bp-md) {
-                        width: 80vw;
-                    }
-
-                    @media (max-width: $bp-sm) {
-                        width: 90vw;
-                    }
-
-                    li {
-                        font-size: 1.3em;
-                        text-align: center;
-                        margin: 0.4em;
+                    ul {
                         display: flex;
-                        width: fit-content;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+
+                        height: 100%;
+                        overflow: hidden;
+                        list-style: none;
+                        padding: 0;
+                        max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
+                        align-items: center;
+                        transition: var(--transition);
+
+                        li {
+                            font-size: 1.3em;
+                            text-align: center;
+                            margin: 0.2em;
+                            display: flex;
+                            width: fit-content;
 
 
-                        a {
-                            @include flex();
-                            color: var(--font-color);
-                            position: relative;
-                            background-color: transparent;
-                            transition: $transition;
-                            width: 1.9em;
-                            height: 1.9em;
-                            border-radius: $radius;
-                            white-space: nowrap;
+                            a {
+                                @include flex();
+                                color: var(--font-color);
+                                position: relative;
+                                background-color: transparent;
+                                transition: $transition;
+                                width: 1.9em;
+                                height: 1.9em;
+                                border-radius: $radius;
+                                white-space: nowrap;
 
-                            &:hover {
-                                background-color: var(--menu-active);
-                                color: var(--menu-text);
-                            }
+                                &:hover {
+                                    background-color: var(--menu-active);
+                                    color: var(--menu-text);
+                                }
 
-                            &.active {
-                                background-color: var(--menu-active);
-                                color: var(--menu-text);
+                                &.active {
+                                    background-color: var(--menu-active);
+                                    color: var(--menu-text);
+                                }
                             }
                         }
                     }
