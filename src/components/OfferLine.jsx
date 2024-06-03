@@ -1,10 +1,10 @@
 import React, { useMemo } from 'react';
 import StarRating from './utils/StarRating';
 import { Link } from 'react-router-dom';
-import { getImageURL } from '../helpers/all';
+import { getImageURL, treeAll } from '../helpers/all';
 
 const OfferLine = ({ title, uid, desc, servers, count, server, user, total, notDesc, options, data, opt }) => {
-  const image = getImageURL({ path: user.media, type: "user" })
+  const image = getImageURL({ path: user?.media, type: "user" })
   const renderOptions = useMemo(() => {
 
     return options.map((item, i) => {
@@ -41,9 +41,13 @@ const OfferLine = ({ title, uid, desc, servers, count, server, user, total, notD
   }, [options, desc]);
 
   return (
-    <div className={server ? 'offer-line' : 'offer-line-no'}>
+    <div className={data?.servers ? 'offer-line' : 'offer-line-no'}>
       {server && <Link to={`/game/lot/${uid}`} className="serv">{server?.title}</Link>}
-      <Link to={`/game/lot/${uid}`} className="descr">{title}</Link>
+      <Link to={`/game/lot/${uid}`} className="descr">
+        {title && <span className='clamp-on'>{title}, </span>}
+        {desc && <span className='clamp-on'>{desc}<br /></span>}
+        {options && options?.length > 0 && <div className='clamp-on'>{renderOptions}</div>}{title}
+      </Link>
       <div className="seller">
         <Link to={`/trader/${user.id}`}><img src={image} alt={user.nickname} /></Link>
         <div>
@@ -51,14 +55,12 @@ const OfferLine = ({ title, uid, desc, servers, count, server, user, total, notD
           <StarRating value={user.rating} />
         </div>
       </div>
-      <div className="availability">
-        <Link to={`/game/lot/${uid}`}>
-          <span>{count}</span>
-          <span className='gray d-inline d-xl-none ms-1'>шт.</span>
-        </Link>
-      </div>
-      <div className='price'><Link to={`/game/lot/${uid}`}> {Math.round(parseFloat(total) * 10000) / 10000}&nbsp;<span className='rouble ms-1'>₽</span></Link></div>
-    </div>
+      <Link to={`/game/lot/${uid}`} className="availability">
+        <span>{count}</span>
+        <span className='gray d-inline d-xl-none ms-1'>шт.</span>
+      </Link>
+      <Link to={`/game/lot/${uid}`} className='price'> {Math.round(parseFloat(total) * 10000) / 10000}&nbsp;<span className='rouble ms-1'>₽</span></Link>
+    </div >
   );
 };
 

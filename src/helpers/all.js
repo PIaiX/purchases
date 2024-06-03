@@ -20,6 +20,20 @@ const declOfNum = (number, titles) => {
   const cases = [2, 0, 1, 1, 1, 2];
   return titles[(number % 100 > 4 && number % 100 < 20) ? 2 : cases[(number % 10 < 5) ? number % 10 : 5]];
 }
+const treeAll = (option, options) => {
+  let j = 0;
+  let spanOpt = [];
+  spanOpt[j] = option;
+  let optId = option;
+  while (optId.parent) {
+    optId = options.find((e) => e.id === optId.parent);
+    j++;
+    spanOpt[j] = optId;
+  }
+  spanOpt = spanOpt.reverse();
+  return spanOpt;
+}
+
 
 const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   if (path && Array.isArray(path) && path?.length > 0) {
@@ -42,4 +56,4 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   }
 };
 
-export { customPrice, getImageURL, declOfNum };
+export { customPrice, getImageURL, treeAll, declOfNum };

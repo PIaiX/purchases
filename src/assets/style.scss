@@ -2649,9 +2649,9 @@ header {
             padding: 0px;
             position: absolute;
             left: 0.5em;
-            top: 0px;
+            top: -1px;
             width: 20px;
-            height: 14px;
+            height: 15px;
             background: var(--subtract) no-repeat center bottom;
             background-size: 100% 50%;
             @include flex();
@@ -3638,13 +3638,11 @@ header {
         padding: 0.5em 0;
     }
 
-    &>div {
+
+    .serv {
         grid-column: span 1;
         grid-row: span 1;
         padding: var(--pad);
-    }
-
-    .serv {
         grid-area: serv;
 
         @media (max-width: $bp-xl) {
@@ -3654,6 +3652,9 @@ header {
     }
 
     .descr {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: descr;
         @include clamp(3, 1.2em, true);
 
@@ -3663,6 +3664,9 @@ header {
     }
 
     .seller {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: seller;
         @include flex(row, flex-start);
 
@@ -3685,6 +3689,9 @@ header {
     }
 
     .availability {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: availability;
         text-align: center;
 
@@ -3695,6 +3702,9 @@ header {
     }
 
     .price {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: price;
         text-align: center;
 
@@ -3731,14 +3741,11 @@ header {
         padding: 0.5em 0;
     }
 
-    &>div {
+
+    .descr {
         grid-column: span 1;
         grid-row: span 1;
         padding: var(--pad);
-    }
-
-
-    .descr {
         grid-area: descr;
         @include clamp(3, 1.2em, true);
 
@@ -3748,6 +3755,9 @@ header {
     }
 
     .seller {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: seller;
         @include flex(row, flex-start);
 
@@ -3770,6 +3780,9 @@ header {
     }
 
     .availability {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: availability;
         text-align: center;
 
@@ -3780,6 +3793,9 @@ header {
     }
 
     .price {
+        grid-column: span 1;
+        grid-row: span 1;
+        padding: var(--pad);
         grid-area: price;
         text-align: center;
 

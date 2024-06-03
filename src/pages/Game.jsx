@@ -307,7 +307,7 @@ const Game = () => {
 
             <ul className='categories'>
               {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
-                <li key={param.id}><Link to={`/game/${data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
+                <li key={param.id}><Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
               ))}
             </ul>
 
@@ -426,7 +426,7 @@ const Game = () => {
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
                 {displayedProducts?.items?.length > 0 && displayedProducts.items.map((item) => (
                   <li>
-                    <OfferLine {...item} notDesc={data.notDesc} />
+                    <OfferLine {...item} notDesc={data.notDesc} opt={opt} data={data} />
                   </li>
                 ))}
               </ul>

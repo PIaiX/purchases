@@ -2408,9 +2408,9 @@ header .profile-link img {
   padding: 0px;
   position: absolute;
   left: 0.5em;
-  top: 0px;
+  top: -1px;
   width: 20px;
-  height: 14px;
+  height: 15px;
   background: var(--subtract) no-repeat center bottom;
   background-size: 100% 50%;
   display: flex;
@@ -3422,12 +3422,10 @@ header .profile-link img {
     padding: 0.5em 0;
   }
 }
-.offer-line > div {
+.offer-line .serv {
   grid-column: span 1;
   grid-row: span 1;
   padding: var(--pad);
-}
-.offer-line .serv {
   grid-area: serv;
 }
 @media (max-width: 1199.98px) {
@@ -3441,6 +3439,9 @@ header .profile-link img {
   }
 }
 .offer-line .descr {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: descr;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -3460,6 +3461,9 @@ header .profile-link img {
   }
 }
 .offer-line .seller {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: seller;
   display: flex;
   flex-direction: row;
@@ -3487,6 +3491,9 @@ header .profile-link img {
   }
 }
 .offer-line .availability {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: availability;
   text-align: center;
 }
@@ -3501,6 +3508,9 @@ header .profile-link img {
   }
 }
 .offer-line .price {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: price;
   text-align: center;
 }
@@ -3540,12 +3550,10 @@ header .profile-link img {
     padding: 0.5em 0;
   }
 }
-.offer-line-no > div {
+.offer-line-no .descr {
   grid-column: span 1;
   grid-row: span 1;
   padding: var(--pad);
-}
-.offer-line-no .descr {
   grid-area: descr;
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -3565,6 +3573,9 @@ header .profile-link img {
   }
 }
 .offer-line-no .seller {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: seller;
   display: flex;
   flex-direction: row;
@@ -3592,6 +3603,9 @@ header .profile-link img {
   }
 }
 .offer-line-no .availability {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: availability;
   text-align: center;
 }
@@ -3606,6 +3620,9 @@ header .profile-link img {
   }
 }
 .offer-line-no .price {
+  grid-column: span 1;
+  grid-row: span 1;
+  padding: var(--pad);
   grid-area: price;
   text-align: center;
 }
