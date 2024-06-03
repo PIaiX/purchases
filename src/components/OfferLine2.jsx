@@ -24,14 +24,14 @@ const OfferLine2 = ({ category, uid, status, title, desc, price, server, options
   }, [options]);
   return (
     <div className="offer-line-2">
-      <div className="descr">
+      <Link to={`/game/lot/${uid}`} className="descr">
         {server && <span className='me-2'>{server.title},</span>}
         {title && <span className='me-2'>{title},</span>}
         {desc && <span className='me-2'>{desc},</span>}
         {options && options?.length > 0 && renderOptions}
-      </div>
+      </Link>
       <div className='d-flex align-items-center'>
-        <div className='price'>{price} ₽</div>
+        <Link to={`/game/lot/${uid}`} className='price'>{price} ₽</Link>
         <div className="btns">
           <button type='button'><Link to={`edit/${uid}`} >
             <FiEdit />
