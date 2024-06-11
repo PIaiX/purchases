@@ -4,27 +4,14 @@ import { Link } from 'react-router-dom';
 import { getImageURL, treeAll } from '../helpers/all';
 
 const OfferLine = ({ title, uid, desc, servers, count, server, user, total, notDesc, options, data, opt }) => {
-  const image = getImageURL({ path: user?.media, type: "user" })
+  const image = useMemo(() => getImageURL({ path: user?.media }), [user?.media]);
+
+
   const renderOptions = useMemo(() => {
 
     return options.map((item, i) => {
       const option = item.option;
       const key = option.id || i;
-      if (option?.parent && opt) {
-        let spanOpt = treeAll(option, opt);
-        if (spanOpt[0].data?.desc) {
-          return spanOpt.map((item, index) => (
-            <React.Fragment key={item.id}>
-              <span className={index !== spanOpt.length - 1 && 'me-2'}>{item.title}</span>
-              {options?.length !== index + 1 && options[index + 1]?.option?.data?.desc && index === spanOpt.length - 1 && (
-                <span className="me-2">,</span>
-              )}
-            </React.Fragment>
-          ));
-        }
-      }
-
-
       if (!option || !option.data || !option.data.desc) return null; // Проверка наличия данных
 
       const title = option.title || '';
@@ -39,6 +26,7 @@ const OfferLine = ({ title, uid, desc, servers, count, server, user, total, notD
       );
     });
   }, [options, desc]);
+
 
   return (
     <div className={data?.servers ? 'offer-line' : 'offer-line-no'}>

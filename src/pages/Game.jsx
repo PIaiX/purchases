@@ -10,7 +10,7 @@ import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
-import { declOfNum, getImageURL } from '../helpers/all';
+import { declOfNum, getImageURL, removeDescendants } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
 import Loader from '../components/utils/Loader';
 import Meta from '../components/Meta';
@@ -71,59 +71,66 @@ const Game = () => {
   const [games, setGames] = useState({ items: [], loading: true });
   const [selectedValues, setSelectedValues] = useState({});
   const [opt, setOpt] = useState();
-  const handleSelectChange = (nodeId, selectedValue, i) => {
-    setSelectedValues((prevSelectedValues) => {
-      let hug = {};
 
-      if (prevSelectedValues && prevSelectedValues[i]) {
-        hug = { ...prevSelectedValues[i] };
+  const onSaveOption = (option) => {
+    setValue('option', removeDescendants(data, option));
+  };
+
+
+
+  const maxOption = (tree) => {
+    return (
+      <div className='d-flex align-items-center me-4'>
+        <span>{tree.title}</span>
+        <Input
+          className="ms-2"
+          type={"number"}
+          placeholder="От"
+          value={data.option && data.option.find(e => e.parent == tree.id) && data.option.find(e => e.parent == tree.id).min}
+          onChange={(g) => { onSaveOption({ ...tree, min: g !== "" ? parseInt(g) : "all" }) }}
+        />
+        <Input
+          className="ms-2"
+          type={"number"}
+          placeholder="До"
+          value={data.option && data.option.find(e => e.parent == tree.id) && data.option.find(e => e.parent == tree.id).max}
+          onChange={(g) => { onSaveOption({ ...tree, max: g !== "" ? parseInt(g) : "all" }) }}
+        />
+      </div>
+
+    );
+  };
+  const renderSelects = (tree) => {
+    if (tree.children && tree.children.length > 0) {
+      if (tree.children.length == 1 && !data.option.find(e => e.parent == tree.id)) {
+        onSaveOption(tree.children[0])
+
       }
-      if (hug[nodeId]) {
-        let del = hug[nodeId]
-        while (hug[del]) {
-          let uda = hug[del];
-          delete hug[del];
-          del = uda;
-        }
-      }
-      hug[nodeId] = selectedValue;
-
-      return {
-        ...prevSelectedValues,
-        [i]: hug
-      };
-    });
-
-    if (selectedValue) {
-      setValue(`option[${i}].id`, selectedValue)
-    }
-    else {
-      if (nodeId == data.options[i].id) {
-        setValue(`option[${i}].id`, null)
+      if (tree.children[0].data?.max) {
+        return tree.children.map(child =>
+          maxOption(child)
+        );
       }
       else {
-        setValue(`option[${i}].id`, nodeId)
-      }
-    }
+        return (
+          <>
 
-  };
-  const renderSelects = (tree, i) => {
-    if (tree.children && tree.children.length > 0) {
-      return (
-        <>
-          <Select
-            value={selectedValues && selectedValues[i] && selectedValues[i][tree.id] != null && selectedValues[i][tree.id]}
-            title={tree?.title}
-            onClick={(e) => handleSelectChange(tree.id, e.value, i)}
-            data={[
-              { value: null, title: tree.title },
-              ...(tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title })))
-            ]}
-          />
-          {selectedValues && selectedValues[i] && selectedValues[i][tree.id] && selectedValues[i][tree.id] &&
-            renderSelects(tree.children.find((child) => child.id === selectedValues[i][tree.id]), i)}
-        </>
-      );
+            <Select
+              value={data.option != null && data.option.find(e => e.parent == tree.id) && data.option.find(e => e.parent == tree.id).id}
+              title={tree?.title}
+              onClick={(e) => onSaveOption(e.data)}
+              data={[
+                { value: null, data: tree, title: tree.title },
+                ...(tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, data: item, title: item.title })))
+              ]}
+            />
+            {console.log(data.option && data.option.find(e => e.parent == tree.id))}
+            {data.option && data.option.find(e => e.parent == tree.id) &&
+              renderSelects(data.option.find(e => e.parent == tree.id))
+            }
+          </>
+        );
+      }
     }
     return null;
   };
@@ -138,7 +145,7 @@ const Game = () => {
           const sortedParams = [...res?.category?.params]?.sort((a, b) => a.priority - b.priority);
           const firstParamId = sortedParams[0]?.id;
           const regionId = res.category.regions?.length > 0 ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0].id : '';
-          navigate(`/${id}/?${regionId ? `region=${regionId}&` : ''}${firstParamId ? `param=${firstParamId}` : ''}`);
+          navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
         }
         let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
         let param = res.category.params[optionsIndex];
@@ -168,12 +175,12 @@ const Game = () => {
           one: one ? one : null,
           servers: servers ? servers : null,
           options: options ? options : null,
+          option: null,
         });
         setOpt(param.options);
       })
       .catch(() => setGames(prev => ({ ...prev, loading: false })));
   }, [data.param, data.region, data.server, id]);
-
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
@@ -267,9 +274,7 @@ const Game = () => {
   }, [favorite, data.game]);
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
-    navigate('/account/offers/add', { state: data });
-  };
+  console.log(data)
   if (games.loading) {
     return <Loader full />;
   }
@@ -345,72 +350,20 @@ const Game = () => {
                   }))}
                 />
               )}
-              {/* {games?.items?.category?.params?.length > 0 && games.items.category.params.map((param) => (
 
-                (param.id == catId && param?.options?.length > 0 &&
-                  param.options.map(e => {
-                    let options = param.options.filter(item => (item.parent == e.id || item.id == e.id) && item.paramId == catId)
-                    if (!e.parent) {
-                      return <select onChange={(event) => handleFilterChange(e.id, event.target.value)} name={e.name} className=' me-sm-4 me-md-5 mb-3'>
-                        {
-                          options?.length > 0 && options.map(item => (
-                            <option key={item.id} value={item.id} >{item.title}</option>
-                          ))
-                        }
-                      </select>
-                    }
-
-                  }))))} */}
               {data?.options?.length > 0 &&
                 data.options.map((e, i) => {
-                  let optionIndex = data?.optionId?.length > 0 && e?.children.findIndex((child) => child.id == data?.optionId[i])
-                  var option = []
-                  if (optionIndex > -1) {
-                    option = e?.children[optionIndex]
-                  }
                   return (
                     <>
-                      {
-                        e.data?.max
-                          ? <div className='d-flex align-items-center me-4'>
-                            <span>{e.title}</span>
-                            <Input
-                              className="ms-2"
-                              type={"number"}
-                              placeholder="От"
-                              defaultValue={data?.option && data?.option[i]?.min}
-                              onChange={(g) => { setValue(`option[${i}].min`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                            />
-                            <Input
-                              className="ms-2"
-                              type={"number"}
-                              placeholder="До"
-                              defaultValue={data?.option && data?.option[i]?.max}
-                              onChange={(g) => { setValue(`option[${i}].max`, g ? parseInt(g) : "all"), setValue(`option[${i}].id`, e.id) }}
-                            />
-                          </div>
-                          : renderSelects(e, i)
-                      }
-                      {
-                        option?.children?.length > 0 &&
-                        <Select
-                          value={data?.child[i]}
-                          title={option.children[0].title}
-                          onClick={(e) => {
-                            setValue(`child[${i}]`, parseInt(e.value))
-                            setValue(`option[${i}].id`, e.value !== 'false' ? parseInt(e.value) : data.optionId[i])
-                          }}
-                          data={option.children.sort((a, b) => a.priority - b.priority).map((item) => ({
-                            value: item.id,
-                            title: item.title,
-                          }))}
-                        />
+                      {e.data?.max ?
+                        maxOption(e, i)
+                        :
+                        renderSelects(e, i)
                       }
                     </>
-                  );
+                  )
                 })
               }
-
             </form>
           </div>
 
@@ -424,9 +377,9 @@ const Game = () => {
                 <div className='price'>Цена</div>
               </div>
               <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-                {displayedProducts?.items?.length > 0 && displayedProducts.items.map((item) => (
+                {displayedProducts?.items?.length > 0 && displayedProducts.items.reverse().map((item) => (
                   <li>
-                    <OfferLine {...item} notDesc={data.notDesc} opt={opt} data={data} />
+                    <OfferLine {...item} notDesc={data.notDesc} />
                   </li>
                 ))}
               </ul>

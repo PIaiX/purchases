@@ -8,7 +8,7 @@ import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight } from "react-icons/pi";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
 import Chat from '../components/chat/Chat';
@@ -27,33 +27,57 @@ import { refreshAuth } from '../services/auth';
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
-    const [count, setCount] = useState();
     const [showShare, setShowShare] = useState(false);
     const dispatch = useDispatch();
     const [products, setProducts] = useState({
         loading: true,
         items: [],
     });
+    const { state } = useLocation();
     const [isPaymentPending, setPaymentPending] = useState(false);
     const navigate = useNavigate();
     const getPage = () => {
-        getProduct({ id: lotId })
-            .then((res) => {
-                setProducts((prev) => ({
-                    prev,
-                    loading: false,
-                    items: res.product,
-                    reviews: res.reviews,
-                }));
-                setValue("toId", res.product.userId);
-                setValuePay("productId", res.product.id)
-            })
-            .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+        if (state?.order) {
+            getOrder({ id: lotId })
+                .then((res) => {
+                    setProducts((prev) => ({
+                        prev,
+                        loading: false,
+                        items: res.product,
+                        reviews: res.reviews,
+                        nickname: res?.product?.param?.data?.nickname,
+                        nicknameUser: res?.data?.nickname,
+                        author: res.author,
+                        user: res.user,
+                        count: res.count,
+                        createdAt: res.createdAt,
+                        price: res.price,
+                        total: res.total,
+                    }));
+                    setValue("toId", userId != res.author?.id ? res.author?.id : res.user?.id);
+                    setValuePay("productId", res.product?.id)
+                })
+                .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+        }
+        else {
+            getProduct({ id: lotId })
+                .then((res) => {
+                    setProducts((prev) => ({
+                        prev,
+                        loading: false,
+                        items: res.product,
+                        reviews: res.reviews,
+                        nickname: res?.product?.param?.data?.nickname,
+                    }));
+                    setValue("toId", res.product.userId);
+                    setValuePay("productId", res.product.id)
+                })
+                .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
+        }
     };
     useEffect(() => {
         getPage();
     }, [lotId]);
-
     const { control, reset, setValue } = useForm({
         mode: "all",
         reValidateMode: "onChange",
@@ -69,75 +93,86 @@ const LotPage = () => {
     });
 
     useEffect(() => {
-        if (data.toId && userId != products.items.user.id) {
+        if (data.toId && userId != products.items?.user?.id && data.toId != userId) {
             getMessages(data)
                 .then((res) => {
                     setMessages((prev) => ({
                         ...prev,
                         loading: false,
                         items: res.messages.items,
-                        dialogId: res.dialog.id
-                    }))
+                        dialogId: res.dialog.id,
+                        dialog: res.dialog,
+                    }));
                     setValue("id", res.dialog.id);
-                }
-                )
-                .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+                })
+                .catch(() => {
+                    setMessages((prev) => ({ ...prev, loading: false }))
+                });
         }
     }, [data.toId]);
     useEffect(() => {
+        const handleMessage = (data) => {
+
+            setMessages(prev => {
+                if (data.status) {
+                    return {
+                        ...prev,
+                        loading: false,
+                        items: [data, ...prev.items],
+                    };
+                } else {
+                    const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+                    if (messageIndex !== -1) {
+                        const updatedMessages = [...prev.items];
+                        updatedMessages[messageIndex] = data;
+
+                        return {
+                            ...prev,
+                            loading: false,
+                            items: updatedMessages,
+                        };
+                    }
+
+                    return prev;
+                }
+            });
+        };
+
         if (data?.id) {
             socket.emit("createRoom", "message/" + data.id);
+            socket.on("message", handleMessage);
+            socket.on("report", handleMessage);
 
-            socket.on("message", (data) => {
-                if (data) {
-                    setMessages((prev) => ({
-                        ...prev,
-                        loading: false,
-                        items: [
-                            data,
-                            ...prev.items,
-                        ],
-                    }));
-                }
-            });
-            socket.on("report", (data) => {
-                if (data) {
-                    setMessages((prev) => ({
-                        ...prev,
-                        loading: false,
-                        items: [
-                            data,
-                            ...prev.items,
-                        ],
-                    }));
-                }
-            });
             return () => {
-                socket.off("message");
-                socket.off("report");
+                socket.off("message", handleMessage);
+                socket.off("report", handleMessage);
+                socket.emit("removeRoom", "message/" + data.id);
             };
         }
     }, [data?.id]);
 
-
     const onNewMessage = useCallback(
         (text) => {
 
-            createMessage({ ...data, text });
-            if (!data?.id) {
-                getMessages(data)
-                    .then((res) => {
-                        setMessages((prev) => ({
-                            ...prev,
-                            loading: false,
-                            items: res.messages.items,
-                            dialogId: res.dialog.id,
-                            dialog: res.dialog,
-                        }));
-                        setValue("id", res.dialog.id);
-                    })
-                    .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-            }
+            createMessage({ ...data, text })
+                .then((res) => {
+                    if (!data?.id) {
+                        getMessages(data)
+                            .then((res) => {
+                                setMessages((prev) => ({
+                                    ...prev,
+                                    loading: false,
+                                    items: res.messages.items,
+                                    dialogId: res.dialog.id,
+                                    dialog: res.dialog,
+                                }));
+                                setValue("id", res.dialog.id);
+                            })
+                            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+                    }
+                })
+
         },
         [data]
     );
@@ -146,10 +181,7 @@ const LotPage = () => {
         register: registerPay,
         setValue: setValuePay,
         reset: resetPay,
-        formState: {
-            errors: errorsPay,
-            isValid: isValidPay
-        },
+        formState: { errors: errorsPay, isValid: isValidPay },
         handleSubmit: handleSubmitPay,
     } = useForm({
         mode: "all",
@@ -158,11 +190,14 @@ const LotPage = () => {
             count: 1,
         },
     });
-    const pay = useWatch({ control: controlPay })
+    const pay = useWatch({ control: controlPay });
     const onPay = useCallback(
         (pay) => {
             if (!pay.type || pay.type <= 0) {
                 return NotificationManager.error("Выберите способ оплаты");
+            }
+            if (!pay.count || pay.count < 1) {
+                return NotificationManager.error("Укажите количество товара");
             }
             if (products.items.count - pay.count < 0) {
                 return NotificationManager.error(
@@ -172,7 +207,7 @@ const LotPage = () => {
             setPaymentPending(true);
             createOrder(pay)
                 .then((res) => {
-                    resetPay({ ...pay, count: 1, type: null });
+                    resetPay({ ...pay, nickname: null, count: 1, type: null });
                     setPaymentPending(false);
                     getPage();
                     dispatch(refreshAuth());
@@ -193,6 +228,7 @@ const LotPage = () => {
                     }
                 })
                 .catch((err) => {
+                    setPaymentPending(false);
                     NotificationManager.error(
                         err?.response?.data?.error ?? "Ошибка при покупке"
                     );
@@ -201,8 +237,14 @@ const LotPage = () => {
         [products.items.count]
     );
 
+    const user =
+        messages?.dialog ? (userId == messages?.dialog?.to?.id
+            ? messages?.dialog?.from
+            : messages?.dialog?.to)
+            : products?.items?.user
+
     const onTask = useCallback(() => {
-        createTask({ type: "report", userId: products?.items?.userId })
+        createTask({ type: "report", userId: user.id })
             .then(() => {
                 NotificationManager.success("Жалоба отправлена");
 
@@ -212,7 +254,7 @@ const LotPage = () => {
                     err?.response?.data?.error ?? "Ошибка при отправке"
                 );
             });
-    }, [products?.items?.userId]);
+    }, [user]);
     if (products.loading) {
         return <Loader full />;
     }
@@ -239,11 +281,11 @@ const LotPage = () => {
                                     <div className='d-flex align-items-center'>
                                         <span className='tag-gray me-3'>{products?.items?.param?.title}</span>
                                         {
-                                            (products?.items?.region?.title) &&
+                                            (products?.items?.region?.title) && products?.items?.region.status &&
                                             <span className='tag-green me-3'>{products?.items?.region?.title}</span>
                                         }
                                     </div>
-                                    {products?.items?.server?.title &&
+                                    {products?.items?.server?.title && !products?.items?.param?.data?.serverView &&
                                         <div className='d-flex align-items-center'>
                                             <span>Сервер</span>
                                             <span className='fs-09 pale-blue mx-2'>●</span>
@@ -251,9 +293,10 @@ const LotPage = () => {
                                         </div>
                                     }
                                 </div>
-
-                                <div className='title'>{products?.items?.title} </div>
-
+                                {/* <div className='title'>{products?.items?.title} </div> */}
+                                <div className='title'>Название</div>
+                                {products?.items?.status == 0 ? <div className='status'>Закрыт</div> : <div className='status'></div>}
+                                {products?.items?.status == -1 ? <div className='status'>Заблокировано</div> : <div className='status'></div>}
                                 <div className='date'>
                                     <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
                                     <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
@@ -263,16 +306,19 @@ const LotPage = () => {
                                 </div>
 
                                 <div className="payment align-items-center">
-
-                                    <h6>Доступно:</h6>
-                                    <h6>{products?.items?.count}</h6>
-                                    <Input
-                                        value={pay.count}
-                                        type={"number"}
-                                        label={"Количество"}
-                                        name="count"
-                                        register={registerPay}
-                                    />
+                                    {!products?.items?.param?.data?.one &&
+                                        <>
+                                            <h6>Доступно:</h6>
+                                            <h6>{products?.items?.count}</h6>
+                                            <Input
+                                                value={pay.count}
+                                                type={"number"}
+                                                label={"Количество"}
+                                                name="count"
+                                                register={registerPay}
+                                            />
+                                        </>
+                                    }
                                     <Select
                                         value={pay.type}
                                         title="Выберите способ оплаты"
@@ -280,15 +326,31 @@ const LotPage = () => {
 
                                         data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                     />
+                                    <Input
+                                        value={pay?.nickname ?? ""}
+                                        placeholder={'nickname'}
+                                        className="nickname me-4"
+                                        type="text"
+                                        onChange={(e) => setValuePay("nickname", e)}
+                                        maxLength={100}
+                                    />
+                                    {products?.items?.data?.minCount &&
+                                        <Col className="d-flex align-items-center achromat-3" md={12}>
+                                            <span className="me-2">Минимум</span>
+                                            <span className="me-2">{products?.items?.data?.minCount}</span>
+                                            {products?.items?.data?.typeCount && <span className="me-2">{products?.items?.data?.typeCount}.</span>}
+                                            <span className="me-2">(требование продавца)</span>
+                                        </Col>
+                                    }
                                     <button disabled={!userId || isPaymentPending || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
                                 </div>
 
                                 <div className='text'>
-                                    <p>{products?.items?.desc}</p>
+                                    {!products?.items?.desc && <p>{products?.items?.desc}</p>}
                                 </div>
 
                                 <ul className='specifications'>
-                                    {products?.items?.options && products?.items?.options.map(e => {
+                                    {products?.items?.options && [...products?.items?.options].reverse().map(e => {
                                         let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
                                         if (!e.parent) {
                                             return <li>

@@ -3866,7 +3866,7 @@ header {
 /* Lot page */
 .lot-page {
     .specifications {
-        @include list();
+        // @include list();
         font-size: 0.9em;
 
         li {
@@ -3883,9 +3883,9 @@ header {
                 background-color: var(--extrapale-gray);
             }
 
-            &:not(:first-child) {
-                margin-top: 0.5em;
-            }
+            // &:not(:first-child) {
+            margin-top: 0.5em;
+            // }
 
             span {
                 position: relative;
@@ -3953,23 +3953,25 @@ header {
     &-grid {
         display: grid;
         grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: 50px auto auto auto;
+        grid-template-rows: 50px auto auto auto auto;
         gap: 0px 0px;
         grid-template-areas:
             "game info info date"
-            "title title title title"
+            "title title title status"
             "payment payment payment payment"
-            "text text specifications specifications";
+            "specifications specifications specifications specifications"
+            "text text text text";
 
         @media (max-width: $bp-md) {
             grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 50px auto auto auto auto auto;
+            grid-template-rows: 50px auto auto auto auto auto auto;
             grid-template-areas:
                 "game date"
                 "info info"
                 "title title"
-                "text text"
+                "status status"
                 "specifications specifications"
+                "text text"
                 "payment payment";
         }
 
@@ -4038,6 +4040,16 @@ header {
             border-bottom: 1px solid var(--extrapale-gray);
         }
 
+        .status {
+            grid-area: status;
+            color: var(--mess-ban);
+            font-weight: bold;
+            text-align: end;
+            padding: 1em;
+            border-top: 1px solid var(--extrapale-gray);
+            border-bottom: 1px solid var(--extrapale-gray);
+        }
+
         .payment {
             grid-area: payment;
             @include flex(row, flex-start, flex-end, wrap);
@@ -4045,8 +4057,14 @@ header {
             padding: 1em;
             border-bottom: 1px solid var(--extrapale-gray);
 
+
+
             .labeled-input {
                 width: 100px;
+
+                &.nickname {
+                    width: auto !important;
+                }
 
                 label {
                     padding: 0 0.35em;
@@ -4070,11 +4088,17 @@ header {
         .specifications {
             grid-area: specifications;
             padding: 1em;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+
+            gap: 0 2em;
 
             @media (max-width: $bp-md) {
                 font-size: .9em;
+                grid-template-columns: 1fr;
             }
         }
+
     }
 
     .dropdown {

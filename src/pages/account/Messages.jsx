@@ -203,7 +203,7 @@ const Messages = ({ isMobileXL }) => {
       onLoadDialogs();
     }
   };
-
+  console.log(isMobileXL)
   if (dialogs.loading) {
     return <Loader full />;
   }

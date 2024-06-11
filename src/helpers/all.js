@@ -35,6 +35,75 @@ const treeAll = (option, options) => {
 }
 
 
+const removeDescendants = (data, option) => {
+  if (!data.option) {
+    return [option];
+  }
+
+  const filteredOptions = [...data.option];
+  if (option.data?.max) {
+    const existingOptionIndex = filteredOptions.findIndex(item => item.id === option.id);
+
+    // Если элемент найден, обновляем его
+    if (existingOptionIndex !== -1) {
+      if (option.max) {
+        filteredOptions[existingOptionIndex] = {
+          ...filteredOptions[existingOptionIndex],
+          max: option.max,
+        };
+      }
+      else if (option.min) {
+        filteredOptions[existingOptionIndex] = {
+          ...filteredOptions[existingOptionIndex],
+          min: option.min,
+        };
+      }
+      else {
+        filteredOptions[existingOptionIndex] = {
+          ...filteredOptions[existingOptionIndex],
+          value: option.value,
+        };
+      }
+    } else {
+      // Если элемент не найден, добавляем его
+      filteredOptions.push({
+        ...option,
+      });
+    }
+  }
+  else {
+
+    const descendants = [];
+
+    // Ищем потомков с parent, равным id option
+    const findDescendants = (id) => {
+      const found = filteredOptions.filter(item => item.parent === id);
+      if (found.length > 0) {
+        found.forEach(item => {
+          descendants.push(item); // Добавляем найденного потомка в массив descendants
+          findDescendants(item.id); // Рекурсивно ищем потомков этого потомка
+        });
+      }
+    };
+
+    findDescendants(option.id); // Начинаем поиск потомков с option.id
+    if (option.parent) {
+      findDescendants(option.parent);
+    }
+    // Удаляем потомков из массива filteredOptions
+    descendants.forEach(item => {
+      filteredOptions.splice(filteredOptions.indexOf(item), 1);
+    });
+
+    // Добавляем option в filteredOptions
+    if (option.parent) {
+      filteredOptions.push(option);
+    }
+  }
+  return filteredOptions;
+};
+
+
 const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   if (path && Array.isArray(path) && path?.length > 0) {
     if (size == "mini") {
@@ -56,4 +125,4 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   }
 };
 
-export { customPrice, getImageURL, treeAll, declOfNum };
+export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum };
