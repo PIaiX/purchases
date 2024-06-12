@@ -234,19 +234,20 @@ const Profile = () => {
                           {user?.data?.createdAt ? moment(user.data.createdAt).fromNow(1) : ""} на платформе
                         </p>
                       </div>
+                      <div>
+                        <p>
+                          {user?.data?.online?.status ? (
+                            <span className="online">online</span>
+                          ) : user?.data?.online?.end ? (
+                            "Был(-а) в сети " +
+                            moment(user?.data?.online?.end).fromNow()
+                          ) : (
+                            "Оффлайн"
+                          )}
+                        </p>
+                      </div>
                     </div>
-                    <div>
-                      <p className="text-muted">
-                        {user?.data?.online?.status ? (
-                          <span className="text-success">Онлайн</span>
-                        ) : user?.data?.online?.end ? (
-                          "Был(-а) в сети " +
-                          moment(user?.data?.online?.end).fromNow()
-                        ) : (
-                          "Оффлайн"
-                        )}
-                      </p>
-                    </div>
+
                   </div>
 
                   <ul className="user-info">

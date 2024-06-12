@@ -23,11 +23,14 @@ import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
 import { NotificationManager } from 'react-notifications';
 import { refreshAuth } from '../services/auth';
+import useIsMobile from '../hooks/isMobile';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
     const [showShare, setShowShare] = useState(false);
+    const isMobileLG = useIsMobile('991px');
+    const [scrollOff, setScrollOff] = useState(isMobileLG ? false : true);
     const dispatch = useDispatch();
     const [products, setProducts] = useState({
         loading: true,
@@ -262,211 +265,212 @@ const LotPage = () => {
         <main>
             <Meta title="Лот" />
             <section className='lot-page mb-6'>
-                <Container>
-                    <button type="button" onClick={() => navigate(-1)} className='blue d-flex align-items-center mb-3'>
-                        <PiCaretLeftLight className='fs-15' />
-                        <span className='ms-2'>Назад в каталог</span>
-                    </button>
-                    <Row>
-                        <Col xs={12} lg={8}>
-                            <div className="lot-page-box lot-page-grid mb-4">
-                                <div className="game">
-                                    {/* {products?.items?.category?.media &&
+                <button type="button" onClick={() => navigate(-1)} className='blue d-flex align-items-center mb-3'>
+                    <PiCaretLeftLight className='fs-15' />
+                    <span className='ms-2'>Назад в каталог</span>
+                </button>
+                <Row>
+                    <Col xs={12} lg={8}>
+                        <div className="lot-page-box lot-page-grid mb-4">
+                            <div className="game">
+                                {/* {products?.items?.category?.media &&
                                         <img src={getImageURL(products?.items?.category?.media)} alt="AFK Arena" />
                                     } */}
-                                    <h6>{products?.items?.category?.title}</h6>
-                                </div>
+                                <h6>{products?.items?.category?.title}</h6>
+                            </div>
 
-                                <div className='info'>
-                                    <div className='d-flex align-items-center'>
-                                        <span className='tag-gray me-3'>{products?.items?.param?.title}</span>
-                                        {
-                                            (products?.items?.region?.title) && products?.items?.region.status &&
-                                            <span className='tag-green me-3'>{products?.items?.region?.title}</span>
-                                        }
-                                    </div>
-                                    {products?.items?.server?.title && !products?.items?.param?.data?.serverView &&
-                                        <div className='d-flex align-items-center'>
-                                            <span>Сервер</span>
-                                            <span className='fs-09 pale-blue mx-2'>●</span>
-                                            <span>{products?.items?.server?.title}</span>
-                                        </div>
+                            <div className='info'>
+                                <div className='d-flex align-items-center'>
+                                    <span className='tag-gray me-3'>{products?.items?.param?.title}</span>
+                                    {
+                                        (products?.items?.region?.title) && products?.items?.region.status &&
+                                        <span className='tag-green me-3'>{products?.items?.region?.title}</span>
                                     }
                                 </div>
-                                {/* <div className='title'>{products?.items?.title} </div> */}
-                                <div className='title'>Название</div>
-                                {products?.items?.status == 0 ? <div className='status'>Закрыт</div> : <div className='status'></div>}
-                                {products?.items?.status == -1 ? <div className='status'>Заблокировано</div> : <div className='status'></div>}
-                                <div className='date'>
-                                    <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
-                                    <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
-                                    {/* <button type='button' className='d-flex fs-14 ms-3'>
+                                {products?.items?.server?.title && !products?.items?.param?.data?.serverView &&
+                                    <div className='d-flex align-items-center'>
+                                        <span>Сервер</span>
+                                        <span className='fs-09 pale-blue mx-2'>●</span>
+                                        <span>{products?.items?.server?.title}</span>
+                                    </div>
+                                }
+                            </div>
+                            {/* <div className='title'>{products?.items?.title} </div> */}
+                            <div className='title'>Название</div>
+                            {products?.items?.status == 0 ? <div className='status'>Закрыт</div> : <div className='status'></div>}
+                            {products?.items?.status == -1 ? <div className='status'>Заблокировано</div> : <div className='status'></div>}
+                            <div className='date'>
+                                <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
+                                <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
+                                {/* <button type='button' className='d-flex fs-14 ms-3'>
                                         <PiWarningLight />
                                     </button> */}
-                                </div>
-
-                                <div className="payment align-items-center">
-                                    {!products?.items?.param?.data?.one &&
-                                        <>
-                                            <h6>Доступно:</h6>
-                                            <h6>{products?.items?.count}</h6>
-                                            <Input
-                                                value={pay.count}
-                                                type={"number"}
-                                                label={"Количество"}
-                                                name="count"
-                                                register={registerPay}
-                                            />
-                                        </>
-                                    }
-                                    <Select
-                                        value={pay.type}
-                                        title="Выберите способ оплаты"
-                                        onClick={e => setValuePay("type", e.value)}
-
-                                        data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
-                                    />
-                                    <Input
-                                        value={pay?.nickname ?? ""}
-                                        placeholder={'nickname'}
-                                        className="nickname me-4"
-                                        type="text"
-                                        onChange={(e) => setValuePay("nickname", e)}
-                                        maxLength={100}
-                                    />
-                                    {products?.items?.data?.minCount &&
-                                        <Col className="d-flex align-items-center achromat-3" md={12}>
-                                            <span className="me-2">Минимум</span>
-                                            <span className="me-2">{products?.items?.data?.minCount}</span>
-                                            {products?.items?.data?.typeCount && <span className="me-2">{products?.items?.data?.typeCount}.</span>}
-                                            <span className="me-2">(требование продавца)</span>
-                                        </Col>
-                                    }
-                                    <button disabled={!userId || isPaymentPending || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
-                                </div>
-
-                                <div className='text'>
-                                    {!products?.items?.desc && <p>{products?.items?.desc}</p>}
-                                </div>
-
-                                <ul className='specifications'>
-                                    {products?.items?.options && [...products?.items?.options].reverse().map(e => {
-                                        let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
-                                        if (!e.parent) {
-                                            return <li>
-                                                <span>{e.value ? e?.option?.title : name?.title ? name.title : "Хакатеристика"}</span>
-                                                {e.value ? <span>{e?.value}</span> : <span>{e?.option?.title}</span>}
-                                            </li>
-
-                                        }
-                                    })}
-                                </ul>
                             </div>
 
-                            <div className="lot-page-box">
-                                <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
-                                    <div className="seller">
-                                        <Link to={`/trader/${products?.items?.userId}`}>
-                                            <img src={getImageURL(products?.items?.user)} alt="Weatherwax" />
-                                        </Link>
-                                        <Link to={`/trader/${products?.items?.userId}`}>
-                                            <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>
-                                        </Link>
-                                        <div className='rating ms-3'>
-                                            <StarIcon />
-                                            {/* <StarRating value={products?.items?.user?.rating} /> */}
-                                            <span>{products?.items?.user?.rating != null ? parseFloat(products?.items?.user?.rating).toFixed(1) : "0.0"}</span>
-                                        </div>
-                                    </div>
-                                    <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
-                                        <div className="d-flex">
-                                            <div className="d-flex flex-column align-items-center">
-                                                <p className='fs-09 mb-1 mb-sm-2'>Сделки</p>
-                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.orderSale}</p>
-                                            </div>
-                                            <div className='d-flex flex-column align-items-center ms-4'>
-                                                <p className='fs-09 mb-1 mb-sm-2'>Лоты</p>
-                                                <p className="fs-15 title-font lh-n">{products?.items?.user?.product}</p>
-                                            </div>
-                                        </div>
-                                        <div className='ms-5'>
-
-                                            <button
-                                                type="button"
-                                                onClick={setShowShare}
-                                                className='d-flex gray fs-13 mb-2 mb-sm-3'
-                                            >
-                                                <FiShare />
-                                            </button>
-                                            {userId != products?.items?.user?.id &&
-                                                <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
-                                            }
-                                        </div>
-                                    </div>
-                                </div>
-                                {userId != products?.items?.user?.id &&
+                            <div className="payment align-items-center">
+                                {!products?.items?.param?.data?.one &&
                                     <>
-                                        <hr />
-                                        <div className="px-3 py-2">
-                                            <p className='blue'>Напишите продавцу перед покупкой</p>
-                                        </div>
-                                        <hr />
-                                        {!userId ? (
-                                            <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                                                Для отправки сообщений войдите в аккаунт!
-                                            </div>
-                                        ) : (
-                                            <div className="p-0 fs-09">
-                                                {products.loading ? (
-                                                    <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                                                        Загрузка чата...
-                                                    </div>
-                                                ) : (
-                                                    < Chat
-                                                        messages={messages}
-                                                        emptyText="Нет сообщений"
-                                                        onSubmit={(e) => onNewMessage(e)}
-                                                        onChange={(e) => setValue("text", e)}
-                                                        data={data}
-                                                        setImage={(e) => setValue("media", Array.from(e))}
-                                                    />
-                                                )}
-                                            </div>
-                                        )}
+                                        <h6>Доступно:</h6>
+                                        <h6>{products?.items?.count}</h6>
+                                        <Input
+                                            value={pay.count}
+                                            type={"number"}
+                                            label={"Количество"}
+                                            name="count"
+                                            register={registerPay}
+                                        />
                                     </>
                                 }
-                            </div>
-                        </Col>
-                        <Col xs={12} lg={4} className='mt-5 mt-lg-0'>
-                            <h2 className='fs-15'>Отзывы</h2>
-                            <ul className='list-unstyled'>
-                                {products?.reviews?.length > 0 ? products.reviews.map(review => (
-                                    <li className='mb-3'>
-                                        <ReviewCard {...review} />
-                                    </li>
-                                )) : (
-                                    <div className="d-flex align-items-center justify-content-center mt-4">
-                                        <h5>
-                                            Нет отзывов
-                                        </h5>
-                                    </div>
-                                )
+                                <Select
+                                    value={pay.type}
+                                    title="Выберите способ оплаты"
+                                    onClick={e => setValuePay("type", e.value)}
+
+                                    data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
+                                />
+                                <Input
+                                    value={pay?.nickname ?? ""}
+                                    placeholder={'nickname'}
+                                    className="nickname me-4"
+                                    type="text"
+                                    onChange={(e) => setValuePay("nickname", e)}
+                                    maxLength={100}
+                                />
+                                {products?.items?.data?.minCount &&
+                                    <Col className="d-flex align-items-center achromat-3" md={12}>
+                                        <span className="me-2">Минимум</span>
+                                        <span className="me-2">{products?.items?.data?.minCount}</span>
+                                        {products?.items?.data?.typeCount && <span className="me-2">{products?.items?.data?.typeCount}.</span>}
+                                        <span className="me-2">(требование продавца)</span>
+                                    </Col>
                                 }
+                                <button disabled={!userId || isPaymentPending || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
+                            </div>
+
+                            <div className='text'>
+                                {!products?.items?.desc && <p>{products?.items?.desc}</p>}
+                            </div>
+
+                            <ul className='specifications'>
+                                {products?.items?.options && [...products?.items?.options].reverse().map(e => {
+                                    let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
+                                    if (!e.parent) {
+                                        return <li>
+                                            <span>{e.value ? e?.option?.title : name?.title ? name.title : "Хакатеристика"}</span>
+                                            {e.value ? <span>{e?.value}</span> : <span>{e?.option?.title}</span>}
+                                        </li>
+
+                                    }
+                                })}
                             </ul>
-                        </Col>
-                    </Row>
-                    <Modal show={showShare} onHide={setShowShare} centered>
-                        <Modal.Header closeButton></Modal.Header>
-                        <Modal.Body>
-                            <h4 className="mb-3">Профиль продавца</h4>
-                            <Input
-                                onClick={(e) => e.target.select()}
-                                readOnly
-                                defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${products.items.userId}`}
-                            />
-                        </Modal.Body>
-                    </Modal>
-                </Container>
+                        </div>
+
+                        <div className="lot-page-box">
+                            <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
+                                <div className="seller">
+                                    <Link to={`/trader/${products?.items?.userId}`}>
+                                        <img src={getImageURL(products?.items?.user)} alt="Weatherwax" />
+                                    </Link>
+                                    <Link to={`/trader/${products?.items?.userId}`}>
+                                        <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>
+                                    </Link>
+                                    <div className='rating ms-3'>
+                                        <StarIcon />
+                                        {/* <StarRating value={products?.items?.user?.rating} /> */}
+                                        <span>{products?.items?.user?.rating != null ? parseFloat(products?.items?.user?.rating).toFixed(1) : "0.0"}</span>
+                                    </div>
+                                </div>
+                                <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
+                                    <div className="d-flex">
+                                        <div className="d-flex flex-column align-items-center">
+                                            <p className='fs-09 mb-1 mb-sm-2'>Сделки</p>
+                                            <p className="fs-15 title-font lh-n">{products?.items?.user?.orderSale}</p>
+                                        </div>
+                                        <div className='d-flex flex-column align-items-center ms-4'>
+                                            <p className='fs-09 mb-1 mb-sm-2'>Лоты</p>
+                                            <p className="fs-15 title-font lh-n">{products?.items?.user?.product}</p>
+                                        </div>
+                                    </div>
+                                    <div className='ms-5'>
+
+                                        <button
+                                            type="button"
+                                            onClick={setShowShare}
+                                            className='d-flex gray fs-13 mb-2 mb-sm-3'
+                                        >
+                                            <FiShare />
+                                        </button>
+                                        {userId != products?.items?.user?.id &&
+                                            <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                            {userId != products?.items?.user?.id &&
+                                <>
+                                    <hr />
+                                    <div className="px-3 py-2">
+                                        <p className='blue'>Напишите продавцу перед покупкой</p>
+                                    </div>
+                                    <hr />
+
+                                    {!userId ? (
+                                        <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                                            Для отправки сообщений войдите в аккаунт!
+                                        </div>
+                                    ) : (
+                                        <div className="p-0 fs-09">
+                                            {products.loading ? (
+                                                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                                                    Загрузка чата...
+                                                </div>
+                                            ) : (
+                                                < Chat
+                                                    setScrollOff={setScrollOff}
+                                                    scrollOff={scrollOff}
+                                                    messages={messages}
+                                                    emptyText="Нет сообщений"
+                                                    onSubmit={(e) => onNewMessage(e)}
+                                                    onChange={(e) => setValue("text", e)}
+                                                    data={data}
+                                                    setImage={(e) => setValue("media", Array.from(e))}
+                                                />
+                                            )}
+                                        </div>
+                                    )}
+                                </>
+                            }
+                        </div>
+                    </Col>
+                    <Col xs={12} lg={4} className='mt-5 mt-lg-0'>
+                        <h2 className='fs-15'>Отзывы</h2>
+                        <ul className='list-unstyled'>
+                            {products?.reviews?.length > 0 ? products.reviews.map(review => (
+                                <li className='mb-3'>
+                                    <ReviewCard {...review} />
+                                </li>
+                            )) : (
+                                <div className="d-flex align-items-center justify-content-center mt-4">
+                                    <h5>
+                                        Нет отзывов
+                                    </h5>
+                                </div>
+                            )
+                            }
+                        </ul>
+                    </Col>
+                </Row>
+                <Modal show={showShare} onHide={setShowShare} centered>
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body>
+                        <h4 className="mb-3">Профиль продавца</h4>
+                        <Input
+                            onClick={(e) => e.target.select()}
+                            readOnly
+                            defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${products.items.userId}`}
+                        />
+                    </Modal.Body>
+                </Modal>
             </section>
         </main>
     )

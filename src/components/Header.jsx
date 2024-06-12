@@ -95,24 +95,22 @@ const Header = () => {
   return (
     <>
       <header className="header" onClick={() => { setShowSearch(false), setSearchTerm(""), showFav == true && setShowFav(false); }}>
-        <Container className="h-100">
-          <div className="h-100 w-100 d-flex align-items-center justify-content-between">
-            <Link to="/">
-              <Logo />
-            </Link>
+        <div className="h-100 w-100 d-flex align-items-center justify-content-between pe-3 ps-3">
+          <Link to="/">
+            <Logo />
+          </Link>
 
-            <input
-              type="search"
-              className="d-none d-lg-flex ms-4 ms-xxl-5 w-50"
-              placeholder="Поиск по описанию"
-              onChange={(event) => {
-                handleSearchChange(event);
-              }}
-            />
+          <input
+            type="search"
+            className="d-none d-lg-flex ms-4 ms-xxl-5 w-50"
+            placeholder="Поиск по описанию"
+            onChange={(event) => {
+              handleSearchChange(event);
+            }}
+          />
 
-            <ThemeToggler />
-          </div>
-        </Container>
+          <ThemeToggler />
+        </div>
       </header>
 
       {

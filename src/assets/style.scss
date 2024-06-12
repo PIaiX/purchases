@@ -65,6 +65,7 @@ $bp-xxl: 1399.98px;
     --font-color: #191F2D;
     --switcher: #F4F4F4;
     --extrapale-blue: #E5F2FF;
+    --extrapale-line: #E5F2FF;
     --pale-blue: #9dc4ef;
     --blue: #4a83dc;
     --dark-blue: #0d59ab;
@@ -98,6 +99,8 @@ $bp-xxl: 1399.98px;
     --arrow: #4A83DC;
     --login-icon: #44F06A;
     --login-key: #000;
+    --review-color: #C7DFF933;
+
 
     --letter: #fff;
     --search-game-border: #9DC4EF;
@@ -138,6 +141,7 @@ $bp-xxl: 1399.98px;
     --count: #9DC4EF33;
     --white: #000;
     --extrapale-gray: #43536A;
+    --extrapale-line: #43536A;
     --grayish: #374050;
     --pale-gray: #4F5D70;
     --light-gray: #7D8999;
@@ -151,6 +155,11 @@ $bp-xxl: 1399.98px;
     --arrow: #43536A;
     --login-icon: #47567B;
     --login-key: #2B3651;
+    --review-color: linear-gradient(137deg,
+            rgba(35, 43, 66, 0.09) 15.10%,
+            rgba(22, 30, 49, 0.30) 100%),
+        rgba(50, 62, 94);
+
 
     --letter: #47567B;
     --search-game-border: rgba(0, 0, 0, 0);
@@ -2274,6 +2283,10 @@ header {
     .container {
         position: relative;
 
+        @media (max-width: $bp-xl) {
+            max-width: 1370px;
+        }
+
         @media (max-width: $bp-lg) {
             @include flex(row, flex-start, stretch, nowrap);
         }
@@ -2512,6 +2525,7 @@ header {
         flex: 1;
 
 
+
     }
 
     &-part {
@@ -2520,6 +2534,7 @@ header {
         }
 
         .element {
+
             padding: 1em 1.5em;
             background: var(--glass);
             box-shadow: var(--shadow);
@@ -2909,6 +2924,33 @@ header {
         flex-direction: column-reverse;
         height: 500px;
         overflow: auto;
+
+        &.off {
+            overflow: unset;
+
+            .scroll-button {
+                position: absolute;
+                top: 1em;
+                left: 50%;
+                transform: translateX(-50%);
+                width: fit-content;
+                background: var(--btn-1);
+                padding: .9em 1.4em;
+                font-size: .9em;
+                color: #fff;
+                transition: 300ms ease-in-out;
+                transition-property: background-color, color;
+                border-radius: 8px;
+                border: 1px solid rgba(0, 0, 0, 0);
+            }
+
+
+            @media (max-width: $bp-lg) {
+                overflow: auto;
+            }
+
+        }
+
         padding: 1em 1.5em;
 
 
@@ -3266,6 +3308,8 @@ header {
 /* Game page */
 .page-game {
     overflow: hidden;
+    padding-left: 3em;
+    padding-right: 3em;
 
     &-top {
         h1 {
@@ -3384,7 +3428,7 @@ header {
                 background: var(--glass);
                 padding: 1em;
                 border-radius: $radius;
-                @include shadow();
+                @include shadowMobile();
             }
 
             &-top {
@@ -3865,6 +3909,9 @@ header {
 
 /* Lot page */
 .lot-page {
+    padding-left: 3em;
+    padding-right: 3em;
+
     .specifications {
         // @include list();
         font-size: 0.9em;
@@ -3880,7 +3927,7 @@ header {
                 left: 0em;
                 width: 100%;
                 height: 1px;
-                background-color: var(--extrapale-gray);
+                background-color: var(--extrapale-line);
             }
 
             // &:not(:first-child) {
@@ -3909,11 +3956,11 @@ header {
     }
 
     &-box {
-        border: 1px solid var(--extrapale-gray);
+        border: 1px solid var(--extrapale-line);
         border-radius: $radius;
 
         hr {
-            background-color: var(--extrapale-gray);
+            background-color: var(--extrapale-line);
             width: 100%;
             height: 1px;
             border: none;
@@ -4015,7 +4062,7 @@ header {
 
             @media (max-width: $bp-md) {
                 padding: 1em;
-                border-top: 1px solid var(--extrapale-gray);
+                border-top: 1px solid var(--extrapale-line);
             }
 
             .tag-gray {
@@ -4036,8 +4083,8 @@ header {
             grid-area: title;
             color: var(--blue);
             padding: 1em;
-            border-top: 1px solid var(--extrapale-gray);
-            border-bottom: 1px solid var(--extrapale-gray);
+            border-top: 1px solid var(--extrapale-line);
+            border-bottom: 1px solid var(--extrapale-line);
         }
 
         .status {
@@ -4046,8 +4093,8 @@ header {
             font-weight: bold;
             text-align: end;
             padding: 1em;
-            border-top: 1px solid var(--extrapale-gray);
-            border-bottom: 1px solid var(--extrapale-gray);
+            border-top: 1px solid var(--extrapale-line);
+            border-bottom: 1px solid var(--extrapale-line);
         }
 
         .payment {
@@ -4055,7 +4102,7 @@ header {
             @include flex(row, flex-start, flex-end, wrap);
             gap: 1em;
             padding: 1em;
-            border-bottom: 1px solid var(--extrapale-gray);
+            border-bottom: 1px solid var(--extrapale-line);
 
 
 
@@ -4080,7 +4127,7 @@ header {
             @include flex(row, flex-start, center, nowrap);
 
             @media (max-width: $bp-md) {
-                border-bottom: 1px solid var(--extrapale-gray);
+                border-bottom: 1px solid var(--extrapale-line);
                 font-size: .9em;
             }
         }
@@ -4112,8 +4159,9 @@ header {
 }
 
 .review-card {
-    border: 1px solid var(--extrapale-gray);
-    background-color: transparent;
+    border: 1px solid var(--extrapale-line);
+
+    background: var(--review-color);
     border-radius: $radius;
     padding: 0.75em;
 
@@ -4790,6 +4838,8 @@ ACCOUNT
         flex-wrap: wrap;
     }
 
+
+
     &-photo {
         position: relative;
         z-index: 2;
@@ -4865,10 +4915,27 @@ ACCOUNT
         z-index: 1;
         height: 144px;
         flex: 1;
-        position: relative;
         margin-left: -60px;
         padding-left: 72px;
         @include flex(column, center, flex-start, nowrap);
+
+        .online {
+            display: flex;
+            align-items: center;
+            width: 56%;
+
+            &:before {
+
+                content: "";
+                display: inline-block;
+                width: 100%;
+                border-radius: $radius;
+                height: 10px;
+                background: linear-gradient(120.98deg, #33C954 48.77%, #78D848 85.89%);
+
+                margin-right: 1em;
+            }
+        }
 
         @media (min-width: $bp-md) {
             &::before {
@@ -6196,7 +6263,7 @@ footer {
         border-radius: $radius;
         margin-right: 2em;
         left: 0;
-        width: 86px;
+        width: 96px;
         height: fit-content;
         max-height: calc(100vh - var(--h-height) - 100px);
         overflow-y: auto;
@@ -6209,7 +6276,7 @@ footer {
 
         &.full {
             max-height: calc(100vh - var(--h-height) - 200px);
-            width: 300px;
+            width: 310px;
         }
     }
 
@@ -6235,6 +6302,7 @@ footer {
     }
 
     .content {
+        margin-top: 1em;
         width: 86px;
         height: fit-content;
 
@@ -6285,14 +6353,14 @@ footer {
 
     &-block {
         background: var(--glass);
-        box-shadow: var(--shadow);
+        @include btnStyle();
         border-radius: $radius;
 
     }
 
     &-login {
         background: var(--glass);
-        box-shadow: var(--shadow);
+        @include btnStyle();
         border-radius: $radius;
         padding: 1em;
         min-height: 86px;
@@ -6325,10 +6393,9 @@ footer {
 
     &-top {
         background: var(--glass);
-        box-shadow: var(--shadow);
+        @include btnStyle();
         border-radius: $radius;
         padding: .67em;
-        margin-bottom: 1em;
         text-align: center;
 
         hr {
@@ -6483,11 +6550,11 @@ footer {
         align-items: center;
         padding: 0px;
         position: absolute;
-        right: -1.5em;
+        right: -1.4em;
         top: 2em;
         width: 40px;
         height: 30px;
-        // filter: drop-shadow(0px 0px 3px rgba(70, 67, 118, 0.2));
+        filter: drop-shadow(0px 0px 3px rgba(70, 67, 118, 0.2));
         background: var(--menu-substract) no-repeat center bottom;
         transform: rotate(90deg);
         background-size: 100% 50%;

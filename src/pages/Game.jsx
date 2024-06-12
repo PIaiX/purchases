@@ -281,52 +281,51 @@ const Game = () => {
   return (
     <main>
       <Meta title={games.items?.category?.title ?? "Игра"} />
-      <Container>
-        <NavBreadcrumbs title="Каталог" />
-      </Container>
+
+      <NavBreadcrumbs title="Каталог" />
+
 
       <section className='page-game pb-2 pb-4 pb-md-5'>
-        <Container>
-          <div className="page-game-top">
-            <h1>{games.items?.category?.title}</h1>
-            <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-4 mb-md-5'>
-              {
-                (fav)
-                  ? <span>В Избранном</span>
-                  : <span>Добавить в Избранное</span>
-              }
-              <HiHeart className='ms-2 fs-12' />
-            </button>
-            {/* {auth && <BtnAddFav favo={fav} onFav={onFav} />} */}
+        <div className="page-game-top">
+          <h1>{games.items?.category?.title}</h1>
+          <button type='button' onClick={onFav} className='btn-primary fs-09 px-3 py-2 mx-auto mb-4 mb-md-5'>
+            {
+              (fav)
+                ? <span>В Избранном</span>
+                : <span>Добавить в Избранное</span>
+            }
+            <HiHeart className='ms-2 fs-12' />
+          </button>
+          {/* {auth && <BtnAddFav favo={fav} onFav={onFav} />} */}
 
-            {games?.items?.category?.regions?.length > 0 && [...games?.items?.category?.regions].sort((a, b) => a.priority - b.priority)[0].status ? (
-              <div className='mb-4 mb-md-5'>
-                <ServerSwitcher
-                  data={data}
-                  id={id}
-                  active={data.region}
-                  serversArr={games.items.category.regions.sort((a, b) => a.priority - b.priority)}
-                />
-              </div>
-            ) : ""}
+          {games?.items?.category?.regions?.length > 0 && [...games?.items?.category?.regions].sort((a, b) => a.priority - b.priority)[0].status ? (
+            <div className='mb-4 mb-md-5'>
+              <ServerSwitcher
+                data={data}
+                id={id}
+                active={data.region}
+                serversArr={games.items.category.regions.sort((a, b) => a.priority - b.priority)}
+              />
+            </div>
+          ) : ""}
 
-            <ul className='categories'>
-              {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
-                <li key={param.id}><Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
-              ))}
-            </ul>
+          <ul className='categories'>
+            {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
+              <li key={param.id}><Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
+            ))}
+          </ul>
 
-            <form action="" className='filter mb-4 mb-xxl-5'>
+          <form action="" className='filter mb-4 mb-xxl-5'>
 
-              <div className="filter-top">
-                <input type="search" placeholder='Поиск по описанию' />
-                <label className='fs-12'>
-                  <span className='me-2'>Только продавцы онлайн</span>
-                  <input type="checkbox" />
-                </label>
-              </div>
+            <div className="filter-top">
+              <input type="search" placeholder='Поиск по описанию' />
+              <label className='fs-12'>
+                <span className='me-2'>Только продавцы онлайн</span>
+                <input type="checkbox" />
+              </label>
+            </div>
 
-              {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
+            {/* {games?.items?.category?.regions?.length > 0 && games.items.category.regions.map((param) => (
 
                 (param.id == regId && param?.servers?.length > 0 &&
                   <select defaultValue={param.servers.sort((a, b) => a.id - b.id)[0]?.id} onChange={(event) => handleServerChange(event.target.value)} name={param.servers.name} className=' me-sm-4 me-md-5 mb-3'>
@@ -339,60 +338,59 @@ const Game = () => {
 
 
                 )))} */}
-              {data?.servers && data?.servers.length > 0 && (
-                <Select
-                  value={data.server}
-                  title="Выберите сервер"
-                  onClick={(e) => setValue("server", parseInt(e.value))}
-                  data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
-                    value: item.id,
-                    title: item.title,
-                  }))}
-                />
-              )}
+            {data?.servers && data?.servers.length > 0 && (
+              <Select
+                value={data.server}
+                title="Выберите сервер"
+                onClick={(e) => setValue("server", parseInt(e.value))}
+                data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
+                  value: item.id,
+                  title: item.title,
+                }))}
+              />
+            )}
 
-              {data?.options?.length > 0 &&
-                data.options.map((e, i) => {
-                  return (
-                    <>
-                      {e.data?.max ?
-                        maxOption(e, i)
-                        :
-                        renderSelects(e, i)
-                      }
-                    </>
-                  )
-                })
-              }
-            </form>
+            {data?.options?.length > 0 &&
+              data.options.map((e, i) => {
+                return (
+                  <>
+                    {e.data?.max ?
+                      maxOption(e, i)
+                      :
+                      renderSelects(e, i)
+                    }
+                  </>
+                )
+              })
+            }
+          </form>
+        </div>
+
+        {displayedProducts?.items?.length > 0 ?
+          <div className={data.servers ? "page-game-offers" : "page-game-offers-no"}>
+            <div className="top">
+              {data.servers && <div className="serv">Сервер</div>}
+              <div className='descr'>Описание</div>
+              <div className='seller'>Продавец</div>
+              <div className='availability'>Наличие, шт.</div>
+              <div className='price'>Цена</div>
+            </div>
+            <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
+              {displayedProducts?.items?.length > 0 && displayedProducts.items.reverse().map((item) => (
+                <li>
+                  <OfferLine {...item} notDesc={data.notDesc} />
+                </li>
+              ))}
+            </ul>
+            <NavPagination totalPages={displayedProducts.pagesCount} onPageChange={onPageChange} />
           </div>
-
-          {displayedProducts?.items?.length > 0 ?
-            <div className={data.servers ? "page-game-offers" : "page-game-offers-no"}>
-              <div className="top">
-                {data.servers && <div className="serv">Сервер</div>}
-                <div className='descr'>Описание</div>
-                <div className='seller'>Продавец</div>
-                <div className='availability'>Наличие, шт.</div>
-                <div className='price'>Цена</div>
-              </div>
-              <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
-                {displayedProducts?.items?.length > 0 && displayedProducts.items.reverse().map((item) => (
-                  <li>
-                    <OfferLine {...item} notDesc={data.notDesc} />
-                  </li>
-                ))}
-              </ul>
-              <NavPagination totalPages={displayedProducts.pagesCount} onPageChange={onPageChange} />
-            </div>
-            :
-            <div className="page-game-offers d-flex align-items-center justify-content-center mt-4">
-              <h3>
-                Нет объявлений
-              </h3>
-            </div>
-          }
-        </Container>
+          :
+          <div className="page-game-offers d-flex align-items-center justify-content-center mt-4">
+            <h3>
+              Нет объявлений
+            </h3>
+          </div>
+        }
       </section>
     </main >
   );

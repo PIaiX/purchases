@@ -8,7 +8,7 @@ import { getImageURL } from "../../helpers/all";
 import { useNavigate } from "react-router-dom";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask, scrollOff, setScrollOff }) => {
   const userId = useSelector((state) => state.auth?.user?.id);
   const [text, setText] = useState();
   const [rows, setRows] = useState(1);
@@ -49,7 +49,12 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             Загрузка сообщений...
           </div>
         ) : messages?.items?.length > 0 ? (
-          <div className="chat-window">
+          <div className={"chat-window" + (scrollOff ? " off" : "")}>
+            {scrollOff &&
+              <>
+                <button type="button" className='scroll-button' onClick={() => setScrollOff(false)}>Показать ещё</button>
+              </>
+            }
             {messages.items.map((item, index) => (
 
               <Message
