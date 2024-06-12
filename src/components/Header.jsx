@@ -95,7 +95,7 @@ const Header = () => {
   return (
     <>
       <header className="header" onClick={() => { setShowSearch(false), setSearchTerm(""), showFav == true && setShowFav(false); }}>
-        <div className="h-100 w-100 d-flex align-items-center justify-content-between pe-3 ps-3">
+        <div className="h-100 w-100 d-flex align-items-center justify-content-between pe-4 ps-4">
           <Link to="/">
             <Logo />
           </Link>

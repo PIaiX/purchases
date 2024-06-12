@@ -209,17 +209,17 @@ const Profile = () => {
   return (
     <main>
       <Meta title={user?.data?.nickname ?? "Профиль"} />
-      <section className="mb-6">
-        <Container>
-          <Row>
-            <Col lg={userId != myId ? 8 : 12}>
-              <div className="d-flex align-items-start mb-5">
-                <div className="user flex-1">
-                  <div className="user-photo">
-                    <img src={getImageURL(user)} alt="userphoto" />
-                  </div>
-                  <div className="flex-1 flex-column">
-                    <div className="user-main">
+      <section className="mb-6 ps-3 pe-3">
+        <Row>
+          <Col lg={userId != myId ? 8 : 12}>
+            <div className="d-flex align-items-start mb-5">
+              <div className="user flex-1">
+                <div className="user-photo-1">
+                  <img src={getImageURL({ path: user.data.media, type: "user", size: "mini", })} alt="userphoto" />
+                </div>
+                <div className="flex-1 flex-column">
+                  <div>
+                    <div className="user-main-1">
                       <div className="title">
                         {user.data.nickname ?? "Никнейм"}
                       </div>
@@ -234,140 +234,138 @@ const Profile = () => {
                           {user?.data?.createdAt ? moment(user.data.createdAt).fromNow(1) : ""} на платформе
                         </p>
                       </div>
-                      <div>
-                        <p>
-                          {user?.data?.online?.status ? (
-                            <span className="online">online</span>
-                          ) : user?.data?.online?.end ? (
-                            "Был(-а) в сети " +
-                            moment(user?.data?.online?.end).fromNow()
-                          ) : (
-                            "Оффлайн"
-                          )}
-                        </p>
-                      </div>
+
                     </div>
+                    <div className="status">
 
+                      {user?.data?.online?.status ? (
+                        <span className="online">online</span>
+                      ) : user?.data?.online?.end ? (
+                        <p className="was">Offline {moment(user?.data?.online?.end).fromNow(true)}</p>
+                      ) : (
+                        <p className="offline">offline</p>
+                      )}
+                    </div>
                   </div>
+                </div>
 
-                  <ul className="user-info">
-                    <li>
-                      <div>
-                        <TbHeartHandshake className="svg" />
-                        <span>Сделок:</span>
-                      </div>
-                      <span>{user.data?.orderSale ?? 0}</span>
-                    </li>
-                    <li>
-                      <div>
-                        <Joystick className="path" />
-                        <span>Лотов:</span>
-                      </div>
-                      <span>{user?.data?.product ?? 0}</span>
-                    </li>
-                    <li>
-                      <div>
-                        <FiMessageCircle className="svg" />
-                        <span>Отзывов:</span>
-                      </div>
-                      <span>{user.data?.review ?? 0}</span>
-                    </li>
-                  </ul>
-                  <QRCode
-                    className="qr-code ms-3 ms-xl-5"
-                    size={100}
-                    value={`${process.env.REACT_APP_SITE_URL}/trader/${user.data.id}`}
-                    viewBox={`0 0 256 256`}
-                  />
-                </div>
-                <div>
-                  <button
-                    onClick={() => setShowShare(true)}
-                    type="button"
-                    className="d-flex dark-blue fs-15 ms-2 ms-xl-4"
-                  >
-                    <FiShare />
-                  </button>
-                  {userId != myId &&
-                    <button
-                      onClick={() => setShowAlert(true)}
-                      type="button"
-                      className="mt-4 d-flex dark-blue fs-15 ms-2 ms-xl-4"
-                    >
-                      <FiAlertTriangle />
-                    </button>
-                  }
-                </div>
+                <ul className="user-info">
+                  <li>
+                    <div>
+                      <TbHeartHandshake className="svg" />
+                      <span>Сделок:</span>
+                    </div>
+                    <span>{user.data?.orderSale ?? 0}</span>
+                  </li>
+                  <li>
+                    <div>
+                      <Joystick className="path" />
+                      <span>Лотов:</span>
+                    </div>
+                    <span>{user?.data?.product ?? 0}</span>
+                  </li>
+                  <li>
+                    <div>
+                      <FiMessageCircle className="svg" />
+                      <span>Отзывов:</span>
+                    </div>
+                    <span>{user.data?.review ?? 0}</span>
+                  </li>
+                </ul>
+                <QRCode
+                  className="qr-code ms-3 ms-xl-5"
+                  size={100}
+                  value={`${process.env.REACT_APP_SITE_URL}/trader/${user.data.id}`}
+                  viewBox={`0 0 256 256`}
+                />
               </div>
+              <div>
+                <button
+                  onClick={() => setShowShare(true)}
+                  type="button"
+                  className="d-flex dark-blue fs-15 ms-2 ms-xl-4"
+                >
+                  <FiShare />
+                </button>
+                {userId != myId &&
+                  <button
+                    onClick={() => setShowAlert(true)}
+                    type="button"
+                    className="mt-4 d-flex dark-blue fs-15 ms-2 ms-xl-4"
+                  >
+                    <FiAlertTriangle />
+                  </button>
+                }
+              </div>
+            </div>
 
-              <h4>Предложения</h4>
-              <div className="d-flex align-items-start">
-                <div className='flex-1'>
-                  <ul className='list-unstyled g-2 g-sm-4 row row-cols-sm-2 row-cols-md-3 row-cols-xxl-4'>
-                    {user?.categories?.length > 0 && user.categories.map(item => (
-                      <li><GameMiniCard {...item} onGameChange={onGameChange} currentGame={currentGame} /></li>
-                    ))}
-                  </ul>
-                  {/* <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5' onClick={handleShowAll}>
+            <h4>Предложения</h4>
+            <div className="d-flex align-items-start">
+              <div className='flex-1'>
+                <ul className='list-unstyled g-2 g-sm-4 row row-cols-sm-2 row-cols-md-3 row-cols-xxl-4'>
+                  {user?.categories?.length > 0 && user.categories.map(item => (
+                    <li><GameMiniCard {...item} onGameChange={onGameChange} currentGame={currentGame} /></li>
+                  ))}
+                </ul>
+                {/* <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-4 mb-4 mb-sm-5' onClick={handleShowAll}>
                     <span>Показать все</span>
                     <FiChevronDown className='fs-13' />
                   </button> */}
-                </div>
               </div>
-              <div className="list-wrapping mt-4 mt-sm-5">
-                <div className="list-wrapping-top d-flex justify-content-between">
-                  <div className="serv ms-5">Сервер</div>
-                  <div className='descr'>Описание</div>
-                  <div className='price me-5'>Цена</div>
-                </div>
-                <div className="list-wrapping-main p-sm-4">
-                  <ul className="row row-cols-1 g-3">
-                    {user?.products?.items?.length > 0 && user.products.items.map(item => (
-                      <li>
-                        <TraderLine {...item} />
-                      </li>
-                    ))}
-                  </ul>
-                  <NavPagination totalPages={user?.products?.pagination?.totalPages} onPageChange={onPageChange} />
-                </div>
+            </div>
+            <div className="list-wrapping mt-4 mt-sm-5">
+              <div className="list-wrapping-top d-flex justify-content-between">
+                <div className="serv ms-5">Сервер</div>
+                <div className='descr'>Описание</div>
+                <div className='price me-5'>Цена</div>
               </div>
+              <div className="list-wrapping-main p-sm-4">
+                <ul className="row row-cols-1 g-3">
+                  {user?.products?.items?.length > 0 && user.products.items.map(item => (
+                    <li>
+                      <TraderLine {...item} />
+                    </li>
+                  ))}
+                </ul>
+                <NavPagination totalPages={user?.products?.pagination?.totalPages} onPageChange={onPageChange} />
+              </div>
+            </div>
 
-              <div className="list-wrapping mt-4 mt-sm-5">
-                <div className="list-wrapping-top">
-                  <h5 className="fw-6">Всего {user?.data?.review} {declOfNum(user?.data?.review, ['отзыв', 'отзыва', 'отзывов'])}</h5>
-                </div>
-                <div className="list-wrapping-main p-sm-4">
-                  <ul className="row row-cols-1 g-3">
-                    {user?.reviews?.length > 0 && user.reviews.map(item => (
-                      <li>
-                        <FeedbackLine {...item} />
-                      </li>
-                    ))}
-                  </ul>
-                </div>
+            <div className="list-wrapping mt-4 mt-sm-5">
+              <div className="list-wrapping-top">
+                <h5 className="fw-6">Всего {user?.data?.review} {declOfNum(user?.data?.review, ['отзыв', 'отзыва', 'отзывов'])}</h5>
               </div>
+              <div className="list-wrapping-main p-sm-4">
+                <ul className="row row-cols-1 g-3">
+                  {user?.reviews?.length > 0 && user.reviews.map(item => (
+                    <li>
+                      <FeedbackLine {...item} />
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+          </Col>
+          {userId != myId &&
+            <Col className="chat-container" lg={4}>
+              <h2 className="text-center">Чат с пользователем</h2>
+              {!myId ? (
+                <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+                  Для отправки сообщений войдите в аккаунт!
+                </div>
+              ) : (
+                <div className="p-0 fs-09">
+                  <Chat
+                    messages={messages}
+                    emptyText="Нет сообщений"
+                    onSubmit={(e) => onNewMessage(e)}
+                    onChange={(e) => setValueMessage("text", e)}
+                  />
+                </div>
+              )}
             </Col>
-            {userId != myId &&
-              <Col className="chat-container" lg={4}>
-                <h2 className="text-center">Чат с пользователем</h2>
-                {!myId ? (
-                  <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-                    Для отправки сообщений войдите в аккаунт!
-                  </div>
-                ) : (
-                  <div className="p-0 fs-09">
-                    <Chat
-                      messages={messages}
-                      emptyText="Нет сообщений"
-                      onSubmit={(e) => onNewMessage(e)}
-                      onChange={(e) => setValueMessage("text", e)}
-                    />
-                  </div>
-                )}
-              </Col>
-            }
-          </Row>
-        </Container>
+          }
+        </Row>
       </section>
       <Modal show={showShare} onHide={handleClose} centered>
         <Modal.Header closeButton></Modal.Header>

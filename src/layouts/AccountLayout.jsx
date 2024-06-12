@@ -9,7 +9,7 @@ const AccountLayout = ({ isMobile }) => {
   return (
     <main className='account'>
       <img src={bgImg} alt="bgImg" className='account-bg' />
-      <Container>
+      <div className='pe-3 ps-3'>
         <ScrollToTopButton />
         {/* {
 
@@ -23,7 +23,7 @@ const AccountLayout = ({ isMobile }) => {
             </div>
         } */}
         <Outlet />
-      </Container>
+      </div>
     </main>
   );
 };

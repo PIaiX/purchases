@@ -216,23 +216,25 @@ const Messages = ({ isMobileXL }) => {
       <section className='sec-messages'>
 
         <div className='sec-messages-list'>
-          <InfiniteScroll
-            pageStart={1}
-            loadMore={onLoadDialogs}
-            hasMore={dialogs.hasMore}
-            loader={<Loader />}
-          >
-            <form action="" className='p-2 p-sm-3'>
-              <input
-                type="search"
-                placeholder="Поиск пользователя"
-                className="p-blue"
-                onChange={e => setSearch(e.target.value)}
-                onKeyPress={(e) => onKeyPress1(e)}
-              />
-            </form>
-            <ul>
 
+          <form action="" className='p-2 p-sm-3'>
+            <input
+              type="search"
+              placeholder="Поиск пользователя"
+              className="p-blue"
+              onChange={e => setSearch(e.target.value)}
+              onKeyPress={(e) => onKeyPress1(e)}
+            />
+          </form>
+          <ul id="scrollableDiv" >
+            <InfiniteScroll
+              useWindow={false}
+              pageStart={1}
+              loadMore={onLoadDialogs}
+              hasMore={dialogs.hasMore}
+              loader={<Loader />}
+              getScrollParent={() => document.getElementById('scrollableDiv')}
+            >
 
 
               <li>
@@ -255,10 +257,9 @@ const Messages = ({ isMobileXL }) => {
                 </p>
               )
               }
+            </InfiniteScroll>
+          </ul>
 
-            </ul>
-
-          </InfiniteScroll>
         </div>
 
         {!isMobileXL &&

@@ -369,7 +369,7 @@ const LotPage = () => {
                             <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                 <div className="seller">
                                     <Link to={`/trader/${products?.items?.userId}`}>
-                                        <img src={getImageURL(products?.items?.user)} alt="Weatherwax" />
+                                        <img src={getImageURL({ path: products?.items?.user?.media, type: "user", size: "mini" })} alt={products?.items?.user?.nickname} />
                                     </Link>
                                     <Link to={`/trader/${products?.items?.userId}`}>
                                         <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>

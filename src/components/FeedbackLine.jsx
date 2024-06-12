@@ -12,7 +12,7 @@ const FeedbackLine = ({ text, value, createdAt, author, user }) => {
     setClampOff(!clampOff);
   };
   const data = moment(createdAt).fromNow();
-  const image = getImageURL({ path: author, type: "user" })
+  const image = getImageURL({ path: author.media, type: "user", size: "mini", })
   return (
     <div className="feedback-line">
 

@@ -11,7 +11,7 @@ const ReviewCard = ({ createdAt, text, author, id }) => {
     const toggleClamp = () => {
         setClampOff(!clampOff);
     };
-    const image = getImageURL({ path: author, type: "user" })
+    const image = getImageURL({ path: author?.media, type: "user", size: "mini" })
     return (
         <div className='review-card'>
             <div className="d-flex flex-column flex-xxl-row-reverse justify-content-between align-items-stretch align-items-xxl-start mb-2">
@@ -26,7 +26,7 @@ const ReviewCard = ({ createdAt, text, author, id }) => {
                 </div>
                 <div className='d-flex align-items-center'>
                     <Link to={`/trader/${author.id}`} className='user'>
-                        <img src="/imgs/user.jpg" alt="name8user" className='user-photo' />
+                        <img src={image} alt="name8user" className='user-photo' />
                         <span>{author.nickname}</span>
                     </Link>
                     <div className='rating ms-3'>

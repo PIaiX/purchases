@@ -12,7 +12,7 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
   const profileId = (user.id == userId) ? author.id : user.id;
   const nickname = (user.id == userId) ? author.nickname : user.nickname;
   const rating = (user.id == userId) ? author.rating : user.rating;
-  const image = getImageURL({ path: ((user.id == userId) ? author : user), type: "user" })
+  const image = getImageURL({ path: ((user.id == userId) ? author?.media : user?.media), type: "user", size: "mini" })
   const coly = user.id == userId ? total : price;
   const renderOptions = useMemo(() => {
 

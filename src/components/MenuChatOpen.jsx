@@ -215,7 +215,7 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
           <div className='top'>
             {id ?
               <div className="d-flex mt-2 mb-2">
-                <button type="button" onClick={() => setId(false)} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
+                <button type="button" onClick={() => { setId(false), setChatOpen(true) }} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
                   <ReturnIcon />
                 </button>
                 <div>

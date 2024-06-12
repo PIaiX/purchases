@@ -5,7 +5,8 @@ import moment from 'moment';
 import { getImageURL } from '../helpers/all';
 
 const PurchaseLine = ({ createdAt, product, author, id }) => {
-  const image = getImageURL({ path: author, type: "user" })
+  const image = getImageURL({ path: author?.media, type: "user", size: "mini" })
+
   return (
     <div className="purchase-line">
       <time>
