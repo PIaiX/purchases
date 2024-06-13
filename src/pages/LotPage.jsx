@@ -29,8 +29,7 @@ const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
     const [showShare, setShowShare] = useState(false);
-    const isMobileLG = useIsMobile('991px');
-    const [scrollOff, setScrollOff] = useState(isMobileLG ? false : true);
+    const [scrollOff, setScrollOff] = useState(true);
     const dispatch = useDispatch();
     const [products, setProducts] = useState({
         loading: true,

@@ -30,12 +30,15 @@ import socket from "../config/socket";
 import { declOfNum, getImageURL } from "../helpers/all";
 import { createMessage, getMessages } from "../services/message";
 import { getUser } from "../services/user";
+import useIsMobile from "../hooks/isMobile";
 
 const Profile = () => {
   const { userId } = useParams();
   const myId = useSelector(state => state.auth?.user?.id);
   const [showAlert, setShowAlert] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const isMobileXL = useIsMobile('1400px');
+  const [scrollOff, setScrollOff] = useState(isMobileXL ? true : false);
   const handleCloseAlert = () => {
     setShowAlert(false);
   };
@@ -210,10 +213,10 @@ const Profile = () => {
     <main>
       <Meta title={user?.data?.nickname ?? "Профиль"} />
       <section className="mb-6 ps-3 pe-3">
-        <Row>
-          <Col lg={userId != myId ? 8 : 12}>
+        <Row className="trader">
+          <Col xxl={userId != myId ? 7 : 12}>
             <div className="d-flex align-items-start mb-5">
-              <div className="user flex-1">
+              <div className="user">
                 <div className="user-photo-1">
                   <img src={getImageURL({ path: user.data.media, type: "user", size: "mini", })} alt="userphoto" />
                 </div>
@@ -347,7 +350,7 @@ const Profile = () => {
             </div>
           </Col>
           {userId != myId &&
-            <Col className="chat-container" lg={4}>
+            <Col xxl={4} className="chat-container">
               <h2 className="text-center">Чат с пользователем</h2>
               {!myId ? (
                 <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
@@ -356,6 +359,7 @@ const Profile = () => {
               ) : (
                 <div className="p-0 fs-09">
                   <Chat
+                    scrollOff={scrollOff}
                     messages={messages}
                     emptyText="Нет сообщений"
                     onSubmit={(e) => onNewMessage(e)}

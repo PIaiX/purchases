@@ -6,9 +6,10 @@ import Loader from "../utils/Loader";
 import { NotificationManager } from "react-notifications";
 import { getImageURL } from "../../helpers/all";
 import { useNavigate } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroller";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask, scrollOff, setScrollOff }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask, scrollOff, setScrollOff, onLoadChat }) => {
   const userId = useSelector((state) => state.auth?.user?.id);
   const [text, setText] = useState();
   const [rows, setRows] = useState(1);
@@ -49,24 +50,34 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             Загрузка сообщений...
           </div>
         ) : messages?.items?.length > 0 ? (
-          <div className={"chat-window" + (scrollOff ? " off" : "")}>
-            {scrollOff &&
-              <>
-                <button type="button" className='scroll-button' onClick={() => setScrollOff(false)}>Показать ещё</button>
-              </>
-            }
-            {messages.items.map((item, index) => (
+          <div id="scrollableChat" className={"chat-window" + (scrollOff ? " off" : "")}>
+            <InfiniteScroll
+              isReverse
+              useWindow={false}
+              pageStart={1}
+              loadMore={onLoadChat}
+              hasMore={messages.hasMore}
+              loader={<Loader />}
+              getScrollParent={() => document.getElementById('scrollableChat')}
+            >
+              {scrollOff &&
+                <>
+                  <button type="button" className='scroll-button' onClick={() => setScrollOff(false)}>Показать ещё</button>
+                </>
+              }
+              {messages.items.map((item, index) => (
 
-              <Message
-                key={index}
-                {...item}
-                my={item.userId === userId}
-                general={general}
-                admin={type != "task" && item.memberId}
-              />
+                <Message
+                  key={index}
+                  {...item}
+                  my={item.userId === userId}
+                  general={general}
+                  admin={type != "task" && item.memberId}
+                />
 
 
-            ))}
+              ))}
+            </InfiniteScroll>
           </div>
 
         ) : (

@@ -2926,17 +2926,18 @@ header {
 /* Chat */
 .chat {
     position: relative;
-    background: var(--glass);
+    background: var(--label);
     box-shadow: var(--shadow);
     border-radius: 10px;
     overflow: hidden;
 
     &-window {
+        position: relative;
         display: flex;
         flex-direction: column-reverse;
-        height: 100%;
+        height: auto;
         overflow: auto;
-        max-height: calc(100vh - var(--h-height) - 10em);
+        max-height: calc(100vh - var(--h-height) - 15em);
 
         &.off {
             overflow: unset;
@@ -2967,27 +2968,23 @@ header {
             }
 
 
-            @media (max-width: $bp-lg) {
-                overflow: auto;
-            }
-
         }
 
         padding: 1em 1.5em;
 
         @media (max-width: $bp-lg) {
             padding: 1em 1.5em;
-            max-height: calc(100vh - var(--h-height) - var(--f-height) - 3em);
+            max-height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
         }
 
         @media (max-width: $bp-md) {
             padding: 1em;
-            max-height: calc(100vh - var(--h-height) - var(--f-height) - 3em);
+            max-height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
         }
 
         @media (max-width: $bp-sm) {
             padding: 1em 0.5em;
-            max-height: calc(100vh - var(--h-height) - var(--f-height) - 3em);
+            max-height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
         }
 
 
@@ -3238,7 +3235,9 @@ header {
         border-radius: 0px 0px 10px 10px;
 
         &-window {
-            height: 600px;
+            max-height: calc(100vh - var(--h-height) - 20em);
+
+
         }
     }
 }
@@ -4018,6 +4017,11 @@ header {
 
         .chat {
             border: none;
+
+            &-window {
+                max-height: calc(100vh - var(--h-height) - 20em);
+
+            }
         }
     }
 
@@ -4269,6 +4273,11 @@ header {
 
         .chat {
             border: none;
+
+            &-window {
+                max-height: calc(100vh - var(--h-height) - 20em);
+
+            }
         }
     }
 
@@ -4279,19 +4288,20 @@ header {
         gap: 0px 0px;
         grid-template-areas: "game info info info"
             "title title title title"
-            "payment payment payment status"
+            "payment payment status status"
             "specifications specifications specifications specifications"
             "text text text text"
             "date date date date";
 
         @media (max-width: $bp-md) {
             grid-template-columns: repeat(2, 1fr);
-            grid-template-rows: 50px auto auto auto auto auto auto;
+            grid-template-rows: 50px auto auto auto auto auto auto auto;
             grid-template-areas:
                 "game game"
                 "info info"
                 "title title"
-                "payment status"
+                "payment payment"
+                "status status"
                 "specifications specifications"
                 "text text"
                 "date date";
@@ -4376,6 +4386,15 @@ header {
             justify-content: end;
             // padding: 1em;
             border-top: 1px solid var(--extrapale-line);
+            gap: 1;
+
+            .price {
+                border: 1px solid var(--light-blue);
+                color: var(--light-blue);
+                background-size: 200% 100% !important;
+                padding: .8em 1.6em;
+                border-radius: .67em;
+            }
 
 
         }
@@ -5121,29 +5140,42 @@ ACCOUNT
     }
 }
 
-.user {
-    position: relative;
-    @include flex(row, flex-start, center, nowrap);
-    @include lightShadow();
 
-    @media (max-width: $bp-md) {
-        flex-wrap: wrap;
+
+.trader {
+    position: relative;
+
+    .chat-container {
+        position: fixed;
+        top: calc(var(--h-height) + 1em);
+        right: 5em;
+
+        .chat {
+            &-window {
+                max-height: calc(100vh - var(--h-height) - var(--f-height) - 13em);
+            }
+        }
+
+        @media (max-width: $bp-xxl) {
+            position: unset;
+
+
+
+        }
     }
 
-
-
-    &-photo {
+    .user {
+        flex: 1;
         position: relative;
-        z-index: 2;
-        width: 110px;
-        height: 110px;
-        border-radius: 100%;
-        overflow: hidden;
-        @include safariFix();
-        border: 5px solid var(--body-bg);
-        box-sizing: content-box;
+        @include flex(row, flex-start, center, nowrap);
+        @include lightShadow();
 
-        &-1 {
+        @media (max-width: $bp-md) {
+            flex-wrap: wrap;
+        }
+
+
+        &-photo-1 {
             width: 90px;
             height: 90px;
             position: relative;
@@ -5209,7 +5241,317 @@ ACCOUNT
                 }
             }
 
+
+
+
+
+
+
+
+
+
+
         }
+
+
+        &-main-1 {
+            position: relative;
+            z-index: 1;
+            height: 119px;
+            flex: 1;
+            margin-left: -60px;
+            padding-left: 72px;
+            @include flex(column, center, flex-start, nowrap);
+
+
+            @media (min-width: $bp-md) {
+                &::before {
+                    content: "";
+                    position: absolute;
+                    z-index: -1;
+                    top: 0px;
+                    left: 0px;
+                    height: 100%;
+                    width: 70%;
+                    background-color: var(--extrapale-gray);
+                    border-radius: $radius 0 0 $radius;
+                }
+
+                &::after {
+                    content: "";
+                    position: absolute;
+                    z-index: -1;
+                    top: 0px;
+                    right: 0px;
+                    height: 100%;
+                    width: 50%;
+                    background-color: var(--extrapale-gray);
+                    transform: skewX(-25deg);
+                    border-radius: $radius;
+                }
+            }
+
+            @media (max-width: $bp-md) {
+                background-color: var(--extrapale-gray);
+                border-radius: $radius;
+                padding-left: 65px;
+                height: 120px;
+            }
+
+            @media (max-width: $bp-sm) {
+                height: 100px;
+            }
+
+            .title {
+                font-family: $title-font;
+                font-size: 2em;
+                line-height: 100%;
+                @include clamp(2, 1em);
+            }
+
+
+
+        }
+
+        .status {
+            width: 100%;
+            margin-top: .5em;
+            margin-left: -3.8em;
+
+            .online {
+                display: flex;
+                align-items: center;
+                width: 102%;
+
+                @media (max-width: $bp-md) {
+                    width: 110%;
+                }
+
+                &:before {
+
+                    content: "";
+                    display: inline-block;
+                    width: 100%;
+                    border-radius: $radius;
+                    height: 10px;
+                    background: linear-gradient(120.98deg, #33C954 48.77%, #78D848 85.89%);
+
+                    margin-right: 1em;
+                }
+            }
+
+            .offline {
+                display: flex;
+                align-items: center;
+                width: 102%;
+
+                @media (max-width: $bp-md) {
+                    width: 110%;
+                }
+
+                &:before {
+
+                    content: "";
+                    display: inline-block;
+                    width: 100%;
+                    border-radius: $radius;
+                    height: 10px;
+                    background: $gray;
+
+                    margin-right: 1em;
+                }
+            }
+
+            .was {
+                display: flex;
+                align-items: center;
+
+                @media (max-width: $bp-md) {
+                    width: 110%;
+                }
+
+                @media (max-width: $bp-sm) {
+                    width: 114%;
+                }
+
+                width: 105%;
+
+
+                &:before {
+
+                    content: "";
+                    display: inline-block;
+
+
+                    width: calc(100% - 140px);
+                    border-radius: $radius;
+                    height: 10px;
+                    background: $gray;
+
+                    margin-right: 1em;
+
+
+                }
+
+            }
+        }
+
+        &-info {
+            @include list();
+            @include flex(column, flex-start, flex-end, nowrap);
+            margin-left: -1em;
+            width: 215px;
+
+            @media (max-width: $bp-xxl) {
+                width: 200px;
+            }
+
+            @media (max-width: $bp-md) {
+                font-size: 0.9em;
+                width: 100%;
+                margin-left: 0em;
+                margin-top: 1em;
+                flex-direction: row;
+                justify-content: center;
+                gap: 1em;
+            }
+
+            li {
+                position: relative;
+                padding: 0.6em;
+                height: 41px;
+                color: var(--black);
+                font-weight: 600;
+                width: 100%;
+
+
+                @include flex(row, space-between, center, nowrap);
+
+                @media (min-width: $bp-md) {
+
+
+                    &:first-child {
+                        width: 79%;
+                    }
+
+                    &:nth-child(2) {
+                        width: 89.5%;
+                    }
+
+                    &::before {
+                        content: "";
+                        position: absolute;
+                        z-index: -1;
+                        top: 0px;
+                        left: 0px;
+                        height: 100%;
+                        width: 94%;
+                        background: var(--label);
+                        transform: skewX(-25deg);
+                        border-radius: $radius;
+                    }
+
+                    &::after {
+                        content: "";
+                        position: absolute;
+                        z-index: -1;
+                        top: 0px;
+                        right: 0px;
+                        height: 100%;
+                        width: 89%;
+
+                        background: var(--label);
+                        border-radius: 0 $radius $radius 0;
+                    }
+                }
+
+                @media (max-width: $bp-md) {
+                    background: var(--glass);
+                    box-shadow: var(--shadow);
+                    border-radius: $radius;
+                    flex-direction: column;
+                    height: auto;
+                    width: 23%;
+                }
+
+                div {
+                    @include flex();
+
+                    @media (max-width: $bp-md) {
+                        flex-direction: column;
+                    }
+
+                    svg {
+                        font-size: 1.6em;
+                        margin-right: 0.34em;
+
+                        @media (max-width: $bp-md) {
+                            color: var(--blue);
+                        }
+
+                        &.svg {
+                            stroke-width: 1.3px;
+                        }
+
+                        &.path {
+                            path {
+                                stroke-width: 1.3px;
+                            }
+                        }
+                    }
+                }
+
+                &:not(:first-child) {
+                    margin-top: 11px;
+                }
+            }
+        }
+
+        .qr-code {
+            display: block;
+            width: 100px;
+            align-self: flex-start;
+
+            @media (max-width: $bp-xl) {
+                width: 80px;
+            }
+
+            @media (max-width: $bp-md) {
+                position: absolute;
+                top: 1em;
+                right: 1em;
+                z-index: 10;
+            }
+
+            @media (max-width: $bp-sm) {
+                width: 50px;
+            }
+        }
+    }
+}
+
+.user {
+    position: relative;
+    @include flex(row, flex-start, center, nowrap);
+    @include lightShadow();
+
+    @media (max-width: $bp-md) {
+        flex-wrap: wrap;
+    }
+
+
+    &-photo {
+        position: relative;
+        z-index: 2;
+        width: 110px;
+        height: 110px;
+        border-radius: 100%;
+        overflow: hidden;
+        @include safariFix();
+        border: 5px solid var(--body-bg);
+        box-sizing: content-box;
+
+
 
         @media (max-width: $bp-xxl) {
             width: 100px;
@@ -5329,64 +5671,7 @@ ACCOUNT
 
     }
 
-    &-main-1 {
-        position: relative;
-        z-index: 1;
-        height: 119px;
-        flex: 1;
-        margin-left: -60px;
-        padding-left: 72px;
-        @include flex(column, center, flex-start, nowrap);
 
-
-        @media (min-width: $bp-md) {
-            &::before {
-                content: "";
-                position: absolute;
-                z-index: -1;
-                top: 0px;
-                left: 0px;
-                height: 100%;
-                width: 70%;
-                background-color: var(--extrapale-gray);
-                border-radius: $radius 0 0 $radius;
-            }
-
-            &::after {
-                content: "";
-                position: absolute;
-                z-index: -1;
-                top: 0px;
-                right: 0px;
-                height: 100%;
-                width: 50%;
-                background-color: var(--extrapale-gray);
-                transform: skewX(-25deg);
-                border-radius: $radius;
-            }
-        }
-
-        @media (max-width: $bp-md) {
-            background-color: var(--extrapale-gray);
-            border-radius: $radius;
-            padding-left: 65px;
-            height: 120px;
-        }
-
-        @media (max-width: $bp-sm) {
-            height: 100px;
-        }
-
-        .title {
-            font-family: $title-font;
-            font-size: 2em;
-            line-height: 100%;
-            @include clamp(2, 1em);
-        }
-
-
-
-    }
 
     .status {
         width: 100%;
@@ -6724,17 +7009,17 @@ footer {
 .scroll-to-top {
     z-index: 1042;
     position: fixed;
-    bottom: calc(var(--f-height) + 1em);
+    bottom: 2.7em;
     right: 1em;
     @include btnStyle();
     backdrop-filter: blur(5px);
 
     &.mini {
-        right: 5em;
+        right: 4em;
     }
 
     &.maxi {
-        right: 24em;
+        right: 20em;
     }
 
     @media (max-width: $bp-lg) {

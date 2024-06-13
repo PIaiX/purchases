@@ -17,7 +17,7 @@ import Input from '../components/utils/Input';
 import Loader from '../components/utils/Loader';
 import Select from '../components/utils/Select';
 import socket from '../config/socket';
-import { getImageURL } from '../helpers/all';
+import { customPrice, getImageURL } from '../helpers/all';
 import { createMessage, getMessages } from '../services/message';
 import { createOrder, getOrder } from '../services/order';
 import { getProduct } from '../services/product';
@@ -29,8 +29,7 @@ const OrderPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
     const [showShare, setShowShare] = useState(false);
-    const isMobileLG = useIsMobile('991px');
-    const [scrollOff, setScrollOff] = useState(isMobileLG ? false : true);
+    const [scrollOff, setScrollOff] = useState(true);
     const dispatch = useDispatch();
     const [products, setProducts] = useState({
         loading: true,
@@ -76,23 +75,26 @@ const OrderPage = () => {
         loading: true,
         items: [],
     });
-
+    const onLoadChat = (chatPage) => {
+        getMessages({ ...data, page: chatPage, size: 20 })
+            .then((res) => {
+                setMessages((prev) => ({
+                    ...prev,
+                    loading: false,
+                    items: res.messages.items,
+                    hasMore: res.messages.items.length > 19 ? true : false,
+                    dialogId: res.dialog.id,
+                    dialog: res.dialog,
+                }));
+                setValue("id", res.dialog.id);
+            })
+            .catch(() => {
+                setMessages((prev) => ({ ...prev, loading: false }))
+            });
+    };
     useEffect(() => {
         if (data.toId && userId != products.items?.user?.id && data.toId != userId) {
-            getMessages(data)
-                .then((res) => {
-                    setMessages((prev) => ({
-                        ...prev,
-                        loading: false,
-                        items: res.messages.items,
-                        dialogId: res.dialog.id,
-                        dialog: res.dialog,
-                    }));
-                    setValue("id", res.dialog.id);
-                })
-                .catch(() => {
-                    setMessages((prev) => ({ ...prev, loading: false }))
-                });
+            onLoadChat();
         }
     }, [data.toId]);
     useEffect(() => {
@@ -219,6 +221,12 @@ const OrderPage = () => {
                             {/* <div className='title'>{products?.items?.title} </div> */}
                             <div className='title'>{products?.items?.title}</div>
                             <div className='status'>
+                                {userId == products.author ?
+                                    <p className='price me-3'>{customPrice(products?.total)}</p>
+                                    :
+                                    <p className='price me-3'>{customPrice(products?.price)}</p>
+                                }
+
                                 {!products?.items?.status == 0 && <div className='btn-1'>Закрыт</div>}
                                 {products?.items?.status == 0 && <div className='btn-3'>Заблокировано</div>}
                             </div>
@@ -333,6 +341,7 @@ const OrderPage = () => {
                                                 </div>
                                             ) : (
                                                 < Chat
+                                                    onLoadChat={onLoadChat}
                                                     setScrollOff={setScrollOff}
                                                     scrollOff={scrollOff}
                                                     messages={messages}

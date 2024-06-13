@@ -20,7 +20,7 @@ import ReturnIcon from '../../components/svg/ReturnIcon';
 const MessagesDialogue = () => {
   const { dialogId } = useParams();
   const { state } = useLocation();
-
+  const navigate = useNavigate();
   const timer = useRef(0);
   const userId = useSelector((state) => state.auth?.user?.id);
 
