@@ -10,12 +10,12 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
 import { getGamesList, getUserGame } from '../../services/game';
-import { createUserProduct, editUserProduct, getUserProduct } from '../../services/product';
+import { createUserProduct, deleteUserProduct, editUserProduct, getUserProduct } from '../../services/product';
+import { removeDescendants } from '../../helpers/all';
 
 const AddOffer = () => {
   const { id } = useParams();
   const [games, setGames] = useState({ items: [], loading: true });
-
   const {
     control,
     register,
@@ -28,7 +28,6 @@ const AddOffer = () => {
     reValidateMode: "onSubmit",
     defaultValues: {
       count: 1,
-      status: 1,
     },
   });
 
@@ -95,7 +94,7 @@ const AddOffer = () => {
         desc: data.desc,
         count: data.count,
         price: data.price,
-        status: data.status,
+        status: 1,
         data: {
           minCount: data.minCount,
           typeCount: data.typeCount
@@ -127,7 +126,7 @@ const AddOffer = () => {
         desc: data.desc,
         count: data.count,
         price: data.price,
-        status: data.status,
+        status: 1,
         data: {
           minCount: data.minCount,
           typeCount: data.typeCount
@@ -147,6 +146,55 @@ const AddOffer = () => {
             )
         );
     }
+  }, []);
+  const onEdit = useCallback((data) => {
+    editUserProduct({
+      id: data.id,
+      categoryId: data.categoryId,
+      region: data.region,
+      server: data.server,
+      param: data.param,
+      option: data.option,
+      desc: data.desc,
+      count: data.count,
+      price: data.price,
+      status: 0,
+      data: {
+        minCount: data.minCount,
+        typeCount: data.typeCount
+      },
+      protectedData: data.protectedData,
+    })
+      .then(() => {
+        NotificationManager.success("Лот обновлён");
+        reset();
+        navigate(-1);
+      })
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+          )
+      );
+
+  }, []);
+  const onDelete = useCallback((data) => {
+    deleteUserProduct({
+      id: data.id
+    })
+      .then(() => {
+        NotificationManager.success("Лот удален");
+        reset();
+        navigate(-1);
+      })
+      .catch(
+        (err) =>
+          err &&
+          NotificationManager.error(
+            err?.response?.data?.error ?? "Неизвестная ошибка при отправке"
+          )
+      );
   }, []);
 
   useEffect(() => {
@@ -213,7 +261,6 @@ const AddOffer = () => {
           let serverView = res.product.param.data?.serverView;
           let options;
           let option = [];
-          let sortOptions = res.product.options.sort((a, b) => a.optionId - b.optionId);
           if (res?.product?.regionId) {
             region = res.product.regionId
             if (!serverView) {
@@ -228,27 +275,13 @@ const AddOffer = () => {
           if (res?.category?.params[paramIndex]?.options?.length > 0) {
 
             options = createTree(res.category.params[paramIndex].options, 'id', 'parent', null).sort((a, b) => a.id - b.id);
-            for (let i = 0; i < sortOptions.length; i++) {
-              option[i] = {
-                id: sortOptions[i].optionId,
-                value: sortOptions[i]?.value
-              };
 
-              if (!sortOptions[i]?.value) {
-                let optionsIndex = res.category.params[paramIndex].options.findIndex((e) => e.id === option[i].id);
-                let hug = res.category.params[paramIndex].options[optionsIndex].parent;
-                let opt = {};
-                while (hug) {
-                  opt[hug] = res.category.params[paramIndex].options[optionsIndex].id;
-                  optionsIndex = res.category.params[paramIndex].options.findIndex((e) => e.id === hug);
-                  hug = res.category.params[paramIndex].options[optionsIndex].parent;
-                }
-                setSelectedValues((prevSelectedValues) => ({
-                  ...prevSelectedValues,
-                  [i]: opt
-                }));
-              }
-            }
+            option = res.product.options.map(opt => ({
+              ...opt.option,
+              children: createTree(res.category.params[paramIndex].options, 'id', 'parent', opt.option.id).sort((a, b) => a.id - b.id),
+              value: opt?.value
+            }));
+
 
           }
 
@@ -288,64 +321,70 @@ const AddOffer = () => {
         );
 
     }
+
   }, []);
 
-
-  const handleSelectChange = (nodeId, selectedValue, i) => {
-    setSelectedValues((prevSelectedValues) => {
-      let hug = {};
-
-      if (prevSelectedValues && prevSelectedValues[i]) {
-        hug = { ...prevSelectedValues[i] };
-      }
-      if (hug[nodeId]) {
-        let del = hug[nodeId]
-        while (hug[del]) {
-          let uda = hug[del];
-          delete hug[del];
-          del = uda;
-        }
-      }
-      hug[nodeId] = selectedValue;
-
-      return {
-        ...prevSelectedValues,
-        [i]: hug
-      };
-    });
-
-
-    setValue(`option[${i}].id`, selectedValue)
-  };
+  console.log(data.status)
   const createTree = (data, idProp, parentProp, parentId) =>
     data.filter((n) => parentId === (n[parentProp] ?? null))
       .map((n) => ({
         ...n,
         children: createTree(data, idProp, parentProp, n[idProp]),
       }));
-  const renderSelects = (tree, i) => {
-    if (tree.children && tree.children.length > 0) {
-      return (
-        <>
-          <Col md={6}>
-            <Select
-              value={selectedValues && selectedValues[i] && selectedValues[i][tree.id]}
-              title="Выбрать"
-              label={tree?.title}
-              onClick={(e) => handleSelectChange(tree.id, e.value, i)}
-              data={tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({
-                value: item.id,
-                title: item.title,
-              }))}
-            />
-          </Col>
-          {selectedValues && selectedValues[i] && selectedValues[i][tree.id] &&
-            renderSelects(tree.children.find((child) => child.id === selectedValues[i][tree.id]), i)}
-        </>
-      );
+
+
+  const onSaveOption = (option) => {
+    setValue('option', removeDescendants(data, option));
+  };
+
+
+
+  const maxOption = (tree) => {
+    return (
+      <Col md={6} className="d-flex align-items-center">
+        <Input
+          type="number"
+          placeholder={'0'}
+          max={tree?.data?.max}
+          min={tree?.data?.min}
+          label={tree.title}
+          value={parseInt(data?.option?.find(e => e.id == tree.id)?.value)}
+          onChange={(g) => {
+            if (parseInt(g) >= tree?.data?.min && parseInt(g) <= tree?.data?.max || g == "") onSaveOption({ ...tree, value: parseInt(g) })
+          }}
+        />
+      </Col>
+    );
+  };
+  const renderSelects = (tree) => {
+    if (tree?.children && tree?.children.length > 0) {
+      if (tree?.children[0].data?.max) {
+        return tree.children.map(child =>
+          maxOption(child)
+        );
+      }
+      else {
+        return (
+          <>
+            <Col md={6}>
+              <Select
+                value={data.option && data.option.find(e => e.parent == tree.id) && data.option.find(e => e.parent == tree.id).id}
+                title="Выбрать"
+                label={tree?.title}
+                onClick={(e) => onSaveOption(e.data)}
+                data={tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, data: item, title: item.title }))}
+              />
+            </Col>
+            {data.option && data.option.find(e => e.parent == tree.id) &&
+              renderSelects(data.option.find(e => e.parent == tree.id))
+            }
+          </>
+        );
+      }
     }
     return null;
   };
+
   useEffect(() => {
     if (data?.serverView) {
 
@@ -395,6 +434,8 @@ const AddOffer = () => {
       setSelectedValues({});
     }
   }, [data.param]);
+
+
   if (games.loading || id && sum == 0) {
     return <Loader full />;
   }
@@ -471,23 +512,13 @@ const AddOffer = () => {
                   )}
 
                   {data?.options && data?.options?.length > 0 &&
-                    data.options.map((e, i) => {
+                    data.options.map((e) => {
                       return (
                         <>
-                          {
-                            e.data?.max ?
-                              <>
-                                <Col md={6} className="d-flex align-items-center">
-                                  <Input
-                                    type={"text"}
-                                    label={e.title}
-                                    defaultValue={data?.option && data?.option[i]?.value}
-                                    onChange={(g) => { if (parseInt(g) >= e.data.min && parseInt(g) <= e.data.max || g == "") setValue(`option[${i}].id`, e.id), setValue(`option[${i}].value`, parseInt(g)) }}
-                                  />
-                                </Col>
-                              </>
-                              :
-                              renderSelects(e, i)
+                          {e.data?.max ?
+                            maxOption(e)
+                            :
+                            renderSelects(e)
                           }
                         </>
                       )
@@ -502,30 +533,110 @@ const AddOffer = () => {
                       onChange={e => setValue("title", e)}
                     />
                   </Col>
-                  <Col md={12}>
-                    <Textarea
-                      type={"text"}
-                      label={"Описание"}
-                      defaultValue={data.desc}
-                      onChange={e => setValue("desc", e)}
-                    />
-                  </Col>
+                  {!data?.notDesc &&
+                    <Col md={12}>
+                      <Textarea
+                        type={"text"}
+                        label={"Описание"}
+                        defaultValue={data.desc}
+                        onChange={e => setValue("desc", e)}
+                      />
+                    </Col>
+                  }
+                  {!data?.one && data?.notDesc &&
+                    <Col md={4}>
+                      <Input
+                        label={"Наличие"}
+                        type={"number"}
+                        value={data.count}
+                        onChange={(e) => {
+                          if (/^\d*$/.test(e)) {
+                            setValue("count", e)
+                          }
+                        }}
+                      />
+                    </Col>
+                  }
+                  {data?.notDesc &&
+                    <Col md={4}>
+                      <Select
+                        label={"Единица измерения"}
+                        type={"number"}
+                        value={data.typeCount}
+                        onClick={(e) => setValue("typeCount", e.value)}
+                        data={[
+                          { value: "шт", title: "шт" },
+                          { value: "кк", title: "кк" },
+                          { value: "к", title: "к" }
+                        ]}
+                      />
+                    </Col>
+                  }
                   <Col md={4}>
                     <Input
-                      type={"text"}
-                      label={"Наличие"}
-                      defaultValue={data.count}
-                      onChange={e => setValue("count", e)}
-                    />
-                  </Col>
-                  <Col md={4}>
-                    <Input
-                      type={"text"}
                       label={"Цена, ₽ "}
-                      defaultValue={data.price}
-                      onChange={e => setValue("price", e)}
+                      type="number"
+                      value={data.price}
+                      onChange={(e) => {
+                        const value = e;
+                        let isValid;
+                        if (value >= 1) { isValid = /^\d+(\.\d{0,2})?$/.test(value); }
+                        else { isValid = /^\d+(\.\d{0,4})?$/.test(value); }
+                        if (isValid || !value) {
+                          setValue("price", value);
+                        }
+                      }}
                     />
                   </Col>
+                  {data?.notDesc &&
+                    <Col md={4}>
+                      <Input
+                        label={"Минимальный обьем покупки"}
+                        type={"number"}
+                        value={data.minCount}
+                        onChange={(e) => {
+                          if (/^\d*$/.test(e)) {
+                            setValue("minCount", e)
+                          }
+
+                        }}
+                      />
+                    </Col>
+                  }
+                  {!data?.one && !data?.notDesc &&
+                    <Col md={4}>
+                      <Input
+                        label={"Наличие"}
+                        type={"number"}
+                        value={data.count}
+                        onChange={(e) => {
+                          if (/^\d*$/.test(e)) {
+                            setValue("count", e)
+                          }
+                        }}
+                      />
+                    </Col>
+                  }
+                  <Col xs={12}>
+                    <p>Цена для покупателей: {data?.game?.commission ? (data?.price && Math.round(((data?.price) * 1 + (data?.price / 100 * data?.game?.commission)) * 1000000) / 1000000) : data.price}</p>
+                  </Col>
+                  {data.status == -1 &&
+                    <Col xs={12}>
+                      <label className="color-1 justify-content-center">
+                        Обьявление заблокировано! Обратитесь к администратору.
+                      </label>
+                    </Col>
+                  }
+                  {data?.auto &&
+                    <Col md={12}>
+                      <Textarea
+                        type={"text"}
+                        label={"Сообщение покупателю после оплаты"}
+                        defaultValue={data?.protectedData?.auto}
+                        onChange={(e) => setValue("protectedData.auto", e)}
+                      />
+                    </Col>
+                  }
                 </Row>
               </Col>
             </Row>
@@ -536,11 +647,29 @@ const AddOffer = () => {
                 onClick={handleSubmit(onSubmit)}
               >Опубликовать</button>
               :
-              <button
-                type='button'
-                className='btn-1 mt-4 mt-sm-5'
-                onClick={handleSubmit(onSubmit)}
-              >Сохранить изменения</button>
+              <Row>
+                <Col md={4}>
+                  <button
+                    type='button'
+                    className='btn-5 mt-4 mt-sm-5'
+                    onClick={handleSubmit(onSubmit)}
+                  >Сохранить изменения</button>
+                </Col>
+                <Col md={4}>
+                  <button
+                    type='button'
+                    className='btn-3 mt-4 mt-sm-5'
+                    onClick={handleSubmit(onEdit)}
+                  >Снять с публикации</button>
+                </Col>
+                <Col md={4}>
+                  <button
+                    type='button'
+                    className='btn-4 mt-4 mt-sm-5'
+                    onClick={handleSubmit(onDelete)}
+                  >Удалить объявление</button>
+                </Col>
+              </Row>
             }
           </form>
         </div>

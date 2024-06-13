@@ -19,13 +19,13 @@ import Select from '../components/utils/Select';
 import socket from '../config/socket';
 import { getImageURL } from '../helpers/all';
 import { createMessage, getMessages } from '../services/message';
-import { createOrder } from '../services/order';
+import { createOrder, getOrder } from '../services/order';
 import { getProduct } from '../services/product';
 import { NotificationManager } from 'react-notifications';
 import { refreshAuth } from '../services/auth';
 import useIsMobile from '../hooks/isMobile';
 
-const LotPage = () => {
+const OrderPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
     const { lotId } = useParams()
     const [showShare, setShowShare] = useState(false);
@@ -36,11 +36,10 @@ const LotPage = () => {
         loading: true,
         items: [],
     });
-    const [isPaymentPending, setPaymentPending] = useState(false);
+
     const navigate = useNavigate();
     const getPage = () => {
-
-        getProduct({ id: lotId })
+        getOrder({ id: lotId })
             .then((res) => {
                 setProducts((prev) => ({
                     prev,
@@ -48,9 +47,15 @@ const LotPage = () => {
                     items: res.product,
                     reviews: res.reviews,
                     nickname: res?.product?.param?.data?.nickname,
+                    nicknameUser: res?.data?.nickname,
+                    author: res.author,
+                    user: res.user,
+                    count: res.count,
+                    createdAt: res.createdAt,
+                    price: res.price,
+                    total: res.total,
                 }));
-                setValue("toId", res.product.userId);
-                setValuePay("productId", res.product.id)
+                setValue("toId", userId != res.author?.id ? res.author?.id : res.user?.id);
             })
             .catch(() => setProducts((prev) => ({ ...prev, loading: false })));
 
@@ -156,72 +161,11 @@ const LotPage = () => {
         },
         [data]
     );
-    const {
-        control: controlPay,
-        register: registerPay,
-        setValue: setValuePay,
-        reset: resetPay,
-        formState: { errors: errorsPay, isValid: isValidPay },
-        handleSubmit: handleSubmitPay,
-    } = useForm({
-        mode: "all",
-        reValidateMode: "onSubmit",
-        defaultValues: {
-            count: 1,
-        },
-    });
-    const pay = useWatch({ control: controlPay });
-    const onPay = useCallback(
-        (pay) => {
-            if (!pay.type || pay.type <= 0) {
-                return NotificationManager.error("Выберите способ оплаты");
-            }
-            if (!pay.count || pay.count < 1) {
-                return NotificationManager.error("Укажите количество товара");
-            }
-            if (products.items.count - pay.count < 0) {
-                return NotificationManager.error(
-                    "У продавца недостаточно кол-ва данного товара"
-                );
-            }
-            setPaymentPending(true);
-            createOrder(pay)
-                .then((res) => {
-                    resetPay({ ...pay, nickname: null, count: 1, type: null });
-                    setPaymentPending(false);
-                    getPage();
-                    dispatch(refreshAuth());
-                    NotificationManager.success("Куплено");
-                    if (!data?.id) {
-                        getMessages(data)
-                            .then((res) => {
-                                setMessages((prev) => ({
-                                    ...prev,
-                                    loading: false,
-                                    items: res.messages.items,
-                                    dialogId: res.dialog.id,
-                                    dialog: res.dialog,
-                                }));
-                                setValue("id", res.dialog.id);
-                            })
-                            .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-                    }
-                })
-                .catch((err) => {
-                    setPaymentPending(false);
-                    NotificationManager.error(
-                        err?.response?.data?.error ?? "Ошибка при покупке"
-                    );
-                });
-        },
-        [products.items.count]
-    );
 
-    const user =
-        messages?.dialog ? (userId == messages?.dialog?.to?.id
-            ? messages?.dialog?.from
-            : messages?.dialog?.to)
-            : products?.items?.user
+
+    const user = userId == products?.author?.id
+        ? products?.user
+        : products?.author
 
     const onTask = useCallback(() => {
         createTask({ type: "report", userId: user.id })
@@ -241,14 +185,14 @@ const LotPage = () => {
     return (
         <main>
             <Meta title="Лот" />
-            <section className='lot-page mb-6'>
+            <section className='order-page mb-6'>
                 <button type="button" onClick={() => navigate(-1)} className='blue d-flex align-items-center mb-3'>
                     <PiCaretLeftLight className='fs-15' />
                     <span className='ms-2'>Назад в каталог</span>
                 </button>
                 <Row>
                     <Col xs={12} lg={8}>
-                        <div className="lot-page-box lot-page-grid mb-4">
+                        <div className="order-page-box order-page-grid mb-4">
                             <div className="game">
                                 {/* {products?.items?.category?.media &&
                                         <img src={getImageURL(products?.items?.category?.media)} alt="AFK Arena" />
@@ -274,54 +218,27 @@ const LotPage = () => {
                             </div>
                             {/* <div className='title'>{products?.items?.title} </div> */}
                             <div className='title'>{products?.items?.title}</div>
-                            {products?.items?.status == 0 ? <div className='status'>Закрыт</div> : <div className='status'></div>}
-                            {products?.items?.status == -1 ? <div className='status'>Заблокировано</div> : <div className='status'></div>}
-                            <div className='date'>
-                                <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
-                                <time className='ms-3'>{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
-                                {/* <button type='button' className='d-flex fs-14 ms-3'>
-                                        <PiWarningLight />
-                                    </button> */}
+                            <div className='status'>
+                                {!products?.items?.status == 0 && <div className='btn-1'>Закрыт</div>}
+                                {products?.items?.status == 0 && <div className='btn-3'>Заблокировано</div>}
                             </div>
+
+
 
                             <div className="payment align-items-center">
                                 {!products?.items?.param?.data?.one &&
-                                    <>
-                                        <h6>Доступно:</h6>
-                                        <h6>{products?.items?.count}</h6>
-                                        <Input
-                                            value={pay.count}
-                                            type={"number"}
-                                            label={"Количество"}
-                                            name="count"
-                                            register={registerPay}
-                                        />
-                                    </>
+                                    <div className='d-flex'>
+                                        <h6>Количество:</h6>
+                                        <h6>{products?.count}</h6>
+                                    </div>
                                 }
-                                <Select
-                                    value={pay.type}
-                                    title="Выберите способ оплаты"
-                                    onClick={e => setValuePay("type", e.value)}
-
-                                    data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
-                                />
-                                <Input
-                                    value={pay?.nickname ?? ""}
-                                    placeholder={'nickname'}
-                                    className="nickname me-4"
-                                    type="text"
-                                    onChange={(e) => setValuePay("nickname", e)}
-                                    maxLength={100}
-                                />
-                                {products?.items?.data?.minCount &&
-                                    <Col className="d-flex align-items-center achromat-3" md={12}>
-                                        <span className="me-2">Минимум</span>
-                                        <span className="me-2">{products?.items?.data?.minCount}</span>
-                                        {products?.items?.data?.typeCount && <span className="me-2">{products?.items?.data?.typeCount}.</span>}
-                                        <span className="me-2">(требование продавца)</span>
-                                    </Col>
+                                {products?.nickname &&
+                                    <div className='d-flex'>
+                                        <h6>Nickname:</h6>
+                                        <h6>{products?.nicknameUser}</h6>
+                                    </div>
                                 }
-                                <button disabled={!userId || isPaymentPending || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button>
+                                {/* <button disabled={!userId || userId == products?.items?.user?.id} onClick={handleSubmitPay(onPay)} type='button' className='btn-1'>Оплатить {(pay.count > 0 ? pay.count : 1) * products?.items?.total} ₽</button> */}
                             </div>
 
                             <div className='text'>
@@ -340,32 +257,50 @@ const LotPage = () => {
                                     }
                                 })}
                             </ul>
+                            <div className='date'>
+                                <div>
+                                    <p>Дата размещения</p>
+                                    <time>{moment(products?.items?.createdAt).format("kk:mm")}</time>
+                                    <time >{moment(products?.items?.createdAt).format("DD.MM.YYYY")}</time>
+                                </div>
+                                <div>
+                                    {userId == products.author ?
+                                        <p>Дата продажи</p>
+                                        :
+                                        <p>Дата покупки</p>
+                                    }
+
+                                    <time>{moment(products?.createdAt).format("kk:mm")}</time>
+                                    <time >{moment(products?.createdAt).format("DD.MM.YYYY")}</time>
+                                </div>
+
+                            </div>
                         </div>
 
-                        <div className="lot-page-box">
+                        <div className="order-page-box">
                             <div className="px-3 py-2 d-sm-flex justify-content-between align-items-center">
                                 <div className="seller">
-                                    <Link to={`/trader/${products?.items?.userId}`}>
-                                        <img src={getImageURL({ path: products?.items?.user?.media, type: "user", size: "mini" })} alt={products?.items?.user?.nickname} />
+                                    <Link to={`/trader/${user?.id}`}>
+                                        <img src={getImageURL({ path: user?.media, type: "user", size: "mini" })} alt={products?.items?.user?.nickname} />
                                     </Link>
-                                    <Link to={`/trader/${products?.items?.userId}`}>
-                                        <h3 className='title-font lh-n mb-0'>{products?.items?.user?.nickname}</h3>
+                                    <Link to={`/trader/${user?.id}`}>
+                                        <h3 className='title-font lh-n mb-0'>{user?.nickname}</h3>
                                     </Link>
                                     <div className='rating ms-3'>
                                         <StarIcon />
                                         {/* <StarRating value={products?.items?.user?.rating} /> */}
-                                        <span>{products?.items?.user?.rating != null ? parseFloat(products?.items?.user?.rating).toFixed(1) : "0.0"}</span>
+                                        <span>{user?.rating != null ? parseFloat(user?.rating).toFixed(1) : "0.0"}</span>
                                     </div>
                                 </div>
                                 <div className='mt-3 mt-md-0 d-flex align-items-center justify-content-between w-xs-100'>
                                     <div className="d-flex">
                                         <div className="d-flex flex-column align-items-center">
                                             <p className='fs-09 mb-1 mb-sm-2'>Сделки</p>
-                                            <p className="fs-15 title-font lh-n">{products?.items?.user?.orderSale}</p>
+                                            <p className="fs-15 title-font lh-n">{user?.orderSale}</p>
                                         </div>
                                         <div className='d-flex flex-column align-items-center ms-4'>
                                             <p className='fs-09 mb-1 mb-sm-2'>Лоты</p>
-                                            <p className="fs-15 title-font lh-n">{products?.items?.user?.product}</p>
+                                            <p className="fs-15 title-font lh-n">{user?.product}</p>
                                         </div>
                                     </div>
                                     <div className='ms-5'>
@@ -377,18 +312,13 @@ const LotPage = () => {
                                         >
                                             <FiShare />
                                         </button>
-                                        {userId != products?.items?.user?.id &&
-                                            <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
-                                        }
+                                        <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
+
                                     </div>
                                 </div>
                             </div>
                             {userId != products?.items?.user?.id &&
                                 <>
-                                    <hr />
-                                    <div className="px-3 py-2">
-                                        <p className='blue'>Напишите продавцу перед покупкой</p>
-                                    </div>
                                     <hr />
 
                                     {!userId ? (
@@ -453,4 +383,4 @@ const LotPage = () => {
     )
 }
 
-export default LotPage
+export default OrderPage

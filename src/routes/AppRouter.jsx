@@ -34,7 +34,6 @@ const router = createBrowserRouter(
       <Route index element={<Home />} />
       <Route path="game/:id" element={<Game />} />
       <Route path="game/lot/:lotId" element={<LotPage />} />
-      <Route path="order/:lotId" element={<LotPage />} />
       <Route path="trader/:userId" element={<Profile />} />
       <Route path="blog" element={<Blog />} />
       <Route path="blog/:id" element={<Article />} />

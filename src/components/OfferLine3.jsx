@@ -35,22 +35,22 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
   }, [product]);
   return (
     <div className="offer-line-3">
-      <div className="date">
+      <Link to={`/account/order/${uid}`} className="date">
 
         <span>{moment(createdAt).format("DD.MM.YYYY")}</span>
         <span className='ms-3 gray'>{moment(createdAt).format("kk:mm")}</span>
 
-      </div>
-      <div className="id">
+      </Link>
+      <Link to={`/account/order/${uid}`} className="id">
         <span className='d-xl-none me-2'>ID заказа:</span>
         <div>{uid.toUpperCase()}</div>
-      </div>
-      <div className="descr"><Link to={`/game/lot/${product.uid}`}>
+      </Link>
+      <Link to={`/account/order/${uid}`} className="descr">
         {product.serverTitle && <span className='me-2'>{product.serverTitle},</span>}
         {product.title && <span className='me-2'>{product.title},</span>}
         {product.desc && <span className='me-2'>{product.desc},</span>}
         {product.options && product.options?.length > 0 && renderOptions}
-      </Link></div>
+      </Link>
       <div className="seller">
         <Link to={`/trader/${profileId}`}><img src={image} alt="User8name" /></Link>
         <div>
@@ -71,7 +71,7 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
             )
         }
       </div>
-      <div className="price">{coly}&nbsp;&nbsp;₽</div>
+      <Link to={`/account/order/${uid}`} className="price">{coly}&nbsp;&nbsp;₽</Link>
     </div>
   );
 };

@@ -1101,13 +1101,11 @@ button {
 
         &:hover,
         &:focus {
-            color: var(--white);
             background-position: right center;
         }
 
         &:active,
         &.active {
-            color: var(--white) !important;
             background-position: center center;
         }
 
@@ -1143,21 +1141,19 @@ button {
     &-danger {
         @extend .btn;
         background: $rose;
-        color: var(--white);
+        color: $white !important;
         box-shadow: var(--shadow);
         backdrop-filter: blur(5px);
         border-radius: $radius;
 
         &:hover,
         &:focus {
-            background: $rose;
-            color: var(--white);
+            background: var(--dark-blue);
         }
 
         &:active,
         &.active {
-            background: $rose;
-            color: var(--white);
+            background: var(--dark-green);
         }
 
         &[disabled] {
@@ -1196,20 +1192,18 @@ button {
     &-5 {
         @extend .btn;
         background: var(--blue);
-        color: var(--white);
+        color: $white !important;
         box-shadow: var(--shadow);
         backdrop-filter: blur(5px);
         border-radius: $radius;
 
         &:hover,
         &:focus {
-            color: var(--white);
             background: var(--dark-blue);
         }
 
         &:active,
         &.active {
-            color: var(--white);
             background: var(--dark-green);
         }
 
@@ -1701,7 +1695,7 @@ nav.pagination {
     &-top {
         background-color: var(--extrapale-gray);
         border-radius: $radius $radius 0px 0px;
-        padding: var(--padY) var(--padX);
+        padding: var(--padY) 1em;
 
         @media (max-width: $bp-xl) {
             display: none;
@@ -1710,13 +1704,30 @@ nav.pagination {
         ul {
             @include list();
             @include flex();
-            padding: 0.25em 1em;
+            padding: 0.25em 0em;
             font-weight: 700;
             font-size: 1.2em;
 
             &.line-2 {
-                .descr {
+                .category {
+                    width: 150px;
+                    text-align: left;
+
+                }
+
+                .server {
+                    width: 200px;
+                    text-align: left;
+
+                }
+
+                .title {
                     flex: 1;
+                }
+
+                .count {
+                    width: 120px;
+                    text-align: right;
                 }
 
                 .price {
@@ -2940,10 +2951,19 @@ header {
                 padding: .9em 1.4em;
                 font-size: .9em;
                 color: #fff;
-                transition: 300ms ease-in-out;
+                transition: $transition;
                 transition-property: background-color, color;
                 border-radius: 8px;
-                border: 1px solid rgba(0, 0, 0, 0);
+                z-index: 20;
+                border: 1px solid transparent;
+
+                &:hover {
+                    border: 1px solid var(--param-hover);
+                }
+
+                &:active {
+                    background: var(--param-active);
+                }
             }
 
 
@@ -4162,6 +4182,250 @@ header {
     }
 }
 
+/* Order page */
+.order-page {
+    padding-left: 3em;
+    padding-right: 3em;
+
+    .specifications {
+        // @include list();
+        font-size: 0.9em;
+
+        li {
+            @include flex(row, space-between, center, nowrap);
+            position: relative;
+
+            &::after {
+                content: "";
+                position: absolute;
+                bottom: 0.2em;
+                left: 0em;
+                width: 100%;
+                height: 1px;
+                background-color: var(--extrapale-line);
+            }
+
+            // &:not(:first-child) {
+            margin-top: 0.5em;
+            // }
+
+            span {
+                position: relative;
+                z-index: 2;
+                background-color: var(--body-bg);
+                padding: 0em 0.5em;
+                line-height: normal;
+                @include textEllipsis();
+                width: fit-content;
+                max-width: 48%;
+
+                &:first-child {
+                    color: var(--gray);
+                }
+
+                &:last-child {
+                    color: var(--blue);
+                }
+            }
+        }
+    }
+
+    &-box {
+        border: 1px solid var(--extrapale-line);
+        border-radius: $radius;
+
+        hr {
+            background-color: var(--extrapale-line);
+            width: 100%;
+            height: 1px;
+            border: none;
+            margin: 0px;
+            opacity: 1;
+        }
+
+        .seller {
+            @include flex(row, flex-start, center, nowrap);
+
+            img {
+                @include roundedImg(70px, 50%, cover);
+                margin-right: 1em;
+            }
+
+            .rating {
+                font-size: 1.2em;
+                font-weight: 700;
+                @include flex();
+
+                svg {
+                    color: var(--blue);
+                    font-size: 1.1em;
+
+                    path {
+                        fill: var(--blue);
+                    }
+                }
+            }
+        }
+
+        .chat {
+            border: none;
+        }
+    }
+
+    &-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        grid-template-rows: 50px auto auto auto auto auto;
+        gap: 0px 0px;
+        grid-template-areas: "game info info info"
+            "title title title title"
+            "payment payment payment status"
+            "specifications specifications specifications specifications"
+            "text text text text"
+            "date date date date";
+
+        @media (max-width: $bp-md) {
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: 50px auto auto auto auto auto auto;
+            grid-template-areas:
+                "game game"
+                "info info"
+                "title title"
+                "payment status"
+                "specifications specifications"
+                "text text"
+                "date date";
+        }
+
+        // @media (max-width: $bp-sm) {
+        //   grid-template-columns: 100px auto;
+        // }
+
+        .game {
+            grid-area: game;
+            width: 100%;
+            padding: 0em 1em;
+            @include flex(column, center, flex-start, nowrap);
+
+            @media (max-width: $bp-md) {
+                padding: 1em;
+            }
+
+            img {
+                @include roundedImg(50px, 50%, cover);
+            }
+        }
+
+        .date {
+            grid-area: date;
+            @include flex(row, space-between, flex-end, wrap);
+            gap: 1em;
+            padding: 1em;
+
+            border-top: 1px solid var(--extrapale-line);
+
+            @media (max-width: $bp-sm) {
+                align-items: center;
+            }
+
+            div {
+                @include flex(row, flex-start, flex-end, wrap);
+                gap: 1em;
+            }
+
+            time {
+                color: var(--light-gray);
+                font-size: 0.8em;
+            }
+        }
+
+        .info {
+            grid-area: info;
+            @include flex(row, flex-start, center, wrap);
+
+            @media (max-width: $bp-md) {
+                padding: 1em;
+                border-top: 1px solid var(--extrapale-line);
+            }
+
+            .tag-gray {
+                background-color: var(--extrapale-gray);
+                padding: 0.25em 0.5em;
+                border-radius: 0.5em;
+            }
+
+            .tag-green {
+                background-color: var(--green);
+                color: var(--white);
+                padding: 0.25em 0.5em;
+                border-radius: 0.5em;
+            }
+        }
+
+        .title {
+            grid-area: title;
+            color: var(--blue);
+            padding: 1em;
+            border-top: 1px solid var(--extrapale-line);
+        }
+
+        .status {
+            grid-area: status;
+            display: flex;
+            align-items: center;
+            justify-content: end;
+            // padding: 1em;
+            border-top: 1px solid var(--extrapale-line);
+
+
+        }
+
+        .payment {
+            grid-area: payment;
+            @include flex(row, flex-start, flex-end, wrap);
+            gap: 1em;
+            padding: 1em;
+            border-top: 1px solid var(--extrapale-line);
+
+        }
+
+        .text {
+            grid-area: text;
+            padding: 1em;
+            @include flex(row, flex-start, center, nowrap);
+
+            @media (max-width: $bp-md) {
+                border-top: 1px solid var(--extrapale-line);
+                font-size: .9em;
+            }
+        }
+
+        .specifications {
+            grid-area: specifications;
+            padding: 1em;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            border-top: 1px solid var(--extrapale-line);
+            gap: 0 2em;
+
+            @media (max-width: $bp-md) {
+                font-size: .9em;
+                grid-template-columns: 1fr;
+            }
+        }
+
+    }
+
+    .dropdown {
+        .select {
+            background-color: var(--body-bg);
+            padding: 0.7em 1em;
+            border-radius: $radius;
+            border: 1px solid $light-gray;
+        }
+    }
+}
+
 .review-card {
     border: 1px solid var(--extrapale-line);
 
@@ -4586,6 +4850,14 @@ ACCOUNT
         box-shadow: var(--shadow);
         backdrop-filter: blur(5px);
 
+        .labeled-input {
+            --bg: var(--label);
+            width: 100%;
+
+            label {
+                border-radius: $radius;
+            }
+        }
 
 
         .dropdown {
@@ -4598,6 +4870,7 @@ ACCOUNT
                 padding: 0.725em 1.65em;
 
                 &-label {
+                    border-radius: $radius;
                     position: absolute;
                     z-index: 10;
                     top: 0px;
@@ -4607,22 +4880,21 @@ ACCOUNT
                     background: var(--label);
                     color: var(--gray);
                     padding: 0 0.67em;
+
                 }
 
                 &:hover,
                 &:focus,
-                &:active {
+                &:active,
+                &.active {
                     border: 1px solid var(--blue);
+
+                    .select-label {
+                        color: var(--blue) !important;
+                    }
                 }
             }
 
-            &:hover,
-            &:focus,
-            &:active {
-                label {
-                    color: var(--blue);
-                }
-            }
         }
 
         @media (max-width: $bp-sm) {
@@ -5440,9 +5712,40 @@ ACCOUNT
         border-radius: $radius;
     }
 
-    .descr {
+    .category {
+        width: 150px;
+        text-align: left;
+
+        @media (max-width: $bp-xl) {
+            flex: 1;
+        }
+    }
+
+    .server {
+        width: 200px;
+        text-align: left;
         overflow-wrap: anywhere;
-        @include clamp(2, 1.4em, false);
+        @include clamp(1, 1.4em, false);
+
+        @media (max-width: $bp-xl) {
+            flex: 1;
+        }
+    }
+
+    .title {
+        width: 100%;
+        text-align: left;
+        overflow-wrap: anywhere;
+        @include clamp(1, 1.4em, false);
+    }
+
+    .count {
+        width: 120px;
+        text-align: right;
+
+        @media (max-width: $bp-xl) {
+            flex: 1;
+        }
     }
 
     .price {
@@ -5455,7 +5758,7 @@ ACCOUNT
     }
 
     .btns {
-        width: 60px;
+        width: 40px;
         @include flex(row, flex-end, center, nowrap);
 
         button {
@@ -5527,10 +5830,13 @@ ACCOUNT
 
     .id {
         grid-area: id;
+        display: flex;
+        align-items: center;
     }
 
     .descr {
         overflow-wrap: anywhere;
+        padding-right: 1em;
         @include clamp(3, 1.4em, false);
     }
 

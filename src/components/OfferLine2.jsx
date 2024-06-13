@@ -2,35 +2,22 @@ import React, { useMemo } from 'react';
 import { FiEdit } from "react-icons/fi";
 import { Link } from 'react-router-dom';
 
-const OfferLine2 = ({ category, uid, status, title, desc, price, server, options }) => {
-  const renderOptions = useMemo(() => {
+const OfferLine2 = ({ category, uid, param, status, title, desc, price, server, options, count }) => {
 
-    return options.map((item, i) => {
-      const option = item.option;
-      if (!option || !option.data || !option.data.desc) return null; // Проверка наличия данных
-      const key = option.id || i; // Использование уникального идентификатора или индекса
-      const titleOpt = option.title || '';
-      const value = item.value || '';
-
-      return (
-        <React.Fragment key={key}>
-          <span className={value && 'me-2'}>{titleOpt}</span>
-          {value && <span>{value}</span>}
-          {/* {options?.length != (i + 1) && options[i + 1]?.option?.data?.desc &&  */}
-          < span className="me-2">,</span>
-        </React.Fragment >
-      );
-    });
-  }, [options]);
   return (
     <div className="offer-line-2">
-      <Link to={`/game/lot/${uid}`} className="descr">
-        {server && <span className='me-2'>{server.title},</span>}
-        {title && <span className='me-2'>{title},</span>}
-        {desc && <span className='me-2'>{desc},</span>}
-        {options && options?.length > 0 && renderOptions}
+      <Link to={`/game/lot/${uid}`} className='d-flex align-items-center'>
+        <div className="category">
+          {param?.title}
+        </div>
+        <div className="server">
+          {server?.title}
+        </div>
       </Link>
+      <Link to={`/game/lot/${uid}`} className='title'>{title}</Link>
+
       <div className='d-flex align-items-center'>
+        <Link to={`/game/lot/${uid}`} className='count'>{count}</Link>
         <Link to={`/game/lot/${uid}`} className='price'>{price} ₽</Link>
         <div className="btns">
           <button type='button'><Link to={`edit/${uid}`} >
@@ -38,7 +25,8 @@ const OfferLine2 = ({ category, uid, status, title, desc, price, server, options
           </Link></button>
         </div>
       </div>
-    </div>
+
+    </div >
   );
 };
 

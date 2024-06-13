@@ -19,6 +19,7 @@ import Profile from '../pages/account/Profile'
 import PurchaseHistory from '../pages/account/PurchaseHistory'
 import SalesHistory from '../pages/account/SalesHistory'
 import Settings from '../pages/account/Settings'
+import OrderPage from '../pages/OrderPage'
 
 const AccountRouter = () => {
   const isMobileLG = useIsMobile('991px')
@@ -41,6 +42,7 @@ const AccountRouter = () => {
         <Route path="purchase-history" element={<PurchaseHistory />} />
         <Route path="sales-history" element={<SalesHistory />} />
         <Route path="finance" element={<Finance />} />
+        <Route path="order/:lotId" element={<OrderPage />} />
         <Route path="messages" element={<Messages isMobileXL={isMobileXL} />} />
         {
           (!isMobileXL)

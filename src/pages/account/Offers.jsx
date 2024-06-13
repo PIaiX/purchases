@@ -64,7 +64,10 @@ const Offers = () => {
               <div className="list-wrapping">
                 <div className="list-wrapping-top">
                   <ul className='line-2'>
-                    <li className='descr'>Описание</li>
+                    <li className='category'>Категория</li>
+                    <li className='server'>Сервер</li>
+                    <li className='title'>Название</li>
+                    <li className='count'>Кол-во</li>
                     <li className='price'>Цена</li>
                     <li className='btns'></li>
                   </ul>
