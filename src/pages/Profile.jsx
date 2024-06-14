@@ -113,6 +113,7 @@ const Profile = () => {
 
 
   const {
+    reset: resetMessage,
     control: controlMessage,
     register: registerMessage,
     formState: { errors: errorsMessage, isValid: isValidMessage },
@@ -120,10 +121,6 @@ const Profile = () => {
   } = useForm({
     mode: "all",
     reValidateMode: "onChange",
-    defaultValues: {
-      fromId: myId,
-      toId: userId,
-    },
   });
 
   const dataMessage = useWatch({ control: controlMessage });
@@ -133,52 +130,74 @@ const Profile = () => {
   });
 
 
-
+  const onLoadChat = (chatPage) => {
+    setMessages((prev) => ({ ...prev, load: false }))
+    getMessages({ ...dataMessage, page: chatPage, size: 20 })
+      .then((res) => {
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: [...messages.items, ...res.messages.items],
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+          dialog: res.dialog,
+          load: true,
+        }));
+        setValueMessage("id", res.dialog.id);
+      })
+      .catch(() => {
+        setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+      });
+  };
   useEffect(() => {
     if (userId != myId) {
-      getMessages(dataMessage)
-        .then((res) => {
-          setMessages((prev) => ({
-            ...prev,
-            loading: false,
-            items: res.messages.items,
-            dialogId: res.dialog.id
-          }))
-        }
-        )
-        .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+      resetMessage({
+        fromId: myId,
+        toId: userId,
+      })
+      setMessages(() => ({ items: [], loading: true }))
+      onLoadChat();
     }
-  }, []);
+  }, [userId]);
   useEffect(() => {
-    setValueMessage("id", messages.dialogId);
-  }, [messages.dialogId]);
-  useEffect(() => {
-    if (dataMessage?.id) {
-      socket.emit("createRoom", "message/" + dataMessage.id);
+    const handleMessage = (data) => {
 
-      socket.on("message", (dataMessage) => {
-
-        if (dataMessage) {
-          setMessages((prev) => ({
+      setMessages(prev => {
+        if (data.status) {
+          return {
             ...prev,
             loading: false,
-            items: [
-              dataMessage,
-              ...prev.items.map((e) => {
-                if (e?.userId) {
-                  e.view = true;
-                }
-                return e;
-              }),
-            ],
-          }));
+            items: [data, ...prev.items],
+          };
+        } else {
+          const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+          if (messageIndex !== -1) {
+            const updatedMessages = [...prev.items];
+            updatedMessages[messageIndex] = data;
+
+            return {
+              ...prev,
+              loading: false,
+              items: updatedMessages,
+            };
+          }
+
+          return prev;
         }
       });
+    };
+
+    if (dataMessage?.id) {
+      socket.emit("createRoom", "message/" + dataMessage.id);
+      socket.on("message", handleMessage);
+      socket.on("report", handleMessage);
+
       return () => {
-        socket.off("message");
+        socket.off("message", handleMessage);
+        socket.off("report", handleMessage);
+        socket.emit("removeRoom", "message/" + dataMessage.id);
       };
     }
-
   }, [dataMessage?.id]);
 
 
@@ -359,6 +378,8 @@ const Profile = () => {
               ) : (
                 <div className="p-0 fs-09">
                   <Chat
+                    onLoadChat={onLoadChat}
+                    setScrollOff={setScrollOff}
                     scrollOff={scrollOff}
                     messages={messages}
                     emptyText="Нет сообщений"

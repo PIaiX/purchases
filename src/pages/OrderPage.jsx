@@ -76,24 +76,26 @@ const OrderPage = () => {
         items: [],
     });
     const onLoadChat = (chatPage) => {
-        getMessages({ ...data, page: chatPage, size: 20 })
+        setMessages((prev) => ({ ...prev, load: false }))
+        getMessages({ ...data, page: chatPage, size: 50 })
             .then((res) => {
                 setMessages((prev) => ({
                     ...prev,
                     loading: false,
-                    items: res.messages.items,
-                    hasMore: res.messages.items.length > 19 ? true : false,
-                    dialogId: res.dialog.id,
+                    items: [...messages.items, ...res.messages.items],
+                    hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
                     dialog: res.dialog,
+                    load: true,
                 }));
                 setValue("id", res.dialog.id);
             })
             .catch(() => {
-                setMessages((prev) => ({ ...prev, loading: false }))
+                setMessages((prev) => ({ ...prev, loading: false, load: true, }))
             });
     };
     useEffect(() => {
         if (data.toId && userId != products.items?.user?.id && data.toId != userId) {
+            setMessages(() => ({ items: [], loading: true }))
             onLoadChat();
         }
     }, [data.toId]);
@@ -151,7 +153,6 @@ const OrderPage = () => {
                                     ...prev,
                                     loading: false,
                                     items: res.messages.items,
-                                    dialogId: res.dialog.id,
                                     dialog: res.dialog,
                                 }));
                                 setValue("id", res.dialog.id);

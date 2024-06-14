@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit'
 
-import notification1 from "../../assets/audio/notification-1.mp3";
+import notification1 from "../../assets/audio/signal.mp3";
 const initialState = {
     count: 0,
     message: 0,

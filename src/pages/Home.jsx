@@ -34,18 +34,25 @@ const Home = () => {
     loading: true,
     items: [],
   });
-
-  useEffect(() => {
-    getMessagesGeneral()
-      .then((res) =>
+  const onLoadChat = (chatPage) => {
+    setMessages((prev) => ({ ...prev, load: false }))
+    getMessagesGeneral({ page: chatPage, size: 50 })
+      .then((res) => {
         setMessages((prev) => ({
           ...prev,
           loading: false,
-          items: res.messages.items,
+          items: [...messages.items, ...res.messages.items],
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
           count: res.countOnline,
-        }))
-      )
-      .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
+          load: true,
+        }));
+      })
+      .catch(() => {
+        setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+      });
+  };
+  useEffect(() => {
+    onLoadChat();
   }, []);
 
   const userId = useSelector(state => state.auth?.user?.id);
@@ -144,6 +151,7 @@ const Home = () => {
                   </div>
 
                   <Chat
+                    onLoadChat={onLoadChat}
                     general="general"
                     messages={messages}
                     emptyText="Нет сообщений"

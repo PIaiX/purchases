@@ -2708,10 +2708,15 @@ header .profile-link img {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  height: auto;
-  overflow: auto;
+  height: 100%;
   max-height: calc(100vh - var(--h-height) - 15em);
+  overflow-y: auto;
   padding: 1em 1.5em;
+}
+.chat-window .div {
+  display: flex;
+  flex-direction: column-reverse;
+  height: calc(100vh - var(--h-height) - 15em);
 }
 .chat-window.off {
   overflow: unset;
@@ -4186,7 +4191,7 @@ header .profile-link img {
   grid-area: status;
   display: flex;
   align-items: center;
-  justify-content: end;
+  justify-content: flex-end;
   border-top: 1px solid var(--extrapale-line);
   gap: 1;
 }

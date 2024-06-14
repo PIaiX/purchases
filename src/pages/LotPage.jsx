@@ -71,22 +71,28 @@ const LotPage = () => {
         items: [],
     });
 
+    const onLoadChat = (chatPage) => {
+        setMessages((prev) => ({ ...prev, load: false }))
+        getMessages({ ...data, page: chatPage, size: 50 })
+            .then((res) => {
+                setMessages((prev) => ({
+                    ...prev,
+                    loading: false,
+                    items: [...messages.items, ...res.messages.items],
+                    hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+                    dialog: res.dialog,
+                    load: true,
+                }));
+                setValue("id", res.dialog.id);
+            })
+            .catch(() => {
+                setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+            });
+    };
     useEffect(() => {
         if (data.toId && userId != products.items?.user?.id && data.toId != userId) {
-            getMessages(data)
-                .then((res) => {
-                    setMessages((prev) => ({
-                        ...prev,
-                        loading: false,
-                        items: res.messages.items,
-                        dialogId: res.dialog.id,
-                        dialog: res.dialog,
-                    }));
-                    setValue("id", res.dialog.id);
-                })
-                .catch(() => {
-                    setMessages((prev) => ({ ...prev, loading: false }))
-                });
+            setMessages(() => ({ items: [], loading: true }))
+            onLoadChat();
         }
     }, [data.toId]);
     useEffect(() => {
@@ -402,6 +408,7 @@ const LotPage = () => {
                                                 </div>
                                             ) : (
                                                 < Chat
+                                                    onLoadChat={onLoadChat}
                                                     setScrollOff={setScrollOff}
                                                     scrollOff={scrollOff}
                                                     messages={messages}

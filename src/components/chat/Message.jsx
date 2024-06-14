@@ -20,7 +20,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
 
 
     <>
-      {my ? (
+      {my && type != "system" ? (
         <div className="chat-window-message-mine">
           <div className='text'>
             <div className='gray fs-08 d-flex align-items-center mb-2'>

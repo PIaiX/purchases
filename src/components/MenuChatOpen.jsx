@@ -1,23 +1,17 @@
+import moment from 'moment';
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { LuMails } from "react-icons/lu";
-import { useDispatch, useSelector } from 'react-redux';
-import { Link, NavLink } from 'react-router-dom';
-import Arrow from '../assets/imgs/2arrow.svg';
-import close from '../assets/imgs/close.svg';
-import { getImageURL } from '../helpers/all';
-import useIsMobile from '../hooks/isMobile';
-import { createMessage, createMessageGeneral, getDialogs, getMessages, getMessagesGeneral } from '../services/message';
-import { Badge } from 'react-bootstrap';
 import { useForm, useWatch } from 'react-hook-form';
 import InfiniteScroll from 'react-infinite-scroller';
-import Loader from './utils/Loader';
-import { updateNotification } from '../store/reducers/notificationSlice';
-import DialogPreview from '../pages/account/DialogPreview';
-import DialogPreviewMini from '../pages/account/DialogPreviewMini';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
+import close from '../assets/imgs/close.svg';
 import socket from '../config/socket';
-import ReturnIcon from './svg/ReturnIcon';
+import DialogPreviewMini from '../pages/account/DialogPreviewMini';
+import { createMessage, getDialogs, getMessages } from '../services/message';
+import { updateNotification } from '../store/reducers/notificationSlice';
 import Chat from './chat/Chat';
-import moment from 'moment';
+import ReturnIcon from './svg/ReturnIcon';
+import Loader from './utils/Loader';
 
 const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   const timer = useRef(0);
@@ -73,120 +67,79 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
     else {
       reset();
       setMessages(() => ({ items: [], loading: true }))
+      console.log("id.delete")
     }
   }, [id]);
-
+  const onLoadChat = (chatPage) => {
+    setMessages((prev) => ({ ...prev, load: false }))
+    getMessages({ ...data, page: chatPage, size: 20 })
+      .then((res) => {
+        setMessages((prev) => ({
+          ...prev,
+          loading: false,
+          items: [...messages.items, ...res.messages.items],
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+          dialog: res.dialog,
+          load: true,
+        }));
+      })
+      .catch(() => {
+        setMessages((prev) => ({ ...prev, loading: false }))
+      });
+  };
   useEffect(() => {
     if (data?.id) {
-      // viewMessages(data);
-      if (data?.id == "general") {
-        getMessagesGeneral()
-          .then((res) =>
-            setMessages((prev) => ({
-              ...prev,
-              loading: false,
-              items: res.messages.items,
-            }))
-          )
-          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-      } else {
-        getMessages(data)
-          .then((res) => {
-            setMessages((prev) => ({
-              ...prev,
-              loading: false,
-              items: res.messages.items,
-              dialog: res.dialog
-            }))
-          }
-          )
-          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-      }
+      setMessages(() => ({ items: [], loading: true }))
+      onLoadChat();
     }
   }, [data?.id]);
 
   useEffect(() => {
-    if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
+    const handleMessage = (data) => {
 
-      socket.on("message", (data) => {
-
-        if (data) {
-          setPrint(false);
-
-          setMessages((prev) => ({
+      setMessages(prev => {
+        if (data.status) {
+          return {
             ...prev,
             loading: false,
-            items: [
-              data,
-              ...prev.items,
-            ],
-          }));
+            items: [data, ...prev.items],
+          };
+        } else {
+          const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+          if (messageIndex !== -1) {
+            const updatedMessages = [...prev.items];
+            updatedMessages[messageIndex] = data;
+
+            return {
+              ...prev,
+              loading: false,
+              items: updatedMessages,
+            };
+          }
+
+          return prev;
         }
       });
-      // socket.on("message/view/" + data.id, (data) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     loading: false,
-      //     items: prev.items.map((e) => {
-      //       if (e?.memberId && data == "client") {
-      //         e.view = true;
-      //       }
-      //       return e;
-      //     }),
-      //   }));
-      // });
-      // socket.on("message/online/" + data.id, (online) => {
-      //   setMessages((prev) => ({
-      //     ...prev,
-      //     user: {
-      //       ...prev.user,
-      //       online,
-      //     },
-      //   }));
-      //   onLoadDialogs();
-      // });
-      socket.on("message/print/" + data.id, () => {
-        setPrint(true);
-        if (timer.current === 0) {
-          timer.current = 1;
-          setTimeout(() => {
-            timer.current = 0;
-            setPrint(false);
-          }, 5000);
-          return () => clearTimeout(timer.current);
-        }
-      });
+    };
+
+    if (data?.id) {
+      socket.emit("createRoom", "message/" + data.id);
+      socket.on("message", handleMessage);
+      socket.on("report", handleMessage);
+
       return () => {
-        socket.off("message");
-        // socket.off("message/view/" + data.id);
-        socket.off("message/print/" + data.id);
+        socket.off("message", handleMessage);
+        socket.off("report", handleMessage);
+        socket.emit("removeRoom", "message/" + data.id);
       };
     }
-
   }, [data?.id]);
 
-  useEffect(() => {
-    if (timer.current === 0 && data?.text?.length > 0) {
-      timer.current = 1;
-      setPrint(true);
-      socket.emit("message/print", { adminId: data.id });
-      setTimeout(() => {
-        timer.current = 0;
-        setPrint(false);
-      }, 5000);
-      return () => clearTimeout(timer.current);
-    }
-  }, [data?.text]);
 
   const onNewMessage = useCallback(
     (text) => {
-      if (data?.id === "general" || id === "general") {
-        createMessageGeneral({ ...data, text });
-      } else {
-        createMessage({ ...data, text });
-      }
-
+      createMessage({ ...data, text });
       reset({ id: data.id ?? id });
     },
     [data, id]
@@ -252,11 +205,8 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
 
           {id ?
             <Chat
-              print={print}
+              onLoadChat={onLoadChat}
               onTask={(e) => onTask(e)}
-              account="true"
-              general={data.id}
-              user={user}
               messages={messages}
               emptyText="Нет сообщений"
               onSubmit={(e) => onNewMessage(e)}

@@ -2935,9 +2935,17 @@ header {
         position: relative;
         display: flex;
         flex-direction: column-reverse;
-        height: auto;
-        overflow: auto;
+        height: 100%;
         max-height: calc(100vh - var(--h-height) - 15em);
+        overflow-y: auto;
+
+
+        .div {
+            display: flex;
+            flex-direction: column-reverse;
+            height: calc(100vh - var(--h-height) - 15em);
+        }
+
 
         &.off {
             overflow: unset;
@@ -4383,7 +4391,7 @@ header {
             grid-area: status;
             display: flex;
             align-items: center;
-            justify-content: end;
+            justify-content: flex-end;
             // padding: 1em;
             border-top: 1px solid var(--extrapale-line);
             gap: 1;
@@ -7706,6 +7714,7 @@ footer {
     .chat {
         &-window {
             max-height: 340px;
+
         }
 
         width: 100%;

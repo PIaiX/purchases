@@ -1,21 +1,34 @@
-import React, { memo, useCallback, useEffect, useState } from "react";
+import React, { memo, useCallback, useEffect, useRef, useState } from "react";
+import { useInView } from "react-intersection-observer";
 import { useSelector } from "react-redux";
+import Loader from "../utils/Loader";
 import SimpleInputFile from '../utils/SimpleInputFile';
 import Message from './Message';
-import Loader from "../utils/Loader";
-import { NotificationManager } from "react-notifications";
-import { getImageURL } from "../../helpers/all";
-import { useNavigate } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroller";
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, user, type, account, setImage, data, onTask, scrollOff, setScrollOff, onLoadChat }) => {
+const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, type, setImage, data, scrollOff, setScrollOff, onLoadChat }) => {
   const userId = useSelector((state) => state.auth?.user?.id);
   const [text, setText] = useState();
   const [rows, setRows] = useState(1);
 
-  const navigate = useNavigate();
+  const [currentPage, setCurrentPage] = useState(1);
+  const chatWindowRef = useRef(null);
+  const { ref: loaderRef, inView, entry } = useInView({
+    threshold: 0.5, //  Наблюдать  при  50%  видимости  loader
+    rootMargin: '200px', //  Дополнительный  отступ  (200px  до  loader)
+  });
 
+  useEffect(() => {
+
+    //  Загружаем  следующую  страницу,  когда  loader  становится  видимым
+    if (inView == true && messages?.hasMore && messages?.load && !messages?.loading) {
+
+      onLoadChat(currentPage + 1);
+      setCurrentPage(currentPage + 1)
+    }
+  }, [inView, messages?.hasMore]);
+  console.log(inView)
+  console.log(messages)
   const onChangeText = (e) => {
     setText(e);
     onChange(e);
@@ -35,6 +48,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
       onSubmit(text);
       setText("");
       setRows(1);
+      chatWindowRef.current.scrollTop = chatWindowRef.current.scrollHeight;
     }
   }, [text, data]);
 
@@ -50,22 +64,15 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             Загрузка сообщений...
           </div>
         ) : messages?.items?.length > 0 ? (
-          <div id="scrollableChat" className={"chat-window" + (scrollOff ? " off" : "")}>
-            <InfiniteScroll
-              isReverse
-              useWindow={false}
-              pageStart={1}
-              loadMore={onLoadChat}
-              hasMore={messages.hasMore}
-              loader={<Loader />}
-              getScrollParent={() => document.getElementById('scrollableChat')}
-            >
-              {scrollOff &&
-                <>
-                  <button type="button" className='scroll-button' onClick={() => setScrollOff(false)}>Показать ещё</button>
-                </>
-              }
-              {messages.items.map((item, index) => (
+          <div ref={chatWindowRef} className={"chat-window" + (scrollOff ? " off" : "")}>
+
+            {scrollOff &&
+              <>
+                <button type="button" className='scroll-button' onClick={() => setScrollOff(false)}>Показать ещё</button>
+              </>
+            }
+            {messages.items.map((item, index) => (
+              <>
 
                 <Message
                   key={index}
@@ -75,9 +82,12 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
                   admin={type != "task" && item.memberId}
                 />
 
-
-              ))}
-            </InfiniteScroll>
+              </>
+            ))}
+            {!inView && messages?.hasMore && messages?.load && < div ref={loaderRef}>
+              <Loader />
+            </div>
+            }
           </div>
 
         ) : (
@@ -86,29 +96,30 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
           </div>
         )
       }
-      {userId ?
-        <>
-          <div className='chat-form'>
-            <textarea
-              rows={rows}
-              value={text}
-              type="text"
-              placeholder={general == "general" ? "Начните общаться" : "Ваше сообщение"}
-              onChange={(e) => onChangeText(e.target.value)}
-              onKeyPress={onKeyPress}
-            />
-            {general != "general" &&
-              <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} />
-            }
-            <button onClick={onClick} type='submit'>Отправить</button>
+      {
+        userId ?
+          <>
+            < div className='chat-form' >
+              <textarea
+                rows={rows}
+                value={text}
+                type="text"
+                placeholder={general == "general" ? "Начните общаться" : "Ваше сообщение"}
+                onChange={(e) => onChangeText(e.target.value)}
+                onKeyPress={onKeyPress}
+              />
+              {general != "general" &&
+                <SimpleInputFile media={data?.media} setImage={(e) => setImage(e)} />
+              }
+              <button onClick={onClick} type='submit'>Отправить</button>
 
-          </div>
-        </>
-        : (
-          <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
-            Для отправки сообщений войдите в аккаунт!
-          </div>
-        )
+            </div >
+          </>
+          : (
+            <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
+              Для отправки сообщений войдите в аккаунт!
+            </div>
+          )
       }
     </div >
   );
