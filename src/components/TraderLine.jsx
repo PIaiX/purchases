@@ -2,15 +2,17 @@ import React from 'react';
 import StarRating from './utils/StarRating';
 import { Link } from 'react-router-dom';
 
-const TraderLine = ({ title, desc, price, server }) => {
+const TraderLine = ({ desc, count, total, server, param, uid }) => {
   return (
-    <div className='trader-line'>
+    <Link to={`/game/lot/${uid}`} className='trader-line'>
+      <div className="category">{param?.title}</div>
       <div className="serv">{server?.title}</div>
-      <div className="descr">{title}</div>
-      <div className='price'>{price}
+      <div className="title">{desc}</div>
+      <div className="count">{count}</div>
+      <div className='price'>{total}
         <span className='rouble ms-1'>₽</span>
       </div>
-    </div>
+    </Link>
   );
 };
 

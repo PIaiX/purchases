@@ -340,10 +340,14 @@ const Profile = () => {
               </div>
             </div>
             <div className="list-wrapping mt-4 mt-sm-5">
-              <div className="list-wrapping-top d-flex justify-content-between">
-                <div className="serv ms-5">Сервер</div>
-                <div className='descr'>Описание</div>
-                <div className='price me-5'>Цена</div>
+              <div className="list-wrapping-top">
+                <ul className='line-1'>
+                  <li className='category'>Категория</li>
+                  <li className="server">Сервер</li>
+                  <li className='title'>Название</li>
+                  <li className='count'>Кол-во</li>
+                  <li className='price'>Цена</li>
+                </ul>
               </div>
               <div className="list-wrapping-main p-sm-4">
                 <ul className="row row-cols-1 g-3">

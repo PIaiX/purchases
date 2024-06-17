@@ -1708,6 +1708,40 @@ nav.pagination {
             font-weight: 700;
             font-size: 1.2em;
 
+            &.line-1 {
+                padding: 0 1.2em;
+                font-weight: normal;
+
+                .category {
+                    width: 160px;
+                    text-align: left;
+
+                }
+
+                .server {
+                    width: 160px;
+                    text-align: left;
+
+                }
+
+                .title {
+                    text-align: left;
+                    width: 100%;
+                    flex: 1;
+                }
+
+                .count {
+                    width: 120px;
+                    text-align: right;
+                }
+
+                .price {
+                    width: 120px;
+                    text-align: right;
+                }
+
+            }
+
             &.line-2 {
                 .category {
                     width: 150px;
@@ -3884,9 +3918,9 @@ header {
 /* Trader page */
 .trader-line {
     display: grid;
-    grid-template-columns: 160px auto 120px;
+    grid-template-columns: 160px 160px auto 120px 120px;
     grid-template-rows: 1fr;
-    grid-template-areas: "serv descr price";
+    grid-template-areas: "category serv title count price";
     background-color: var(--letter);
     @include boxShadow();
     border-radius: $radius;
@@ -3902,14 +3936,29 @@ header {
     //   gap: 10px 0px;
     //   padding: 1em 0;
     // }
-    &>div {
-        grid-column: span 1;
-        grid-row: span 1;
-        padding: 1em;
+
+    padding: 1em;
+
+
+    &>a {
+        &>div {
+            grid-column: span 1;
+            grid-row: span 1;
+        }
+
+    }
+
+    .category {
+        grid-area: category;
+        align-items: center;
+        @include clamp(1, 1.4em, true);
+        width: 160px;
     }
 
     .serv {
         grid-area: serv;
+        @include clamp(1, 1.4em, true);
+        width: 160px;
 
         @media (max-width: $bp-xl) {
             color: var(--blue);
@@ -3917,17 +3966,25 @@ header {
         }
     }
 
-    .descr {
-        grid-area: descr;
+    .count {
+        grid-area: count;
+        text-align: right;
+        width: 120px;
+        @include clamp(1, 1.4em, true);
+    }
 
-        @media (max-width: $bp-xl) {
-            @include clamp(3, 1.2em, true);
-        }
+
+    .title {
+        grid-area: title;
+        text-align: left;
+        width: 100%;
+        @include clamp(1, 1.4em, true);
     }
 
     .price {
         grid-area: price;
-        text-align: center;
+        text-align: right;
+        width: 120px;
 
         @media (max-width: $bp-xl) {
             @include flex(row, flex-end, center, nowrap);
