@@ -109,7 +109,7 @@ const Login = () => {
                   <Button
                     type="submit"
                     variant="primary"
-                    // disabled={!isValid || !captcha}
+                    disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Войти

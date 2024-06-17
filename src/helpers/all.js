@@ -34,17 +34,14 @@ const treeAll = (option, options) => {
   return spanOpt;
 }
 
-
 const removeDescendants = (data, option) => {
-  if (!data.option) {
+  if (!data.option || data.option == null) {
     return [option];
   }
 
   const filteredOptions = [...data.option];
   if (option.data?.max) {
     const existingOptionIndex = filteredOptions.findIndex(item => item.id === option.id);
-
-    // Если элемент найден, обновляем его
     if (existingOptionIndex !== -1) {
       if (option.max) {
         filteredOptions[existingOptionIndex] = {
@@ -86,9 +83,12 @@ const removeDescendants = (data, option) => {
       }
     };
 
-    findDescendants(option.id); // Начинаем поиск потомков с option.id
+    // Начинаем поиск потомков с option.id
     if (option.parent) {
       findDescendants(option.parent);
+    }
+    else {
+      findDescendants(option.id);
     }
     // Удаляем потомков из массива filteredOptions
     descendants.forEach(item => {
