@@ -27,8 +27,6 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
       setCurrentPage(currentPage + 1)
     }
   }, [inView, messages?.hasMore]);
-  console.log(inView)
-  console.log(messages)
   const onChangeText = (e) => {
     setText(e);
     onChange(e);

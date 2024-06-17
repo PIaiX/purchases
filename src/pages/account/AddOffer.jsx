@@ -324,7 +324,6 @@ const AddOffer = () => {
 
   }, []);
 
-  console.log(data.status)
   const createTree = (data, idProp, parentProp, parentId) =>
     data.filter((n) => parentId === (n[parentProp] ?? null))
       .map((n) => ({

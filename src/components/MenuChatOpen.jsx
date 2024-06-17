@@ -68,7 +68,6 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
     else {
       reset();
       setMessages(() => ({ items: [], loading: true }))
-      console.log("id.delete")
     }
   }, [id]);
   const onLoadChat = (chatPage) => {

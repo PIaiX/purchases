@@ -124,7 +124,6 @@ const Game = () => {
                 ...(tree?.children?.sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, data: item, title: item.title })))
               ]}
             />
-            {console.log(data.option && data.option.find(e => e.parent == tree.id))}
             {data.option && data.option.find(e => e.parent == tree.id) &&
               renderSelects(data.option.find(e => e.parent == tree.id))
             }
@@ -274,7 +273,6 @@ const Game = () => {
   }, [favorite, data.game]);
   const navigate = useNavigate();
 
-  console.log(data)
   if (games.loading) {
     return <Loader full />;
   }
