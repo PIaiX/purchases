@@ -63,6 +63,7 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   useEffect(() => {
     if (id) {
       setValue("id", id);
+      setMessages(() => ({ items: [], loading: true }))
     }
     else {
       reset();
@@ -72,13 +73,13 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   }, [id]);
   const onLoadChat = (chatPage) => {
     setMessages((prev) => ({ ...prev, load: false }))
-    getMessages({ ...data, page: chatPage, size: 20 })
+    getMessages({ ...data, page: chatPage, size: 10 })
       .then((res) => {
         setMessages((prev) => ({
           ...prev,
           loading: false,
           items: [...messages.items, ...res.messages.items],
-          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
           dialog: res.dialog,
           load: true,
         }));
@@ -89,7 +90,6 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   };
   useEffect(() => {
     if (data?.id) {
-      setMessages(() => ({ items: [], loading: true }))
       onLoadChat();
     }
   }, [data?.id]);
@@ -159,63 +159,66 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
     <nav className='full-menu-chat'>
 
       <div className='full-menu-chat-block'>
-        <InfiniteScroll
-          pageStart={1}
-          loadMore={onLoadDialogs}
-          hasMore={dialogs.hasMore}
-          loader={<Loader />}
-        >
-          <div className='top'>
-            {id ?
-              <div className="d-flex mt-2 mb-2">
-                <button type="button" onClick={() => { setId(false), setChatOpen(true) }} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
-                  <ReturnIcon />
-                </button>
-                <div>
-                  <h5 className="fw-7 mb-0"><Link to={`/trader/${user?.id}`}>{user?.nickname}</Link></h5>
-                  <p className="fs-08 gray">
-                    {print ? (
-                      "Печатает сообщение..."
-                    ) : user?.online?.status ? (
-                      <span className="text-success">Онлайн</span>
-                    ) : user?.online?.end ? (
-                      "Был(-а) в сети " +
-                      moment(user?.online?.end).fromNow()
-                    ) : (
-                      "Оффлайн"
-                    )}
-                  </p>
-                </div>
 
+        <div className='top'>
+          {id ?
+            <div className="d-flex mt-2 mb-2">
+              <button type="button" onClick={() => { setId(false), setChatOpen(true) }} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
+                <ReturnIcon />
+              </button>
+              <div>
+                <h5 className="fw-7 mb-0"><Link to={`/trader/${user?.id}`}>{user?.nickname}</Link></h5>
+                <p className="fs-08 gray">
+                  {print ? (
+                    "Печатает сообщение..."
+                  ) : user?.online?.status ? (
+                    <span className="text-success">Онлайн</span>
+                  ) : user?.online?.end ? (
+                    "Был(-а) в сети " +
+                    moment(user?.online?.end).fromNow()
+                  ) : (
+                    "Оффлайн"
+                  )}
+                </p>
               </div>
 
-              :
-              <form action="" className='p-2 p-sm-3'>
-                <input
-                  type="search"
-                  placeholder="Поиск пользователя"
-                  className="p-blue"
-                  onChange={e => setSearch(e.target.value)}
-                  onKeyPress={(e) => onKeyPress1(e)}
-                />
-              </form>
-            }
-            <button type='button' onClick={() => (setId(false), setChatOpen(false))}><img src={close} alt="" /></button>
-          </div>
+            </div>
 
-          {id ?
-            <Chat
-              onLoadChat={onLoadChat}
-              onTask={(e) => onTask(e)}
-              messages={messages}
-              emptyText="Нет сообщений"
-              onSubmit={(e) => onNewMessage(e)}
-              onChange={(e) => setValue("text", e)}
-              data={data}
-              setImage={(e) => setValue("media", Array.from(e))}
-            />
             :
-            <ul>
+            <form action="" className='p-2 p-sm-3'>
+              <input
+                type="search"
+                placeholder="Поиск пользователя"
+                className="p-blue"
+                onChange={e => setSearch(e.target.value)}
+                onKeyPress={(e) => onKeyPress1(e)}
+              />
+            </form>
+          }
+          <button type='button' onClick={() => (setId(false), setChatOpen(false))}><img src={close} alt="" /></button>
+        </div>
+
+        {id ? messages.items.length > 0 ?
+          <Chat
+            onLoadChat={onLoadChat}
+            onTask={(e) => onTask(e)}
+            messages={messages}
+            emptyText="Нет сообщений"
+            onSubmit={(e) => onNewMessage(e)}
+            onChange={(e) => setValue("text", e)}
+            data={data}
+            setImage={(e) => setValue("media", Array.from(e))}
+          />
+          :
+          <Loader className="load" />
+          :
+          <ul>
+            <InfiniteScroll
+              pageStart={1}
+              loadMore={onLoadDialogs}
+              hasMore={dialogs.hasMore}
+              loader={<Loader className="load" />}
+            >
               {dialogs?.items?.length > 0 ? (
                 dialogs.items.map((dialog) => (
                   <li>
@@ -226,9 +229,10 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
                   В данный момент нет диалогов
                 </p>
               )}
-            </ul>}
+            </InfiniteScroll>
+          </ul>}
 
-        </InfiniteScroll>
+
       </div >
       {/* <div ref={cut} id="cut" onClick={() => setChatOpen(!chatOpen)} className={(chatOpen) ? 'opened' : ''}><img src={Arrow} alt="arrow" /></div> */}
     </nav >

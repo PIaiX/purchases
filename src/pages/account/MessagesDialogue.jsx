@@ -44,36 +44,47 @@ const MessagesDialogue = () => {
   });
 
   useEffect(() => {
-    (state?.dialogId || dialogId) &&
+    if (state?.dialogId || dialogId) {
+      setMessages(() => ({ items: [], loading: true }))
       setValue("id", state?.dialogId ?? dialogId);
+    }
   }, [state?.dialogId, dialogId]);
-
+  const onLoadChat = (chatPage) => {
+    setMessages((prev) => ({ ...prev, load: false }))
+    if (data?.id == "general") {
+      getMessagesGeneral({ page: chatPage, size: 50 })
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            load: true,
+          }))
+        )
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    } else {
+      getMessages({ ...data, page: chatPage, size: 50 })
+        .then((res) => {
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            dialog: res.dialog,
+            load: true,
+          }));
+        })
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    }
+  };
   useEffect(() => {
     if (data?.id) {
-      // viewMessages(data);
-      if (data?.id == "general") {
-        getMessagesGeneral()
-          .then((res) =>
-            setMessages((prev) => ({
-              ...prev,
-              loading: false,
-              items: res.messages.items,
-            }))
-          )
-          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-      } else {
-        getMessages(data)
-          .then((res) => {
-            setMessages((prev) => ({
-              ...prev,
-              loading: false,
-              items: res.messages.items,
-              dialog: res.dialog,
-              dialog: res.dialog,
-            }));
-          })
-          .catch(() => setMessages((prev) => ({ ...prev, loading: false })));
-      }
+      onLoadChat();
     }
   }, [data?.id]);
 
@@ -179,9 +190,7 @@ const MessagesDialogue = () => {
         }</h5>
       </div>
       <Chat
-        print={print}
-        onTask={(e) => onTask(e)}
-        account="true"
+        onLoadChat={onLoadChat}
         general={data.id}
         user={user}
         messages={messages}

@@ -42,7 +42,7 @@ const Home = () => {
           ...prev,
           loading: false,
           items: [...messages.items, ...res.messages.items],
-          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
           count: res.countOnline,
           load: true,
         }));

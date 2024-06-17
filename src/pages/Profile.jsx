@@ -132,13 +132,13 @@ const Profile = () => {
 
   const onLoadChat = (chatPage) => {
     setMessages((prev) => ({ ...prev, load: false }))
-    getMessages({ ...dataMessage, page: chatPage, size: 20 })
+    getMessages({ ...dataMessage, page: chatPage, size: 50 })
       .then((res) => {
         setMessages((prev) => ({
           ...prev,
           loading: false,
           items: [...messages.items, ...res.messages.items],
-          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : true,
+          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
           dialog: res.dialog,
           load: true,
         }));
@@ -155,9 +155,13 @@ const Profile = () => {
         toId: userId,
       })
       setMessages(() => ({ items: [], loading: true }))
-      onLoadChat();
     }
   }, [userId]);
+  useEffect(() => {
+    if (dataMessage.toId) {
+      onLoadChat();
+    }
+  }, [dataMessage.toId]);
   useEffect(() => {
     const handleMessage = (data) => {
 
