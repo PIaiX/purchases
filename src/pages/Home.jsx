@@ -121,10 +121,15 @@ const Home = () => {
     <main>
       <Meta title="Rush2Play" />
       {sales?.data?.home && sales?.data?.home?.items?.length > 0 &&
-        < Container >
-          <section className="mb-5">
-            <MainSlider data={sales?.data?.home?.items} />
-          </section>
+        < Container className="home-slider mb-5">
+          <Row className='gx-0 align-items-center'>
+            <Col lg={3} xxl={4}>
+              <h3>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h3>
+            </Col>
+            <Col lg={9} xxl={8}>
+              <MainSlider />
+            </Col>
+          </Row>
         </Container>
       }
       <CatalogSection games={category?.data} />

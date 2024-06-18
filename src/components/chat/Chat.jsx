@@ -19,6 +19,13 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
   });
 
   useEffect(() => {
+    const textareaElement = document.querySelector('textarea');
+    if (textareaElement) {
+      document.documentElement.style.setProperty('--textarea-height', `${textareaElement?.scrollHeight}px`);
+    }
+  }, [rows]);
+
+  useEffect(() => {
 
     //  Загружаем  следующую  страницу,  когда  loader  становится  видимым
     if (inView == true && messages?.hasMore && messages?.load && !messages?.loading) {
@@ -28,14 +35,13 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
     }
   }, [inView, messages?.hasMore]);
   const onChangeText = (e) => {
-    setText(e);
-    onChange(e);
+    setText(e.target.value);
+    onChange(e.target.value);
+    const textarea = e.target;
+    setRows(Math.min(Math.max(textarea.value.split('\n').length, 1), 4));
   };
   const onKeyPress = (e) => {
-    if (e.key === "Enter" && e.shiftKey) {
-      const textarea = e.target;
-      setRows(Math.min(Math.max(textarea.value.split('\n').length, 1), 4));
-    } else if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       onClick();
     }
@@ -103,7 +109,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
                 value={text}
                 type="text"
                 placeholder={general == "general" ? "Начните общаться" : "Ваше сообщение"}
-                onChange={(e) => onChangeText(e.target.value)}
+                onChange={(e) => onChangeText(e)}
                 onKeyPress={onKeyPress}
               />
               {general != "general" &&

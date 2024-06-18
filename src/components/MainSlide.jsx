@@ -1,41 +1,69 @@
-import React from "react";
-import SlideFull from "./svg/SlideFull";
-import { Link } from "react-router-dom";
-import SlideMini from "./svg/SlideMini";
-import SlideMobile from "./svg/SlideMobile";
-import useIsMobile from "../hooks/isMobile";
-import { declOfNum } from "../helpers/all";
+import React from 'react'
+import { TfiPaintRoller, TfiBriefcase, TfiTruck, TfiCar, TfiSpray, TfiPlug, TfiBlackboard } from "react-icons/tfi"
+import { SlScreenDesktop, SlWrench } from "react-icons/sl"
+import { RxScissors, RxLapTimer } from "react-icons/rx"
 
-const MainSlide = ({ length, onMouseEnter, onClick, isActive, imgFull, imgMini, title, id, btn }) => {
-  const isMobileLG = useIsMobile("991px");
-  const declension = declOfNum(length, ['лот', 'лота', 'лотов']);
+const MainSlide = (props) => {
+  const scopes = [
+    {
+      id: 1,
+      icon: <TfiSpray />
+    },
+    {
+      id: 2,
+      icon: <TfiPaintRoller />
+    },
+    {
+      id: 3,
+      icon: <TfiBriefcase />
+    },
+    {
+      id: 4,
+      icon: <TfiTruck />
+    },
+    {
+      id: 5,
+      icon: <TfiCar />
+    },
+    {
+      id: 6,
+      icon: <TfiPlug />
+    },
+    {
+      id: 7,
+      icon: <SlScreenDesktop />
+    },
+    {
+      id: 8,
+      icon: <SlWrench />
+    },
+    {
+      id: 9,
+      icon: <RxScissors />
+    },
+    {
+      id: 10,
+      icon: <TfiBlackboard />
+    },
+    {
+      id: 11,
+      icon: <RxLapTimer />
+    }
+  ]
+
   return (
-    <div
-      className={
-        isActive ? "main-slider-item-active" : "main-slider-item"
-      }
-      onMouseEnter={onMouseEnter}
-      onClick={onClick}
-    >
-      <div className="wrap">
-        {isMobileLG ? (
-          <SlideMobile img={imgFull} declension={declension} className="svg-mobile" />
-        ) : isActive ? (
-          <SlideFull img={imgFull} declension={declension} id={id} btn={btn} className="svg-full" />
-        ) : (
-          <SlideMini img={imgMini} declension={declension} className="svg-mini" />
-        )}
-
+    <div className="recent-orders-item">
+      <div>
+        <div className="icon">
+          {
+            scopes.find(obj => obj.id === props.scope).icon
+          }
+        </div>
+        <p>{props.name}</p>
       </div>
-      <div className="title-full">
-        {/* прозрачное появление */}
-        <h2>{title}</h2>
-      </div>
-      <div className="title-mini">
-        <h2>{title}</h2>
-      </div>
+      <p className='gray-2'>Сделали 12 ч. назад</p>
     </div>
   );
 };
 
-export default MainSlide;
+export default MainSlide

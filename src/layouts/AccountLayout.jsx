@@ -10,7 +10,6 @@ const AccountLayout = ({ isMobile }) => {
     <main className='account'>
       <img src={bgImg} alt="bgImg" className='account-bg' />
       <div className='pe-3 ps-3'>
-        <ScrollToTopButton />
         {/* {
 
           (isMobile)

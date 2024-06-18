@@ -1,77 +1,173 @@
-import React, { useState } from "react";
-import MainSlide from "./MainSlide";
-import useIsMobile from "../hooks/isMobile";
-import NextIcon from "./svg/NextIcon";
-import PrevIcon from "./svg/PrevIcon";
-import { getImageURL } from "../helpers/all";
+import React from 'react'
+import useIsMobile from '../hooks/isMobile'
 
-const MainSlider = ({ data }) => {
-  const [activeSlide, setActiveSlide] = useState(0);
-  const isMobileLG = useIsMobile("991px");
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Autoplay, FreeMode } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/autoplay'
+import 'swiper/css/free-mode'
 
-  const handleNext = () => {
-    const nextSlide = activeSlide + 1;
-    if (nextSlide > 2) {
-      setActiveSlide(2);
-    } else {
-      setActiveSlide(nextSlide);
-    }
-  };
-  const handlePrev = () => {
-    const nextSlide = activeSlide - 1;
-    if (nextSlide < 0) {
-      setActiveSlide(0);
-    } else {
-      setActiveSlide(nextSlide);
-    }
-  };
-  return (
-    <div className="main-slider">
-      <div className={"main-slider-box pos-" + (activeSlide + 1)}>
-        {data?.map((e, index) => (
-          <MainSlide
-            key={index}
-            isActive={activeSlide === index}
-            title={e.title ? e.title : "Название"}
-            imgFull={getImageURL({
-              path: e.media,
-              type: "sale",
-              size: "full",
-            })}
-            id={`${e?.category?.uid ? e?.category?.uid : e?.category?.id}/?${(e?.category?.regions.length > 0 ? `regId=${[...e?.category?.regions].sort((a, b) => a.priority - b.priority)[0].id}&` : '')}${e?.category.params.length > 0 ? `catId=${[...e?.category.params].sort((a, b) => a.priority - b.priority)[0].id}` : ''}`}
-            btn={e.btn}
-            imgMini={getImageURL({ path: e.mediaMini, type: "sale" })}
-            onClick={() => setActiveSlide(index)}
-          />
-        ))}
-      </div>
-      {isMobileLG && (
-        <>
-          <button
-            type="button"
-            className="main-slider-prev"
-            onClick={handlePrev}
-          >
-            <PrevIcon />
-          </button>
-          <button
-            type="button"
-            className="main-slider-next"
-            onClick={handleNext}
-          >
-            <NextIcon />
-          </button>
-        </>
-      )}
-      {isMobileLG && (
-        <ul className="main-slider-indicators">
-          {data.map((e, index) => (
-            <li key={index} className={activeSlide === index ? "active" : ""}></li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-};
+const MainSlider = () => {
+  const isMobile = useIsMobile('991px')
 
-export default MainSlider;
+  if (isMobile) {
+    return (
+      <Swiper
+        modules={[Autoplay, FreeMode]}
+        className='main-slider'
+        loop={true}
+        spaceBetween={20}
+        slidesPerView={'auto'}
+        allowTouchMove={true}
+        direction={'horizontal'}
+        speed={15000}
+        freeMode={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          waitForTransition: true
+        }}
+        breakpoints={{
+          576: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          },
+          768: {
+            slidesPerView: 4,
+            spaceBetween: 20,
+          },
+        }}
+      >
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/head.png" alt="head" />
+        </SwiperSlide>
+        <SwiperSlide>
+          <img src="/imgs/system.png" alt="head" />
+        </SwiperSlide>
+
+      </Swiper>
+    )
+  } else return (
+    <Swiper
+      modules={[Autoplay, FreeMode]}
+      className='main-slider'
+      loop={true}
+      spaceBetween={20}
+      slidesPerView={'auto'}
+      allowTouchMove={false}
+      direction={'vertical'}
+      speed={5000}
+      autoplay={{
+        delay: 0,
+        disableOnInteraction: false,
+        waitForTransition: true
+      }}
+    >
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/img5.jpg" alt="head" />
+          <img src="/imgs/user.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+
+    </Swiper>
+  )
+}
+
+export default MainSlider

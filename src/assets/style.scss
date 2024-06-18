@@ -1958,363 +1958,44 @@ header {
 }
 
 /* Slider */
-.main-slider {
-    @media (max-width: $bp-lg) {
-        overflow: hidden;
+.home-slider {
+    background: var(--extrapale-line);
+    border-radius: $radius;
+    padding: 3em;
+
+    .main-slider {
+        height: 450px;
         position: relative;
-        padding-bottom: 2em;
-    }
 
-    margin-right: 1em;
-
-    @media (max-width: $bp-sm) {
-        padding-bottom: 1.5em;
-    }
-
-    &-box {
-        @include flex(row, space-between, flex-start, nowrap);
-
-        @media (max-width: $bp-lg) {
-            width: 300%;
-            transition: 400ms ease-in-out;
-
-            &.pos-1 {
-                transform: translateX(0%);
-            }
-
-            &.pos-2 {
-                transform: translateX(calc(100% / 3 * -1));
-            }
-
-            &.pos-3 {
-                transform: translateX(calc(100% / 3 * 2 * -1));
-            }
-        }
-    }
-
-    &-item {
-        --w: 17%;
-        width: var(--w);
-        position: relative;
-        transition: 400ms ease-in-out;
-
-
-        @media (max-width: $bp-xl) {
-            --w: 16.5%;
-        }
-
-        @media (max-width: $bp-lg) {
-            --w: 100%;
-        }
-
-        .wrap {
-            position: relative;
-            padding-top: 3.25em;
-
-
-            @media (max-width: $bp-xl) {
-                padding-top: 2.75em;
-            }
-
-            @media (max-width: $bp-lg) {
-                padding-top: 0em;
-            }
-        }
-
-        .svg-mini {
-            position: relative;
-            z-index: 1;
-            width: 112%;
-            height: 303px;
-            color: var(--count);
-
-            @media (max-width: $bp-xxl) {
-                height: 260px;
-            }
-
-            @media (max-width: $bp-xl) {
-                height: 210px;
-            }
-        }
-
-        .svg-mobile {
-            width: 100%;
-            height: 552px;
-            color: var(--count);
-
-            @media (max-width: $bp-md) {
-                height: 410px;
-            }
-
-            @media (max-width: $bp-sm) {
-                height: 73vw;
-            }
-        }
-
-        .title-full {
-            position: absolute;
-            z-index: 10;
-            top: 0%;
-            left: 16%;
-            width: 84%;
-            overflow: hidden;
-            opacity: 0;
-            transition: 400ms linear 0ms;
-
-            @media (max-width: $bp-lg) {
-                top: 5%;
-                left: 30%;
-                width: 70%;
-            }
-
-            @media (max-width: $bp-md) {
-                top: 3%;
-            }
-
-            h2 {
-                line-height: 100%;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                margin-bottom: 0px;
-
-                @media (max-width: $bp-xl) {
-                    font-size: 2.5em;
-                }
-
-                @media (max-width: $bp-lg) {
-                    font-size: 3em;
-                }
-
-                @media (max-width: $bp-md) {
-                    font-size: 2.5em;
-                }
-
-                @media (max-width: $bp-sm) {
-                    font-size: 2.3em;
-                }
-            }
-        }
-
-        .title-mini {
-            margin-top: 5px;
-            width: 100%;
-            overflow: hidden;
-            opacity: 1;
-            transition: 400ms linear 400ms;
-
-            @media (max-width: $bp-lg) {
-                display: none;
-            }
-
-            h2 {
-                line-height: 100%;
-                white-space: nowrap;
-                overflow: hidden;
-                text-overflow: ellipsis;
-                margin-bottom: 0px;
-                font-size: 2.5em;
-
-                @media (max-width: $bp-xxl) {
-                    font-size: 2em;
-                }
-            }
-        }
-
-        .lots {
-            width: fit-content;
+        @media (max-width: 991px) {
             height: fit-content;
-            position: absolute;
-            z-index: 10;
-            top: 50%;
-            left: 50%;
-            transform: translateY(-50%) translateX(-50%);
-
-            @include flex(column, center, center, nowrap);
-            color: white;
-            font-size: .8em;
-
-
-            @media (max-width: $bp-lg) {
-                display: none;
-            }
-
-            .num {
-                font-size: 1.1em;
-                line-height: 140%;
-                font-weight: 600;
-
-
-                @media (max-width: $bp-xxl) {
-                    font-size: 1.25em;
-                }
-            }
+            margin-top: 1em;
         }
 
-        .link {
-            position: absolute;
-            z-index: 10;
-            bottom: 2em;
-            right: 2em;
-            opacity: 0;
-            color: $white;
-            text-decoration: none;
-
-            @media (max-width: $bp-xl) {
-                bottom: 1em;
-                right: 1em;
-            }
-
-            @media (max-width: $bp-lg) {
-                display: none;
-            }
+        img {
+            width: 100px;
+            height: 100px;
+            border-radius: $radius;
+            box-sizing: content-box;
         }
 
-        &-active {
-            @extend .main-slider-item;
-            --w: 60.6%;
-
-            @media (max-width: $bp-xxl) {
-                --w: 61%;
-            }
-
-            @media (max-width: $bp-xl) {
-                --w: 62%;
-            }
-
-            @media (max-width: $bp-lg) {
-                --w: 100%;
-            }
-
-            .wrap {
-
-                padding-top: 1em;
-
-                @media (max-width: $bp-lg) {
-                    padding-top: 0em;
-                }
-            }
-
-            .svg-full {
-                position: relative;
-                z-index: 1;
-                width: 100%;
-                height: 365px;
-                color: var(--count);
-
-
-                @media (max-width: $bp-xxl) {
-                    height: 315px;
-                }
-
-                @media (max-width: $bp-xl) {
-                    height: 265px;
-                }
-            }
-
-            .title-full {
-                opacity: 1;
-                transition: 400ms linear 400ms;
-            }
-
-            .title-mini {
-                height: 0px;
-                opacity: 0;
-                transition: 400ms linear 0ms;
-            }
-
-            .lots {
-                display: flex;
-                font-size: .9em;
-                top: 50%;
-                left: 50%;
-                transform: translateY(-50%) translateX(-50%);
-
-                @media (max-width: $bp-xxl) {
-                    font-size: 1em;
-                }
-
-                @media (max-width: $bp-xl) {
-                    font-size: 1em;
-                }
-
-                @media (max-width: $bp-lg) {
-                    font-size: .8em;
-                }
-
-                @media (max-width: $bp-md) {
-                    font-size: .9em;
-                }
-
-                @media (max-width: $bp-sm) {
-                    font-size: .9em;
-                }
-
-                .num {
-                    line-height: 120%;
-                    font-size: 1.6em;
-                    font-weight: 400;
-                }
-            }
-
-            .link {
-                font-size: 1.1em;
-                opacity: 1;
-                transition: 200ms ease-in-out 800ms;
-            }
-        }
-    }
-
-    &-prev,
-    &-next {
-        display: flex;
-        position: absolute;
-        top: 67.5%;
-        font-size: 2em;
-
-        @media (max-width: $bp-md) {
-            top: 66.5%;
-            font-size: 1.5em;
+        .item {
+            display: flex;
+            justify-content: flex-start;
+            align-items: flex-start;
+            gap: 1.25em;
         }
 
-        @media (max-width: $bp-sm) {
-            font-size: 1.25em;
+        .swiper-wrapper {
+            transition-timing-function: linear !important;
         }
-    }
 
-    &-prev {
-        left: 0px;
-    }
+        .swiper-slide {
+            height: fit-content;
+            transition-timing-function: linear !important;
 
-    &-next {
-        right: 0px;
-    }
-
-    &-indicators {
-        position: absolute;
-        bottom: 0px;
-        left: 0px;
-        width: 100%;
-        @include list();
-        @include flex();
-
-        li {
-            flex-grow: 1;
-            height: .6em;
-            background-color: var(--pale-gray);
-            border-radius: .3em;
-            transition: $transition;
-
-            @media (max-width: $bp-sm) {
-                height: .4em;
-            }
-
-            &:not(:first-child) {
-                margin-left: 2em;
-            }
-
-            &.active {
-                background-color: var(--black);
+            @media (max-width: 575px) {
+                width: 160px;
             }
         }
     }
@@ -2991,11 +2672,12 @@ header {
     border-radius: 10px;
     overflow: hidden;
 
+
     &-window {
         position: relative;
         display: flex;
         flex-direction: column-reverse;
-        height: calc(100vh - var(--h-height) - 15em);
+        height: calc(100vh - var(--h-height) - 5em - var(--textarea-height));
         overflow-y: auto;
 
 
@@ -3218,8 +2900,9 @@ header {
     }
 
     &-form {
-        @include flex(row, flex-start, stretch, nowrap);
+        @include flex(row, flex-start, center, nowrap);
         border-top: 1px solid #9DC4EF4D;
+
 
         textarea {
             border: none;
@@ -3242,6 +2925,7 @@ header {
             margin-left: 1.25em;
             padding: .9em 1.4em;
             font-size: .9em;
+            height: fit-content;
             color: white;
             transition: $transition;
             transition-property: background-color, color;
@@ -3263,6 +2947,7 @@ header {
     position: relative;
     box-shadow: 0px 4px 15px 0px rgba(100, 100, 100, 0.08);
     background: var(--label);
+
 
     &-top {
         background: var(--glass);
@@ -3301,9 +2986,10 @@ header {
         border-top: none;
         border-radius: 0px 0px 10px 10px;
 
-        &-window {
-            height: calc(100vh - var(--h-height) - 20em);
 
+        &-window {
+            height: calc(100vh - var(--h-height) - 13em - var(--textarea-height));
+            max-height: calc(100vh - var(--h-height) - 15em);
 
         }
     }
@@ -7761,22 +7447,17 @@ footer {
         background: var(--label);
         border-radius: $radius;
         width: 350px;
-        height: fit-content;
+        height: 460px;
         position: sticky;
         top: 6em;
         margin-right: 2em;
-        min-height: 460px;
         left: 0;
-        max-height: calc(100vh - var(--h-height));
         @include btnStyle();
 
 
 
     }
 
-    main {
-        min-height: 350px !important;
-    }
 
     .top {
         display: flex;
@@ -7811,8 +7492,7 @@ footer {
 
     .chat {
         &-window {
-            height: 340px;
-
+            height: calc(400px - var(--textarea-height));
         }
 
         width: 100%;
