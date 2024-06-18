@@ -35,12 +35,12 @@ const Menu = ({ full, setFull }) => {
               />
               {full &&
                 <>
-                  <div className='rating ms-2'>
+                  <div className='rating'>
                     <StarIcon />
                     {/* <StarRating value={products?.items?.user?.rating} /> */}
                     <span className='ms-1'>{user?.rating != null ? parseFloat(user?.rating).toFixed(1) : "0.0"}</span>
                   </div>
-                  <span className='nickname ms-2'>{user.nickname}</span>
+                  <span className='nickname'>{user.nickname}</span>
 
                 </>}
             </div>

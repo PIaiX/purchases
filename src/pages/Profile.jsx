@@ -78,38 +78,46 @@ const Profile = () => {
   });
   const [currentPage, setCurrentPage] = useState(1)
   const onPageChange = (page) => {
-    setCurrentPage(page.selected + 1);
+    onLoadCurrentPage(page.selected + 1)
   };
   const [currentGame, setCurrentGame] = useState("")
   const onGameChange = (game) => {
-    setCurrentGame(game);
+    onLoadPage(game);
+  };
+
+  const onLoadPage = (curGame) => {
+    getUser({ id: userId, page: 1, categoryId: curGame })
+      .then((res) => {
+        setUser({
+          loading: false,
+          data: res.user,
+          products: res.products,
+          reviews: res.reviews,
+          categories: res.categories,
+        })
+        setCurrentGame(curGame ? curGame : res.categories && res.categories[0].id);
+      })
+
+      .catch(() => setUser((e) => ({ ...e, loading: false })));
   };
   useEffect(() => {
-    if (currentGame) {
-      setUser({ loading: true })
-      setCurrentPage(1)
-      getUser({ id: userId, page: currentPage, categoryId: currentGame })
-        .then((res) => res && setUser({
+    onLoadPage();
+  }, [userId]);
+  const onLoadCurrentPage = (page) => {
+    getUser({ id: userId, page: page, categoryId: currentGame })
+      .then((res) => {
+        setUser({
           loading: false,
           data: res.user,
           products: res.products,
           reviews: res.reviews,
           categories: res.categories,
-        }))
-        .catch(() => setUser((e) => ({ ...e, loading: false })));
-    }
-    else {
-      getUser({ id: userId, page: currentPage })
-        .then((res) => res && setUser({
-          loading: false,
-          data: res.user,
-          products: res.products,
-          reviews: res.reviews,
-          categories: res.categories,
-        }))
-        .catch(() => setUser((e) => ({ ...e, loading: false })));
-    }
-  }, [userId, currentPage, currentGame]);
+        })
+        setCurrentPage(page);
+      })
+
+      .catch(() => setUser((e) => ({ ...e, loading: false })));
+  };
 
 
   const {

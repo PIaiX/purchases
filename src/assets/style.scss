@@ -95,6 +95,7 @@ $bp-xxl: 1399.98px;
     --param-hover: #191F2D;
     --menu: #637381;
     --menu-active: #9DC4EF33;
+    --menu-hover: #9DC4EF33;
     --menu-text: #4A83DC;
     --arrow: #4A83DC;
     --login-icon: #44F06A;
@@ -151,6 +152,7 @@ $bp-xxl: 1399.98px;
     --btn-1: #323847;
     --menu: #E2EDFA;
     --menu-active: #47567B;
+    --menu-hover: #374260;
     --menu-text: #FFFFFF;
     --arrow: #43536A;
     --login-icon: #47567B;
@@ -1413,12 +1415,13 @@ button {
         &::before {
             content: '';
             top: 0px;
-            left: 0px;
+            left: auto;
+            right: 0;
             width: 10px;
             height: 100%;
             border-radius: 50%;
             border: none !important;
-            background-image: url(imgs/icons/sun.svg);
+            background-image: url(imgs/icons/moon.svg);
             background-color: transparent;
             background-size: contain;
             background-repeat: no-repeat;
@@ -1433,8 +1436,9 @@ button {
 
             &::before {
                 border: none !important;
-                left: 20px;
-                background-image: url(imgs/icons/moon.svg);
+                left: 0;
+                right: auto;
+                background-image: url(imgs/icons/sun.svg);
             }
         }
     }
@@ -2742,34 +2746,56 @@ header {
     @include flex(row, space-between, center, nowrap);
     margin-top: 10%;
 
-    @media (max-width: $bp-xxl) {
-        padding: 0 3em;
-    }
 
-    @media (max-width: $bp-xl) {
+    @media (max-width: $bp-xxl) {
         padding: 0 2em;
     }
 
-    @media (max-width: $bp-lg) {
+    @media (max-width: $bp-xl) {
         margin-top: 15%;
     }
 
-    @media (max-width: $bp-sm) {
+    @media (max-width: $bp-lg) {
         padding: 1em;
         height: 85px;
+    }
+
+    h1 {
+        font-size: 2.5em;
+
+        @media (max-width: $bp-xxl) {
+            font-size: 2.3em;
+        }
+
+        @media (max-width: $bp-xl) {
+            font-size: 1.6em;
+        }
+
+
+        // @media (max-width: $bp-lg) {
+        //     font-size: 3.6em;
+        // }
+
+        // @media (max-width: $bp-md) {
+        //     font-size: 2em;
+        // }
+
+        // @media (max-width: $bp-sm) {
+        //     font-size: 3.6em;
+        // }
     }
 
     img {
         width: 25%;
         margin-top: -11%;
 
-        @media (max-width: $bp-xl) {
+        @media (max-width: $bp-xxl) {
             width: 22%;
-            margin-top: -7%;
+            margin-top: auto;
         }
 
         @media (max-width: $bp-lg) {
-            width: 50%;
+            // width: 50%;
             margin-top: -15%;
         }
 
@@ -3955,15 +3981,15 @@ header {
         width: 160px;
     }
 
-    .serv {
+    .server {
         grid-area: serv;
         @include clamp(1, 1.4em, true);
         width: 160px;
-
-        @media (max-width: $bp-xl) {
-            color: var(--blue);
-            @include flex(row, flex-start, center, nowrap);
-        }
+        color: var(--blue);
+        // @media (max-width: $bp-xl) {
+        //     color: var(--blue);
+        //     @include flex(row, flex-start, center, nowrap);
+        // }
     }
 
     .count {
@@ -7192,7 +7218,7 @@ footer {
 
     &-balance {
         display: flex;
-        background-color: var(--blue);
+        background-color: var(--arrow);
         color: white;
         padding: 0.5em 1em 0.5em 1em;
         border-radius: $radius;
@@ -7303,7 +7329,9 @@ footer {
             .rating {
                 font-size: 1.2em;
                 font-weight: 700;
+                margin-left: .5em;
                 @include flex();
+
 
                 svg {
                     color: var(--blue);
@@ -7316,6 +7344,7 @@ footer {
             }
 
             .nickname {
+                margin-left: .7em;
                 font-family: "Bebas";
                 font-size: 1.4em;
                 line-height: 100%;
@@ -7336,7 +7365,14 @@ footer {
             display: flex;
             justify-content: space-between;
 
+            div {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
             span {
+
                 font-family: "Bebas";
                 font-size: 1.4em;
                 font-weight: 400;
@@ -7402,7 +7438,8 @@ footer {
 
                 &:hover,
                 &:focus {
-                    color: var(--blue);
+                    background-color: var(--menu-hover);
+                    color: var(--menu-text);
                 }
 
                 &.active {

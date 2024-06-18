@@ -60,6 +60,7 @@
   --param-hover: #191F2D;
   --menu: #637381;
   --menu-active: #9DC4EF33;
+  --menu-hover: #9DC4EF33;
   --menu-text: #4A83DC;
   --arrow: #4A83DC;
   --login-icon: #44F06A;
@@ -114,6 +115,7 @@
   --btn-1: #323847;
   --menu: #E2EDFA;
   --menu-active: #47567B;
+  --menu-hover: #374260;
   --menu-text: #FFFFFF;
   --arrow: #43536A;
   --login-icon: #47567B;
@@ -1171,12 +1173,13 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 .themes-switcher input::before {
   content: "";
   top: 0px;
-  left: 0px;
+  left: auto;
+  right: 0;
   width: 10px;
   height: 100%;
   border-radius: 50%;
   border: none !important;
-  background-image: url(imgs/icons/sun.svg);
+  background-image: url(imgs/icons/moon.svg);
   background-color: transparent;
   background-size: contain;
   background-repeat: no-repeat;
@@ -1190,8 +1193,9 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 }
 .themes-switcher input:checked::before {
   border: none !important;
-  left: 20px;
-  background-image: url(imgs/icons/moon.svg);
+  left: 0;
+  right: auto;
+  background-image: url(imgs/icons/sun.svg);
 }
 
 .min-250 {
@@ -2494,38 +2498,45 @@ header .profile-link img {
 }
 @media (max-width: 1399.98px) {
   .sec-promo {
-    padding: 0 3em;
+    padding: 0 2em;
   }
 }
 @media (max-width: 1199.98px) {
   .sec-promo {
-    padding: 0 2em;
+    margin-top: 15%;
   }
 }
 @media (max-width: 991.98px) {
   .sec-promo {
-    margin-top: 15%;
-  }
-}
-@media (max-width: 575.98px) {
-  .sec-promo {
     padding: 1em;
     height: 85px;
+  }
+}
+.sec-promo h1 {
+  font-size: 2.5em;
+}
+@media (max-width: 1399.98px) {
+  .sec-promo h1 {
+    font-size: 2.3em;
+  }
+}
+@media (max-width: 1199.98px) {
+  .sec-promo h1 {
+    font-size: 1.6em;
   }
 }
 .sec-promo img {
   width: 25%;
   margin-top: -11%;
 }
-@media (max-width: 1199.98px) {
+@media (max-width: 1399.98px) {
   .sec-promo img {
     width: 22%;
-    margin-top: -7%;
+    margin-top: auto;
   }
 }
 @media (max-width: 991.98px) {
   .sec-promo img {
-    width: 50%;
     margin-top: -15%;
   }
 }
@@ -3743,7 +3754,7 @@ header .profile-link img {
   height: 1.4em;
   width: 160px;
 }
-.trader-line .serv {
+.trader-line .server {
   grid-area: serv;
   display: -webkit-box;
   -webkit-line-clamp: 1;
@@ -3752,16 +3763,7 @@ header .profile-link img {
   line-height: 1.4em;
   height: 1.4em;
   width: 160px;
-}
-@media (max-width: 1199.98px) {
-  .trader-line .serv {
-    color: var(--blue);
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: center;
-    flex-wrap: nowrap;
-  }
+  color: var(--blue);
 }
 .trader-line .count {
   grid-area: count;
@@ -6978,7 +6980,7 @@ footer .nav-mobile ul li button.active svg path {
 }
 .menu-nav-balance {
   display: flex;
-  background-color: var(--blue);
+  background-color: var(--arrow);
   color: white;
   padding: 0.5em 1em 0.5em 1em;
   border-radius: 0.67em;
@@ -7075,6 +7077,7 @@ footer .nav-mobile ul li button.active svg path {
 .menu-nav-top .user .rating {
   font-size: 1.2em;
   font-weight: 700;
+  margin-left: 0.5em;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -7089,6 +7092,7 @@ footer .nav-mobile ul li button.active svg path {
   fill: var(--blue);
 }
 .menu-nav-top .user .nickname {
+  margin-left: 0.7em;
   font-family: "Bebas";
   font-size: 1.4em;
   line-height: 100%;
@@ -7105,6 +7109,11 @@ footer .nav-mobile ul li button.active svg path {
   padding-right: 1em;
   display: flex;
   justify-content: space-between;
+}
+.menu-nav-top .info div {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
 }
 .menu-nav-top .info span {
   font-family: "Bebas";
@@ -7164,7 +7173,8 @@ footer .nav-mobile ul li button.active svg path {
   color: var(--total-black);
 }
 .menu-nav ul li a:hover, .menu-nav ul li a:focus {
-  color: var(--blue);
+  background-color: var(--menu-hover);
+  color: var(--menu-text);
 }
 .menu-nav ul li a.active {
   background-color: var(--menu-active);

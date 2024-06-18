@@ -132,19 +132,14 @@ const Profile = () => {
   const onUploadAvatar = useCallback(
     (e) => {
       e.preventDefault();
-      if (e.target.files && e.target.files[0]) {
-        const reader = new FileReader();
-
-        reader.readAsDataURL(e.target.files[0]);
-
-        reader.onload = (readerEvent) => {
-          setAvatar(readerEvent.target.result);
-        };
-
-        editAvatar({ file: e.target.files })
+      if (e.target.files.length > 0) {
+        const file = e.target.files[0];
+        const formData = new FormData();
+        formData.append('file', file);
+        editAvatar(formData)
           .then((res) => {
-            NotificationManager.success("Аватвар успешно изменен");
-            res && dispatch(setUser({ ...user, media: res }));
+            NotificationManager.success("Аватар успешно изменен");
+            res && dispatch(setUser({ ...user, media: res.media }));
           })
           .catch(
             (err) =>
@@ -182,7 +177,7 @@ const Profile = () => {
                 id="input-file-upload"
                 className="d-none"
                 name="file"
-                onChange={onUploadAvatar}
+                onChange={(e) => onUploadAvatar(e)}
               />
               <FiEdit />
             </label>
@@ -284,6 +279,7 @@ const Profile = () => {
           <Row className="g-3 gy-xl-4">
             <Col md={12}>
               <Input
+                autoComplete="new-password"
                 mask="7(999)999-99-99"
                 label="Номер телефона"
                 name="phone"
@@ -329,6 +325,7 @@ const Profile = () => {
           <Row className="g-4">
             <Col md={4}>
               <Input
+                autoComplete="new-password"
                 type="password"
                 name="passwordOld"
                 label="Старый пароль"
@@ -339,6 +336,7 @@ const Profile = () => {
             </Col>
             <Col md={4}>
               <Input
+                autoComplete="new-password"
                 type="password"
                 name="passwordNew"
                 label="Новый пароль"
@@ -349,6 +347,7 @@ const Profile = () => {
             </Col>
             <Col md={4}>
               <Input
+                autoComplete="new-password"
                 type="password"
                 name="passwordConfirm"
                 errors={errorsPassword}

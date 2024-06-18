@@ -137,11 +137,11 @@ const Home = () => {
       }
       {
         (!isMobileLG) &&
-        <section className='sec-bottom mb-md-5'>
+        <section className='sec-bottom'>
           <Container className="">
             <Row>
               <Col xs={12} md={8}>
-                <section className="sec-chat mb-4 mb-md-5">
+                <section className="sec-chat">
                   <div className="sec-chat-top">
                     <div className="sec-chat-top-count">
                       <div className="num">{messages.count}</div>
