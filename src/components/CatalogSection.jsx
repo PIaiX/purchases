@@ -10,6 +10,9 @@ import 'swiper/css/mousewheel';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { FreeMode, Mousewheel } from 'swiper';
 import { Link } from 'react-scroll';
+import { Col, Row } from 'react-bootstrap';
+import MainSlider from './MainSlider';
+import Logo from './svg/Logo';
 
 const CatalogSection = ({ games }) => {
   const [full, setFull] = useState(false);
@@ -43,8 +46,20 @@ const CatalogSection = ({ games }) => {
 
   return (
     <section className='sec-catalog mb-6'>
-      <Container><h2>Выбери одну из {games?.items?.length} игр</h2></Container>
-      <Container>
+      <div className='wrap'>
+        <div className='home-slider mb-4 align-items-center'>
+
+          <div className="title">
+            <Logo />
+            <h1>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h1>
+            <h3>Откройте для себя мир захватывающих игр и наслаждайтесь каждым мгновением!</h3>
+            <button type="button" >Начать играть</button>
+          </div>
+          <div className='slider'>
+            <MainSlider />
+          </div>
+        </div>
+        <h2>Выбери одну из {games?.items?.length} игр</h2>
         <div className="sec-catalog-box">
 
           <div>
@@ -138,7 +153,7 @@ const CatalogSection = ({ games }) => {
             <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
           </div>
         </nav>
-      </Container>
+      </div>
     </section>
   );
 };

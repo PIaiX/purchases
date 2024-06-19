@@ -18,9 +18,7 @@ const MainSlider = () => {
         loop={true}
         spaceBetween={20}
         slidesPerView={'auto'}
-        allowTouchMove={true}
-        direction={'horizontal'}
-        speed={15000}
+        speed={4000}
         freeMode={true}
         autoplay={{
           delay: 0,
@@ -29,50 +27,50 @@ const MainSlider = () => {
         }}
         breakpoints={{
           576: {
-            slidesPerView: 3,
-            spaceBetween: 20,
+            slidesPerView: 2,
+            spaceBetween: 10,
           },
           768: {
-            slidesPerView: 4,
-            spaceBetween: 20,
+            slidesPerView: 3,
+            spaceBetween: 15,
           },
         }}
       >
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/head.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
         <SwiperSlide>
-          <img src="/imgs/system.png" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </SwiperSlide>
 
       </Swiper>
@@ -86,83 +84,83 @@ const MainSlider = () => {
       slidesPerView={'auto'}
       allowTouchMove={false}
       direction={'vertical'}
-      speed={5000}
+      speed={2000}
       autoplay={{
         delay: 0,
         disableOnInteraction: false,
         waitForTransition: true
       }}
+      breakpoints={{
+        991: {
+          spaceBetween: 10,
+        },
+        1199: {
+          spaceBetween: 15,
+        },
+      }}
     >
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
       <SwiperSlide>
         <div className="item">
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
-          <img src="/imgs/head.png" alt="head" />
-          <img src="/imgs/system.png" alt="head" />
-          <img src="/imgs/img5.jpg" alt="head" />
-          <img src="/imgs/user.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+        </div>
+      </SwiperSlide>
+      <SwiperSlide>
+        <div className="item">
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
+          <img src="/imgs/arche-age-icon.jpg" alt="head" />
         </div>
       </SwiperSlide>
 
