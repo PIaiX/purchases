@@ -2084,16 +2084,41 @@ header {
 
     }
 
-    .main-slider {
-        aspect-ratio: 1 / 1;
-        position: relative;
-
+    .item {
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-start;
+        gap: 15px;
+        height: fit-content;
         width: fit-content;
+
+        @media (max-width: $bp-xxl) {
+            gap: 15px;
+        }
+
+        @media (max-width: $bp-xl) {
+            gap: 10px;
+        }
+
+        img {
+            @media (min-width: 992px) {
+                &:nth-child(even) {
+                    transform: translateY(50%);
+                }
+            }
+        }
+    }
+
+    .main-slider {
+        aspect-ratio: 1 / 5;
+        position: relative;
+        width: 25% !important;
+
 
         @media (max-width: 991px) {
             height: fit-content;
             margin-top: 1em;
-            width: 100%;
+            width: 100% !important;
             aspect-ratio: unset;
         }
 
@@ -2104,29 +2129,7 @@ header {
             box-sizing: content-box;
         }
 
-        .item {
-            display: flex;
-            justify-content: flex-start;
-            align-items: flex-start;
-            gap: 1em;
-            height: fit-content;
 
-            @media (max-width: $bp-xxl) {
-                gap: 15px;
-            }
-
-            @media (max-width: $bp-xl) {
-                gap: 10px;
-            }
-
-            img {
-                @media (min-width: 992px) {
-                    &:nth-child(even) {
-                        transform: translateY(50%);
-                    }
-                }
-            }
-        }
 
         .swiper-wrapper {
             transition-timing-function: linear !important;
@@ -2134,12 +2137,15 @@ header {
 
         .swiper-slide {
             transition-timing-function: linear !important;
-            width: 21% !important;
-            height: fit-content;
+            width: 100% !important;
+            height: auto !important;
 
-            @media (max-width: $bp-lg) {
+            @media (max-width: 991px) {
                 width: 100px !important;
             }
+
+
+
         }
     }
 }

@@ -138,10 +138,10 @@ const Callback = () => {
                             count: data.count,
                             price: data.price,
                             category: e.value,
-                            game: tasks.items[tasks.items.findIndex(e2 => e2.id === e.value)]
+                            game: task.items[task.items.findIndex(e2 => e2.id === e.value)]
                           })
                         }}
-                        data={tasks.items.map((item) => ({ value: item.id, title: item.title }))}
+                        data={task.items.map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </div>
                     <div className="col-md-6">
@@ -164,7 +164,7 @@ const Callback = () => {
                       <InputFileImg />
                     </div>
                   </div>
-                  <button onClick={handleSubmit(onClick)} type='submit' className='btn-1 mt-4 mt-md-5'>Отправить</button>
+                  <button onClick={handleSubmit(onTask)} type='submit' className='btn-1 mt-4 mt-md-5'>Отправить</button>
                 </form>
               </div>
             </div>

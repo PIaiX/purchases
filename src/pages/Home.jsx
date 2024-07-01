@@ -4,13 +4,13 @@ import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import { useForm, useWatch } from "react-hook-form";
 import { useSelector } from "react-redux";
-import { Mousewheel, Scrollbar } from 'swiper';
+import { Mousewheel, Scrollbar } from 'swiper/modules';
 import 'swiper/css';
 import 'swiper/css/scrollbar';
 import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
 import BlogSection from "../components/BlogSection";
 import CatalogSection from "../components/CatalogSection";
-import MainSlider from "../components/MainSlider";
 import Meta from "../components/Meta";
 import OfferCard from "../components/OfferCard";
 import Chat from "../components/chat/Chat";
@@ -19,15 +19,12 @@ import socket from "../config/socket";
 import { declOfNum } from "../helpers/all";
 import useIsMobile from '../hooks/isMobile';
 import { createMessageGeneral, getMessagesGeneral } from "../services/message";
-import { useGetArticlesQuery, useGetGamesQuery, useGetRecommendsQuery, useGetSalesQuery } from "../store/reducers/homeQuery";
+import { useGetArticlesQuery, useGetGeneralHomeQuery } from "../store/reducers/homeQuery";
+
 
 const Home = () => {
   const isMobileLG = useIsMobile('991px');
-  const category = useGetGamesQuery();
-  const recommends = [];
-  // useGetRecommendsQuery();
-  const articles = useGetArticlesQuery();
-  const sales = useGetSalesQuery();
+  const home = useGetGeneralHomeQuery();
 
 
   const [messages, setMessages] = useState({
@@ -114,18 +111,18 @@ const Home = () => {
   );
   const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
-  if (category?.isLoading || articles.isLoading || sales.isLoading) {
+  if (home?.isLoading) {
     return <Loader />;
   }
   return (
     <main>
       <Meta title="Rush2Play" />
 
-      <CatalogSection games={category?.data} />
+      <CatalogSection games={home?.data?.category} />
       {
-        articles?.data?.pagination?.totalItems > 0 && (
+        home?.data?.news?.pagination?.totalItems > 0 && (
           <Container>
-            <BlogSection articles={articles.data} />
+            <BlogSection articles={home?.data?.news} />
           </Container>)
 
       }
@@ -167,7 +164,7 @@ const Home = () => {
                     scrollbar={{ draggable: true }}
                     mousewheel={{ releaseOnEdges: true }}
                   >
-                    {recommends?.data?.items && recommends?.data?.items?.map(item => (
+                    {home?.data?.recommends?.items && home?.data?.recommends?.items?.map(item => (
                       <SwiperSlide>
                         <OfferCard {...item} />
                       </SwiperSlide>

@@ -20,7 +20,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   const dispatch = useDispatch();
   const onLoadDialogs = () => {
     // dispatch(updateNotification({ message: -1 }))
-    getDialogs({ size: 7 })
+    getDialogs({ size: 3 })
       .then((res) => {
         setDialogs((prev) => ({
           ...prev,

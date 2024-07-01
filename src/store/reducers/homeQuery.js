@@ -39,20 +39,11 @@ export const homeQuery = createApi({
     refetchOnMountOrArgChange: true,
     keepUnusedDataFor: 350,
     endpoints: (build) => ({
-        getArticles: build.query({
-            query: () => apiRoutes.ARTICLES,
-        }),
-        getRecommends: build.query({
-            query: () => apiRoutes.RECOMMENDS,
-        }),
-        getGames: build.query({
-            query: () => apiRoutes.CATEGORIES,
-        }),
-        getSales: build.query({
-            query: () => apiRoutes.SALES,
+        getGeneralHome: build.query({
+            query: () => apiRoutes.GENERAL_HOME,
         }),
 
     }),
 });
 
-export const { useGetArticlesQuery, useGetRecommendsQuery, useGetSalesQuery, useGetGamesQuery } = homeQuery;
+export const { useGetGeneralHomeQuery } = homeQuery;

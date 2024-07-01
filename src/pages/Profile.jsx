@@ -358,7 +358,7 @@ const Profile = () => {
                 </ul>
               </div>
               <div className="list-wrapping-main p-sm-4">
-                <ul className="row row-cols-1 g-3">
+                <ul className="row row-cols-1 g-3 mb-4">
                   {user?.products?.items?.length > 0 && user.products.items.map(item => (
                     <li>
                       <TraderLine {...item} />

@@ -37,6 +37,9 @@ const apiRoutes = {
   ORDER_EDIT_STATUS: BASE_URL + "/user/order/editStatus",
   ORDER_DELETE: BASE_URL + "/user/order/delete",
 
+  //home
+  GENERAL_HOME: BASE_URL + "/general/home",
+
   // review
   REVIEWS: BASE_URL + "/user/review",
   // reserve

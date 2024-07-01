@@ -1,69 +1,49 @@
 import React from 'react'
-import { TfiPaintRoller, TfiBriefcase, TfiTruck, TfiCar, TfiSpray, TfiPlug, TfiBlackboard } from "react-icons/tfi"
-import { SlScreenDesktop, SlWrench } from "react-icons/sl"
-import { RxScissors, RxLapTimer } from "react-icons/rx"
+import useIsMobile from '../hooks/isMobile'
 
-const MainSlide = (props) => {
-  const scopes = [
-    {
-      id: 1,
-      icon: <TfiSpray />
-    },
-    {
-      id: 2,
-      icon: <TfiPaintRoller />
-    },
-    {
-      id: 3,
-      icon: <TfiBriefcase />
-    },
-    {
-      id: 4,
-      icon: <TfiTruck />
-    },
-    {
-      id: 5,
-      icon: <TfiCar />
-    },
-    {
-      id: 6,
-      icon: <TfiPlug />
-    },
-    {
-      id: 7,
-      icon: <SlScreenDesktop />
-    },
-    {
-      id: 8,
-      icon: <SlWrench />
-    },
-    {
-      id: 9,
-      icon: <RxScissors />
-    },
-    {
-      id: 10,
-      icon: <TfiBlackboard />
-    },
-    {
-      id: 11,
-      icon: <RxLapTimer />
-    }
-  ]
+import { Autoplay, FreeMode } from 'swiper/modules';
+import 'swiper/css'
+import 'swiper/css/autoplay'
+import 'swiper/css/free-mode'
+import { Swiper, SwiperSlide } from 'swiper/react';
+import 'swiper/swiper-bundle.css';
+
+const MainSlide = ({ content, direction, speed }) => {
 
   return (
-    <div className="recent-orders-item">
-      <div>
-        <div className="icon">
-          {
-            scopes.find(obj => obj.id === props.scope).icon
-          }
-        </div>
-        <p>{props.name}</p>
-      </div>
-      <p className='gray-2'>Сделали 12 ч. назад</p>
-    </div>
-  );
-};
+    <Swiper
+      modules={[Autoplay]}
+      className='main-slider'
+      loop={true}
+      spaceBetween={20}
+      slidesPerView={'auto'}
+      speed={speed}
+      direction={direction}
+      autoplay={{
+        delay: 0,
+        disableOnInteraction: false,
+      }}
+      breakpoints={{
+        576: {
+          slidesPerView: 2,
+          spaceBetween: 10,
+        },
+        768: {
+          slidesPerView: 3,
+          spaceBetween: 15,
+        },
+      }}
+    >
+      {content.map((icon, index) => (
+        <SwiperSlide>
+          <img key={icon + index} src={icon} alt={icon + index} />
+        </SwiperSlide>
+
+      ))}
+    </Swiper>
+  )
+
+
+}
 
 export default MainSlide
