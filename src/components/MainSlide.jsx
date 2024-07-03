@@ -12,35 +12,33 @@ const MainSlide = ({ content, direction, speed }) => {
 
   return (
     <Swiper
-      modules={[Autoplay]}
+      modules={[Autoplay]} // Добавлен FreeMode
       className='main-slider'
       loop={true}
       spaceBetween={20}
+      preloadImages={true}
       slidesPerView={'auto'}
       speed={speed}
+      allowTouchMove={false}
       direction={direction}
+      preventClicks={true}
+      a11y={false}
       autoplay={{
         delay: 0,
-        disableOnInteraction: false,
+        disableOnInteraction: true,
+        // pauseOnMouseEnter: false,
+        waitForTransition: true
       }}
-      breakpoints={{
-        576: {
-          slidesPerView: 2,
-          spaceBetween: 10,
-        },
-        768: {
-          slidesPerView: 3,
-          spaceBetween: 15,
-        },
-      }}
-    >
-      {content.map((icon, index) => (
-        <SwiperSlide>
-          <img key={icon + index} src={icon} alt={icon + index} />
-        </SwiperSlide>
 
-      ))}
-    </Swiper>
+    >
+      {
+        content.map((icon, index) => (
+          <SwiperSlide key={icon + index}>
+            <img src={icon} alt={icon + index} />
+          </SwiperSlide>
+        ))
+      }
+    </Swiper >
   )
 
 
