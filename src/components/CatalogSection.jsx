@@ -48,43 +48,112 @@ const CatalogSection = ({ games }) => {
   return (
     <section className='sec-catalog mb-6'>
       <div className='sec-catalog-container'>
+
+        <div className='home-slider mb-4 align-items-center'>
+          <div className="title">
+            <Logo />
+            <h1>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h1>
+            <h3>Откройте для себя мир захватывающих игр и наслаждайтесь каждым мгновением!</h3>
+            {/* <button type="button" >Начать играть</button> */}
+          </div>
+          <div className='slider'>
+            <MainSlider />
+          </div>
+        </div>
+        <h2>Выбери одну из {games?.items?.length} игр</h2>
         <div className="sec-catalog-box">
-
-          <div className='home-slider mb-4 align-items-center'>
-
-            <div className="title">
-              <Logo />
-              <h1>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h1>
-              <h3>Откройте для себя мир захватывающих игр и наслаждайтесь каждым мгновением!</h3>
-              {/* <button type="button" >Начать играть</button> */}
-            </div>
-            <div className='slider'>
-              <MainSlider />
-            </div>
-          </div>
-          <h2>Выбери одну из {games?.items?.length} игр</h2>
-
-          <div>
-            {games?.data && games?.letters && games.letters.map((letter, i) => (
-              <section key={letter} id={`section-${i}`} className="sec-catalog-part">
-                <div className='element'>
-                  <div className="letter">{letter}</div>
-                  <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
-                    <GameCard param1={letter} param2={games.data} />
-
-                  </ul>
-                </div>
-              </section>
-            ))}
-            <div className='sec-promo mb-5'>
-              <div className='text'>
-                <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
-                <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
+          <nav className='sec-catalog-nav-mobile'>
+            <div
+              className={(full) ? 'wrap full' : 'wrap'}
+            >
+              <div className='alfabet'>
+                <ul>
+                  {games?.data && games?.letters && games?.letters.map((letter, i) => {
+                    return (
+                      <li key={letter}>
+                        <Link
+                          activeClass="active"
+                          to={"section-" + i}
+                          spy={true}
+                          smooth={true}
+                          offset={offsetT}
+                          duration={300}
+                          onSetActive={() => updateSlider(i)}
+                        >
+                          {letter}
+                        </Link>
+                      </li>
+                    )
+                  })}
+                </ul>
               </div>
-              <img src="/imgs/head.png" alt="head" />
-              <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
+              <div id="sort" className='scroll'>
+                <nav className="sort">
+                  <Swiper
+                    ref={menuRef}
+                    direction={'vertical'}
+                    loop={false}
+                    spaceBetween={0}
+                    slidesPerView={'auto'}
+                    watchSlidesProgress={true}
+                    modules={[FreeMode, Mousewheel]}
+                    initialSlide={currentSection}
+                    freeMode={{
+                      enabled: true,
+                      sticky: true,
+                    }}
+                    mousewheel={true}
+                    onSwiper={setSortSwiper}
+                  // centeredSlides={true}
+                  >
+                    {games?.letters && games?.letters?.map((letter, i) => {
+                      return (
+                        <SwiperSlide key={letter.id} >
+                          <Link
+                            activeClass="active"
+                            to={"section-" + i}
+                            spy={true}
+                            smooth={true}
+                            offset={offsetT}
+                            duration={300}
+                            onSetActive={() => updateSlider(i)}
+                          >
+                            {letter}
+                          </Link>
+                        </SwiperSlide>
+                      )
+                    })}
+                  </Swiper>
+                </nav>
+              </div>
+
+              <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
+            </div>
+          </nav>
+          <div className="sec-catalog-box-mobile">
+            <div>
+              {games?.data && games?.letters && games.letters.map((letter, i) => (
+                <section key={letter} id={`section-${i}`} className="sec-catalog-part">
+                  <div className='element'>
+                    <div className="letter">{letter}</div>
+                    <ul className="list-unstyled row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 gx-4 gy-4 gy-sm-5">
+                      <GameCard param1={letter} param2={games.data} />
+
+                    </ul>
+                  </div>
+                </section>
+              ))}
+              <div className='sec-promo mb-5'>
+                <div className='text'>
+                  <h1 className='mb-0 mb-md-2'>Играй в свое <br className='d-sm-none' />удовольствие</h1>
+                  <h3 className='d-none d-md-block'>Более 1000 лотов уже ждут тебя</h3>
+                </div>
+                <img src="/imgs/head.png" alt="head" />
+                <button type='button' className='btn-2 d-none d-lg-block'>Перейти в каталог</button>
+              </div>
             </div>
           </div>
+
         </div>
 
         <nav className='sec-catalog-nav'>

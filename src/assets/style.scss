@@ -2177,10 +2177,11 @@ header {
         }
 
         @media (max-width: $bp-lg) {
-            @include flex(row, flex-start, stretch, nowrap);
             padding: 0 1em;
         }
     }
+
+
 
     &-nav {
         position: absolute;
@@ -2190,6 +2191,9 @@ header {
         width: 60px;
         height: 100%;
 
+        @media (max-width: $bp-lg) {
+            display: none;
+        }
 
 
 
@@ -2197,7 +2201,7 @@ header {
         @media (max-width: $bp-lg) {
             position: relative;
             top: auto;
-            right: auto;
+            left: auto;
             height: auto;
             margin-left: 1em;
         }
@@ -2233,9 +2237,7 @@ header {
             padding: 0.5em;
             transition: $transition;
 
-            @media (max-width: $bp-lg) {
-                float: right;
-            }
+
 
             @media (max-width: $bp-sm) {
                 padding: 0;
@@ -2416,11 +2418,234 @@ header {
         }
     }
 
+    &-nav-mobile {
+        z-index: 10;
+        position: relative;
+        top: auto;
+        left: auto;
+        height: auto;
+        margin-right: 1em;
+        flex-shrink: 0;
+
+        width: 60px;
+        height: 100%;
+
+        @media (min-width: $bp-lg) {
+            display: none;
+        }
+
+        @media (max-width: $bp-sm) {
+            width: 40px;
+        }
+
+        .scroll {
+            width: 100%;
+            max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
+            overflow-y: scroll;
+            padding: 0;
+
+            &::-webkit-scrollbar {
+                width: 0;
+                /* Скрываем полосу прокрутки */
+            }
+        }
+
+        .wrap {
+            background: var(--label);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(5px);
+            border-radius: $radius;
+            position: sticky;
+            top: calc(var(--h-height) + 1em);
+            left: 0;
+            bottom: var(--f-height);
+            width: 100%;
+            // height: fit-content;
+            max-height: calc(100vh - var(--h-height) - var(--f-height));
+            padding: 0.5em;
+            transition: $transition;
+
+
+
+            @media (max-width: $bp-sm) {
+                padding: 0;
+            }
+
+
+            .sort {
+                text-align: center;
+
+                .swiper {
+                    font-size: 1.3em;
+                    text-align: center;
+                    width: 100%;
+                    height: 100%;
+                    max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
+
+                    &-slide {
+                        height: auto !important;
+                        padding: .2em;
+
+                        a {
+                            @include flex();
+                            color: var(--font-color);
+                            position: relative;
+                            background-color: transparent;
+                            transition: $transition;
+                            width: 1.9em;
+                            height: 1.9em;
+                            border-radius: $radius;
+                            white-space: nowrap;
+
+
+                            &:hover {
+                                background-color: var(--menu-active);
+                                color: var(--menu-text);
+                            }
+
+                            &.active {
+                                background-color: var(--menu-active);
+                                color: var(--menu-text);
+                            }
+                        }
+                    }
+                }
+
+
+            }
+
+            ul {
+                display: none;
+            }
+
+
+
+
+
+            #cut {
+                font-size: 1.3em;
+                position: absolute;
+                right: -1.1em;
+                top: 1em;
+                width: 40px;
+                height: 30px;
+                transform: translateY(0.25em);
+                @include flex();
+                border-radius: 50%;
+                overflow: hidden;
+                background: var(--menu-substract) no-repeat center bottom;
+                background-size: 100% 50%;
+                transform: rotate(90deg);
+
+                filter: drop-shadow(-0px 3px 3px rgba(70, 67, 118, 0.2));
+
+
+                .img {
+                    width: 20px;
+                    height: 20px;
+                    transition: $transition;
+                    transform: rotate(-90deg);
+                    color: var(--arrow);
+                    cursor: pointer;
+
+                }
+
+                &.opened {
+                    background: none;
+
+
+
+                    .img {
+                        transform: rotate(90deg);
+
+
+                    }
+                }
+            }
+
+            &.full {
+                @include btnStyle();
+                display: block;
+                width: auto;
+                min-width: max-content;
+
+                .alfabet {
+                    width: fit-content;
+                    display: inline-block;
+
+                    ul {
+                        display: flex;
+                        flex-direction: column;
+                        flex-wrap: wrap;
+
+                        height: 100%;
+                        overflow: hidden;
+                        list-style: none;
+                        padding: 0;
+                        max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
+                        align-items: center;
+                        transition: var(--transition);
+
+                        li {
+                            font-size: 1.3em;
+                            text-align: center;
+                            margin: 0.2em;
+                            display: flex;
+                            width: fit-content;
+
+
+                            a {
+                                @include flex();
+                                color: var(--font-color);
+                                position: relative;
+                                background-color: transparent;
+                                transition: $transition;
+                                width: 1.9em;
+                                height: 1.9em;
+                                border-radius: $radius;
+                                white-space: nowrap;
+
+                                &:hover {
+                                    background-color: var(--menu-active);
+                                    color: var(--menu-text);
+                                }
+
+                                &.active {
+                                    background-color: var(--menu-active);
+                                    color: var(--menu-text);
+                                }
+                            }
+                        }
+                    }
+                }
+
+                .scroll {
+                    display: none;
+                }
+
+
+                form {
+
+                    // border: 1px solid var(--pale-blue);
+                    input {
+                        opacity: 1;
+                    }
+                }
+            }
+        }
+    }
+
     &-box {
         flex: 1;
 
         @media (max-width: $bp-lg) {
-            width: 80%;
+            width: 100%;
+            @include flex(row, flex-start, stretch, nowrap);
+        }
+
+        &-mobile {
+            max-width: 100%;
+            flex: 1;
         }
     }
 
