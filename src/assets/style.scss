@@ -2011,6 +2011,8 @@ header {
             width: 100%;
             margin: 2em;
             padding: 0 2em;
+            margin-bottom: 0;
+
         }
 
         svg {
@@ -2121,6 +2123,7 @@ header {
             width: 100% !important;
             aspect-ratio: unset;
             border-radius: $radius;
+            margin-bottom: 1em;
         }
 
         img {

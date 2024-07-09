@@ -50,11 +50,29 @@ const Header = () => {
     setSearchTerm("");
     setShowMobileMenu(false);
   }
+  const handleShowMenu = () => {
+    setShowMobileMenu(!showMobileMenu);
+    setShowSearch(false);
+    setShowFav(false);
+    setSearchTerm("");
+  }
 
   const [showSearch, setShowSearch] = useState(false);
   const handleCloseSearch = () => { setShowSearch(false), setSearchTerm(""), setShowFav(false); };
-  const handleShowSearch = () => setShowSearch(true);
+  const handleShowSearch = () => {
+    setShowSearch(!showSearch);
+    setShowFav(false);
+    setSearchTerm("");
+    setShowMobileMenu(false);
 
+  }
+  const handleClose = () => {
+    setShowSearch(false);
+    setShowFav(false);
+    setSearchTerm("");
+    setShowMobileMenu(false);
+
+  }
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 900);
 
@@ -118,15 +136,15 @@ const Header = () => {
         && <footer>
           <Container className='h-100'>
             <nav className='nav-mobile'>
-              <Link to='/' onClick={() => setShowMobileMenu(false)} className='logo'>
+              <Link to='/' onClick={handleClose} className='logo'>
                 <img src={Joystick} alt="Joystick" />
               </Link>
               <ul>
                 <li><button type="button" onClick={handleShowSearch}><SearchIcon /></button></li>
                 <li><button type="button" onClick={handleShowFav}><HeartIcon /></button></li>
-                <li><NavLink to='/account' end onClick={() => setShowMobileMenu(false)}><SupportIcon /></NavLink></li>
-                <li><NavLink to='/account/messages' end onClick={() => setShowMobileMenu(false)}><ChatIcon /></NavLink></li>
-                <li><button type='button' onClick={() => setShowMobileMenu(true)}><MenuIcon /></button></li>
+                <li><NavLink to='/account' end onClick={handleClose}><SupportIcon /></NavLink></li>
+                <li><NavLink to='/account/messages' end onClick={handleClose}><ChatIcon /></NavLink></li>
+                <li><button type='button' onClick={handleShowMenu}><MenuIcon /></button></li>
               </ul>
             </nav>
           </Container>
@@ -206,8 +224,13 @@ const Header = () => {
           <button type='button' className='close' onClick={() => setShowMobileMenu(false)}>
             <RxCross1 />
           </button>
-          <div className='text-center title-font fs-20 mb-4'>LOGO-RUSH2PLAY</div>
-          <ul className="offcanvas-mobile-menu" onClick={() => setShowMobileMenu(false)}>
+          <div className='text-center title-font fs-20 mb-4 d-flex justify-content-between w-75'>
+            <Link to="/">
+              <Logo />
+            </Link>
+            <ThemeToggler />
+          </div>
+          <ul className="offcanvas-mobile-menu mb-3" onClick={() => setShowMobileMenu(false)}>
             <li>
               <Link to="/">Главная</Link>
             </li>

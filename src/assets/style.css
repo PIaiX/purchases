@@ -1755,6 +1755,7 @@ header .profile-link img {
     width: 100%;
     margin: 2em;
     padding: 0 2em;
+    margin-bottom: 0;
   }
 }
 .home-slider .title svg {
@@ -1866,6 +1867,7 @@ header .profile-link img {
     width: 100% !important;
     aspect-ratio: unset;
     border-radius: 0.67em;
+    margin-bottom: 1em;
   }
 }
 .home-slider .main-slider img {
