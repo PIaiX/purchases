@@ -47,21 +47,22 @@ const CatalogSection = ({ games }) => {
 
   return (
     <section className='sec-catalog mb-6'>
-      <div className='wrap'>
-        <div className='home-slider mb-4 align-items-center'>
-
-          <div className="title">
-            <Logo />
-            <h1>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h1>
-            <h3>Откройте для себя мир захватывающих игр и наслаждайтесь каждым мгновением!</h3>
-            <button type="button" >Начать играть</button>
-          </div>
-          <div className='slider'>
-            <MainSlider />
-          </div>
-        </div>
-        <h2>Выбери одну из {games?.items?.length} игр</h2>
+      <div className='sec-catalog-container'>
         <div className="sec-catalog-box">
+
+          <div className='home-slider mb-4 align-items-center'>
+
+            <div className="title">
+              <Logo />
+              <h1>Играй с удовольствием <br className='d-none d-lg-inline' /> в любимые игры</h1>
+              <h3>Откройте для себя мир захватывающих игр и наслаждайтесь каждым мгновением!</h3>
+              {/* <button type="button" >Начать играть</button> */}
+            </div>
+            <div className='slider'>
+              <MainSlider />
+            </div>
+          </div>
+          <h2>Выбери одну из {games?.items?.length} игр</h2>
 
           <div>
             {games?.data && games?.letters && games.letters.map((letter, i) => (
