@@ -82,7 +82,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
         ) : (
           <div className="chat-window-message">
             <div className="chat-box-user">
-              <Link to={"/trader/" + user.id}>
+              <Link to={"/trader/" + user?.id}>
                 {type == "system" ?
                   <img src="/imgs/system.png" alt={name} />
                   :
@@ -110,7 +110,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
                   {type == "system" ?
                     <div className='system-border'>
                       <LogoMess />
-                      {text && <p>{text}</p>}
+                      {text && <p dangerouslySetInnerHTML={{ __html: text }} />}
                     </div>
                     :
                     <div>

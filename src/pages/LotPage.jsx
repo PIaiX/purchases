@@ -2,13 +2,13 @@ import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
-import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import { useForm, useWatch } from 'react-hook-form';
 import { FiAlertTriangle, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight } from "react-icons/pi";
+import { NotificationManager } from 'react-notifications';
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import Meta from '../components/Meta';
 import ReviewCard from '../components/ReviewCard';
 import Chat from '../components/chat/Chat';
@@ -18,12 +18,11 @@ import Loader from '../components/utils/Loader';
 import Select from '../components/utils/Select';
 import socket from '../config/socket';
 import { getImageURL } from '../helpers/all';
+import { checkAuth, logout } from '../services/auth';
 import { createMessage, getMessages } from '../services/message';
 import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
-import { NotificationManager } from 'react-notifications';
-import { refreshAuth } from '../services/auth';
-import useIsMobile from '../hooks/isMobile';
+import { setUser } from '../store/reducers/authSlice';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -195,7 +194,11 @@ const LotPage = () => {
                     resetPay({ ...pay, nickname: null, count: 1, type: null });
                     setPaymentPending(false);
                     getPage();
-                    dispatch(refreshAuth());
+                    checkAuth()
+                        .then((data) => {
+                            data && dispatch(setUser(data));
+                        })
+                        .catch(() => dispatch(logout()))
                     NotificationManager.success("Куплено");
                     if (!data?.id) {
                         getMessages(data)

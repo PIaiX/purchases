@@ -14,9 +14,9 @@ const DialogPreview = ({ id, to, from, message, userId }) => {
       <div className="text">
         <div className='d-flex justify-content-between align-items-center mb-1'>
           <h6>{user.nickname}</h6>
-          <time>{moment(message.createdAt).subtract(5, 'seconds').fromNow()}</time>
+          <time>{moment(message?.createdAt).subtract(5, 'seconds').fromNow()}</time>
         </div>
-        <p>{message.text ?? "Нет сообщений"}</p>
+        <p>{message?.text ?? "Нет сообщений"}</p>
         {user.online.status &&
           <div className="indicator green"></div>}
       </div>
