@@ -1,16 +1,21 @@
 // value - цена, currency - выводить валюту (true|false))
 import { LiaRubleSignSolid } from "react-icons/lia";
 import { FILE_URL } from "../config/api";
+import { useEffect, useState } from "react";
 
 const customPrice = (value, currency = true) => {
   if (!value) {
-    return 0 + "\u00A0₽";
+    return 0 + "₽";
   }
-  value = parseFloat(value).toLocaleString();
   if (currency) {
     value = (
       <>
-        {value}&nbsp;₽
+        {Number(value).toLocaleString('ru-RU', {
+          style: 'currency',
+          currency: 'RUB',
+          minimumFractionDigits: 0,
+          maximumFractionDigits: 4
+        })}
       </>
     );
   }
@@ -32,6 +37,22 @@ const treeAll = (option, options) => {
   }
   spanOpt = spanOpt.reverse();
   return spanOpt;
+}
+
+const Timer = ({ update = false, value = 60, onEnd }) => {
+  const [counter, setCounter] = useState(value);
+
+  // Third Attempts
+  useEffect(() => {
+    const timer =
+      counter > 0 && setInterval(() => setCounter(counter - 1), 1000);
+    if (counter === 0) {
+      onEnd()
+    }
+    return () => clearInterval(timer);
+  }, [counter, update]);
+
+  return counter
 }
 
 const removeDescendants = (data, option) => {
@@ -125,4 +146,4 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   }
 };
 
-export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum };
+export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum, Timer };

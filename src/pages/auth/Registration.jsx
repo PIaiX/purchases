@@ -3,11 +3,11 @@ import { Button } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Meta from "../../components/Meta";
 import Input from "../../components/utils/Input";
-import { authRegister } from "../../services/auth";
+import { authRegister, login } from "../../services/auth";
 import { useForm } from "react-hook-form";
 import { NotificationManager } from "react-notifications";
 import ReCAPTCHA from "react-google-recaptcha";
@@ -20,9 +20,10 @@ const Registration = () => {
   const handleCheckboxChange = (e) => {
     setIsChecked(e);
   };
+  const dispatch = useDispatch();
   useEffect(() => {
     if (isAuth) {
-      return navigate("/");
+      return navigate("/activate");
     }
   }, [isAuth]);
 
@@ -187,8 +188,9 @@ const Registration = () => {
     }
     authRegister(data)
       .then(() => {
+        dispatch(login({ login: data.email, password: data.password }));
         NotificationManager.success("Завершите регистрацию, подтвердив почту");
-        navigate("/login");
+
       })
       .catch(
         (err) =>
@@ -335,7 +337,7 @@ const Registration = () => {
                   <Button
                     variant="primary"
                     type="submit"
-                    disabled={!isValid || !captcha}
+                    // disabled={!isValid || !captcha}
                     className="mt-4 mx-auto"
                   >
                     Зарегистрироваться

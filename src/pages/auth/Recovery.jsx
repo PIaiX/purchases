@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useState } from "react";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -22,6 +22,7 @@ const Recovery = () => {
       step: 1,
     },
   });
+  const [endTimer, setEndTimer] = useState(false);
 
   const data = useWatch({ control });
 
@@ -49,6 +50,23 @@ const Recovery = () => {
         )
       });
   }, []);
+  const getKey = useCallback(() => {
+    setEndTimer(false)
+    authNewKeyActivate()
+      .then(() => {
+        NotificationManager.success("Код подтверждения отправлен повторно");
+
+        setLoading(false);
+      })
+      .catch((error) => {
+        NotificationManager.error(
+          typeof error?.response?.data?.error === "string"
+            ? error.response.data.error
+            : "Неизвестная ошибка"
+        )
+        setLoading(false);
+      });
+  }, []);
   return (
     <main>
       <Container>
@@ -57,7 +75,7 @@ const Recovery = () => {
           <Row className="justify-content-center">
             <Col xs={12} xl={5}>
               <div className="wrap">
-                <PasswordForm data={data} register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} errors={errors} isValid={isValid} setValue={setValue} />
+                <PasswordForm getKey={getKey} endTimer={endTimer} setEndTimer={setEndTimer} data={data} register={register} handleSubmit={handleSubmit} onSubmit={onSubmit} errors={errors} isValid={isValid} setValue={setValue} />
               </div>
             </Col>
           </Row>

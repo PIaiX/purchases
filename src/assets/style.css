@@ -7627,4 +7627,8 @@ footer .nav-mobile ul li button.active svg path {
   width: 58px;
   height: 58px;
   margin: 0;
+}
+
+.pointer {
+  cursor: pointer;
 }/*# sourceMappingURL=style.css.map */

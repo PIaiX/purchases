@@ -2,8 +2,9 @@ import React from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Input from '../utils/Input';
+import { Timer } from "../../helpers/all";
 
-const PasswordForm = ({ data, register, handleSubmit, onSubmit, errors, isValid, setValue }) => {
+const PasswordForm = ({ getKey, endTimer, setEndTimer, data, register, handleSubmit, onSubmit, errors, isValid, setValue }) => {
   return (
     <form action="" className='mini' onSubmit={handleSubmit(onSubmit)}>
       {!data.step || data.step === 1 ? (
@@ -13,6 +14,7 @@ const PasswordForm = ({ data, register, handleSubmit, onSubmit, errors, isValid,
           <Row className='g-3 g-md-4'>
             <Col md={8}>
               <Input
+                autoFocus={true}
                 type="email"
                 label={'E-mail'}
                 name="email"
@@ -41,15 +43,26 @@ const PasswordForm = ({ data, register, handleSubmit, onSubmit, errors, isValid,
         <>
           <p className='mb-3'>Введите код, отправленный на указанную электронную почту</p>
           <Row className='g-3 g-md-4 justify-content-center'>
-            <Col md={4}>
+            <Col md={12}>
               <input
+                autoFocus={true}
                 className='code'
                 type="number"
                 placeholder='0000'
-                onChange={(e) => setValue("key", e.target.value)}
+                value={data?.key}
+                onChange={(e) => { e.target.value.length < 5 && setValue("key", e.target.value) }}
               />
+              {endTimer ? (
+                <p className="text-center pointer mt-2" onClick={() => getKey()}>
+                  <u>Отправить повторно код подтверждения</u>
+                </p>
+              ) : (
+                <p className="text-center">
+                  Повторить отправку кода через <Timer onEnd={() => setEndTimer(true)} /> сек
+                </p>
+              )}
             </Col>
-            <Col md={4}>
+            <Col md={12}>
               <button type='submit' className='btn-1 h-100 w-100' disabled={!data?.key || data?.key?.length < 4}>Отправить</button>
             </Col>
           </Row>

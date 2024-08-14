@@ -4,7 +4,7 @@ import { apiRoutes } from "../config/api";
 import socket from "../config/socket";
 import { toggleRememberMe } from "../store/reducers/rememberMeSlice";
 import { resetFavoriteSync } from "../store/reducers/favoriteSlice";
-import { clearNotification } from "../store/reducers/notificationSlice";
+import { clearNotification, setNotification } from "../store/reducers/notificationSlice";
 // import socket from "../config/socket";
 
 const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
@@ -13,7 +13,20 @@ const login = createAsyncThunk("auth/login", async (payloads, thunkAPI) => {
     if (response?.data) {
       socket.io.opts.query = { userId: response?.data?.user?.id }
       socket.disconnect().connect()
-      sessionStorage.setItem('myKey', 'myValue');
+    }
+    if (response?.data?.user?.message) {
+      thunkAPI.dispatch(
+        setNotification({
+          message: response?.data?.user?.message,
+        })
+      )
+    }
+    if (response?.data?.user?.notification) {
+      thunkAPI.dispatch(
+        setNotification({
+          notification: response?.data?.user?.notification,
+        })
+      )
     }
     return response?.data;
   } catch (error) {
@@ -79,6 +92,11 @@ const authEditPassword = async (params) => {
   return response?.data;
 };
 
+const newKeyRecovery = async (params) => {
+  const response = await $api.post(apiRoutes.AUTH_NEW_KEY_RECOVERY, params);
+  return response?.data;
+};
+
 const authNewKeyActivate = async (params) => {
   const response = await $authApi.post(apiRoutes.AUTH_NEW_KEY_ACTIVATE, params);
   return response?.data;
@@ -99,6 +117,7 @@ export {
   authActivateEmail,
   authEditEmail,
   authNewKeyActivate,
+  newKeyRecovery,
   authEditPassword,
   authEditPhone,
   authPasswordRecovery,

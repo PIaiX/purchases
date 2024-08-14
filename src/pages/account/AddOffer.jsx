@@ -63,6 +63,11 @@ const AddOffer = () => {
         "Выберите характеристики продукта"
       )
     }
+    if (!data.title) {
+      return NotificationManager.error(
+        "Введите название"
+      )
+    }
     if (!data.price || data.price == 0) {
       return NotificationManager.error(
         "Введите цену объявления"
@@ -91,6 +96,7 @@ const AddOffer = () => {
         server: data.server,
         param: data.param,
         option: data.option,
+        title: data.title,
         desc: data.desc,
         count: data.count,
         price: data.price,
@@ -123,6 +129,7 @@ const AddOffer = () => {
         server: data.server,
         param: data.param,
         option: data.option,
+        title: data.title,
         desc: data.desc,
         count: data.count,
         price: data.price,
