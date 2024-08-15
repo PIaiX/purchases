@@ -65,6 +65,20 @@ const MessagesDialogue = () => {
         .catch(() =>
           setMessages((prev) => ({ ...prev, loading: false, load: true, }))
         );
+    } else if (data?.id == "system") {
+      getSystemNotification({ page: chatPage, size: 50 })
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            load: true,
+          }))
+        )
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
     } else {
       getMessages({ ...data, page: chatPage, size: 50 })
         .then((res) => {

@@ -8,6 +8,7 @@ import { authActivate, authNewKeyActivate, checkAuth, logout, refreshAuth } from
 import { Col, Row } from "react-bootstrap";
 import { NotificationManager } from "react-notifications";
 import { Timer } from "../../helpers/all";
+import { setUser } from "../../store/reducers/authSlice";
 
 const Activate = () => {
   const [key, setKey] = useState();

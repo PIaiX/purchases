@@ -101,7 +101,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
         )
       }
       {
-        userId ?
+        general != "system" && (userId ?
           <>
             < div className='chat-form' >
               <textarea
@@ -123,7 +123,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             <div className="w-100 py-5 text-center text-muted fs-09 d-flex flex-column align-items-center justify-content-center">
               Для отправки сообщений войдите в аккаунт!
             </div>
-          )
+          ))
       }
     </div >
   );

@@ -72,6 +72,13 @@ const getMessagesGeneral = async (data) => {
 
   return response?.data;
 };
+const getSystemNotification = async (data) => {
+  const response = await $api.get(apiRoutes.MESSAGES_SYSTEM, {
+    params: data,
+  });
+
+  return response?.data;
+};
 
 const getMessageGeneral = async (id) => {
   const response = await $api.get(apiRoutes.MESSAGES_GENERAL, {
@@ -116,5 +123,6 @@ export {
   createMessageGeneral,
   viewMessageGeneral,
   editMessageGeneral,
-  deleteMessageGeneral
+  deleteMessageGeneral,
+  getSystemNotification
 };

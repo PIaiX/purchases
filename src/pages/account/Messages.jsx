@@ -14,12 +14,15 @@ import {
   createMessageGeneral,
   getDialogs,
   getMessages,
-  getMessagesGeneral
+  getMessagesGeneral,
+  getSystemNotification
 } from "../../services/message";
 import DialogPreview from './DialogPreview';
 import { getImageURL } from "../../helpers/all";
 import { updateNotification } from "../../store/reducers/notificationSlice";
 import InfiniteScroll from "react-infinite-scroller";
+import Logo from "../../components/svg/Logo";
+import LogoMess from "../../components/svg/LogoMess";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -83,6 +86,20 @@ const Messages = ({ isMobileXL }) => {
     setMessages((prev) => ({ ...prev, load: false }))
     if (data?.id == "general") {
       getMessagesGeneral({ page: chatPage, size: 50 })
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            load: true,
+          }))
+        )
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    } else if (data?.id == "system") {
+      getSystemNotification({ page: chatPage, size: 50 })
         .then((res) =>
           setMessages((prev) => ({
             ...prev,
@@ -249,6 +266,12 @@ const Messages = ({ isMobileXL }) => {
 
 
               <li>
+                <Link to="/account/messages/system" className='dialog-preview'>
+                  <img src="/imgs/system.png" alt="user" />
+                  <LogoMess />
+                </Link>
+              </li>
+              <li>
                 <Link to="/account/messages/general" className='general-chat'>
                   <div className="count">
                     <div class="fs-13">{dialogs.count}</div>
@@ -300,6 +323,15 @@ const Messages = ({ isMobileXL }) => {
                         <span className="fw-7 mb-0">{dialogs.count} </span>
                         <span className="text-success"> Онлайн</span>
                       </p>
+                    </div>
+                  </div>
+                ) : data?.id == 'system' ? (
+                  <div className="sec-messages-chat-top">
+                    <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
+                      <ReturnIcon />
+                    </button>
+                    <div>
+                      <h5 className="fw-7 mb-0"><Logo /></h5>
                     </div>
                   </div>
                 ) : (
