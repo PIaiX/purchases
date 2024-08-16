@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import moment from "moment";
 import { getImageURL } from '../../helpers/all';
 
-const DialogPreviewMini = ({ id, to, from, message, userId, setId }) => {
+const DialogPreviewMini = ({ id, to, from, messages, userId, setId, messageCount, updatedAt }) => {
 
   const user = (userId == to.id ? from : to);
   const imag = getImageURL({ path: user?.media, size: "mini", type: "user" })
@@ -14,9 +14,13 @@ const DialogPreviewMini = ({ id, to, from, message, userId, setId }) => {
       <div className="text">
         <div className='d-flex justify-content-between align-items-center mb-1'>
           <h6>{user.nickname}</h6>
-          <time>{moment(message.createdAt).subtract(5, 'seconds').fromNow()}</time>
+          <time>{moment(updatedAt).subtract(5, 'seconds').fromNow()}</time>
         </div>
-        <p>{message.text ?? "Нет сообщений"}</p>
+        <div className='d-flex justify-content-between align-items-center'>
+          <p>{messages[0]?.text ?? "Нет сообщений"}</p>
+          {messageCount > 0 && <div className='count'></div>}
+        </div>
+
         {user.online.status &&
           <div className="indicator green"></div>}
       </div>

@@ -73,7 +73,7 @@ const getMessagesGeneral = async (data) => {
   return response?.data;
 };
 const getSystemNotification = async (data) => {
-  const response = await $api.get(apiRoutes.MESSAGES_SYSTEM, {
+  const response = await $authApi.get(apiRoutes.MESSAGES_SYSTEM, {
     params: data,
   });
 

@@ -25,7 +25,7 @@ const Activate = () => {
   }, [auth]);
   useEffect(() => {
     if (status == 1) {
-      // return navigate("/account");
+      return navigate("/account");
     }
   }, [status]);
   const onKey = useCallback((key) => {

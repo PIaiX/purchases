@@ -46,6 +46,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   //   }
   // };
 
+
   return (
     <nav className='menu-chat'>
       <ul className='menu-chat-block'>
@@ -63,7 +64,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
                   alt="userphoto"
                 />
                 <div className="indicator green"></div>
-                {dialog?.messagecount > 0 && <div className="count"><span>{dialog?.messagecount}</span></div>}
+                {dialog?.messageCount > 0 && <div className="count"><span>{dialog?.messageCount}</span></div>}
               </div>
             ))
           )}

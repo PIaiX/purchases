@@ -4,6 +4,7 @@ import notification1 from "../../assets/audio/signal.mp3";
 const initialState = {
     count: 0,
     message: 0,
+    messageDate: [],
     order: 0,
     notification: 0,
 }
@@ -17,6 +18,7 @@ const notificationSlice = createSlice({
         clearNotification: (state) => {
             state.count = 0
             state.message = 0
+            state.messageDate = []
             state.order = 0
             state.notification = 0
         },
@@ -29,6 +31,7 @@ const notificationSlice = createSlice({
                 if (action?.payload?.message == -1) {
                     state.message = null
                 } else {
+                    state.messageDate = action?.payload?.message;
                     state.message++
                     audio.play();
                 }
@@ -53,6 +56,7 @@ const notificationSlice = createSlice({
                     state.notification = 0
                 } else {
                     state.notification++
+                    audio.play();
                 }
             }
             let count = state.book + state.order + state.message + state.notification

@@ -63,6 +63,7 @@
   --menu-hover: #9DC4EF33;
   --menu-text: #4A83DC;
   --arrow: #4A83DC;
+  --badge: #4A83DC;
   --login-icon: #44F06A;
   --login-key: #000;
   --review-color: #C7DFF933;
@@ -125,6 +126,7 @@
           rgba(22, 30, 49, 0.30) 100%),
       rgba(50, 62, 94);
   --letter: #47567B;
+  --badge: #FFFFFF;
   --search-game-border: rgba(0, 0, 0, 0);
   --search-game-text: #FFFFFFF2;
   --region: #7D8999;
@@ -6345,22 +6347,14 @@ ACCOUNT
 .dialog-preview .indicator.green {
   background-color: var(--green);
 }
-.dialog-preview .count span {
+.dialog-preview .count {
   display: flex;
   background-color: #66c6e4 !important;
   align-items: center;
   justify-content: center;
-  color: #0d59ab;
-  font-size: 16px;
-  font-weight: 400;
-  width: 1.5em;
-  height: 1.5em;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-}
-@media (max-width: 767px) {
-  .dialog-preview .count span {
-    font-size: 13px;
-  }
 }
 .dialog-preview .text {
   flex: 1;
@@ -6387,7 +6381,6 @@ ACCOUNT
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 90%;
-  margin-top: 0.5em;
 }
 
 /***********
@@ -7166,6 +7159,18 @@ footer .nav-mobile ul li button.active svg path {
     margin-bottom: 0.5em;
   }
 }
+.menu-nav ul li .indicator {
+  position: absolute;
+  top: 0em;
+  right: 0.3em;
+  width: 0.67em;
+  height: 0.67em;
+  border-radius: 50%;
+  z-index: 10;
+}
+.menu-nav ul li .indicator.blue {
+  background-color: var(--blue);
+}
 .menu-nav ul li a {
   color: var(--menu);
   display: flex;
@@ -7186,14 +7191,15 @@ footer .nav-mobile ul li button.active svg path {
 }
 .menu-nav ul li a div {
   margin-left: 0.5em;
+  position: relative;
   display: flex;
   align-items: center;
 }
 .menu-nav ul li a .badge {
-  background-color: var(--extrapale-gray);
-  padding: 0.34em;
-  border-radius: 0.67em;
-  color: var(--total-black);
+  background-color: var(--menu-active);
+  padding: 0.67em;
+  border-radius: 10px;
+  color: var(--badge);
 }
 .menu-nav ul li a:hover, .menu-nav ul li a:focus {
   background-color: var(--menu-hover);
@@ -7328,8 +7334,8 @@ footer .nav-mobile ul li button.active svg path {
 }
 .menu-chat ul li .preview .count {
   position: absolute;
-  top: 1em;
-  right: 1em;
+  top: 0;
+  right: 0;
   z-index: 10;
   opacity: 0.9;
 }
@@ -7339,11 +7345,10 @@ footer .nav-mobile ul li button.active svg path {
   align-items: center;
   justify-content: center;
   color: #0d59ab;
-  font-size: 16px;
+  font-size: 12px;
   font-weight: 400;
-  width: 1.5em;
-  height: 1.5em;
-  border-radius: 50%;
+  padding: 0.2em 0.6em;
+  border-radius: 10px;
 }
 @media (max-width: 767px) {
   .menu-chat ul li .preview .count span {
@@ -7552,10 +7557,19 @@ footer .nav-mobile ul li button.active svg path {
   position: relative;
   z-index: 1;
 }
+.full-menu-chat ul li .preview .count {
+  display: flex;
+  background-color: #66c6e4 !important;
+  align-items: center;
+  justify-content: center;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
 .full-menu-chat ul li .preview .indicator {
   position: absolute;
   bottom: 0.5em;
-  left: 3.5em;
+  left: 3em;
   width: 0.67em;
   height: 0.67em;
   border-radius: 50%;
@@ -7563,13 +7577,6 @@ footer .nav-mobile ul li button.active svg path {
 }
 .full-menu-chat ul li .preview .indicator.green {
   background-color: var(--green);
-}
-.full-menu-chat ul li .preview .count {
-  position: absolute;
-  top: 1em;
-  right: 1em;
-  z-index: 10;
-  opacity: 0.9;
 }
 .full-menu-chat ul li .preview .text {
   flex: 1;
@@ -7596,7 +7603,6 @@ footer .nav-mobile ul li button.active svg path {
   text-overflow: ellipsis;
   white-space: nowrap;
   width: 90%;
-  margin-top: 0.5em;
 }
 .full-menu-chat ul li a {
   color: var(--menu);

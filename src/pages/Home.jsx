@@ -164,7 +164,7 @@ const Home = () => {
                     scrollbar={{ draggable: true }}
                     mousewheel={{ releaseOnEdges: true }}
                   >
-                    {home?.data?.recommends?.items && home?.data?.recommends?.items?.map(item => (
+                    {home?.data?.recommends && home?.data?.recommends.map(item => (
                       <SwiperSlide>
                         <OfferCard {...item} />
                       </SwiperSlide>

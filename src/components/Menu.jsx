@@ -14,8 +14,10 @@ import Arrow from './svg/Arrow';
 
 const Menu = ({ full, setFull }) => {
   const { user, isAuth } = useSelector((state) => state.auth);
+  const unreadCount = useSelector((state) => state.notification.message);
   const cut = useRef(null);
   const dispatch = useDispatch();
+  console.log(user)
   return (
     <nav className='menu-nav'>
       <div className={(full) ? 'wrap full' : 'wrap'}>
@@ -141,12 +143,13 @@ const Menu = ({ full, setFull }) => {
                 </li>
 
                 <li className='mt-sm-4 mt-lg-5'>
-                  <NavLink to="account/messages" className={!full && "justify-content-center"}>
+                  <NavLink to="account/messages" className={!full ? "justify-content-center" : "justify-content-between"}>
                     <div>
                       <LuMails className="svg me-2" />
+                      {!full && unreadCount > 0 && <div className="indicator blue"></div>}
                       {full && <span>Сообщения</span>}
                     </div>
-                    {/* <span className='badge'></span> */}
+                    {full && unreadCount > 0 && <span className='badge'>+{unreadCount}</span>}
                   </NavLink>
                 </li>
                 <li>

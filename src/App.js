@@ -26,13 +26,19 @@ function App() {
   useEffect(() => {
     if (isAuth) {
       socket.on('notification', (data) => {
+        const url = location.pathname;
+        console.log(data)
         if (data?.user) {
           dispatch(setUser(data.user))
         }
-        if (data.message) {
+        if (data?.message && `/account/messages/${data?.message?.dialogId}` != url) {
+          dispatch(updateNotification(data))
+        }
+        if (data?.notification && `/account/callback/${data?.notification?.title}` != url) {
           dispatch(updateNotification(data))
         }
       })
+
 
       socket.on('logout/' + user.id, (data) => {
         if (data) {
@@ -60,6 +66,13 @@ function App() {
               dispatch(
                 setNotification({
                   message: data.message,
+                })
+              )
+            }
+            if (data?.notification) {
+              dispatch(
+                setNotification({
+                  notification: data.notification,
                 })
               )
             }

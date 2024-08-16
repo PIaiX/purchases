@@ -35,13 +35,14 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
     }
   }, [inView, messages?.hasMore]);
   const onChangeText = (e) => {
-    setText(e.target.value);
-    onChange(e.target.value);
-    const textarea = e.target;
-    setRows(Math.min(Math.max(textarea.value.split('\n').length, 1), 4));
+    setText(e);
+    onChange(e);
   };
   const onKeyPress = (e) => {
-    if (e.key === "Enter" && !e.shiftKey) {
+    if (e.key === "Enter" && e.shiftKey) {
+      const textarea = e.target;
+      setRows(Math.min(Math.max(textarea.value.split('\n').length, 1), 4));
+    } else if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();
       onClick();
     }
@@ -109,7 +110,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
                 value={text}
                 type="text"
                 placeholder={general == "general" ? "Начните общаться" : "Ваше сообщение"}
-                onChange={(e) => onChangeText(e)}
+                onChange={(e) => onChangeText(e.target.value)}
                 onKeyPress={onKeyPress}
               />
               {general != "general" &&

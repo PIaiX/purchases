@@ -129,7 +129,7 @@ const Finance = () => {
       {balanceSection === 2 && (
         transactions?.pagination?.totalPages ? (
           <div className="list-wrapping">
-            <div className="list-wrapping-top px-0">
+            <div className="list-wrapping-top">
               <ul className="line-operation">
                 <li className="date">Дата</li>
                 <li className="id">ID операции</li>

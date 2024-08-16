@@ -31,8 +31,8 @@ const Messages = ({ isMobileXL }) => {
   const timer = useRef(0);
   const userId = useSelector(state => state.auth?.user?.id);
   const navigate = useNavigate();
-  // const message = useSelector((state) => state.notification.message);
   const [search, setSearch] = useState('');
+  const unreadDate = useSelector((state) => state.notification.messageDate);
 
   const { control, reset, setValue } = useForm({
     mode: "all",
@@ -56,24 +56,40 @@ const Messages = ({ isMobileXL }) => {
     items: [],
   });
   const dispatch = useDispatch();
-  const onLoadDialogs = (data) => {
-    dispatch(updateNotification({ message: -1 }))
-    getDialogs({ page: data, search: search, size: 7 })
+  const onLoadDialogsHash = (data) => {
+    getDialogs({ page: data, search: search, size: 50 })
       .then((res) => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
           items: [...prev.items, ...res.dialogs],
-          hasMore: res.dialogs.length > 6 ? true : false,
+          hasMore: res.dialogs.length > 49 ? true : false,
           count: res.countOnline,
+          countSystem: res.countSystem,
         }))
+      }
+      )
+      .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
+  };
+  const onLoadDialogs = (data) => {
+    getDialogs({ page: data, search: search, size: 50 })
+      .then((res) => {
+        setDialogs((prev) => ({
+          ...prev,
+          loading: false,
+          items: [...prev.items, ...res.dialogs],
+          hasMore: res.dialogs.length > 49 ? true : false,
+          count: res.countOnline,
+          countSystem: res.countSystem,
+        }))
+        dispatch(updateNotification({ message: -1 }))
       }
       )
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
   };
   useEffect(() => {
     onLoadDialogs();
-  }, []);
+  }, [unreadDate]);
 
   useEffect(() => {
     if (state?.dialogId || dialogId) {
@@ -167,12 +183,14 @@ const Messages = ({ isMobileXL }) => {
 
 
     if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
+      const socketId = data.id == "system" ? data.id + "/" + userId : data.id
+
+      socket.emit("createRoom", "message/" + socketId);
       socket.on("message", handleMessage);
       socket.on("report", handleMessage);
 
       return () => {
-        socket.emit("removeRoom", "message/" + data.id);
+        socket.emit("removeRoom", "message/" + socketId);
         socket.off("message", handleMessage);
         socket.off("report", handleMessage);
       };
@@ -268,7 +286,10 @@ const Messages = ({ isMobileXL }) => {
               <li>
                 <Link to="/account/messages/system" className='dialog-preview'>
                   <img src="/imgs/system.png" alt="user" />
-                  <LogoMess />
+                  <div className='d-flex justify-content-between align-items-center w-100'>
+                    <LogoMess />
+                    {dialogs?.countSystem > 0 && <div className='count'></div>}
+                  </div>
                 </Link>
               </li>
               <li>

@@ -54,7 +54,7 @@ const PurchaseHistory = () => {
       <ReturnTitle link={'/account'} title={'История покупок'} />
       {orders?.pagination?.totalItems > 0 ? (
         < div className="list-wrapping">
-          <div className="list-wrapping-top px-0">
+          <div className="list-wrapping-top">
             <ul className='line-3'>
               <li className="date">Дата</li>
               <li className="id">ID заказа</li>

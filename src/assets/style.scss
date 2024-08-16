@@ -98,6 +98,7 @@ $bp-xxl: 1399.98px;
     --menu-hover: #9DC4EF33;
     --menu-text: #4A83DC;
     --arrow: #4A83DC;
+    --badge: #4A83DC;
     --login-icon: #44F06A;
     --login-key: #000;
     --review-color: #C7DFF933;
@@ -164,6 +165,7 @@ $bp-xxl: 1399.98px;
 
 
     --letter: #47567B;
+    --badge: #FFFFFF;
     --search-game-border: rgba(0, 0, 0, 0);
     --search-game-text: #FFFFFFF2;
     --region: #7D8999;
@@ -6584,24 +6586,14 @@ ACCOUNT
     }
 
     .count {
+        display: flex;
+        background-color: #66c6e4 !important;
+        align-items: center;
+        justify-content: center;
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
 
-
-        span {
-            display: flex;
-            background-color: #66c6e4 !important;
-            align-items: center;
-            justify-content: center;
-            color: #0d59ab;
-            font-size: 16px;
-            font-weight: 400;
-            width: 1.5em;
-            height: 1.5em;
-            border-radius: 50%;
-
-            @media (max-width: 767px) {
-                font-size: 13px;
-            }
-        }
     }
 
     .text {
@@ -6627,8 +6619,10 @@ ACCOUNT
             text-overflow: ellipsis;
             white-space: nowrap;
             width: 90%;
-            margin-top: .5em;
+            // margin-top: .5em;
         }
+
+
     }
 }
 
@@ -7482,6 +7476,19 @@ footer {
 
             }
 
+            .indicator {
+                position: absolute;
+                top: 0em;
+                right: 0.3em;
+                width: 0.67em;
+                height: 0.67em;
+                border-radius: 50%;
+                z-index: 10;
+
+                &.blue {
+                    background-color: var(--blue);
+                }
+            }
 
             a {
                 color: var(--menu);
@@ -7499,17 +7506,17 @@ footer {
 
                 div {
                     margin-left: 0.5em;
-
+                    position: relative;
                     display: flex;
                     align-items: center;
 
                 }
 
                 .badge {
-                    background-color: var(--extrapale-gray);
-                    padding: 0.34em;
-                    border-radius: $radius;
-                    color: var(--total-black);
+                    background-color: var(--menu-active);
+                    padding: 0.67em;
+                    border-radius: 10px;
+                    color: var(--badge);
                 }
 
                 &:hover,
@@ -7663,8 +7670,8 @@ footer {
 
                 .count {
                     position: absolute;
-                    top: 1em;
-                    right: 1em;
+                    top: 0;
+                    right: 0;
                     z-index: 10;
                     opacity: 0.9;
 
@@ -7674,11 +7681,10 @@ footer {
                         align-items: center;
                         justify-content: center;
                         color: #0d59ab;
-                        font-size: 16px;
+                        font-size: 12px;
                         font-weight: 400;
-                        width: 1.5em;
-                        height: 1.5em;
-                        border-radius: 50%;
+                        padding: 0.2em 0.6em;
+                        border-radius: 10px;
 
                         @media (max-width: 767px) {
                             font-size: 13px;
@@ -7924,10 +7930,21 @@ footer {
                     z-index: 1;
                 }
 
+                .count {
+                    display: flex;
+                    background-color: #66c6e4 !important;
+                    align-items: center;
+                    justify-content: center;
+                    width: 10px;
+                    height: 10px;
+                    border-radius: 50%;
+
+                }
+
                 .indicator {
                     position: absolute;
                     bottom: 0.5em;
-                    left: 3.5em;
+                    left: 3em;
                     width: 0.67em;
                     height: 0.67em;
                     border-radius: 50%;
@@ -7936,14 +7953,6 @@ footer {
                     &.green {
                         background-color: var(--green);
                     }
-                }
-
-                .count {
-                    position: absolute;
-                    top: 1em;
-                    right: 1em;
-                    z-index: 10;
-                    opacity: 0.9;
                 }
 
 
@@ -7970,7 +7979,6 @@ footer {
                         text-overflow: ellipsis;
                         white-space: nowrap;
                         width: 90%;
-                        margin-top: .5em;
                     }
                 }
             }
