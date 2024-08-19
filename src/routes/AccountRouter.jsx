@@ -20,6 +20,7 @@ import PurchaseHistory from '../pages/account/PurchaseHistory'
 import SalesHistory from '../pages/account/SalesHistory'
 import Settings from '../pages/account/Settings'
 import OrderPage from '../pages/OrderPage'
+import FeedbackView from '../pages/account/FeedbackView'
 
 const AccountRouter = () => {
   const isMobileLG = useIsMobile('991px')
@@ -50,6 +51,7 @@ const AccountRouter = () => {
             : <Route path="messages/:dialogId" element={<MessagesDialogue />} />
         }
         <Route path="feedback" element={<Feedback />} />
+        <Route path="feedback/:reviewId" element={<FeedbackView />} />
         <Route path="feedback/add/:orderId" element={<LeaveFeedback />} />
         <Route path="callback" element={<Callback />} />
         <Route path="callback/:id" element={<CallbackChat />} />

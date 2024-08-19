@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import InputRating from '../../components/utils/InputRating';
 import Input from '../../components/utils/Input';
 import ReturnTitle from '../../components/utils/ReturnTitle';
@@ -14,6 +14,7 @@ import Loader from '../../components/utils/Loader';
 
 const LeaveFeedback = () => {
   const { orderId } = useParams();
+  const navigate = useNavigate();
   const {
     control,
     register,
@@ -36,6 +37,7 @@ const LeaveFeedback = () => {
     }
     editReview(data)
       .then(() => {
+        navigate(-1);
         NotificationManager.success("Отзыв отправлен");
       })
       .catch(
@@ -70,7 +72,7 @@ const LeaveFeedback = () => {
       <Row xs={1} xxl={2} className='gx-xxl-5'>
         <Col>
 
-          <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to="/">Obnyalpodnyal</Link></p>
+          <p className='fs-13 mb-3'>Оцените услуги пользователя <Link className='link' to={`/trader/${order?.items?.author?.id}`}>{order?.items?.author?.nickname}</Link></p>
           <InputRating className="mb-4 mb-sm-5" onChange={e => setValue('value', e)} />
           <Input type='textarea' rows={5} label={'Отзыв'} placeholder={'Расскажите подробнее о сделке'} name="text" register={register} />
           <button type='button' className='btn-1 mt-4' onClick={handleSubmit(onClick)}>Оценить</button>

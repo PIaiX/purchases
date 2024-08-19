@@ -7,8 +7,10 @@ import ReturnTitle from '../../components/utils/ReturnTitle';
 import { useForm, useWatch } from 'react-hook-form';
 import Select from '../../components/utils/Select';
 import Textarea from '../../components/utils/Textarea';
-import { getTasks } from '../../services/task';
+import { createTask, getTasks } from '../../services/task';
 import Loader from '../../components/utils/Loader';
+import { Col } from 'react-bootstrap';
+import { NotificationManager } from 'react-notifications';
 
 const Callback = () => {
   const [cbSection, setCbSection] = useState(1);
@@ -57,8 +59,10 @@ const Callback = () => {
       return NotificationManager.error("Поле сообщение не может быть пустым");
     }
     setValue("loading", true)
+
     createTask({ ...data })
       .then(() => {
+        setCbSection(1);
         reset({ ...data, comment: "", title: "", file: null, loading: false })
         getPage();
         NotificationManager.success("Тикет отправлен");
@@ -97,74 +101,100 @@ const Callback = () => {
 
       {
         (cbSection === 1)
-          ? <div className="list-wrapping mb-4 mb-sm-5">
-            <div className="list-wrapping-top">
-              <ul className="line-appeal">
-                <li className="subject">Тема</li>
-                <li className="id">ID</li>
-                <li className="status">Статус</li>
-                <li className="date">Дата</li>
-                <li className="btns"></li>
-              </ul>
-            </div>
-            <div className="list-wrapping-main p-sm-3">
-              <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-3'>
-                {task?.items?.length > 0 && task.items.map((item) => (
-                  <li>
-                    <AppealLine {...item} />
-                  </li>
+          ? task?.items?.length > 0 ?
+            <div className="list-wrapping mb-4 mb-sm-5">
+              <div className="list-wrapping-top">
+                <ul className="line-appeal">
+                  <li className="subject">Тема</li>
+                  <li className="id">ID</li>
+                  <li className="status">Статус</li>
+                  <li className="date">Дата</li>
+                  <li className="btns"></li>
+                </ul>
+              </div>
+              <div className="list-wrapping-main p-sm-3">
+                <ul className='row row-cols-1 row-cols-md-2 row-cols-xl-1 g-3'>
+                  {task?.items?.length > 0 && task.items.map((item) => (
+                    <li>
+                      <AppealLine {...item} />
+                    </li>
 
-                ))}
+                  ))}
 
-              </ul>
+                </ul>
+              </div>
+              <div className="list-wrapping-bottom">
+                <NavPagination totalPages={task?.pagination?.totalPages} onPageChange={onPageChange} />
+              </div>
             </div>
-            <div className="list-wrapping-bottom">
-              <NavPagination totalPages={task?.pagination?.totalPages} onPageChange={onPageChange} />
+            :
+            <div className="d-flex align-items-center justify-content-center mt-4">
+              <h3>
+                Нет обращений
+              </h3>
             </div>
-          </div>
           : <div className="row">
             <div className="col-xxl-10">
               <div className="box">
                 <form action="">
                   <div className="row g-4 g-md-5">
-                    <div className="col-md-6">
+                    <Col md={6}>
                       <Select
-                        value={data.category}
-                        title="Тема"
+                        value={data.title}
+                        title="Выбрать тему"
+                        label="Тема"
                         onClick={e => {
                           reset({
-                            title: data.title,
-                            text: data.text,
-                            count: data.count,
-                            price: data.price,
-                            category: e.value,
-                            game: task.items[task.items.findIndex(e2 => e2.id === e.value)]
+                            ...data,
+                            title: e.value,
+                            subTitle: null,
                           })
                         }}
-                        data={task.items.map((item) => ({ value: item.id, title: item.title }))}
+                        data={[
+                          { value: 1, title: "Проблема с платежной системой или выводом средств" },
+                          { value: 2, title: "Покупатель не подтверждает сделку" },
+                          { value: 3, title: "Возврат средств при отсутствии продавца" },
+                          { value: 4, title: "Обращение для снятия ограничений на вывод средств" },
+                          { value: 5, title: "Восстановление доступа к учетной записи" },
+                          { value: 6, title: "Спорные ситуации / арбитраж" },
+                          { value: 7, title: "Жалоба на пользователя" },
+                          { value: 8, title: "Персональные данные" },
+                          { value: 9, title: "Иные вопросы" },
+                        ]}
                       />
-                    </div>
-                    <div className="col-md-6">
+                    </Col>
+                    <Col md={6}>
                       <Select
-                        value={data.region}
-                        title="Подтема"
-                        onClick={e => setValue('region', e.value)}
-                        data={data?.game?.regions?.map((item) => ({ value: item.id, title: item.title }))}
+                        value={data.subTitle}
+                        title="Выбрать подтему"
+                        label="Подтема"
+                        onClick={e => setValue('subTitle', e.value)}
+                        data={[
+                          { value: 1, title: "Проблема с платежной системой или выводом средств" },
+                          { value: 2, title: "Покупатель не подтверждает сделку" },
+                          { value: 3, title: "Возврат средств при отсутствии продавца" },
+                          { value: 4, title: "Обращение для снятия ограничений на вывод средств" },
+                          { value: 5, title: "Восстановление доступа к учетной записи" },
+                          { value: 6, title: "Спорные ситуации / арбитраж" },
+                          { value: 7, title: "Жалоба на пользователя" },
+                          { value: 8, title: "Персональные данные" },
+                          { value: 9, title: "Иные вопросы" },
+                        ]}
                       />
-                    </div>
+                    </Col>
                     <div className="col-md-12">
                       <Textarea
                         className="mb-3"
                         type={"text"}
                         label={"Обращение"}
                         placeholder={'Предоставьте как можно более подробную информацию, приложите необходимые скриншоты.'}
-                        defaultValue={data.text}
-                        onChange={e => setValue("text", e)}
+                        defaultValue={data.comment}
+                        onChange={e => setValue("comment", e)}
                       />
-                      <InputFileImg />
+                      <InputFileImg media={data?.file} setImage={(e) => setValue("file", Array.from(e)[0])} />
                     </div>
                   </div>
-                  <button onClick={handleSubmit(onTask)} type='submit' className='btn-1 mt-4 mt-md-5'>Отправить</button>
+                  <button onClick={handleSubmit(onTask)} type='submit' className='btn-1 mt-4 mt-md-5' disabled={data?.loading}>Отправить</button>
                 </form>
               </div>
             </div>

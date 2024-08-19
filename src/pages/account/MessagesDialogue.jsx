@@ -10,7 +10,8 @@ import {
   createMessage,
   createMessageGeneral,
   getMessages,
-  getMessagesGeneral
+  getMessagesGeneral,
+  getSystemNotification
 } from "../../services/message";
 import { createTask } from '../../services/task';
 import { NotificationManager } from "react-notifications";
@@ -105,7 +106,6 @@ const MessagesDialogue = () => {
   useEffect(() => {
     const handleMessage = (data) => {
       setPrint(false);
-
       setMessages(prev => {
         if (data.status) {
           return {
@@ -134,15 +134,27 @@ const MessagesDialogue = () => {
 
 
     if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
-      socket.on("message", handleMessage);
-      socket.on("report", handleMessage);
+      if (data.id == "system") {
+        socket.emit("createRoom", "system/" + userId);
+        socket.on("system", handleMessage);
+        socket.on("report", handleMessage);
 
-      return () => {
-        socket.emit("removeRoom", "message/" + data.id);
-        socket.off("message", handleMessage);
-        socket.off("report", handleMessage);
-      };
+        return () => {
+          socket.emit("removeRoom", "system/" + userId);
+          socket.off("system", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      } else {
+        socket.emit("createRoom", "message/" + data.id);
+        socket.on("message", handleMessage);
+        socket.on("report", handleMessage);
+
+        return () => {
+          socket.emit("removeRoom", "message/" + data.id);
+          socket.off("message", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      }
     }
   }, [data?.id]);
 

@@ -1391,6 +1391,33 @@ nav.pagination ul li a:active, nav.pagination ul li a.active {
   font-weight: 600;
 }
 
+.dropdown .select {
+  border-radius: 0.67em;
+  width: 100%;
+  border: 1px solid var(--light-gray);
+  box-shadow: none;
+  min-width: 150px;
+  padding: 0.725em 1.65em;
+}
+.dropdown .select-label {
+  border-radius: 0.67em;
+  position: absolute;
+  z-index: 10;
+  top: 0px;
+  left: 1em;
+  transform: translateY(-60%);
+  width: -moz-fit-content;
+  width: fit-content;
+  background: var(--label);
+  color: var(--gray);
+  padding: 0 0.67em;
+}
+.dropdown .select:hover, .dropdown .select:focus, .dropdown .select:active, .dropdown .select.active {
+  border: 1px solid var(--blue);
+}
+.dropdown .select:hover .select-label, .dropdown .select:focus .select-label, .dropdown .select:active .select-label, .dropdown .select.active .select-label {
+  color: var(--blue) !important;
+}
 .dropdown-toggle {
   display: flex;
   flex-direction: row;
@@ -1427,20 +1454,16 @@ nav.pagination ul li a:active, nav.pagination ul li a.active {
   transform: translateZ(0);
 }
 .dropdown-item {
-  display: block;
+  display: block !important;
+  width: 100%;
   padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
   text-align: left;
-  width: 100%;
   justify-content: flex-start !important;
   transition: 300ms ease-in-out;
 }
-.dropdown-item:hover, .dropdown-item:focus {
-  color: var(--bs-dropdown-link-hover-color) !important;
-  background-color: var(--bs-dropdown-link-hover-bg);
-}
-.dropdown-item:active {
-  color: var(--bs-dropdown-link-active-color) !important;
-  background-color: var(--bs-dropdown-link-active-bg);
+.dropdown-item:active, .dropdown-item.active {
+  background: var(--param-active);
+  color: white;
 }
 
 /* Box */
@@ -7107,16 +7130,18 @@ footer .nav-mobile ul li button.active svg path {
   fill: var(--blue);
 }
 .menu-nav-top .user .nickname {
+  justify-content: center;
+  align-items: center;
   margin-left: 0.7em;
   font-family: "Bebas";
   font-size: 1.4em;
   line-height: 100%;
   display: -webkit-box;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 1.1;
   -webkit-box-orient: vertical;
   overflow: hidden;
   line-height: 1em;
-  height: 2em;
+  height: 1.1em;
   max-height: 2em;
 }
 .menu-nav-top .info {

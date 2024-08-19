@@ -1628,7 +1628,44 @@ nav.pagination {
     }
 }
 
+
+
 .dropdown {
+    .select {
+        border-radius: 0.67em;
+        width: 100%;
+        border: 1px solid var(--light-gray);
+        box-shadow: none;
+        min-width: 150px;
+        padding: 0.725em 1.65em;
+
+        &-label {
+            border-radius: $radius;
+            position: absolute;
+            z-index: 10;
+            top: 0px;
+            left: 1em;
+            transform: translateY(-60%);
+            width: fit-content;
+            background: var(--label);
+            color: var(--gray);
+            padding: 0 0.67em;
+
+        }
+
+        &:hover,
+        &:focus,
+        &:active,
+        &.active {
+            border: 1px solid var(--blue);
+
+            .select-label {
+                color: var(--blue) !important;
+            }
+        }
+    }
+
+
     &-toggle {
         @include flex();
 
@@ -1661,22 +1698,21 @@ nav.pagination {
     }
 
     &-item {
-        display: block;
+        display: block !important;
+        width: 100%;
+
+
         padding: var(--bs-dropdown-item-padding-y) var(--bs-dropdown-item-padding-x);
         text-align: left;
-        width: 100%;
         justify-content: flex-start !important;
         transition: $transition;
 
-        &:hover,
-        &:focus {
-            color: var(--bs-dropdown-link-hover-color) !important;
-            background-color: var(--bs-dropdown-link-hover-bg);
-        }
 
-        &:active {
-            color: var(--bs-dropdown-link-active-color) !important;
-            background-color: var(--bs-dropdown-link-active-bg);
+        &:active,
+        &.active {
+            background: var(--param-active);
+            color: white;
+
         }
     }
 
@@ -7418,11 +7454,13 @@ footer {
             }
 
             .nickname {
+                justify-content: center;
+                align-items: center;
                 margin-left: .7em;
                 font-family: "Bebas";
                 font-size: 1.4em;
                 line-height: 100%;
-                @include clamp(2, 1em, true);
+                @include clamp(1.1, 1em, true);
                 max-height: 2em;
             }
 

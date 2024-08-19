@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { FiEdit } from "react-icons/fi";
+import { FiChevronDown, FiChevronUp, FiEdit } from "react-icons/fi";
 import StarRating from '../../components/utils/StarRating';
 import NavPagination from '../../components/NavPagination';
 import FeedbackLine from '../../components/FeedbackLine';
@@ -15,6 +15,7 @@ const Feedback = () => {
   const user = useSelector(state => state.auth?.user);
   const [isMyFeedback, setIsMyFeedback] = useState(0);
   const [currentPage, setCurrentPage] = useState(1)
+  const [count, setCount] = useState(5);
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
   };
@@ -23,7 +24,7 @@ const Feedback = () => {
     items: [],
   });
   useEffect(() => {
-    getReview({ page: currentPage, authorId: isMyFeedback })
+    getReview({ page: currentPage, authorId: isMyFeedback, size: 10, count: count })
       .then((res) => {
         setReview((prev) => ({
           prev,
@@ -33,7 +34,7 @@ const Feedback = () => {
         setCurrentPage(res.pagination.currentPage)
       })
       .catch(() => setReview((prev) => ({ ...prev, loading: false })));
-  }, [currentPage, isMyFeedback]);
+  }, [currentPage, isMyFeedback, count]);
   const totalItems = review?.pagination?.totalItems ?? 0;
   const declension = declOfNum(totalItems, ['отзыв', 'отзыва', 'отзывов']);
   if (review.loading) {
@@ -82,20 +83,27 @@ const Feedback = () => {
               <div className="list-wrapping-top">
                 <h5 className='fw-6'>Оставить отзыв</h5>
               </div>
-              {review?.orders?.length > 0 ? (
+              {review?.orders?.items?.length > 0 ? (
                 <>
                   <div className="list-wrapping-main p-3">
                     <ul className='row row-cols-1 row-cols-sm-2 row-cols-xl-1 g-3'>
-                      {review.orders.map((item) => (
+                      {review.orders.items.map((item) => (
                         <li>
                           <PurchaseLine  {...item} />
                         </li>
                       ))}
                     </ul>
                   </div>
-                  <div className="list-wrapping-bottom">
-                    {/* <NavPagination totalPages={review?.orders?.pagination?.totalPages} onPageChange={onPageChange1} /> */}
-                  </div>
+                  {count != "all" ? <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mt-2 mb-4 mb-sm-5' onClick={() => setCount("all")}>
+                    <span>Показать все</span>
+                    <FiChevronDown className='fs-13' />
+                  </button>
+                    :
+                    <button type='button' className='d-flex flex-column align-items-center pale-blue fs-12 mx-auto mb-4 mb-sm-5' onClick={() => setCount(5)}>
+                      <FiChevronUp className='fs-13' />
+                      <span className='mb-2'>Скрыть</span>
+                    </button>
+                  }
                 </>
               ) : (
                 <div className="d-flex align-items-center justify-content-center mt-4">
@@ -109,11 +117,11 @@ const Feedback = () => {
               <div className="list-wrapping-top">
                 <h5 className='fw-6'>Мои отзывы</h5>
               </div>
-              {review?.items?.length > 0 ? (
+              {review?.reviews?.items?.length > 0 ? (
                 <>
                   <div className="list-wrapping-main p-3">
                     <ul className='row row-cols-1 g-4'>
-                      {review.items.map((item) => (
+                      {review.reviews.items.map((item) => (
                         <li>
                           <FeedbackLine  {...item} />
                         </li>
@@ -121,7 +129,7 @@ const Feedback = () => {
                     </ul>
                   </div>
                   <div className="list-wrapping-bottom">
-                    <NavPagination totalPages={review?.pagination?.totalPages} onPageChange={onPageChange} />
+                    <NavPagination totalPages={review?.reviews?.pagination?.totalPages} onPageChange={onPageChange} />
                   </div>
                 </>
               ) : (

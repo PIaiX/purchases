@@ -77,7 +77,7 @@ const Messages = ({ isMobileXL }) => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
-          items: [...prev.items, ...res.dialogs],
+          items: [...res.dialogs],
           hasMore: res.dialogs.length > 49 ? true : false,
           count: res.countOnline,
           countSystem: res.countSystem,
@@ -99,6 +99,7 @@ const Messages = ({ isMobileXL }) => {
   }, [state?.dialogId, dialogId]);
 
   const onLoadChat = (chatPage) => {
+    onLoadDialogs();
     setMessages((prev) => ({ ...prev, load: false }))
     if (data?.id == "general") {
       getMessagesGeneral({ page: chatPage, size: 50 })
@@ -154,7 +155,6 @@ const Messages = ({ isMobileXL }) => {
   useEffect(() => {
     const handleMessage = (data) => {
       setPrint(false);
-
       setMessages(prev => {
         if (data.status) {
           return {
@@ -183,17 +183,27 @@ const Messages = ({ isMobileXL }) => {
 
 
     if (data?.id) {
-      const socketId = data.id == "system" ? data.id + "/" + userId : data.id
+      if (data.id == "system") {
+        socket.emit("createRoom", "system/" + userId);
+        socket.on("system", handleMessage);
+        socket.on("report", handleMessage);
 
-      socket.emit("createRoom", "message/" + socketId);
-      socket.on("message", handleMessage);
-      socket.on("report", handleMessage);
+        return () => {
+          socket.emit("removeRoom", "system/" + userId);
+          socket.off("system", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      } else {
+        socket.emit("createRoom", "message/" + data.id);
+        socket.on("message", handleMessage);
+        socket.on("report", handleMessage);
 
-      return () => {
-        socket.emit("removeRoom", "message/" + socketId);
-        socket.off("message", handleMessage);
-        socket.off("report", handleMessage);
-      };
+        return () => {
+          socket.emit("removeRoom", "message/" + data.id);
+          socket.off("message", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      }
     }
   }, [data?.id]);
 

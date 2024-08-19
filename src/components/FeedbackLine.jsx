@@ -5,7 +5,7 @@ import { getImageURL } from '../helpers/all';
 import { Link } from 'react-router-dom';
 
 
-const FeedbackLine = ({ text, value, createdAt, author, user }) => {
+const FeedbackLine = ({ text, value, createdAt, author, user, id }) => {
   const [clampOff, setClampOff] = useState(false);
 
   const toggleClamp = () => {
@@ -26,11 +26,12 @@ const FeedbackLine = ({ text, value, createdAt, author, user }) => {
           </div>
           <h5><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
         </div>
-        <div className='feedback-line-text'>
-          <p className={clampOff ? 'clamp-off' : ''} onClick={toggleClamp}>{text}</p>
+        <Link to={id}>
+          <div className='feedback-line-text'>
+            <p className={clampOff ? 'clamp-off' : ''} onClick={toggleClamp}>{text}</p>
 
-        </div>
-
+          </div>
+        </Link>
       </div>
     </div>
   );

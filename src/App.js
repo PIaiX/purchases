@@ -31,7 +31,7 @@ function App() {
         if (data?.user) {
           dispatch(setUser(data.user))
         }
-        if (data?.message && `/account/messages/${data?.message?.dialogId}` != url) {
+        if (data?.message && data?.message?.dialogId ? `/account/messages/${data?.message?.dialogId}` != url : `/account/messages/system` != url) {
           dispatch(updateNotification(data))
         }
         if (data?.notification && `/account/callback/${data?.notification?.title}` != url) {

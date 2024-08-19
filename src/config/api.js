@@ -42,6 +42,7 @@ const apiRoutes = {
 
   // review
   REVIEWS: BASE_URL + "/user/review",
+  REVIEW_ONE: BASE_URL + "/user/review/one",
   // reserve
   RESERVE: BASE_URL + "/user/reserve",
 
@@ -145,8 +146,7 @@ const apiRoutes = {
   SEARCH_GET: BASE_URL + "/search",
 
   // Task
-  TASK_GET_ALL: BASE_URL + "/user/task",
-  TASK_CREATE: BASE_URL + "/user/task",
+  TASK: BASE_URL + "/user/task",
 
   //transaction
   TRANSACTION_GET_ALL: BASE_URL + "/user/transaction",
