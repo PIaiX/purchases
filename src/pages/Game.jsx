@@ -77,7 +77,7 @@ const Game = () => {
   };
 
 
-
+  console.log(data.servers)
   const maxOption = (tree) => {
     return (
       <div className='d-flex align-items-center me-4'>
@@ -376,7 +376,7 @@ const Game = () => {
             <ul className='row row-cols-1 row-cols-sm-2 row-cols-lg-3 row-cols-xl-1 g-3'>
               {displayedProducts?.items?.length > 0 && displayedProducts.items.reverse().map((item) => (
                 <li>
-                  <OfferLine {...item} notDesc={data.notDesc} />
+                  <OfferLine {...item} notDesc={data.notDesc} data={data} />
                 </li>
               ))}
             </ul>

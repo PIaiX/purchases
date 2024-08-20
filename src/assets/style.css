@@ -1271,6 +1271,7 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 
 /* Breadcrumbs */
 .breadcrumbs {
+  margin-left: 2em;
   margin-bottom: 2em;
   color: var(--light-gray);
 }
