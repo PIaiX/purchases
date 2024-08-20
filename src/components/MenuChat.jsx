@@ -12,6 +12,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const userId = useSelector((state) => state.auth?.user?.id);
   const cut = useRef(null);
+  const unreadDate = useSelector((state) => state.notification.messageDate);
   const [dialogs, setDialogs] = useState({
     loading: true,
     items: [],
@@ -20,7 +21,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   const dispatch = useDispatch();
   const onLoadDialogs = () => {
     // dispatch(updateNotification({ message: -1 }))
-    getDialogs({ size: 3 })
+    getDialogs({ size: 5 })
       .then((res) => {
         setDialogs((prev) => ({
           ...prev,
@@ -34,7 +35,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   };
   useEffect(() => {
     onLoadDialogs();
-  }, []);
+  }, [unreadDate]);
   // const onKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();
@@ -51,6 +52,20 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
     <nav className='menu-chat'>
       <ul className='menu-chat-block'>
         <li>
+          <div key="system" onClick={() => setId("system")} className="preview">
+            <img src="/imgs/system.png" alt="user" />
+            {dialogs?.countSystem > 0 && <div className="count"><span>{dialogs?.countSystem}</span></div>}
+          </div>
+        </li>
+        <li>
+          <div key="general" onClick={() => setId("general")} className='general-chat'>
+            <div className="count">
+              <div class="fs-13">{dialogs.count}</div>
+              <div>online</div>
+            </div>
+          </div>
+        </li>
+        <li>
           {dialogs?.items?.length > 0 && (
             dialogs.items.map((dialog) => (
               <div key={dialog.id} onClick={() => setId(dialog?.id)} className="preview">
@@ -63,7 +78,8 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
                   }
                   alt="userphoto"
                 />
-                <div className="indicator green"></div>
+                {userId == dialog.to?.id ? dialog.from?.online?.status : dialog.to?.online?.status &&
+                  <div className="indicator green"></div>}
                 {dialog?.messageCount > 0 && <div className="count"><span>{dialog?.messageCount}</span></div>}
               </div>
             ))

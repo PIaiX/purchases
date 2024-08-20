@@ -7,16 +7,19 @@ import { Link } from 'react-router-dom';
 import close from '../assets/imgs/close.svg';
 import socket from '../config/socket';
 import DialogPreviewMini from '../pages/account/DialogPreviewMini';
-import { createMessage, getDialogs, getMessages } from '../services/message';
+import { createMessage, createMessageGeneral, getDialogs, getMessages, getMessagesGeneral, getSystemNotification } from '../services/message';
 import { updateNotification } from '../store/reducers/notificationSlice';
 import Chat from './chat/Chat';
 import ReturnIcon from './svg/ReturnIcon';
 import Loader from './utils/Loader';
+import LogoMess from './svg/LogoMess';
+import Logo from './svg/Logo';
 
 const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
   const timer = useRef(0);
   const userId = useSelector(state => state.auth?.user?.id);
 
+  const unreadDate = useSelector((state) => state.notification.messageDate);
   const [search, setSearch] = useState('');
 
   const { control, reset, setValue } = useForm({
@@ -41,24 +44,40 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
     items: [],
   });
   const dispatch = useDispatch();
-  const onLoadDialogs = (data) => {
-    dispatch(updateNotification({ message: -1 }))
-    getDialogs({ page: data, search: search, size: 7 })
+  const onLoadDialogsHash = (data) => {
+    getDialogs({ page: data, search: search, size: 50 })
       .then((res) => {
         setDialogs((prev) => ({
           ...prev,
           loading: false,
           items: [...prev.items, ...res.dialogs],
-          hasMore: res.dialogs.length > 6 ? true : false,
+          hasMore: res.dialogs.length > 49 ? true : false,
           count: res.countOnline,
+          countSystem: res.countSystem,
         }))
+      }
+      )
+      .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
+  };
+  const onLoadDialogs = (data) => {
+    getDialogs({ page: data, search: search, size: 50 })
+      .then((res) => {
+        setDialogs((prev) => ({
+          ...prev,
+          loading: false,
+          items: [...res.dialogs],
+          hasMore: res.dialogs.length > 49 ? true : false,
+          count: res.countOnline,
+          countSystem: res.countSystem,
+        }))
+        dispatch(updateNotification({ message: -1 }))
       }
       )
       .catch(() => setDialogs((prev) => ({ ...prev, loading: false })));
   };
   useEffect(() => {
     onLoadDialogs();
-  }, []);
+  }, [unreadDate]);
 
   useEffect(() => {
     if (id) {
@@ -71,21 +90,52 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
     }
   }, [id]);
   const onLoadChat = (chatPage) => {
+    onLoadDialogs();
     setMessages((prev) => ({ ...prev, load: false }))
-    getMessages({ ...data, page: chatPage, size: 10 })
-      .then((res) => {
-        setMessages((prev) => ({
-          ...prev,
-          loading: false,
-          items: [...messages.items, ...res.messages.items],
-          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
-          dialog: res.dialog,
-          load: true,
-        }));
-      })
-      .catch(() => {
-        setMessages((prev) => ({ ...prev, loading: false }))
-      });
+    if (data?.id == "general") {
+      getMessagesGeneral({ page: chatPage, size: 50 })
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            load: true,
+          }))
+        )
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    } else if (data?.id == "system") {
+      getSystemNotification({ page: chatPage, size: 50 })
+        .then((res) =>
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            load: true,
+          }))
+        )
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    } else {
+      getMessages({ ...data, page: chatPage, size: 50 })
+        .then((res) => {
+          setMessages((prev) => ({
+            ...prev,
+            loading: false,
+            items: [...messages.items, ...res.messages.items],
+            hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+            dialog: res.dialog,
+            load: true,
+          }));
+        })
+        .catch(() =>
+          setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+        );
+    }
   };
   useEffect(() => {
     if (data?.id) {
@@ -95,7 +145,7 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
 
   useEffect(() => {
     const handleMessage = (data) => {
-
+      setPrint(false);
       setMessages(prev => {
         if (data.status) {
           return {
@@ -122,23 +172,41 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
       });
     };
 
-    if (data?.id) {
-      socket.emit("createRoom", "message/" + data.id);
-      socket.on("message", handleMessage);
-      socket.on("report", handleMessage);
 
-      return () => {
-        socket.off("message", handleMessage);
-        socket.off("report", handleMessage);
-        socket.emit("removeRoom", "message/" + data.id);
-      };
+    if (data?.id) {
+      if (data.id == "system") {
+        socket.emit("createRoom", "system/" + userId);
+        socket.on("system", handleMessage);
+        socket.on("report", handleMessage);
+
+        return () => {
+          socket.emit("removeRoom", "system/" + userId);
+          socket.off("system", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      } else {
+        socket.emit("createRoom", "message/" + data.id);
+        socket.on("message", handleMessage);
+        socket.on("report", handleMessage);
+
+        return () => {
+          socket.emit("removeRoom", "message/" + data.id);
+          socket.off("message", handleMessage);
+          socket.off("report", handleMessage);
+        };
+      }
     }
   }, [data?.id]);
 
 
   const onNewMessage = useCallback(
     (text) => {
-      createMessage({ ...data, text });
+      if (data?.id === "general" || id === "general") {
+        createMessageGeneral({ ...data, text });
+      } else {
+        createMessage(data);
+      }
+
       reset({ id: data.id ?? id });
     },
     [data, id]
@@ -165,22 +233,36 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
               <button type="button" onClick={() => { setId(false), setChatOpen(true) }} className='d-flex align-items-center return-icon ms-2 me-2 fs-15'>
                 <ReturnIcon />
               </button>
-              <div>
-                <h5 className="fw-7 mb-0"><Link to={`/trader/${user?.id}`}>{user?.nickname}</Link></h5>
-                <p className="fs-08 gray">
-                  {print ? (
-                    "Печатает сообщение..."
-                  ) : user?.online?.status ? (
-                    <span className="text-success">Онлайн</span>
-                  ) : user?.online?.end ? (
-                    "Был(-а) в сети " +
-                    moment(user?.online?.end).fromNow()
-                  ) : (
-                    "Оффлайн"
-                  )}
-                </p>
-              </div>
-
+              {data.id == "general" ?
+                <div>
+                  <h5 className="fw-7 mb-0">Общий чат</h5>
+                  <p className="text-muted">
+                    <span className="fw-7 mb-0">{dialogs.count} </span>
+                    <span className="text-success"> Онлайн</span>
+                  </p>
+                </div>
+                :
+                data.id == "system" ?
+                  <div>
+                    <h5 className="fw-7 mb-0"><Logo /></h5>
+                  </div>
+                  :
+                  <div>
+                    <h5 className="fw-7 mb-0"><Link to={`/trader/${user?.id}`}>{user?.nickname}</Link></h5>
+                    <p className="fs-08 gray">
+                      {print ? (
+                        "Печатает сообщение..."
+                      ) : user?.online?.status ? (
+                        <span className="text-success">Онлайн</span>
+                      ) : user?.online?.end ? (
+                        "Был(-а) в сети " +
+                        moment(user?.online?.end).fromNow()
+                      ) : (
+                        "Оффлайн"
+                      )}
+                    </p>
+                  </div>
+              }
             </div>
 
             :
@@ -199,6 +281,7 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
 
         {id ? messages.items.length > 0 ?
           <Chat
+            general={data.id}
             onLoadChat={onLoadChat}
             onTask={(e) => onTask(e)}
             messages={messages}
@@ -211,13 +294,33 @@ const MenuChatOpen = ({ chatOpen, setChatOpen, id, setId }) => {
           :
           <Loader className="load" />
           :
-          <ul>
+          <ul id="scrollableDiv" >
             <InfiniteScroll
+              useWindow={false}
               pageStart={1}
-              loadMore={onLoadDialogs}
+              loadMore={onLoadDialogsHash}
               hasMore={dialogs.hasMore}
               loader={<Loader className="load" />}
+              getScrollParent={() => document.getElementById('scrollableDiv')}
             >
+              <li>
+                <div onClick={() => setId("system")} className='preview'>
+                  <img src="/imgs/system.png" alt="user" className='me-3' />
+                  <div className='d-flex justify-content-between align-items-center w-100'>
+                    <LogoMess />
+                    {dialogs?.countSystem > 0 && <div className='count'></div>}
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div onClick={() => setId("general")} className='general-chat'>
+                  <div className="count">
+                    <div class="fs-13">{dialogs.count}</div>
+                    <div>online</div>
+                  </div>
+                  <h6>Общий чат</h6>
+                </div>
+              </li>
               {dialogs?.items?.length > 0 ? (
                 dialogs.items.map((dialog) => (
                   <li>

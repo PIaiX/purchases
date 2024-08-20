@@ -77,7 +77,7 @@ const Game = () => {
   };
 
 
-  console.log(data.servers)
+  console.log(data)
   const maxOption = (tree) => {
     return (
       <div className='d-flex align-items-center me-4'>
@@ -340,11 +340,14 @@ const Game = () => {
               <Select
                 value={data.server}
                 title="Выберите сервер"
-                onClick={(e) => setValue("server", parseInt(e.value))}
-                data={data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
-                  value: item.id,
-                  title: item.title,
-                }))}
+                onClick={(e) => e.value ? setValue("server", e.value) : setValue("server", null)}
+                data={[
+                  { value: false, title: "Все сервера" },
+                  ...(data.servers.sort((a, b) => a.priority - b.priority).map((item) => ({
+                    value: item.id,
+                    title: item.title,
+                  })))
+                ]}
               />
             )}
 

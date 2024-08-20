@@ -286,7 +286,7 @@ const Messages = ({ isMobileXL }) => {
             <InfiniteScroll
               useWindow={false}
               pageStart={1}
-              loadMore={onLoadDialogs}
+              loadMore={onLoadDialogsHash}
               hasMore={dialogs.hasMore}
               loader={<Loader />}
               getScrollParent={() => document.getElementById('scrollableDiv')}

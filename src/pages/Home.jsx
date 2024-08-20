@@ -126,7 +126,7 @@ const Home = () => {
           </Container>)
 
       }
-      {
+      {/* {
         (!isMobileLG) &&
         <section className='sec-bottom'>
           <Container className="">
@@ -175,7 +175,7 @@ const Home = () => {
             </Row>
           </Container>
         </section>
-      }
+      } */}
 
     </main >
   );

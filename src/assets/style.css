@@ -6044,6 +6044,10 @@ ACCOUNT
   display: flex;
   align-items: center;
 }
+.offer-line-3 a {
+  display: flex;
+  align-items: center;
+}
 .offer-line-3 .descr {
   overflow-wrap: anywhere;
   padding-right: 1em;
@@ -6081,6 +6085,8 @@ ACCOUNT
 }
 .offer-line-3 .price {
   grid-area: price;
+  display: flex;
+  align-items: center;
 }
 @media (max-width: 1199.98px) {
   .offer-line-3 .price {
@@ -7316,6 +7322,36 @@ footer .nav-mobile ul li button.active svg path {
   list-style: none;
   padding-left: 0px;
 }
+.menu-chat ul li .general-chat {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.4em 0em;
+}
+.menu-chat ul li .general-chat .count {
+  background-color: var(--black);
+  color: var(--white);
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  font-size: 10px;
+  text-align: center;
+  line-height: 100%;
+}
+.menu-chat ul li .general-chat h6 {
+  margin-left: 0.5em;
+  flex: 1;
+  text-align: left;
+}
 .menu-chat ul li .preview {
   display: flex;
   flex-direction: row;
@@ -7556,6 +7592,36 @@ footer .nav-mobile ul li button.active svg path {
 }
 .full-menu-chat ul div {
   max-height: 370px;
+}
+.full-menu-chat ul li .general-chat {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  padding: 0.67em 1em;
+}
+.full-menu-chat ul li .general-chat .count {
+  background-color: var(--black);
+  color: var(--white);
+  width: 4em;
+  height: 4em;
+  border-radius: 50%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: nowrap;
+  font-size: 10px;
+  text-align: center;
+  line-height: 100%;
+}
+.full-menu-chat ul li .general-chat h6 {
+  margin-left: 0.5em;
+  flex: 1;
+  text-align: left;
 }
 .full-menu-chat ul li .preview {
   display: flex;

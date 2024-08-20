@@ -313,14 +313,14 @@ const LotPage = () => {
 
                                     data={[{ value: "online", title: 'Банковская карта' }, { value: "wallet", title: 'Онлайн кошелек' }]}
                                 />
-                                <Input
+                                {products?.nickname && <Input
                                     value={pay?.nickname ?? ""}
                                     placeholder={'nickname'}
                                     className="nickname me-4"
                                     type="text"
                                     onChange={(e) => setValuePay("nickname", e)}
                                     maxLength={100}
-                                />
+                                />}
                                 {products?.items?.data?.minCount &&
                                     <Col className="d-flex align-items-center achromat-3" md={12}>
                                         <span className="me-2">Минимум</span>

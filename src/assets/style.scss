@@ -6328,6 +6328,11 @@ ACCOUNT
         align-items: center;
     }
 
+    a {
+        display: flex;
+        align-items: center;
+    }
+
     .descr {
         overflow-wrap: anywhere;
         padding-right: 1em;
@@ -6358,6 +6363,8 @@ ACCOUNT
 
     .price {
         grid-area: price;
+        display: flex;
+        align-items: center;
 
         @media (max-width: $bp-xl) {
             justify-content: flex-end;
@@ -7665,6 +7672,27 @@ footer {
         // padding-top: .5em;
 
         li {
+            .general-chat {
+                @include flex(row, center, center, nowrap);
+                padding: 0.4em 0em;
+
+                .count {
+                    background-color: var(--black);
+                    color: var(--white);
+                    @include rounedImg(4em);
+                    @include flex(column, center, center, nowrap);
+                    font-size: 10px;
+                    text-align: center;
+                    line-height: 100%;
+                }
+
+                h6 {
+                    margin-left: 0.5em;
+                    flex: 1;
+                    text-align: left;
+                }
+            }
+
             .preview {
                 @include flex(row, center, center, nowrap);
                 padding: 0.4em 0em;
@@ -7946,6 +7974,27 @@ footer {
         }
 
         li {
+            .general-chat {
+                @include flex(row, center, center, nowrap);
+                padding: 0.67em 1em;
+
+                .count {
+                    background-color: var(--black);
+                    color: var(--white);
+                    @include rounedImg(4em);
+                    @include flex(column, center, center, nowrap);
+                    font-size: 10px;
+                    text-align: center;
+                    line-height: 100%;
+                }
+
+                h6 {
+                    margin-left: 0.5em;
+                    flex: 1;
+                    text-align: left;
+                }
+            }
+
             .preview {
                 @include flex(row, center, center, nowrap);
                 padding: 0.67em 1em;
