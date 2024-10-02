@@ -2168,11 +2168,16 @@ header {
         img {
             width: 100%;
             aspect-ratio: 1 / 1;
+            -webkit-aspect-ratio: 1 / 1;
+            -moz-aspect-ratio: 1 / 1;
+            -ms-aspect-ratio: 1 / 1;
+            -o-aspect-ratio: 1 / 1;
             border-radius: $radius;
-            box-sizing: content-box;
+            box-sizing: border-box;
             pointer-events: none;
             user-select: none;
         }
+
 
 
 

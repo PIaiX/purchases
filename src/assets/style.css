@@ -1899,8 +1899,12 @@ header .profile-link img {
 .home-slider .main-slider img {
   width: 100%;
   aspect-ratio: 1/1;
+  -webkit-aspect-ratio: 1/1;
+  -moz-aspect-ratio: 1/1;
+  -ms-aspect-ratio: 1/1;
+  -o-aspect-ratio: 1/1;
   border-radius: 0.67em;
-  box-sizing: content-box;
+  box-sizing: border-box;
   pointer-events: none;
   -webkit-user-select: none;
      -moz-user-select: none;
