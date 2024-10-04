@@ -31,6 +31,8 @@ import { declOfNum, getImageURL } from "../helpers/all";
 import { createMessage, getMessages } from "../services/message";
 import { getUser } from "../services/user";
 import useIsMobile from "../hooks/isMobile";
+import Select from "../components/utils/Select";
+import { titles } from "../helpers/titles";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -436,12 +438,15 @@ const Profile = () => {
           {!submitted ? (
             <div>
               <div className="mb-4">
-                <select value={data.title} onClick={e => setValue('title', e.value)} className="mb-3">
-                  <option value="">Выберите тему жалобы</option>
-                  <option value="spam">Спам</option>
-                  <option value="inappropriate">Неуместное содержимое</option>
-                  <option value="other">Другое</option>
-                </select>
+                <div className="mb-4">
+                  <Select
+                    value={data.title}
+                    title="Выберите тему жалобы"
+                    label="Тема"
+                    onClick={e => { setValue(e.value) }}
+                    data={titles}
+                  />
+                </div>
                 <Textarea
                   className="col-md-6"
                   type={"text"}
