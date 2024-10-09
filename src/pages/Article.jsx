@@ -36,7 +36,7 @@ const Article = () => {
   if (articles.loading) {
     return <Loader full />;
   }
-  const image = getImageURL({ path: articles?.document.media, type: "news" })
+  const image = getImageURL({ path: articles?.document.media, type: "news", size: "full" })
   return (
     <main>
       <Meta title={articles?.document?.title ?? "Новости"} />

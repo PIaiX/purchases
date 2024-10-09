@@ -5,7 +5,7 @@ import { getImageURL } from '../helpers/all';
 
 const BlogCard2 = ({ id, media, title, createdAt }) => {
   const date = createdAt ? moment(createdAt).format("DD MMMM YYYY") : null
-  const image = getImageURL({ path: media, type: "news" })
+  const image = getImageURL({ path: media, type: "news", size: "full" })
   return (
     <figure className='article-mini'>
       <Link className='stretched-link' to={`/blog/${id}`}><img src={image} alt={title} /></Link>
