@@ -3093,10 +3093,12 @@ header {
         position: relative;
         display: flex;
         flex-direction: column-reverse;
-        height: calc(100vh - var(--h-height) - 5em - var(--textarea-height));
+        height: calc(100vh - var(--h-height) - 7.5em - var(--textarea-height));
         overflow-y: auto;
 
-
+        &.system {
+            height: calc(100vh - var(--h-height) - 7.5em) !important;
+        }
 
         &.off {
             overflow: unset;
@@ -3131,19 +3133,22 @@ header {
 
         padding: 1em 1.5em;
 
+        @media (max-width: $bp-xl) {
+            height: calc(100vh - var(--h-height) - var(--f-height) - 0.4em - var(--textarea-height));
+        }
+
         @media (max-width: $bp-lg) {
             padding: 1em 1.5em;
-            height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
+            height: calc(100vh - var(--h-height) - var(--f-height) - 1em - var(--textarea-height));
         }
 
         @media (max-width: $bp-md) {
             padding: 1em;
-            height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
         }
 
         @media (max-width: $bp-sm) {
             padding: 1em 0.5em;
-            height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
+            height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
         }
 
 
@@ -3314,6 +3319,8 @@ header {
             }
         }
     }
+
+
 
     &-form {
         @include flex(row, flex-start, center, nowrap);
@@ -3861,8 +3868,7 @@ header {
     @media (max-width: $bp-xl) {
         grid-template-columns: auto var(--price);
         grid-template-rows: 2em auto 3em;
-        grid-template-areas:
-            "serv serv price"
+        grid-template-areas: "serv serv price"
             "descr descr descr"
             "seller seller availability";
         gap: 10px 0px;
@@ -3964,8 +3970,7 @@ header {
     @media (max-width: $bp-xl) {
         grid-template-columns: auto var(--price);
         grid-template-rows: 2em auto 3em;
-        grid-template-areas:
-            "price price price"
+        grid-template-areas: "price price price"
             "descr descr descr"
             "seller seller availability";
         gap: 10px 0px;
@@ -4222,8 +4227,7 @@ header {
         grid-template-columns: repeat(4, 1fr);
         grid-template-rows: 50px auto auto auto auto;
         gap: 0px 0px;
-        grid-template-areas:
-            "game info info date"
+        grid-template-areas: "game info info date"
             "title title title status"
             "payment payment payment payment"
             "specifications specifications specifications specifications"
@@ -4232,8 +4236,7 @@ header {
         @media (max-width: $bp-md) {
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: 50px auto auto auto auto auto auto;
-            grid-template-areas:
-                "game date"
+            grid-template-areas: "game date"
                 "info info"
                 "title title"
                 "status status"
@@ -4488,8 +4491,7 @@ header {
         @media (max-width: $bp-md) {
             grid-template-columns: repeat(2, 1fr);
             grid-template-rows: 50px auto auto auto auto auto auto auto;
-            grid-template-areas:
-                "game game"
+            grid-template-areas: "game game"
                 "info info"
                 "title title"
                 "payment payment"
@@ -5196,10 +5198,14 @@ ACCOUNT
         &-list {
             width: 30%;
             border-right: 1px solid var(--extrapale-gray);
-            max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
+            max-height: calc(100vh - var(--h-height) - 3em);
 
             @media (max-width: $bp-xxl) {
                 width: 35%;
+            }
+
+            @media (max-width: $bp-lg) {
+                max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
             }
 
             @media (max-width: $bp-xl) {
@@ -6096,8 +6102,7 @@ ACCOUNT
     // }
     @media (max-width: $bp-xl) {
         grid-template-columns: 1fr 1fr 80px;
-        grid-template-areas:
-            "session system btns"
+        grid-template-areas: "session system btns"
             "browser browser browser"
             "ip ip region";
         border: 1px solid var(--pale-gray);
@@ -6277,8 +6282,7 @@ ACCOUNT
         grid-template-columns: 2fr 1fr;
         grid-template-rows: auto;
         gap: 0.5em;
-        grid-template-areas:
-            "descr descr"
+        grid-template-areas: "descr descr"
             "id id"
             "status status"
             "seller date"
@@ -6487,8 +6491,7 @@ ACCOUNT
     @media (max-width: $bp-xl) {
         grid-template-columns: repeat(5, 1fr);
         grid-template-rows: repeat(2, 1fr);
-        grid-template-areas:
-            "date date date stat stat"
+        grid-template-areas: "date date date stat stat"
             "id type type sum sum";
         gap: 0.5em;
         font-size: 0.9em;
@@ -6548,8 +6551,7 @@ ACCOUNT
     @media (max-width: $bp-xl) {
         grid-template-columns: repeat(2, 1fr);
         grid-template-rows: repeat(3, 1fr);
-        grid-template-areas:
-            "date id"
+        grid-template-areas: "date id"
             "subject subject"
             "status btns";
         gap: 0.5em;

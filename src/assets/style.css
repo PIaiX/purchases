@@ -2765,9 +2765,12 @@ header .profile-link img {
   position: relative;
   display: flex;
   flex-direction: column-reverse;
-  height: calc(100vh - var(--h-height) - 5em - var(--textarea-height));
+  height: calc(100vh - var(--h-height) - 7.5em - var(--textarea-height));
   overflow-y: auto;
   padding: 1em 1.5em;
+}
+.chat-window.system {
+  height: calc(100vh - var(--h-height) - 7.5em) !important;
 }
 .chat-window.off {
   overflow: unset;
@@ -2795,22 +2798,26 @@ header .profile-link img {
 .chat-window.off .scroll-button:active {
   background: var(--param-active);
 }
+@media (max-width: 1199.98px) {
+  .chat-window {
+    height: calc(100vh - var(--h-height) - var(--f-height) - 0.4em - var(--textarea-height));
+  }
+}
 @media (max-width: 991.98px) {
   .chat-window {
     padding: 1em 1.5em;
-    height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
+    height: calc(100vh - var(--h-height) - var(--f-height) - 1em - var(--textarea-height));
   }
 }
 @media (max-width: 767.98px) {
   .chat-window {
     padding: 1em;
-    height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
   }
 }
 @media (max-width: 575.98px) {
   .chat-window {
     padding: 1em 0.5em;
-    height: calc(100vh - var(--h-height) - var(--f-height) - 7em);
+    height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
   }
 }
 .chat-window-message, .chat-window-message-mine {
@@ -4918,11 +4925,16 @@ ACCOUNT
 .account .sec-messages-list {
   width: 30%;
   border-right: 1px solid var(--extrapale-gray);
-  max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
+  max-height: calc(100vh - var(--h-height) - 3em);
 }
 @media (max-width: 1399.98px) {
   .account .sec-messages-list {
     width: 35%;
+  }
+}
+@media (max-width: 991.98px) {
+  .account .sec-messages-list {
+    max-height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
   }
 }
 @media (max-width: 1199.98px) {

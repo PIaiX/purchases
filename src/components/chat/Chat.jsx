@@ -69,7 +69,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             Загрузка сообщений...
           </div>
         ) : messages?.items?.length > 0 ? (
-          <div ref={chatWindowRef} className={"chat-window" + (scrollOff ? " off" : "")}>
+          <div ref={chatWindowRef} className={"chat-window" + (general == "system" ? " system" : "") + (scrollOff ? " off" : "")}>
 
             {scrollOff &&
               <>
