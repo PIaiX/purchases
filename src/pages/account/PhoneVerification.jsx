@@ -99,7 +99,7 @@ const PhoneVerification = () => {
                 Отправить код повторно
               </button> */}
 
-              <Link to="/" className="d-block link-2 mt-3">
+              <Link to="/account/callback" className="d-block link-2 mt-3">
                 Возникли проблемы?
               </Link>
             </>

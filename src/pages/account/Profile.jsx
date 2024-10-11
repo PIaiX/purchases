@@ -22,7 +22,7 @@ import { getImageURL } from "../../helpers/all";
 import moment from "moment";
 
 const Profile = () => {
-  const { user } = useSelector((state) => state.auth);
+  const user = useSelector((state) => state.auth.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [showShare, setShowShare] = useState(false);

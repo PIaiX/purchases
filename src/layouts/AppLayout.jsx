@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
@@ -20,6 +20,11 @@ const AppLayout = () => {
   const location = useLocation();
   const mini = !isMobile && isAuth && !location.pathname.startsWith('/account/messages');
   const maxi = !isMobile && isAuth && !location.pathname.startsWith('/account/messages') && (chatOpen || id);
+  const url = location.pathname;
+  useEffect(() => {
+    setId(false)
+    setChatOpen(false)
+  }, [url])
   return (
     <>
       <ScrollRestoration />

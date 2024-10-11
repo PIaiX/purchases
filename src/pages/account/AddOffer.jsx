@@ -12,6 +12,7 @@ import Textarea from '../../components/utils/Textarea';
 import { getGamesList, getUserGame } from '../../services/game';
 import { createUserProduct, deleteUserProduct, editUserProduct, getUserProduct } from '../../services/product';
 import { removeDescendants } from '../../helpers/all';
+import { useSelector } from 'react-redux';
 
 const AddOffer = () => {
   const { id } = useParams();
@@ -35,9 +36,16 @@ const AddOffer = () => {
   const [sum, setSum] = useState(0);
   const navigate = useNavigate();
   const [selectedValues, setSelectedValues] = useState({}); // Хранение выбранных значений
+  const user = useSelector((state) => state.auth.user);
 
 
   const onSubmit = useCallback((data) => {
+
+    if (!user?.phone) {
+      return NotificationManager.error(
+        "Для размещения объявления подтвердите номер телефона в профиле"
+      )
+    }
     if (!data.categoryId) {
       return NotificationManager.error(
         "Выберите игру"
