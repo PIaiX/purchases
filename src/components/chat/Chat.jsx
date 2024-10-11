@@ -6,7 +6,20 @@ import SimpleInputFile from '../utils/SimpleInputFile';
 import Message from './Message';
 
 
-const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit, type, setImage, data, scrollOff, setScrollOff, onLoadChat }) => {
+const Chat = memo(({
+  general,
+  messages,
+  emptyText,
+  onChange,
+  className,
+  onSubmit,
+  type,
+  setImage,
+  data,
+  scrollOff,
+  setScrollOff,
+  onLoadChat,
+}) => {
   const userId = useSelector((state) => state.auth?.user?.id);
   const [text, setText] = useState();
   const [rows, setRows] = useState(1);
@@ -69,7 +82,7 @@ const Chat = memo(({ general, messages, emptyText, onChange, className, onSubmit
             Загрузка сообщений...
           </div>
         ) : messages?.items?.length > 0 ? (
-          <div ref={chatWindowRef} className={"chat-window" + (general == "system" ? " system" : "") + (scrollOff ? " off" : "")}>
+          <div ref={chatWindowRef} className={"chat-window" + (general == "system" ? " system" : "") + (general == "system" ? " system" : "") + (scrollOff ? " off" : "")}>
 
             {scrollOff &&
               <>

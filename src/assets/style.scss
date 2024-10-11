@@ -2947,9 +2947,7 @@ header {
                 border-radius: $radius;
                 margin-bottom: 1.3em;
 
-                @media (max-width: $bp-xxl) {
-                    height: 190px;
-                }
+
             }
 
             h5 {
@@ -3140,6 +3138,10 @@ header {
         @media (max-width: $bp-lg) {
             padding: 1em 1.5em;
             height: calc(100vh - var(--h-height) - var(--f-height) - 1em - var(--textarea-height));
+
+            &.system {
+                height: calc(100vh - var(--h-height) - var(--f-height)) !important;
+            }
         }
 
         @media (max-width: $bp-md) {
@@ -7633,7 +7635,7 @@ footer {
     margin-right: auto;
     z-index: 1042;
     position: fixed;
-    bottom: 0;
+    bottom: 0.4em;
     right: 1em;
     width: 52px;
     height: auto;
@@ -7885,7 +7887,7 @@ footer {
     margin-right: auto;
     z-index: 1042;
     position: fixed;
-    bottom: 0;
+    bottom: 0.4em;
     right: 4em;
 
 
@@ -7913,6 +7915,8 @@ footer {
         @include btnStyle();
         margin-bottom: 0.8em;
 
+
+
         form {
             width: 90%;
 
@@ -7939,8 +7943,19 @@ footer {
     }
 
     .chat {
+        &-form {
+            textarea {
+                font-size: 0.9em;
+            }
+        }
+
         &-window {
-            height: calc(400px - var(--textarea-height));
+            height: calc(379px - var(--textarea-height));
+
+            &.system {
+                height: 387px !important;
+            }
+
         }
 
         width: 100%;

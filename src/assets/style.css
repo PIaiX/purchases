@@ -2618,11 +2618,6 @@ header .profile-link img {
   border-radius: 0.67em;
   margin-bottom: 1.3em;
 }
-@media (max-width: 1399.98px) {
-  .sec-blog .blog-list-item img {
-    height: 190px;
-  }
-}
 .sec-blog .blog-list-item h5 {
   display: -webkit-box;
   -webkit-line-clamp: 3;
@@ -2807,6 +2802,9 @@ header .profile-link img {
   .chat-window {
     padding: 1em 1.5em;
     height: calc(100vh - var(--h-height) - var(--f-height) - 1em - var(--textarea-height));
+  }
+  .chat-window.system {
+    height: calc(100vh - var(--h-height) - var(--f-height)) !important;
   }
 }
 @media (max-width: 767.98px) {
@@ -7293,7 +7291,7 @@ footer .nav-mobile ul li button.active svg path {
   margin-right: auto;
   z-index: 1042;
   position: fixed;
-  bottom: 0;
+  bottom: 0.4em;
   right: 1em;
   width: 52px;
   height: auto;
@@ -7526,7 +7524,7 @@ footer .nav-mobile ul li button.active svg path {
   margin-right: auto;
   z-index: 1042;
   position: fixed;
-  bottom: 0;
+  bottom: 0.4em;
   right: 4em;
 }
 .full-menu-chat-block {
@@ -7567,8 +7565,14 @@ footer .nav-mobile ul li button.active svg path {
 .full-menu-chat .chat {
   width: 100%;
 }
+.full-menu-chat .chat-form textarea {
+  font-size: 0.9em;
+}
 .full-menu-chat .chat-window {
-  height: calc(400px - var(--textarea-height));
+  height: calc(379px - var(--textarea-height));
+}
+.full-menu-chat .chat-window.system {
+  height: 387px !important;
 }
 .full-menu-chat ul {
   list-style: none;
