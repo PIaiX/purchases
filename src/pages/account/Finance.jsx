@@ -35,7 +35,7 @@ const Finance = () => {
     return <Loader full />;
   }
   return (
-    <section className="sec-finance mb-6">
+    <section className="sec-finance">
       <Meta title="Финансы" />
       <ReturnTitle link="/account" title="Финансы" />
 

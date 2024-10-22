@@ -1669,7 +1669,7 @@ body {
 
 main {
   min-height: calc(100vh - var(--h-height) - var(--f-height));
-  padding: 2em 0;
+  padding: 2em 0 1em 0;
 }
 @media (max-width: 991.98px) {
   main {
@@ -6938,7 +6938,7 @@ footer .nav-mobile ul li button.active svg path {
   margin-right: auto;
   position: sticky;
   top: var(--h-height);
-  height: 100vh;
+  height: calc(100vh - var(--h-height) - var(--f-height) - 2em);
   bottom: var(--f-height);
   width: 100%;
 }
