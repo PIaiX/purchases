@@ -11,6 +11,7 @@ import StarIcon from './svg/StarIcon';
 import Key from './svg/Key';
 import { logout } from '../services/auth';
 import Arrow from './svg/Arrow';
+import Plaix from './svg/Plaix';
 
 const Menu = ({ full, setFull }) => {
   const { user, isAuth } = useSelector((state) => state.auth);
@@ -203,8 +204,21 @@ const Menu = ({ full, setFull }) => {
                 </li>
                 <li>
                   <NavLink to="/privacy">
-                    <div>Политика</div>
+                    <div>Политика конфиденциальности</div>
                   </NavLink>
+                </li>
+                <li>
+                  <NavLink to="/cookie">
+                    <div>Политика cookie</div>
+                  </NavLink>
+                </li>
+                <li>
+                  <a href="/" className='dev-link'>
+                    <div>©2024 Rush to play</div>
+                    <div className='note' />
+                    <div>Создано в</div>
+                    <Plaix />
+                  </a>
                 </li>
               </ul>
             }

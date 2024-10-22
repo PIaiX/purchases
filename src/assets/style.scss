@@ -7521,6 +7521,30 @@ footer {
                 }
             }
 
+
+            .dev-link {
+                color: var(--blue);
+                font-size: .9em;
+                padding: 0;
+                margin: 0;
+
+                .note {
+                    width: 4px;
+                    height: 4px;
+                    display: inline-block;
+                    border-radius: 50%;
+                    background-color: var(--blue);
+
+                }
+
+                svg {
+                    margin-left: .5em;
+                    font-size: 1.2em;
+                }
+
+            }
+
+
             a {
                 color: var(--menu);
                 @include flex(row, flex-start, center, nowrap);
@@ -7530,6 +7554,7 @@ footer {
                 @media (max-width: $bp-lg) {
                     font-size: 1.2em;
                 }
+
 
                 svg {
                     font-size: 1.6em;

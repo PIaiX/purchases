@@ -7187,6 +7187,23 @@ footer .nav-mobile ul li button.active svg path {
 .menu-nav ul li .indicator.blue {
   background-color: var(--blue);
 }
+.menu-nav ul li .dev-link {
+  color: var(--blue);
+  font-size: 0.9em;
+  padding: 0;
+  margin: 0;
+}
+.menu-nav ul li .dev-link .note {
+  width: 4px;
+  height: 4px;
+  display: inline-block;
+  border-radius: 50%;
+  background-color: var(--blue);
+}
+.menu-nav ul li .dev-link svg {
+  margin-left: 0.5em;
+  font-size: 1.2em;
+}
 .menu-nav ul li a {
   color: var(--menu);
   display: flex;
