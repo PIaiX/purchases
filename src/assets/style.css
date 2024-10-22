@@ -4754,21 +4754,19 @@ ACCOUNT
   }
 }
 .account .btn-add-offer {
-  background-color: rgba(var(--pale-blue), 0.2);
-  color: var(--pale-blue);
+  background-color: var(--pale-blue);
+  padding: 0.8em;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  font-size: 6.5em;
   border-radius: 10px;
-  filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
+  box-shadow: 0px 4px 15px rgba(100, 100, 100, 0.08);
   transition: 300ms ease-in-out;
 }
 .account .btn-add-offer:hover, .account .btn-add-offer:focus, .account .btn-add-offer:active {
-  background: var(--menu-active);
-  color: var(--blue);
+  background: var(--blue);
 }
 @media (max-width: 767.98px) {
   .account .btn-add-offer {
@@ -7721,4 +7719,19 @@ footer .nav-mobile ul li button.active svg path {
 
 .pointer {
   cursor: pointer;
+}
+
+.notOffer {
+  display: flex;
+  align-items: flex-start;
+}
+.notOffer img {
+  width: 139px;
+  height: 139px;
+  margin-right: 2em;
+  margin-left: 2em;
+}
+.notOffer h4 {
+  margin-top: 1em;
+  margin-bottom: 1em;
 }/*# sourceMappingURL=style.css.map */

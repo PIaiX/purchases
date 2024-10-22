@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { getImageURL } from '../helpers/all';
 
-const GameMiniCard = ({ id, media, title, onGameChange, currentGame }) => {
+const GameMiniCard = ({ id, title, onGameChange, currentGame }) => {
   const handleGameChange = () => {
     onGameChange(id);
   };

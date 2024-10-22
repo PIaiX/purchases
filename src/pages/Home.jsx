@@ -23,93 +23,93 @@ import { useGetArticlesQuery, useGetGeneralHomeQuery } from "../store/reducers/h
 
 
 const Home = () => {
-  const isMobileLG = useIsMobile('991px');
+  // const isMobileLG = useIsMobile('991px');
   const home = useGetGeneralHomeQuery();
 
 
-  const [messages, setMessages] = useState({
-    loading: true,
-    items: [],
-  });
-  const onLoadChat = (chatPage) => {
-    setMessages((prev) => ({ ...prev, load: false }))
-    getMessagesGeneral({ page: chatPage, size: 50 })
-      .then((res) => {
-        setMessages((prev) => ({
-          ...prev,
-          loading: false,
-          items: [...messages.items, ...res.messages.items],
-          hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
-          count: res.countOnline,
-          load: true,
-        }));
-      })
-      .catch(() => {
-        setMessages((prev) => ({ ...prev, loading: false, load: true, }))
-      });
-  };
-  useEffect(() => {
-    onLoadChat();
-  }, []);
+  // const [messages, setMessages] = useState({
+  //   loading: true,
+  //   items: [],
+  // });
+  // const onLoadChat = (chatPage) => {
+  //   setMessages((prev) => ({ ...prev, load: false }))
+  //   getMessagesGeneral({ page: chatPage, size: 50 })
+  //     .then((res) => {
+  //       setMessages((prev) => ({
+  //         ...prev,
+  //         loading: false,
+  //         items: [...messages.items, ...res.messages.items],
+  //         hasMore: chatPage ? (chatPage < res.messages.pagination.totalPages) ? true : false : res.messages.pagination.totalPages > 1 ? true : false,
+  //         count: res.countOnline,
+  //         load: true,
+  //       }));
+  //     })
+  //     .catch(() => {
+  //       setMessages((prev) => ({ ...prev, loading: false, load: true, }))
+  //     });
+  // };
+  // useEffect(() => {
+  //   onLoadChat();
+  // }, []);
 
-  const userId = useSelector(state => state.auth?.user?.id);
+  // const userId = useSelector(state => state.auth?.user?.id);
 
-  const { control, reset, setValue } = useForm({
-    mode: "all",
-    reValidateMode: "onChange",
-    defaultValues: {
-      id: "general",
-    },
-  });
+  // const { control, reset, setValue } = useForm({
+  //   mode: "all",
+  //   reValidateMode: "onChange",
+  //   defaultValues: {
+  //     id: "general",
+  //   },
+  // });
 
-  const data = useWatch({ control });
-
-
-  useEffect(() => {
-    socket.emit("createRoom", "message/" + data.id);
-
-    socket.on("message", (data) => {
-      setMessages(prev => {
-        if (data.status) {
-          return {
-            ...prev,
-            loading: false,
-            items: [data, ...prev.items],
-          };
-        } else {
-          const messageIndex = prev.items.findIndex(item => item.id === data.id);
-
-          if (messageIndex !== -1) {
-            const updatedMessages = [...prev.items];
-            updatedMessages[messageIndex] = data;
-
-            return {
-              ...prev,
-              loading: false,
-              items: updatedMessages,
-            };
-          }
-
-          return prev;
-        }
-      });
-    });
-
-    return () => {
-      socket.emit("removeRoom", "message/" + data.id);
-      socket.off("message");
-    };
+  // const data = useWatch({ control });
 
 
-  }, [userId]);
+  // useEffect(() => {
+  //   socket.emit("createRoom", "message/" + data.id);
 
-  const onNewMessage = useCallback(
-    (text) => {
-      createMessageGeneral({ ...data, text });
-    },
-    [data]
-  );
-  const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
+  //   socket.on("message", (data) => {
+  //     setMessages(prev => {
+  //       if (data.status) {
+  //         return {
+  //           ...prev,
+  //           loading: false,
+  //           items: [data, ...prev.items],
+  //         };
+  //       } else {
+  //         const messageIndex = prev.items.findIndex(item => item.id === data.id);
+
+  //         if (messageIndex !== -1) {
+  //           const updatedMessages = [...prev.items];
+  //           updatedMessages[messageIndex] = data;
+
+  //           return {
+  //             ...prev,
+  //             loading: false,
+  //             items: updatedMessages,
+  //           };
+  //         }
+
+  //         return prev;
+  //       }
+  //     });
+  //   });
+
+  //   return () => {
+  //     socket.emit("removeRoom", "message/" + data.id);
+  //     socket.off("message");
+  //   };
+
+
+  // }, [userId]);
+
+  // const onNewMessage = useCallback(
+  //   (text) => {
+  //     createMessageGeneral({ ...data, text });
+  //   },
+  //   [data]
+  // );
+  // const declension = declOfNum(messages?.count, ['участник', 'участника', 'участников']);
 
   if (home?.isLoading) {
     return <Loader />;
@@ -119,13 +119,13 @@ const Home = () => {
       <Meta title="Rush2Play" />
 
       <CatalogSection games={home?.data?.category} />
-      {
+      {/* {
         home?.data?.news?.pagination?.totalItems > 0 && (
           <Container>
             <BlogSection articles={home?.data?.news} />
           </Container>)
 
-      }
+      } */}
       {/* {
         (!isMobileLG) &&
         <section className='sec-bottom'>

@@ -5034,19 +5034,17 @@ ACCOUNT
     }
 
     .btn-add-offer {
-        background-color: rgba($color: var(--pale-blue), $alpha: 0.2);
-        color: var(--pale-blue);
+        background-color: var(--pale-blue);
+        padding: .8em;
         @include flex();
-        font-size: 6.5em;
         border-radius: 10px;
-        @include lightShadow();
+        @include boxShadow();
         transition: $transition;
 
         &:hover,
         &:focus,
         &:active {
-            background: var(--menu-active);
-            color: var(--blue);
+            background: var(--blue);
         }
 
         @media (max-width: $bp-md) {
@@ -8114,4 +8112,21 @@ footer {
 
 .pointer {
     cursor: pointer;
+}
+
+.notOffer {
+    display: flex;
+    align-items: flex-start;
+
+    img {
+        width: 139px;
+        height: 139px;
+        margin-right: 2em;
+        margin-left: 2em;
+    }
+
+    h4 {
+        margin-top: 1em;
+        margin-bottom: 1em;
+    }
 }

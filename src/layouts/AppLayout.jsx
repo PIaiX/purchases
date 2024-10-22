@@ -47,7 +47,7 @@ const AppLayout = () => {
             </Col>
           </Row>
       }
-      <Footer />
+      {/* <Footer /> */}
     </>
   );
 };
