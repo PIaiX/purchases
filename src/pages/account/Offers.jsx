@@ -140,7 +140,7 @@ const Offers = () => {
             </>
             ) : (
               <div className="notOffer">
-                <img src="/imgs/NotOffer.jpg" alt="" />
+                <img src="/imgs/NotOffer.png" alt="" />
                 <div>
                   <h4>
                     У вас нет ни одного обьявления
