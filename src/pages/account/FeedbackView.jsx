@@ -17,7 +17,7 @@ const FeedbackView = () => {
     loading: true,
     items: [],
   });
-  console.log(review)
+
   useEffect(() => {
     getReviewOne({ reviewId: reviewId })
       .then((res) => {

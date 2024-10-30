@@ -28,7 +28,6 @@ function App() {
     if (isAuth) {
       socket.on('notification', (data) => {
         const url = location.pathname;
-        console.log(data)
         if (data?.user) {
           dispatch(setUser(data.user))
         }

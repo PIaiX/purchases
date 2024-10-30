@@ -76,8 +76,6 @@ const Game = () => {
     setValue('option', removeDescendants(data, option));
   };
 
-
-  console.log(data)
   const maxOption = (tree) => {
     return (
       <div className='d-flex align-items-center me-4'>

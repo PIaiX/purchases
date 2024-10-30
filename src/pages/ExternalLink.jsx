@@ -6,7 +6,6 @@ import { Link, useNavigate, useParams } from 'react-router-dom';
 const ExternalLink = () => {
   const navigate = useNavigate();
   const { url } = useParams();
-  console.log(url)
   return (
     <main>
       <Container>

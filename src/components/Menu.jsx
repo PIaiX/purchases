@@ -18,7 +18,6 @@ const Menu = ({ full, setFull }) => {
   const unreadCount = useSelector((state) => state.notification.message);
   const cut = useRef(null);
   const dispatch = useDispatch();
-  console.log(user)
   return (
     <nav className='menu-nav'>
       <div className={(full) ? 'wrap full' : 'wrap'}>
