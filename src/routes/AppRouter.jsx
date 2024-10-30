@@ -26,6 +26,7 @@ import Profile from "../pages/Profile";
 import LotPage from "../pages/LotPage";
 import AuthRoute from "../layouts/AuthRoute";
 import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
+import ExternalLink from "../pages/ExternalLink";
 
 
 const router = createBrowserRouter(
@@ -56,6 +57,7 @@ const router = createBrowserRouter(
       <Route path="rules" element={<Rules />} />
       <Route path="cookie" element={<Cookie />} />
       <Route path="feedback" element={<Feedback />} />
+      <Route path="externalLink/:url" element={<ExternalLink />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

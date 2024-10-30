@@ -4,7 +4,7 @@ import WarningIcon from '../svg/WarningIcon';
 
 import { IoCheckmarkDoneOutline, IoCheckmarkOutline } from "react-icons/io5";
 import { Link } from 'react-router-dom';
-import { getImageURL } from '../../helpers/all';
+import { getImageURL, wrapLinks } from '../../helpers/all';
 import { Modal } from 'react-bootstrap';
 import Logo from '../svg/Logo';
 import LogoMess from '../svg/LogoMess';
@@ -39,11 +39,11 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
                 {type == "system" ?
                   <div className='system-border'>
                     <LogoMess />
-                    {text && <p>{text}</p>}
+                    {text && <div dangerouslySetInnerHTML={{ __html: wrapLinks(text) }} />}
                   </div>
                   :
                   <div>
-                    {text && <p>{text}</p>}
+                    {text && <div dangerouslySetInnerHTML={{ __html: wrapLinks(text) }} />}
                     {media &&
                       <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
                     }
@@ -72,7 +72,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
 
               </div>
               <div className="bubble-admin">
-                {text && <p>{text}</p>}
+                {text && <div dangerouslySetInnerHTML={{ __html: wrapLinks(text) }} />}
                 {media &&
                   <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
                 }
@@ -114,7 +114,7 @@ const Message = ({ my, userId, general, createdAt, media, text, name, admin, use
                     </div>
                     :
                     <div>
-                      {text && <p>{text}</p>}
+                      {text && <div dangerouslySetInnerHTML={{ __html: wrapLinks(text) }} />}
                       {media &&
                         <img src={getImageURL({ path: media, size: "", type: "message" })} onClick={setShowShare} className="bubble-img" />
                       }

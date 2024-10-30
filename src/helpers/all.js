@@ -54,6 +54,21 @@ const Timer = ({ update = false, value = 60, onEnd }) => {
 
   return counter
 }
+const wrapLinks = (text) => {
+  return text.replace(/(https?:\/\/[^\s]+)/g, (match) => {
+    // Проверяем, является ли ссылка на rushtoplay
+    const isRushtoplayLink = match.includes('rushtoplay.com');
+
+    if (isRushtoplayLink) {
+      // Для ссылок на rushtoplay используем стандартный href
+      return `<a href="${match}" target="_blank" rel="noopener noreferrer">${match}</a>`;
+    } else {
+      // Для внешних ссылок используем /externalLink
+      return `<a href="/externalLink/${encodeURIComponent(match)}"  target="_blank" rel="noopener noreferrer">${match}</a>`;
+    }
+  });
+};
+
 
 const removeDescendants = (data, option) => {
   if (!data.option || data.option == null) {
@@ -146,4 +161,4 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   }
 };
 
-export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum, Timer };
+export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum, Timer, wrapLinks };

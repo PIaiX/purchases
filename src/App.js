@@ -18,6 +18,7 @@ function App() {
   const { isAuth, token, user } = useSelector((state) => state.auth);
 
   const theme = useSelector((state) => state.theme.value);
+
   useEffect(() => {
     document.documentElement.dataset.theme = theme;
 
