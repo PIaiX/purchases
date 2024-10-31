@@ -64,7 +64,7 @@ const wrapLinks = (text) => {
       return `<a href="${match}" target="_blank" rel="noopener noreferrer">${match}</a>`;
     } else {
       // Для внешних ссылок используем /externalLink
-      return `<a href="/externalLink/${encodeURIComponent(match)}"  target="_blank" rel="noopener noreferrer">${match}</a>`;
+      return `<a href="/externalLink/${btoa(match)}"  target="_blank" rel="noopener noreferrer">${match}</a>`;
     }
   });
 };

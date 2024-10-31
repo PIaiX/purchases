@@ -16,7 +16,7 @@ const ExternalLink = () => {
           <Col lg={10}>
             <h1 >Переход по внешней ссылке</h1>
             <h3 className='mt-5 mb-4'>Вы покидаете сайт. Нажмите на ссылку ниже если хотите перейти. Администрация Rush to Play ответственности за это не несёт.</h3>
-            <Link to={url} className='link'><h3>{url}</h3></Link>
+            <Link to={atob(url)} className='link'><h3>{atob(url)}</h3></Link>
             <Button onClick={() => navigate(-1)} className='btn-1 mt-5'>Вернуться назад</Button>
           </Col>
         </Row>
