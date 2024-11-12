@@ -448,7 +448,7 @@ const AddOffer = () => {
       setSelectedValues({});
     }
   }, [data.param]);
-
+  console.log(data)
 
   if (games.loading || id && sum == 0) {
     return <Loader full />;
@@ -510,7 +510,7 @@ const AddOffer = () => {
                     </Col>
                   )}
 
-                  {data?.game?.params?.length > 0 && (
+                  {(data?.game?.regions ? data?.region && data?.game?.params?.length > 0 : data?.game?.params?.length > 0) && (
                     <Col md={6} >
                       <Select
                         value={data.param}
@@ -520,7 +520,7 @@ const AddOffer = () => {
                           setValue("param", e.value)
                           setSum(2)
                         }}
-                        data={data.game.params.map((item) => ({ value: item.id, title: item.title }))}
+                        data={data.game.params.filter(e => e.data?.region ? e.data.region == 'all' || e.data.region.includes(String(data.region)) : true).sort((a, b) => a.priority - b.priority).map((item) => ({ value: item.id, title: item.title }))}
                       />
                     </Col>
                   )}

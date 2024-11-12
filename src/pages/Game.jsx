@@ -307,7 +307,13 @@ const Game = () => {
 
           <ul className='categories'>
             {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
-              <li key={param.id}><Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>{param.title}</Link></li>
+              (data?.region && (param?.data?.region == 'all' || param?.data?.region?.includes(String(data?.region))) || !data?.region) &&
+              < li key={param.id} >
+                <Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>
+                  {param.title}
+                </Link>
+              </li>
+
             ))}
           </ul>
 
