@@ -21,6 +21,7 @@ import Select from '../components/utils/Select';
 import Input from '../components/utils/Input';
 import { HiHeart } from "react-icons/hi";
 import { toggleFavorite, getFavorites } from '../services/favorite';
+import { NotificationManager } from 'react-notifications';
 
 const Game = () => {
   const { id } = useParams();
@@ -46,6 +47,7 @@ const Game = () => {
     mode: "onChange",
     reValidateMode: "onSubmit",
     defaultValues: {
+      uid: id,
       param: parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null,
       region: parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null,
     },
@@ -100,14 +102,14 @@ const Game = () => {
   };
   const renderSelects = (tree) => {
     if (tree.children && tree.children.length > 0) {
-      if (tree.children.length == 1 && !data.option.find(e => e.parent == tree.id)) {
-        onSaveOption(tree.children[0])
-
-      }
       if (tree.children[0].data?.max) {
         return tree.children.map(child =>
           maxOption(child)
         );
+      }
+      if (tree.children.length == 1 && !data.option.find(e => e.parent == tree.id)) {
+        onSaveOption(tree.children[0])
+
       }
       else {
         return (
@@ -138,10 +140,18 @@ const Game = () => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
 
         let servers;
-        if (!data.param) {
-          const sortedParams = [...res?.category?.params]?.sort((a, b) => a.priority - b.priority);
+        const regionId = data.region ?? (res.category.regions?.length > 0
+          ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0].id
+          : '');
+
+        const sortedParams = regionId
+          ? [...res?.category?.params].filter(e =>
+            e.data?.region ? e.data.region === 'all' || e.data.region.includes(String(regionId)) : true)
+            .sort((a, b) => a.priority - b.priority)
+          : [];
+
+        if (!data.param || sortedParams.filter(e => e.id === data.param).length === 0) {
           const firstParamId = sortedParams[0]?.id;
-          const regionId = res.category.regions?.length > 0 ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0].id : '';
           navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
         }
         let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
@@ -149,8 +159,11 @@ const Game = () => {
         let one = param.data?.one;
         let currency = param.data?.currency;
         let serverView = param.data?.serverView;
-        let options = createTree(param.options, 'id', 'parent', null).sort((a, b) => a.id - b.id);
+        let filterOption = res.category?.options && res.category?.options.filter(e =>
+          e.paramIds ? e.paramIds.includes(String(param.id)) || e.paramIds.includes('all') : true
+        );
 
+        let options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
 
         if (!serverView) {
           let serverIndex = res.category.regions.findIndex(
@@ -176,7 +189,10 @@ const Game = () => {
         });
         setOpt(param.options);
       })
-      .catch(() => setGames(prev => ({ ...prev, loading: false })));
+      .catch((err) => {
+        NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при регистрации")
+        setGames(prev => ({ ...prev, loading: false }))
+      });
   }, [data.param, data.region, data.server, id]);
   const onPageChange = (page) => {
     setCurrentPage(page.selected + 1);
@@ -356,13 +372,14 @@ const Game = () => {
             )}
 
             {data?.options?.length > 0 &&
-              data.options.map((e, i) => {
+              data.options.map((e) => {
+                console.log(e)
                 return (
                   <>
                     {e.data?.max ?
-                      maxOption(e, i)
+                      maxOption(e)
                       :
-                      renderSelects(e, i)
+                      renderSelects(e)
                     }
                   </>
                 )

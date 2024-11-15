@@ -259,6 +259,7 @@ const AddOffer = () => {
           let desc = res.product.desc;
           let count = res.product.count;
           let price = res.product.price;
+          let title = res.product.title;
           let status = res.product.status;
           let region;
           let servers;
@@ -286,14 +287,17 @@ const AddOffer = () => {
               }
             }
           }
-          let paramIndex = res?.category?.params.findIndex((e) => e.id === param);
-          if (res?.category?.params[paramIndex]?.options?.length > 0) {
+          if (res?.category?.options?.length > 0) {
+            let filterOption = res.category?.options && res.category?.options.filter(e =>
+              e.paramIds ? e.paramIds.includes(String(param.id)) || e.paramIds.includes('all') : true
+            );
 
-            options = createTree(res.category.params[paramIndex].options, 'id', 'parent', null).sort((a, b) => a.id - b.id);
+            options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
+
 
             option = res.product.options.map(opt => ({
               ...opt.option,
-              children: createTree(res.category.params[paramIndex].options, 'id', 'parent', opt.option.id).sort((a, b) => a.id - b.id),
+              children: createTree(res.category.options, 'id', 'parent', opt.option.id).sort((a, b) => a.id - b.id),
               value: opt?.value
             }));
 
@@ -305,6 +309,7 @@ const AddOffer = () => {
             id: id,
             categoryId: categoryId,
             game: game,
+            title: title || null,
             region: region ? region : null,
             servers: servers ? servers : null,
             server: server ? server : null,
@@ -421,6 +426,7 @@ const AddOffer = () => {
         );
         servers = data.game.regions[serverIndex].servers;
       }
+
       reset({
         ...data,
         server: null,
@@ -430,12 +436,17 @@ const AddOffer = () => {
   }, [data.region]);
   useEffect(() => {
     if (data.param && sum > 1) {
-      let optionsIndex = data.game.params.findIndex((e) => e.id === data.param);
-      let one = data.game?.params[optionsIndex]?.data?.one;
-      let auto = data.game?.params[optionsIndex]?.data?.auto;
-      let currency = data.game?.params[optionsIndex]?.data?.currency;
-      let serverView = data.game?.params[optionsIndex]?.data?.serverView;
-      let options = data?.game?.params[optionsIndex]?.options ? createTree(data?.game?.params[optionsIndex]?.options, 'id', 'parent', null).sort((a, b) => a.id - b.id) : null;
+      let param = data.game?.params[data.game.params.findIndex((e) => e.id === data.param)];
+      let one = param?.data?.one;
+      let auto = param?.data?.auto;
+      let currency = param?.data?.currency;
+      let serverView = param?.data?.serverView;
+      let filterOption = data.game?.options && data.game?.options.filter(e =>
+        e.paramIds ? e.paramIds.includes(String(param.id)) || e.paramIds.includes('all') : true
+      );
+
+      let options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
+
       reset({
         ...data,
         notDesc: currency ? currency : null,

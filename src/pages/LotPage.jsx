@@ -338,7 +338,7 @@ const LotPage = () => {
 
                             <ul className='specifications'>
                                 {products?.items?.options && [...products?.items?.options].reverse().map(e => {
-                                    let name = products.items.param.options.find(item => (e?.option?.parent && item.id == e.option.parent));
+                                    let name = products.items.category.options.find(item => (e?.option?.parent && item.id == e.option.parent));
                                     if (!e.parent) {
                                         return <li>
                                             <span>{e.value ? e?.option?.title : name?.title ? name.title : "Хакатеристика"}</span>
