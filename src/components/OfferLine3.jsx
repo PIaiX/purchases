@@ -16,7 +16,7 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
   const coly = user.id == userId ? total : price;
   const renderOptions = useMemo(() => {
 
-    return product.options?.map((item, i) => {
+    return product?.options?.map((item, i) => {
       const option = item.option;
       if (!option || !option.data || !option.data.desc) return null; // Проверка наличия данных
       const key = option.id || i; // Использование уникального идентификатора или индекса
@@ -46,10 +46,10 @@ const OfferLine3 = ({ uid, id, author, user, product, createdAt, status, total, 
         <div>{uid.toUpperCase()}</div>
       </Link>
       <Link to={`/account/order/${uid}`} className="descr">
-        {product.serverTitle && <span className='me-2'>{product.serverTitle},</span>}
-        {product.title && <span className='me-2'>{product.title},</span>}
-        {product.desc && <span className='me-2'>{product.desc},</span>}
-        {product.options && product.options?.length > 0 && renderOptions}
+        {product?.serverTitle && <span className='me-2'>{product.serverTitle},</span>}
+        {product?.title && <span className='me-2'>{product.title},</span>}
+        {product?.desc && <span className='me-2'>{product.desc},</span>}
+        {product?.options && product.options?.length > 0 && renderOptions}
       </Link>
       <div className="seller">
         <Link to={`/trader/${profileId}`}><img src={image} alt="User8name" /></Link>

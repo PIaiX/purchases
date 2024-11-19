@@ -280,7 +280,7 @@ const Profile = () => {
             <Col md={12}>
               <Input
                 autoComplete="new-password"
-                mask="7(999)999-99-99"
+                mask="9(999)999-99-99"
                 label="Номер телефона"
                 name="phone"
                 errors={errorsPhone}

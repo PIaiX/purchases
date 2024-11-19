@@ -33,6 +33,7 @@ const Settings = () => {
 
   const {
     control,
+    setValue,
     register,
     formState: { errors, isValid },
     handleSubmit,
@@ -67,6 +68,11 @@ const Settings = () => {
   const onDeleteSession = useCallback((data) => deleteSession(data), []);
 
   const onEditAccount = useCallback((data) => {
+
+    if (data.option?.notificationTelergam && !data.option?.telegramNickname) {
+      setValue("option?.notificationTelergam", false)
+      return NotificationManager.error("Напишите никнейм в телеграмме");
+    }
     editAccount(data)
       .then(() => {
         dispatch(setUser({ ...user, options: data?.options ?? {} }));
@@ -77,7 +83,7 @@ const Settings = () => {
           err?.response?.data?.error ?? "Ошибка при сохранении"
         );
       });
-  }, []);
+  }, [form]);
   const onEditReserve = useCallback((data) => {
     editReserve(data.reserve)
       .then((res) => {
@@ -93,7 +99,7 @@ const Settings = () => {
 
   useEffect(() => {
     Object.keys(form).length > 0 && handleSubmit(onEditAccount(form));
-  }, [form]);
+  }, [form.option?.notificationEmail, form.option?.notificationTelergam]);
 
   if (sessions?.loading) {
     return <Loader full />;
@@ -159,13 +165,32 @@ const Settings = () => {
             />
           </label>
           <label htmlFor="">
+
             <span>Получать уведомления в Telegram</span>
             <input
               type="checkbox"
               className="switch"
+              defaultChecked={!!user?.options?.notificationTelergam}
               {...register("options.notificationTelergam")}
             />
+
           </label>
+        </Col>
+        <Col className="mt-4 align-items-center">
+
+          <Col md={9}>
+            <Input
+              label={user?.options?.telegramNickname ?
+                'Никнейм:'
+                :
+                'Введите никнейм:'
+              }
+              type="text"
+              defaultValue={data?.options?.telegramNickname}
+              name="options.telegramNickname"
+              register={register}
+            />
+          </Col>
         </Col>
       </Row>
 

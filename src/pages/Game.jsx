@@ -141,7 +141,7 @@ const Game = () => {
 
         let servers;
         const regionId = data.region ?? (res.category.regions?.length > 0
-          ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0].id
+          ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0]?.id
           : '');
 
         const sortedParams = regionId
@@ -190,7 +190,7 @@ const Game = () => {
         setOpt(param.options);
       })
       .catch((err) => {
-        NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при регистрации")
+        NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при загрузке")
         setGames(prev => ({ ...prev, loading: false }))
       });
   }, [data.param, data.region, data.server, id]);

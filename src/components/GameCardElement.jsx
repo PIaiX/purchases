@@ -12,7 +12,7 @@ import { getImageURL } from "../helpers/all";
 
 const GameCardElement = memo(({ el, onSearch }) => {
   const [regId, setRegId] = useState({
-    current: el?.regions ? [...el.regions].sort((a, b) => a.priority - b.priority)[0].id : null,
+    current: el?.regions ? [...el.regions].sort((a, b) => a.priority - b.priority)[0]?.id : null,
     items: el?.regions ? [...el.regions].sort((a, b) => a.priority - b.priority) : null
   });
   const [catId, setCatId] = useState({
@@ -23,7 +23,7 @@ const GameCardElement = memo(({ el, onSearch }) => {
     if (regId) {
       const params = [...el?.params].filter(e => e.data?.region ? e.data.region == 'all' || e.data.region.includes(String(regId.current)) : true)?.sort((a, b) => a.priority - b.priority)
       console.log(params)
-      setCatId({ items: params, first: params[0].id })
+      setCatId({ items: params, first: params[0]?.id })
     }
     if (!el.regions) {
       setCatId({ items: [...el?.params]?.sort((a, b) => a.priority - b.priority), first: [...el?.params]?.sort((a, b) => a.priority - b.priority)[0].id })
