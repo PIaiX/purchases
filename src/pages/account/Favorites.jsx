@@ -29,7 +29,7 @@ const Favorites = () => {
           return (
             <li key={item.id}>
               <div className="fav-item">
-                <h5><Link to={`/${item?.categoryId}/?${item.regionId ? `region=${item.regionId}&` : ''}${item.paramId ? `param=${item.paramId}` : ''}`} className='title'>{item?.category?.title}</Link></h5>
+                <h5><Link to={`/game/${item?.categoryId}/?${item.regionId ? `regId=${item.regionId}&` : ''}${item.paramId ? `catId=${item.paramId}` : ''}`} className='title'>{item?.category?.title}</Link></h5>
                 <button type="button" onClick={() => onFav(item.categoryId)} >
                   <FiTrash />
                 </button>

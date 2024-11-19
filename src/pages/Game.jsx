@@ -144,27 +144,35 @@ const Game = () => {
           ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0]?.id
           : '');
 
-        const sortedParams = regionId
+        const sortedParams = regionId && res?.category?.params
           ? [...res?.category?.params].filter(e =>
             e.data?.region ? e.data.region === 'all' || e.data.region.includes(String(regionId)) : true)
             .sort((a, b) => a.priority - b.priority)
           : [];
+        let optionsIndex
+        let param
+        let one
+        let currency
+        let serverView
+        let filterOption
+        let options
+        if (sortedParams) {
+          if (!data.param || sortedParams.filter(e => e.id === data?.param).length === 0) {
+            const firstParamId = sortedParams[0]?.id;
+            navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
+          }
+          optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
+          param = res.category.params[optionsIndex];
+          one = param.data?.one;
+          currency = param.data?.currency;
+          serverView = param.data?.serverView;
 
-        if (!data.param || sortedParams.filter(e => e.id === data.param).length === 0) {
-          const firstParamId = sortedParams[0]?.id;
-          navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
+          filterOption = res.category?.options && res.category?.options.filter(e =>
+            e.paramIds ? e.paramIds.includes(String(param.id)) || e.paramIds.includes('all') : true
+          );
+
+          options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
         }
-        let optionsIndex = res.category.params.findIndex((e) => e.id === data.param);
-        let param = res.category.params[optionsIndex];
-        let one = param.data?.one;
-        let currency = param.data?.currency;
-        let serverView = param.data?.serverView;
-        let filterOption = res.category?.options && res.category?.options.filter(e =>
-          e.paramIds ? e.paramIds.includes(String(param.id)) || e.paramIds.includes('all') : true
-        );
-
-        let options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
-
         if (!serverView) {
           let serverIndex = res.category.regions.findIndex(
             (e) => e.id === data.region
@@ -187,7 +195,9 @@ const Game = () => {
           options: options ? options : null,
           option: null,
         });
-        setOpt(param.options);
+        if (filterOption) {
+          setOpt(filterOption);
+        }
       })
       .catch((err) => {
         NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при загрузке")

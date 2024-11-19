@@ -67,15 +67,15 @@ const Settings = () => {
 
   const onDeleteSession = useCallback((data) => deleteSession(data), []);
 
-  const onEditAccount = useCallback((data) => {
-
-    if (data.option?.notificationTelergam && !data.option?.telegramNickname) {
+  const onEditAccount = useCallback(() => {
+    console.log(form)
+    if (form.options?.notificationTelergam && !form.options?.telegramNickname) {
       setValue("option?.notificationTelergam", false)
       return NotificationManager.error("Напишите никнейм в телеграмме");
     }
-    editAccount(data)
+    editAccount(form)
       .then(() => {
-        dispatch(setUser({ ...user, options: data?.options ?? {} }));
+        dispatch(setUser({ ...user, options: form?.options ?? {} }));
         NotificationManager.success("Данные успешно обновлены");
       })
       .catch((err) => {
@@ -97,9 +97,6 @@ const Settings = () => {
       });
   }, []);
 
-  useEffect(() => {
-    Object.keys(form).length > 0 && handleSubmit(onEditAccount(form));
-  }, [form.option?.notificationEmail, form.option?.notificationTelergam]);
 
   if (sessions?.loading) {
     return <Loader full />;
@@ -160,6 +157,7 @@ const Settings = () => {
             <input
               type="checkbox"
               className="switch"
+              onClick={() => onEditAccount()}
               defaultChecked={!!user?.options?.notificationEmail}
               {...register("options.notificationEmail")}
             />
@@ -170,6 +168,7 @@ const Settings = () => {
             <input
               type="checkbox"
               className="switch"
+              onClick={() => onEditAccount()}
               defaultChecked={!!user?.options?.notificationTelergam}
               {...register("options.notificationTelergam")}
             />
