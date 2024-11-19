@@ -8,7 +8,7 @@ import GameСover from '../components/svg/GameСover';
 import OfferLine from '../components/OfferLine';
 import useIsMobile from '../hooks/isMobile';
 import FilterIcon from '../components/svg/FilterIcon'
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { getGame } from '../services/game';
 import { declOfNum, getImageURL, removeDescendants } from '../helpers/all';
 import NavPagination from '../components/NavPagination';
@@ -25,6 +25,7 @@ import { NotificationManager } from 'react-notifications';
 
 const Game = () => {
   const { id } = useParams();
+  const location = useLocation();
   const isMobileLG = useIsMobile("1109px");
   const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
   const searchParams = new URLSearchParams(location.search);
@@ -36,6 +37,8 @@ const Game = () => {
   const [fav, setFav] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 900);
+
+  const scrollPosition = location.state?.scrollPosition || 0;
   const {
     control,
     register,
@@ -56,12 +59,15 @@ const Game = () => {
   useEffect(() => {
     setValue("param", (parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null))
     setSelectedValues({});
+
+    window.scrollTo(0, scrollPosition);
   }, [searchParams.get("catId")]);
 
 
   useEffect(() => {
     setValue("region", (parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null))
 
+    window.scrollTo(0, scrollPosition);
   }, [searchParams.get("regId")]);
 
   const data = useWatch({ control });
@@ -134,13 +140,12 @@ const Game = () => {
     return null;
   };
   useEffect(() => {
-
     getGame({ param: data.param, region: data.region, server: data.server, id, })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
 
         let servers;
-        const regionId = data.region ?? (res.category.regions?.length > 0
+        const regionId = data?.region && (res.category?.regions?.length > 0
           ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0]?.id
           : '');
 
@@ -156,7 +161,9 @@ const Game = () => {
         let serverView
         let filterOption
         let options
-        if (sortedParams) {
+
+
+        if (sortedParams && sortedParams.length > 0) {
           if (!data.param || sortedParams.filter(e => e.id === data?.param).length === 0) {
             const firstParamId = sortedParams[0]?.id;
             navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
@@ -173,6 +180,7 @@ const Game = () => {
 
           options = createTree(filterOption, 'id', 'parent', null).sort((a, b) => a.priority - b.priority);
         }
+
         if (!serverView) {
           let serverIndex = res.category.regions.findIndex(
             (e) => e.id === data.region
@@ -198,6 +206,7 @@ const Game = () => {
         if (filterOption) {
           setOpt(filterOption);
         }
+
       })
       .catch((err) => {
         NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при загрузке")
@@ -335,7 +344,7 @@ const Game = () => {
             {games?.items?.category?.params?.length > 0 && [...games.items.category.params].sort((a, b) => a.priority - b.priority).map((param) => (
               (data?.region && (param?.data?.region == 'all' || param?.data?.region?.includes(String(data?.region))) || !data?.region) &&
               < li key={param.id} >
-                <Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'}>
+                <Link to={`/game/${id ?? data.categoryId}/?${data.region ? `regId=${data.region}&` : ''}${param.id ? `catId=${param.id}` : ''}`} className={param.id == data.param ? ' button active' : 'button'} state={{ scrollPosition: window.scrollY }}>
                   {param.title}
                 </Link>
               </li>
@@ -383,7 +392,6 @@ const Game = () => {
 
             {data?.options?.length > 0 &&
               data.options.map((e) => {
-                console.log(e)
                 return (
                   <>
                     {e.data?.max ?

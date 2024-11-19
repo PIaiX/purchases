@@ -25,16 +25,18 @@ const Menu = ({ full, setFull }) => {
 
           <div className='menu-nav-top'>
             <div className={!full ? "user justify-content-center align-items-center" : "user"}>
-              <img
-                src={getImageURL({
-                  path: user?.media,
-                  size: "mini",
-                  type: "user",
-                })
-                }
-                className={!full && "img-small"}
-                alt="userphoto"
-              />
+              <Link to={"/account/profile"}>
+                <img
+                  src={getImageURL({
+                    path: user?.media,
+                    size: "mini",
+                    type: "user",
+                  })
+                  }
+                  className={!full && "img-small"}
+                  alt="userphoto"
+                />
+              </Link>
               {full &&
                 <>
                   <div className='rating'>

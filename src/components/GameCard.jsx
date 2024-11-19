@@ -31,7 +31,6 @@ const GameCard = memo(({ param1, param2, onSearch, term }) => {
     }
     return 0;
   }) : param2;
-  console.log(filteredGames)
   return filteredGames.map((el) => (
     <GameCardElement el={el} onSearch={onSearch} />
 

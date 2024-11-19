@@ -68,7 +68,6 @@ const Settings = () => {
   const onDeleteSession = useCallback((data) => deleteSession(data), []);
 
   const onEditAccount = useCallback(() => {
-    console.log(form)
     if (form.options?.notificationTelergam && !form.options?.telegramNickname) {
       setValue("option?.notificationTelergam", false)
       return NotificationManager.error("Напишите никнейм в телеграмме");

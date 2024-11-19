@@ -37,7 +37,7 @@ const ServerSwitcher = ({ serversArr, onChange, active, data }) => {
         })
         :
         Servers.map((obj, index) => {
-          return <li key={index} id={obj.id} className={(server === obj.id) ? 'active' : ''} onClick={() => navigate(generateLinkTo(obj))}>
+          return <li key={index} id={obj.id} className={(server === obj.id) ? 'active' : ''} onClick={() => navigate(generateLinkTo(obj), { state: { scrollPosition: window.scrollY } })}>
             {obj.title}
           </li>
         })

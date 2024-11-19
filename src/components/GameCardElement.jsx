@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { useLocation } from 'react-router-dom';
 import { getImageURL } from "../helpers/all";
 
-const GameCardElement = memo(({ el, onSearch }) => {
+const GameCardElement = ({ el, onSearch }) => {
   const [regId, setRegId] = useState({
     current: el?.regions ? [...el.regions].sort((a, b) => a.priority - b.priority)[0]?.id : null,
     items: el?.regions ? [...el.regions].sort((a, b) => a.priority - b.priority) : null
@@ -21,8 +21,8 @@ const GameCardElement = memo(({ el, onSearch }) => {
   })
   useEffect(() => {
     if (regId) {
-      const params = [...el?.params].filter(e => e.data?.region ? e.data.region == 'all' || e.data.region.includes(String(regId.current)) : true)?.sort((a, b) => a.priority - b.priority)
-      console.log(params)
+      const params = [...el?.params].filter(e => e.data?.region ? e.data.region == 'all' || e.data.region.includes(String(regId.current)) : false)?.sort((a, b) => a.priority - b.priority)
+
       setCatId({ items: params, first: params[0]?.id })
     }
     if (!el.regions) {
@@ -32,21 +32,21 @@ const GameCardElement = memo(({ el, onSearch }) => {
 
 
   return (
-    <div className="game-card">
+    <div className="game-card" key={el.id}>
       < div >
         <h4 onClick={onSearch}><Link to={`/game/${el.uid ? el.uid : el.id}/?${regId?.current ? `regId=${regId?.current}&` : ''}${el?.params?.length > 0 ? `catId=${catId.first}` : ''}`}>
-          {el.title}
+          {el?.title}
         </Link></h4>
 
         {
-          el.regions && el.regions.length > 0 && regId.items[0].status ? (
+          el.regions && el.regions.length > 0 && regId.items[0]?.status ? (
             <ServerSwitcher serversArr={regId.items} onChange={(e) => setRegId({ ...regId, current: e })} />
           )
             :
             ""
         }
 
-        <ul onClick={onSearch} className='categories'>
+        <ul onClick={onSearch} className='categories' key={el.id}>
           {catId.items.map((param) => (
             <li key={param.id}><Link to={`/game/${el.uid ? el.uid : el.id}/?${regId?.current ? `regId=${regId?.current}&` : ''}${param.id ? `catId=${param.id}` : ''}`}>{param.title}</Link></li>
           ))}
@@ -55,6 +55,6 @@ const GameCardElement = memo(({ el, onSearch }) => {
     </div >
   )
 
-});
+};
 
 export default GameCardElement;
