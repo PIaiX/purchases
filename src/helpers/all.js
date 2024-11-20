@@ -54,6 +54,19 @@ const Timer = ({ update = false, value = 60, onEnd }) => {
 
   return counter
 }
+
+function base64UrlEncode(str) {
+  // Кодируем строку в Base64
+  let base64 = btoa(str);
+
+  // Заменяем '+' на '-' и '/' на '_'
+  base64 = base64.replace(/\+/g, '-').replace(/\//g, '_');
+
+  // Удаляем символы '=' в конце
+  base64 = base64.replace(/=+$/, '');
+
+  return base64;
+}
 const wrapLinks = (text) => {
   return text.replace(/(https?:\/\/[^\s]+)/g, (match) => {
     // Проверяем, является ли ссылка на rushtoplay
@@ -64,11 +77,24 @@ const wrapLinks = (text) => {
       return `<a href="${match}" target="_blank" rel="noopener noreferrer">${match}</a>`;
     } else {
       // Для внешних ссылок используем /externalLink
-      return `<a href="/externalLink/${btoa(match)}"  target="_blank" rel="noopener noreferrer">${match}</a>`;
+      return `<a href="/externalLink/${base64UrlEncode(match)}"  target="_blank" rel="noopener noreferrer">${match}</a>`;
     }
   });
 };
 
+function base64UrlDecode(str) {
+  // Заменяем '-' на '+' и '_' на '/'
+  str = str.replace(/-/g, '+').replace(/_/g, '/');
+
+  // Добавляем символы '=' в конце, если длина строки не кратна 4
+  const padding = 4 - (str.length % 4);
+  if (padding < 4) {
+    str += '='.repeat(padding);
+  }
+
+  // Декодируем строку с помощью atob
+  return atob(str);
+}
 
 const removeDescendants = (data, option) => {
   if (!data.option || data.option == null) {
@@ -161,4 +187,4 @@ const getImageURL = ({ path = "", size = "mini", type = "user" }) => {
   }
 };
 
-export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum, Timer, wrapLinks };
+export { customPrice, getImageURL, treeAll, removeDescendants, declOfNum, Timer, wrapLinks, base64UrlDecode, base64UrlEncode };

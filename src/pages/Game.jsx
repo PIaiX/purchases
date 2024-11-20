@@ -25,6 +25,8 @@ import { NotificationManager } from 'react-notifications';
 
 const Game = () => {
   const { id } = useParams();
+  const isMobileSM = useIsMobile('575px')
+  const isMobileXXL = useIsMobile('1399px')
   const location = useLocation();
   const isMobileLG = useIsMobile("1109px");
   const [filterShow, setFilterShow] = useState(!isMobileLG ? true : false);
@@ -37,7 +39,13 @@ const Game = () => {
   const [fav, setFav] = useState();
   const [searchTerm, setSearchTerm] = useState('');
   const debouncedSearchTerm = useDebounce(searchTerm, 900);
-
+  let headerHeight = 85
+  if (isMobileXXL) {
+    headerHeight = 70
+  }
+  if (isMobileSM) {
+    headerHeight = 55
+  }
   const scrollPosition = location.state?.scrollPosition || 0;
   const {
     control,
@@ -59,15 +67,12 @@ const Game = () => {
   useEffect(() => {
     setValue("param", (parseInt(searchParams.get("catId")) ? parseInt(searchParams.get("catId")) : null))
     setSelectedValues({});
-
-    window.scrollTo(0, scrollPosition);
   }, [searchParams.get("catId")]);
 
 
   useEffect(() => {
     setValue("region", (parseInt(searchParams.get("regId")) ? parseInt(searchParams.get("regId")) : null))
 
-    window.scrollTo(0, scrollPosition);
   }, [searchParams.get("regId")]);
 
   const data = useWatch({ control });
@@ -275,6 +280,7 @@ const Game = () => {
     var indexOfLastProduct = currentPage * productsPerPage;
     var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     setDisplayedProducts({ pagesCount: Math.ceil(totalProducts.length / productsPerPage), items: totalProducts.slice(indexOfFirstProduct, indexOfLastProduct) });
+    window.scrollTo(0, scrollPosition + headerHeight);
   }
 
   useEffect(() => {
@@ -313,7 +319,7 @@ const Game = () => {
     <main>
       <Meta title={games.items?.category?.title ?? "Игра"} />
 
-      <NavBreadcrumbs title="Каталог" />
+      <NavBreadcrumbs title={games.items?.category?.title} />
 
 
       <section className='page-game pb-2 pb-4 pb-md-5'>

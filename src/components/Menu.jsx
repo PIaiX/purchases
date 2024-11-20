@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { FiList, FiMessageCircle, FiSettings, FiUser } from 'react-icons/fi';
+import { FiHeart, FiList, FiMessageCircle, FiSettings, FiUser } from 'react-icons/fi';
 import { LuCoins, LuFileClock, LuLogOut, LuMails, LuSettings } from "react-icons/lu";
 import { RiHistoryLine } from "react-icons/ri";
 import { useDispatch, useSelector } from 'react-redux';
@@ -50,18 +50,18 @@ const Menu = ({ full, setFull }) => {
             </div>
             {full && <hr />}
             {full && <div className='info'>
-              <div>
+              <Link to="account/sales-history">
                 <p>Сделки</p>
                 <span>{user.orderSale}</span>
-              </div>
-              <div>
+              </Link>
+              <Link to="account/offers">
                 <p>Лоты</p>
                 <span>{user.product}</span>
-              </div>
-              <div>
+              </Link>
+              <Link to="account/feedback">
                 <p>Отзывы</p>
                 <span>{user.review}</span>
-              </div>
+              </Link>
             </div>
             }
           </div>
@@ -162,6 +162,15 @@ const Menu = ({ full, setFull }) => {
                     </div>
                   </NavLink>
                 </li>
+                <li>
+                  <NavLink to="account/favs" className={!full && "justify-content-center"}>
+                    <div>
+                      <FiHeart className="svg me-2" />
+                      {full && <span>Избранное</span>}
+                    </div>
+                  </NavLink>
+                </li>
+
 
                 <li>
                   <NavLink to="account/callback" className={!full && "justify-content-center"}>
@@ -199,11 +208,6 @@ const Menu = ({ full, setFull }) => {
                   </NavLink>
                 </li>
                 <li>
-                  <NavLink to="account/favs">
-                    <div>Избранное</div>
-                  </NavLink>
-                </li>
-                <li>
                   <NavLink to="/privacy">
                     <div>Политика конфиденциальности</div>
                   </NavLink>
@@ -214,12 +218,14 @@ const Menu = ({ full, setFull }) => {
                   </NavLink>
                 </li>
                 <li>
-                  <a href="/" className='dev-link'>
+                  <div className='dev-link'>
                     <div>©2024 Rush to play</div>
                     <div className='note' />
-                    <div>Создано в</div>
-                    <Plaix />
-                  </a>
+                    <Link to={"https://plaix.ru/"}>
+                      <div>Создано в</div>
+                      <Plaix />
+                    </Link>
+                  </div>
                 </li>
               </ul>
             }

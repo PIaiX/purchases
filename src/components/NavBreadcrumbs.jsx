@@ -8,13 +8,13 @@ const NavBreadcrumbs = ({ title }) => {
         <li>
           <Link to='/'>Главная</Link>
         </li>
-        {title ? "Новости" &&
+        {!title ? "Новости" &&
           < li >
             <Link to='/blog'>Новости</Link>
           </li>
           :
-          < li >
-            <Link to='/'>{title}</Link>
+          < li className='fs-12' >
+            {title}
           </li>
         }
       </ul>

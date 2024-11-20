@@ -1655,7 +1655,7 @@ body {
   font-family: "Open Sans", "Arial", "Tahoma", "Verdana";
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-size: 15px;
+  font-size: 13px;
   font-weight: 400;
   background-color: var(--body-bg);
   color: var(--font-color);
@@ -7142,7 +7142,7 @@ footer .nav-mobile ul li button.active svg path {
   display: flex;
   justify-content: space-between;
 }
-.menu-nav-top .info div {
+.menu-nav-top .info a {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -7192,6 +7192,8 @@ footer .nav-mobile ul li button.active svg path {
   font-size: 0.9em;
   padding: 0;
   margin: 0;
+  display: flex;
+  align-items: center;
 }
 .menu-nav ul li .dev-link .note {
   width: 4px;
@@ -7199,6 +7201,11 @@ footer .nav-mobile ul li button.active svg path {
   display: inline-block;
   border-radius: 50%;
   background-color: var(--blue);
+  margin: 0 1em;
+}
+.menu-nav ul li .dev-link a {
+  padding: 0;
+  color: var(--blue);
 }
 .menu-nav ul li .dev-link svg {
   margin-left: 0.5em;
