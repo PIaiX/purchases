@@ -13,7 +13,7 @@ const PurchaseLine = ({ createdAt, product, author, id }) => {
         <span>{moment(createdAt).format("DD.MM.YYYY")}</span>
         <span className='ms-3 gray'>{moment(createdAt).format("kk:mm")}</span>
       </time>
-      <div className='purchase-line-text'>{product.title}</div>
+      <div className='purchase-line-text'>{product?.title}</div>
       <div className='purchase-line-user'>
         <Link to={`/trader/${author.id}`}><img src={image} alt="user" className='me-2' /></Link>
         <div>
