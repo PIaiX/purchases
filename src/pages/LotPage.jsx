@@ -1,10 +1,10 @@
 import moment from 'moment';
 import React, { useCallback, useEffect, useState } from 'react';
-import { Modal } from 'react-bootstrap';
+import { Button, Modal } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import Row from 'react-bootstrap/Row';
 import { useForm, useWatch } from 'react-hook-form';
-import { FiAlertTriangle, FiShare } from "react-icons/fi";
+import { FiAlertTriangle, FiCheck, FiCopy, FiShare } from "react-icons/fi";
 import { PiCaretLeftLight } from "react-icons/pi";
 import { NotificationManager } from 'react-notifications';
 import { useDispatch, useSelector } from "react-redux";
@@ -23,6 +23,9 @@ import { createMessage, getMessages } from '../services/message';
 import { createOrder } from '../services/order';
 import { getProduct } from '../services/product';
 import { setUser } from '../store/reducers/authSlice';
+import { titles } from '../helpers/titles';
+import Textarea from '../components/utils/Textarea';
+import { createTask } from '../services/task';
 
 const LotPage = () => {
     const userId = useSelector(state => state.auth?.user?.id);
@@ -36,6 +39,41 @@ const LotPage = () => {
     });
     const [isPaymentPending, setPaymentPending] = useState(false);
     const navigate = useNavigate();
+
+    // жалоба + ссылка
+    const [copied, setCopied] = useState(false);
+    const [showAlert, setShowAlert] = useState(false);
+    const [submitted, setSubmitted] = useState(false);
+    const handleCloseAlert = () => {
+        setShowAlert(false);
+    };
+    const handleSubmitComplaint = () => {
+        onTask();
+        setSubmitted(true);
+    };
+    const handleCopyLink = () => {
+        const textField = document.createElement('textarea');
+        textField.innerText = `${process.env.REACT_APP_SITE_URL} /trader/${user.id}`;
+        document.body.appendChild(textField);
+        textField.select();
+        document.execCommand('copy');
+        textField.remove();
+        setCopied(true);
+    };
+    const handleClose = () => {
+        setShowShare(false);
+        setCopied(false);
+    };
+    const {
+        control: controlTask,
+        handleSubmit: handleSubmitTask,
+        setValue: setValueTask,
+    } = useForm({
+        mode: "onChange",
+        reValidateMode: "onSubmit",
+    });
+    const dataTask = useWatch({ control: controlTask });
+
     const getPage = () => {
 
         getProduct({ id: lotId })
@@ -46,6 +84,7 @@ const LotPage = () => {
                     items: res.product,
                     reviews: res.reviews,
                     nickname: res?.product?.param?.data?.nickname,
+                    category: res?.category
                 }));
                 setValue("toId", res.product.userId);
                 setValuePay("productId", res.product.id)
@@ -56,7 +95,7 @@ const LotPage = () => {
     useEffect(() => {
         getPage();
     }, [lotId]);
-    const { control, reset, setValue } = useForm({
+    const { control, reset, setValue, handleSubmit } = useForm({
         mode: "all",
         reValidateMode: "onChange",
         defaultValues: {
@@ -232,7 +271,7 @@ const LotPage = () => {
             : products?.items?.user
 
     const onTask = useCallback(() => {
-        createTask({ type: "report", userId: user.id })
+        createTask({ type: "report", ...dataTask, productId: products?.items?.id })
             .then(() => {
                 NotificationManager.success("Жалоба отправлена");
 
@@ -242,7 +281,7 @@ const LotPage = () => {
                     err?.response?.data?.error ?? "Ошибка при отправке"
                 );
             });
-    }, [user]);
+    }, [dataTask]);
     if (products.loading) {
         return <Loader full />;
     }
@@ -385,8 +424,8 @@ const LotPage = () => {
                                         >
                                             <FiShare />
                                         </button>
-                                        {userId != products?.items?.user?.id &&
-                                            <button type='button' className='d-flex gray fs-13'><FiAlertTriangle /></button>
+                                        {userId && userId != products?.items?.user?.id &&
+                                            <button type='button' onClick={setShowAlert} className='d-flex gray fs-13'><FiAlertTriangle /></button>
                                         }
                                     </div>
                                 </div>
@@ -446,15 +485,63 @@ const LotPage = () => {
                         </ul>
                     </Col>
                 </Row>
-                <Modal show={showShare} onHide={setShowShare} centered>
+                <Modal show={showShare} onHide={handleClose} centered>
                     <Modal.Header closeButton></Modal.Header>
                     <Modal.Body>
-                        <h4 className="mb-3">Профиль продавца</h4>
-                        <Input
-                            onClick={(e) => e.target.select()}
-                            readOnly
-                            defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${products.items.userId}`}
-                        />
+                        <h4 className="mb-3">Поделитесь профилем</h4>
+                        {copied ? (
+                            <div className="mb-3 text-success">
+                                <FiCheck /> Ссылка скопирована!
+                            </div>
+                        ) : (
+                            <div className="d-flex text-center justify-content-center">
+                                <Input
+                                    type="copy"
+                                    onCopy={handleCopyLink}
+                                    className="w-100 justify-content-center"
+                                    onClick={(e) => e.target.select()}
+                                    readOnly
+                                    defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${products?.items?.userId}`}
+                                />
+                            </div>
+                        )
+                        }
+                    </Modal.Body>
+                </Modal>
+                <Modal show={showAlert} onHide={handleCloseAlert} centered>
+                    <Modal.Header closeButton></Modal.Header>
+                    <Modal.Body>
+                        <h4 className="mb-3">Пожаловаться</h4>
+                        {!submitted ? (
+                            <div>
+                                <div className="mb-4">
+                                    <div className="mb-4">
+                                        <Select
+                                            value={dataTask?.title}
+                                            title="Выберите тему жалобы"
+                                            label="Тема"
+                                            onClick={e => { setValueTask('title', e.value) }}
+                                            data={titles}
+                                        />
+                                    </div>
+                                    <Textarea
+                                        value={dataTask?.comment}
+                                        className="col-md-6"
+                                        type={"text"}
+                                        label={"Описание"}
+                                        onChange={e => setValueTask("comment", e)}
+                                    />
+                                </div>
+                                <div className="d-flex justify-content-between">
+                                    <Button onClick={handleSubmitTask(handleSubmitComplaint)} className="mr-3">Отправить жалобу</Button>
+                                    <Button onClick={handleCloseAlert} className="mr-3">Закрыть</Button>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="mb-3 text-success">
+                                Жалоба отправлена!
+                            </div>
+                        )}
                     </Modal.Body>
                 </Modal>
             </section>

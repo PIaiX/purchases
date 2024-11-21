@@ -8,6 +8,7 @@ import { useForm, useWatch } from "react-hook-form";
 import {
   FiAlertTriangle,
   FiCheck,
+  FiCopy,
   FiMessageCircle,
   FiShare
 } from "react-icons/fi";
@@ -33,6 +34,8 @@ import { getUser } from "../services/user";
 import useIsMobile from "../hooks/isMobile";
 import Select from "../components/utils/Select";
 import { titles } from "../helpers/titles";
+import { createTask } from "../services/task";
+import { NotificationManager } from "react-notifications";
 
 const Profile = () => {
   const { userId } = useParams();
@@ -53,10 +56,11 @@ const Profile = () => {
   } = useForm({
     mode: "onChange",
     reValidateMode: "onSubmit",
-    defaultValues: userId,
+    defaultValues: { userId: userId },
   });
   const data = useWatch({ control });
   const handleSubmitComplaint = () => {
+    onTask();
     setSubmitted(true);
   };
   const [showShare, setShowShare] = useState(false);
@@ -74,6 +78,21 @@ const Profile = () => {
     setShowShare(false);
     setCopied(false);
   };
+
+
+  const onTask = useCallback(() => {
+    createTask({ type: "report", ...data })
+      .then(() => {
+        NotificationManager.success("Жалоба отправлена");
+
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Ошибка при отправке"
+        );
+      });
+  }, [data]);
+
   const [user, setUser] = useState({
     data: {},
     loading: true,
@@ -323,7 +342,7 @@ const Profile = () => {
                 >
                   <FiShare />
                 </button>
-                {userId != myId &&
+                {myId && userId != myId &&
                   <button
                     onClick={() => setShowAlert(true)}
                     type="button"
@@ -419,13 +438,15 @@ const Profile = () => {
               <FiCheck /> Ссылка скопирована!
             </div>
           ) : (
-            <div>
+            <div className="d-flex text-center justify-content-center">
               <Input
+                type="copy"
+                onCopy={handleCopyLink}
+                className="w-100 justify-content-center"
                 onClick={(e) => e.target.select()}
                 readOnly
                 defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${user.data.id}`}
               />
-              <Button onClick={handleCopyLink} className="mt-3">Скопировать ссылку</Button>
             </div>
           )
           }
@@ -440,18 +461,19 @@ const Profile = () => {
               <div className="mb-4">
                 <div className="mb-4">
                   <Select
-                    value={data.title}
+                    value={data?.title}
                     title="Выберите тему жалобы"
                     label="Тема"
-                    onClick={e => { setValue(e.value) }}
+                    onClick={e => { setValue('title', e.value) }}
                     data={titles}
                   />
                 </div>
                 <Textarea
+                  value={data?.comment}
                   className="col-md-6"
                   type={"text"}
                   label={"Описание"}
-                  onChange={e => setValue("text", e)}
+                  onChange={e => setValue("comment", e)}
                 />
               </div>
               <div className="d-flex justify-content-between">

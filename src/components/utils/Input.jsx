@@ -2,6 +2,7 @@ import React, { memo, useState } from "react";
 import Eye from "../svg/Eye";
 import CloseEye from "../svg/CloseEye";
 import ReactInputMask from "react-input-mask";
+import { FiCopy } from "react-icons/fi";
 // import CheckMark from '../svg/CheckMark'
 
 const Input = memo(
@@ -27,6 +28,7 @@ const Input = memo(
     errors,
     max,
     min,
+    onCopy,
   }) => {
     const [visible, setVisibility] = useState(false);
     return (
@@ -78,35 +80,64 @@ const Input = memo(
               }
               {...(register && { ...register(name, validation) })}
             />
-          ) : (
-            <input
-              min={min}
-              max={max}
-              value={value}
-              autocomplete={autoComplete}
-              onClick={onClick}
-              onFocus={onFocus}
-              readOnly={readOnly}
-              defaultValue={defaultValue}
-              autoFocus={autoFocus}
-              type={type}
-              minLength={minLength}
-              maxLength={maxLength}
-              required
-              placeholder={placeholder}
-              onChange={(e) =>
-                onChange && !register && onChange(e.target.value)
-              }
-              {...(register && { ...register(name, validation) })}
-            />
-          )}
+          ) : type == "copy" ?
+            (
+              <div className="password">
+                <input
+                  min={min}
+                  max={max}
+                  value={value}
+                  autocomplete={autoComplete}
+                  onClick={onClick}
+                  onFocus={onFocus}
+                  readOnly={readOnly}
+                  defaultValue={defaultValue}
+                  autoFocus={autoFocus}
+                  type={type}
+                  minLength={minLength}
+                  maxLength={maxLength}
+                  required
+                  placeholder={placeholder}
+                  onChange={(e) =>
+                    onChange && !register && onChange(e.target.value)
+                  }
+                  {...(register && { ...register(name, validation) })}
+
+                />
+                <button type="button" onClick={onCopy}>
+                  <FiCopy />
+                </button>
+              </div>
+            ) : (
+              <input
+                min={min}
+                max={max}
+                value={value}
+                autocomplete={autoComplete}
+                onClick={onClick}
+                onFocus={onFocus}
+                readOnly={readOnly}
+                defaultValue={defaultValue}
+                autoFocus={autoFocus}
+                type={type}
+                minLength={minLength}
+                maxLength={maxLength}
+                required
+                placeholder={placeholder}
+                onChange={(e) =>
+                  onChange && !register && onChange(e.target.value)
+                }
+                {...(register && { ...register(name, validation) })}
+              />
+            )}
           <label>
             <span>{label}</span>
           </label>
-        </div>
+        </div >
         {errors && (
           <p className="rose fs-08">{errors[name]?.message}</p>
-        )}
+        )
+        }
       </>
     );
   }

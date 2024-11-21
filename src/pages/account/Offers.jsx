@@ -90,7 +90,7 @@ const Offers = () => {
                   <ul className={`list-unstyled g-2 g-sm-4 row row-cols-${numCols} ${products.categories.length <= numCols ? 'mb-4 mb-sm-5' : ''}`}>
                     {products?.categories.slice(0, showAll ? products.categories.length : numCols).map((item, index) => (
                       <li key={index}>
-                        <GameMiniCard {...item} currentGame={currentGame} />
+                        <GameMiniCard {...item} currentGame={currentGame} onGameChange={onGameChange} />
                       </li>
                     ))}
                   </ul>

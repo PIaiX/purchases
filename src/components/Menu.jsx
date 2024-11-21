@@ -208,6 +208,11 @@ const Menu = ({ full, setFull }) => {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink to="/blog">
+                    <div>Новости</div>
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to="/privacy">
                     <div>Политика конфиденциальности</div>
                   </NavLink>

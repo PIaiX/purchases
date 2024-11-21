@@ -376,18 +376,21 @@ const Profile = () => {
               <FiCheck /> Ссылка скопирована!
             </div>
           ) : (
-            <div>
+            <div className="d-flex text-center justify-content-center">
               <Input
+                type="copy"
+                onCopy={handleCopyLink}
+                className="w-100 justify-content-center"
                 onClick={(e) => e.target.select()}
                 readOnly
                 defaultValue={`${process.env.REACT_APP_SITE_URL}/trader/${user.id}`}
               />
-              <Button onClick={handleCopyLink} className="mt-3">Скопировать ссылку</Button>
             </div>
           )
           }
         </Modal.Body>
       </Modal>
+
     </section>
   );
 };
