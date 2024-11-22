@@ -60,9 +60,8 @@ const Header = () => {
   const [showSearch, setShowSearch] = useState(false);
   const handleCloseSearch = () => { setShowSearch(false), setSearchTerm(""), setShowFav(false); };
   const handleShowSearch = () => {
-    setShowSearch(!showSearch);
+    setShowSearch(true);
     setShowFav(false);
-    setSearchTerm("");
     setShowMobileMenu(false);
 
   }
@@ -74,7 +73,8 @@ const Header = () => {
 
   }
   const [searchTerm, setSearchTerm] = useState('');
-  const debouncedSearchTerm = useDebounce(searchTerm, 900);
+  const [searchSort, setSearchSort] = useState('');
+  const debouncedSearchTerm = useDebounce(searchTerm, 800);
 
   const [games, setGames] = useState({ items: [], loading: true });;
   useEffect(() => {
@@ -83,7 +83,7 @@ const Header = () => {
     }
   }, [searchTerm]);
   useEffect(() => {
-    if (debouncedSearchTerm && debouncedSearchTerm.length > 0) {
+    if (debouncedSearchTerm && debouncedSearchTerm.length > 0 && searchTerm == debouncedSearchTerm) {
       getSearch(debouncedSearchTerm)
         .then((res) => {
           setGames(prev => ({
@@ -91,9 +91,16 @@ const Header = () => {
             items: res,
             loading: false
           }));
+          handleShowSearch();
+          setSearchSort(debouncedSearchTerm);
+
         })
-        .catch(() => setGames((prev) => ({ ...prev, loading: false })));
-      handleShowSearch();
+        .catch(
+          (err) => {
+            err && NotificationManager.error(err?.response?.data?.error ?? "Неизвестная ошибка при поиске")
+            setGames((prev) => ({ ...prev, loading: false }))
+          })
+
     }
   }, [debouncedSearchTerm]);
   useEffect(() => {
@@ -112,7 +119,7 @@ const Header = () => {
 
   return (
     <>
-      <header className="header" onClick={() => { setShowSearch(false), setSearchTerm(""), showFav == true && setShowFav(false); }}>
+      <header className="header" onClick={handleCloseSearch}>
         <div className="h-100 w-100 d-flex align-items-center justify-content-between pe-4 ps-4">
           <Link to="/">
             <Logo />
@@ -190,12 +197,13 @@ const Header = () => {
       <Offcanvas
         show={showSearch}
         onHide={handleCloseSearch}
+        onClick={handleCloseSearch}
         onEscapeKeyDown={handleCloseSearch}
         placement={isMobileLG ? "bottom" : "top"}
         autoFocus={false}
         scroll={true}
       >
-        <Container className="px-0">
+        <Container className="px-0" onClick={(e) => e.stopPropagation()}>
           <Offcanvas.Body>
             <input
               type="search"
@@ -208,7 +216,7 @@ const Header = () => {
             <section className='sec-favorites px-3'>
               {games.items.length > 0 ?
                 <ul className="list-unstyled gy-3 gx-3 gx-xl-5 row row-cols-lg-4 row-cols-md-3 row-cols-sm-2 row-cols-1">
-                  <GameCard param2={games.items} term={searchTerm} onSearch={() => { handleCloseSearch() }} />
+                  <GameCard param2={games.items} term={searchSort} onSearch={() => { handleCloseSearch() }} />
                 </ul>
                 :
                 <h5 className="text-center">Мы не смогли найти такую игру</h5>
