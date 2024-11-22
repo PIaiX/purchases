@@ -30,7 +30,7 @@ const OfferCard = ({ title, user, param, desc, price, id }) => {
 
       <div className="offer-card-bottom">
         <h5 className='fw-7'>{price} <span className='rouble'>₽</span></h5>
-        <button type='button' className='btn-1'><Link to={`/game/lot/${id}`}>К объявлению</Link></button>
+        <button type='button' className='btn-1 '><Link to={`/game/lot/${id}`}>К объявлению</Link></button>
       </div>
     </div>
   );

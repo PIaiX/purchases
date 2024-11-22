@@ -334,14 +334,13 @@ const Registration = () => {
                     sitekey={process.env.REACT_APP_CAPTCHA}
                     onChange={(e) => setCaptcha(e)}
                   />
-                  <Button
-                    variant="primary"
+                  <button
                     type="submit"
                     // disabled={!isValid || !captcha}
-                    className="mt-4 mx-auto"
+                    className="btn-1 mt-4 mx-auto"
                   >
                     Зарегистрироваться
-                  </Button>
+                  </button>
                 </form>
               </div>
             </Col>

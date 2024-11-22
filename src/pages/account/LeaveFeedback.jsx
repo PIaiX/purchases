@@ -118,12 +118,12 @@ const LeaveFeedback = () => {
               </div>
             </div>
             <div className="list-wrapping-bottom d-sm-flex justify-content-between align-items-center">
-              <div className='box'>
-                <span className='gray me-3'>Количество</span>
+              <div className='btn-1'>
+                <span className='me-3'>Количество:</span>
                 <span>{order?.items?.count}</span>
               </div>
-              <div className='box'>
-                <span className='me-3'>Стоимость</span>
+              <div className='btn-1'>
+                <span className='me-3'>Стоимость:</span>
                 <span className='me-1'>{order?.items?.total}</span>
                 <span>₽</span>
               </div>

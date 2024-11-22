@@ -106,14 +106,13 @@ const Login = () => {
                     onChange={(e) => setCaptcha(e)}
                   />
 
-                  <Button
+                  <button
                     type="submit"
-                    variant="primary"
                     // disabled={!isValid || !captcha}
-                    className="mt-4 mx-auto"
+                    className="btn-1 mt-4 mx-auto"
                   >
                     Войти
-                  </Button>
+                  </button>
                 </form>
                 <Link
                   to="/registration"

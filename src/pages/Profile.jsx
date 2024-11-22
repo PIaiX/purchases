@@ -477,8 +477,8 @@ const Profile = () => {
                 />
               </div>
               <div className="d-flex justify-content-between">
-                <Button onClick={handleSubmit(handleSubmitComplaint)} className="mr-3">Отправить жалобу</Button>
-                <Button onClick={handleCloseAlert} className="mr-3">Закрыть</Button>
+                <button onClick={handleSubmit(handleSubmitComplaint)} className="btn-1">Отправить жалобу</button>
+                <button onClick={handleCloseAlert} className="btn-1">Закрыть</button>
               </div>
             </div>
           ) : (

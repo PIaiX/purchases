@@ -71,7 +71,7 @@ const Menu = ({ full, setFull }) => {
               <>
                 <h6>Добро пожаловать!</h6>
 
-                <NavLink to="/login" className="button btn-1">
+                <NavLink to="/login" className="button btn-1 py-1 px-2">
                   Войти
                 </NavLink>
 

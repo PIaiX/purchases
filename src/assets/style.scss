@@ -1084,7 +1084,7 @@ button {
 
 .btn {
     @include flex(row, center, center, nowrap);
-    padding: 0.8em 1.6em;
+    padding: 0.25rem .5rem;
     text-align: center;
     width: fit-content;
     border-radius: $radius;
@@ -1100,7 +1100,6 @@ button {
         @extend .btn;
         color: $white !important;
         background: var(--btn-1);
-        background-size: 200% 100% !important;
         background-position: left center !important;
 
         &:hover,
@@ -6187,6 +6186,7 @@ ACCOUNT
     color: var(--total-black);
     border-bottom: 1px solid var(--extrapale-blue);
 
+
     @media (max-width: $bp-xl) {
         flex-direction: column;
         align-items: stretch;
@@ -6431,7 +6431,7 @@ ACCOUNT
     @include flex(row, space-between, center, nowrap);
     gap: 2em;
     color: var(--total-black);
-    background-color: var(--white);
+    background-color: var(--letter);
     @include lightShadow();
     border-radius: $radius;
     padding: 0.6em 1em;
@@ -6538,7 +6538,7 @@ ACCOUNT
 }
 
 .appeal-line {
-    background-color: var(--white);
+    background-color: var(--letter);
     border-radius: $radius;
     @include lightShadow();
     padding: 1em;

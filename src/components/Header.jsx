@@ -164,7 +164,7 @@ const Header = () => {
           <p>
             Добавлять игры в избранное могут только авторизованные пользователи.
           </p>
-          <Link to="login" className="btn-3 mt-4" onClick={handleCloseAdvice}>
+          <Link to="login" className="btn-3 py-1 px-2 mt-4 " onClick={handleCloseAdvice}>
             Войти
           </Link>
         </Modal.Body>

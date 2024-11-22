@@ -76,14 +76,13 @@ const PhoneVerification = () => {
               />
             </Col>
             <Col md={4}>
-              <Button
-                variant="primary"
+              <button
                 onClick={handleSubmit(onSubmit)}
-                className="h-100 w-100"
+                className="btn-1 h-100 w-100"
                 disabled={!isValid}
               >
                 Подтвердить
-              </Button>
+              </button>
             </Col>
           </Row>
           {form?.step == 3 ? (

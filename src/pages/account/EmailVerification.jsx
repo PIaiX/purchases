@@ -1,12 +1,12 @@
 import React, { useCallback, useEffect } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { useForm, useWatch } from "react-hook-form";
 import { NotificationManager } from "react-notifications";
 import { Link, useLocation } from "react-router-dom";
+import Meta from "../../components/Meta";
 import Input from "../../components/utils/Input";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import { authEditEmail } from "../../services/auth";
-import Meta from "../../components/Meta";
 
 const EmailVerification = () => {
   const { state } = useLocation();
@@ -66,14 +66,13 @@ const EmailVerification = () => {
               />
             </Col>
             <Col md={4}>
-              <Button
-                variant="primary"
+              <button
                 onClick={() => handleSubmit(onSubmit)}
-                className="h-100 w-100"
+                className="btn-1 h-100 w-100"
                 disabled={!isValid || form?.count > 0}
               >
                 Подтвердить
-              </Button>
+              </button>
             </Col>
           </Row>
 

@@ -890,7 +890,7 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   justify-content: center;
   align-items: center;
   flex-wrap: nowrap;
-  padding: 0.8em 1.6em;
+  padding: 0.25rem 0.5rem;
   text-align: center;
   width: -moz-fit-content;
   width: fit-content;
@@ -902,7 +902,6 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 .btn-1, .btn-primary {
   color: #ffffff !important;
   background: var(--btn-1);
-  background-size: 200% 100% !important;
   background-position: left center !important;
 }
 .btn-1:hover, .btn-1:focus, .btn-primary:hover, .btn-primary:focus {
@@ -6170,7 +6169,7 @@ ACCOUNT
   flex-wrap: nowrap;
   gap: 2em;
   color: var(--total-black);
-  background-color: var(--white);
+  background-color: var(--letter);
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   border-radius: 0.67em;
   padding: 0.6em 1em;
@@ -6282,7 +6281,7 @@ ACCOUNT
 }
 
 .appeal-line {
-  background-color: var(--white);
+  background-color: var(--letter);
   border-radius: 0.67em;
   filter: drop-shadow(0px 4px 15px rgba(100, 100, 100, 0.08));
   padding: 1em;

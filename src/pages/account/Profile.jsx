@@ -1,3 +1,4 @@
+import moment from "moment";
 import React, { useCallback, useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import Col from "react-bootstrap/Col";
@@ -14,12 +15,10 @@ import Joystick from "../../components/svg/Joystick";
 import Input from "../../components/utils/Input";
 import ReturnTitle from "../../components/utils/ReturnTitle";
 import StarRating from "../../components/utils/StarRating";
-import Textarea from "../../components/utils/Textarea";
+import { getImageURL } from "../../helpers/all";
 import { editAccount, editAvatar } from "../../services/account";
 import { authEditPassword, authEditPhone } from "../../services/auth";
 import { setUser } from "../../store/reducers/authSlice";
-import { getImageURL } from "../../helpers/all";
-import moment from "moment";
 
 const Profile = () => {
   const user = useSelector((state) => state.auth.user);
@@ -298,24 +297,24 @@ const Profile = () => {
                   </p>
                 </Col>
                 <Col md={12}>
-                  <Button
-                    variant="danger"
+                  <button
+                    className="btn-3"
                     disabled={!isValidPhone}
                     onClick={handleSubmitPhone(onSubmitPhone)}
                   >
                     Пройти верификацию
-                  </Button>
+                  </button>
                 </Col>
               </>
             ) : (
               <Col md={12}>
-                <Button
-                  variant="primary"
+                <button
+                  className="btn-1"
                   disabled={!isValidPhone}
                   onClick={handleSubmitPhone(onSubmitPhone)}
                 >
                   Изменить номер телефона
-                </Button>
+                </button>
               </Col>
             )}
           </Row>
@@ -357,14 +356,13 @@ const Profile = () => {
               />
             </Col>
           </Row>
-          <Button
-            variant="primary"
+          <button
             disabled={!isValidPassword}
             onClick={handleSubmitPassword(onSubmitPassword)}
-            className="mt-4"
+            className="btn-1 mt-4"
           >
             Изменить пароль
-          </Button>
+          </button>
         </Col>
       </Row>
       <Modal show={showShare} onHide={handleClose} centered>
