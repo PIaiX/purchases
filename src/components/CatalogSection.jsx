@@ -28,7 +28,7 @@ const CatalogSection = ({ games }) => {
   }
 
   const menuRef = useRef(null)
-  const offsetT = -50
+  const offsetT = -100
 
 
   useEffect(() => {

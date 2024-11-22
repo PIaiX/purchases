@@ -3,8 +3,8 @@
 :root {
   --h-height: 85px;
   --f-height: 80px;
-  --s-menu-width: 86px;
-  --l-menu-width: 300px;
+  --s-menu-width: 76px;
+  --l-menu-width: 267px;
 }
 @media (max-width: 1399.98px) {
   :root {
@@ -6945,7 +6945,7 @@ footer .nav-mobile ul li button.active svg path {
   max-width: 90px;
 }
 .menu-nav-conteiner.full {
-  max-width: 310px;
+  max-width: 277px;
 }
 .menu-nav .scroll {
   border-radius: 0.67em;
@@ -6963,14 +6963,14 @@ footer .nav-mobile ul li button.active svg path {
 }
 .menu-nav .scroll.full {
   max-height: calc(100vh - var(--h-height) - 200px);
-  width: 310px;
+  width: 277px;
 }
 .menu-nav .wrap {
   position: sticky;
   top: 6em;
   margin-right: 2em;
   left: 0;
-  width: 86px;
+  width: 76px;
   height: -moz-fit-content;
   height: fit-content;
 }
@@ -6985,11 +6985,11 @@ footer .nav-mobile ul li button.active svg path {
   }
 }
 .menu-nav .wrap.full {
-  width: 300px;
+  width: 267px;
 }
 .menu-nav .content {
   margin-top: 1em;
-  width: 86px;
+  width: 76px;
   height: -moz-fit-content;
   height: fit-content;
 }
@@ -7004,7 +7004,7 @@ footer .nav-mobile ul li button.active svg path {
   }
 }
 .menu-nav .content.full {
-  width: 300px;
+  width: 267px;
 }
 .menu-nav-balance {
   display: flex;
@@ -7047,7 +7047,7 @@ footer .nav-mobile ul li button.active svg path {
   box-shadow: 0px 1px 0px rgba(255, 255, 255, 0.3), 0px 3px 10px rgba(156, 156, 156, 0.2);
   border-radius: 0.67em;
   padding: 1em;
-  min-height: 86px;
+  min-height: 76px;
   justify-content: center;
 }
 .menu-nav-login h6 {
@@ -7062,8 +7062,8 @@ footer .nav-mobile ul li button.active svg path {
 }
 .menu-nav-login .icon {
   display: flex;
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
   border-radius: 50%;
   background-color: var(--login-icon);
   color: var(--login-key);
@@ -7099,8 +7099,8 @@ footer .nav-mobile ul li button.active svg path {
   box-sizing: content-box;
 }
 .menu-nav-top .user .img-small {
-  width: 58px;
-  height: 58px;
+  width: 48px;
+  height: 48px;
 }
 .menu-nav-top .user .rating {
   font-size: 1.2em;
