@@ -35,7 +35,7 @@ const MenuChat = ({ chatOpen, setChatOpen, id, setId }) => {
   };
   useEffect(() => {
     onLoadDialogs();
-  }, [unreadDate]);
+  }, [unreadDate, id]);
   // const onKeyPress = (e) => {
   //   if (e.key === "Enter") {
   //     e.preventDefault();

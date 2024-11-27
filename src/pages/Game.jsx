@@ -148,15 +148,13 @@ const Game = () => {
     getGame({ param: data.param, region: data.region, server: data.server, id, })
       .then((res) => {
         setGames(prev => ({ ...prev, items: res, loading: false }));
-
         let servers;
-        const regionId = data?.region && (res.category?.regions?.length > 0
+        const regionId = data?.region ?? (res.category?.regions?.length > 0
           ? [...res.category.regions].sort((a, b) => a.priority - b.priority)[0]?.id
           : '');
-
         const sortedParams = regionId && res?.category?.params
           ? [...res?.category?.params].filter(e =>
-            e.data?.region ? e.data.region === 'all' || e.data.region.includes(String(regionId)) : true)
+            e.data?.region ? e.data.region == 'all' || e.data.region.includes(String(regionId)) : true)
             .sort((a, b) => a.priority - b.priority)
           : [];
         let optionsIndex
@@ -169,7 +167,7 @@ const Game = () => {
 
 
         if (sortedParams && sortedParams.length > 0) {
-          if (!data.param || sortedParams.filter(e => e.id === data?.param).length === 0) {
+          if (!data.param || sortedParams.filter(e => e.id == data?.param).length === 0) {
             const firstParamId = sortedParams[0]?.id;
             navigate(`/game/${id}/?${regionId ? `regId=${regionId}&` : ''}${firstParamId ? `catId=${firstParamId}` : ''}`);
           }
@@ -280,6 +278,7 @@ const Game = () => {
     var indexOfLastProduct = currentPage * productsPerPage;
     var indexOfFirstProduct = indexOfLastProduct - productsPerPage;
     setDisplayedProducts({ pagesCount: Math.ceil(totalProducts.length / productsPerPage), items: totalProducts.slice(indexOfFirstProduct, indexOfLastProduct) });
+    console.log(scrollPosition)
     window.scrollTo(0, scrollPosition + headerHeight);
   }
 
