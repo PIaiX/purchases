@@ -5268,6 +5268,8 @@ ACCOUNT
                 @include flex(row, flex-start, center, nowrap);
                 padding: 0.75em 1.5em;
                 border-bottom: 1px solid var(--extrapale-blue);
+
+
             }
 
             .chat {
@@ -6971,9 +6973,22 @@ footer {
     }
 
     &-content {
-        background-color: var(--white);
+        background: var(--label);
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(5px);
         border: none;
         border-radius: $radius;
+
+        .labeled-input {
+            textarea {
+                background: var(--label);
+            }
+
+            label {
+                background: var(--label);
+
+            }
+        }
     }
 
     &-header {
@@ -8162,4 +8177,9 @@ footer {
         margin-top: 1em;
         margin-bottom: 1em;
     }
+}
+
+.ban {
+    color: $rose;
+    font-size: 1.5em;
 }

@@ -27,6 +27,9 @@ const apiRoutes = {
   //FAVORITES 
   FAVORITES: BASE_URL + "/favorite",
 
+  //BLACKLIST 
+  BLACKLIST: BASE_URL + "/blacklist",
+
   // Order
   ORDERS_GET_ALL: BASE_URL + "/user/order",
   ORDER_GET_ONE: BASE_URL + "/user/order/one",

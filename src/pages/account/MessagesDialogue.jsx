@@ -16,6 +16,9 @@ import {
 import { createTask } from '../../services/task';
 import { NotificationManager } from "react-notifications";
 import ReturnIcon from '../../components/svg/ReturnIcon';
+import { Modal } from "react-bootstrap";
+import { FiSlash } from "react-icons/fi";
+import { editBlackList } from "../../services/blacklist";
 
 
 const MessagesDialogue = () => {
@@ -25,6 +28,9 @@ const MessagesDialogue = () => {
   const timer = useRef(0);
   const userId = useSelector((state) => state.auth?.user?.id);
 
+  const [showAdvice, setShowAdvice] = useState(false);
+  const handleCloseAdvice = () => setShowAdvice(false);
+  const handleShowAdvice = () => setShowAdvice(true);
 
   const { control, reset, setValue } = useForm({
     mode: "all",
@@ -175,7 +181,12 @@ const MessagesDialogue = () => {
       if (data?.id === "general" || dialogId === "general") {
         createMessageGeneral({ ...data, text });
       } else {
-        createMessage(data);
+        createMessage(data)
+          .catch((err) =>
+            NotificationManager.error(
+              err?.response?.data?.error ?? "Ошибка при отправке"
+            )
+          );
       }
 
       reset({ id: data.id ?? dialogId });
@@ -186,6 +197,24 @@ const MessagesDialogue = () => {
     userId == messages?.dialog?.to?.id
       ? messages?.dialog?.from
       : messages?.dialog?.to;
+
+  const onBlacklist = useCallback(() => {
+    editBlackList({ userId: user.id })
+      .then((res) => {
+        handleCloseAdvice();
+        if (!res) {
+          NotificationManager.success("Пользователь добавлен в черный список");
+        }
+        else {
+          NotificationManager.success("Пользователь удален из черного списка");
+        }
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Ошибка при добавлении"
+        );
+      });
+  }, [user]);
 
   const onTask = useCallback(() => {
     createTask({ type: "report", userId: user.id })
@@ -209,11 +238,17 @@ const MessagesDialogue = () => {
         <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center return-icon me-4 mb-2'>
           <ReturnIcon />
         </button>
-        <h5>{
-          (user)
-            ? user.nickname
-            : "Общий чат"
-        }</h5>
+        <div className="d-flex align-items-center justify-content-between w-100">
+          <h5>{
+            (user)
+              ? user.nickname
+              : "Общий чат"
+          }</h5>
+          <div className="ban">
+            <button onClick={handleShowAdvice}><FiSlash /></button>
+
+          </div>
+        </div>
       </div>
       <Chat
         onLoadChat={onLoadChat}
@@ -226,7 +261,21 @@ const MessagesDialogue = () => {
         data={data}
         setImage={(e) => setValue("media", Array.from(e))}
       />
-
+      <Modal show={showAdvice} onHide={handleCloseAdvice} size={"md"} centered>
+        <Modal.Header closeButton>
+        </Modal.Header>
+        <Modal.Body>
+          <h6>Вы уверены что хотите добавить пользователя в черный список?</h6>
+          <div className="d-flex align-items-center justify-content-between">
+            <button className="btn-3 py-1 px-2 mt-4 ms-5" onClick={onBlacklist}>
+              Добавить
+            </button>
+            <button className="btn-1 py-1 px-2 mt-4 me-5" onClick={handleCloseAdvice}>
+              Отмена
+            </button>
+          </div>
+        </Modal.Body>
+      </Modal>
     </section>
   );
 };

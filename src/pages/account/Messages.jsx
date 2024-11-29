@@ -23,6 +23,10 @@ import { updateNotification } from "../../store/reducers/notificationSlice";
 import InfiniteScroll from "react-infinite-scroller";
 import Logo from "../../components/svg/Logo";
 import LogoMess from "../../components/svg/LogoMess";
+import { FiSlash } from "react-icons/fi";
+import { Modal } from "react-bootstrap";
+import { editBlackList } from "../../services/blacklist";
+import { NotificationManager } from "react-notifications";
 
 
 const Messages = ({ isMobileXL }) => {
@@ -33,6 +37,10 @@ const Messages = ({ isMobileXL }) => {
   const navigate = useNavigate();
   const [search, setSearch] = useState('');
   const unreadDate = useSelector((state) => state.notification.messageDate);
+
+  const [showAdvice, setShowAdvice] = useState(false);
+  const handleCloseAdvice = () => setShowAdvice(false);
+  const handleShowAdvice = () => setShowAdvice(true);
 
   const { control, reset, setValue } = useForm({
     mode: "all",
@@ -224,7 +232,12 @@ const Messages = ({ isMobileXL }) => {
       if (data?.id === "general" || dialogId === "general") {
         createMessageGeneral({ ...data, text });
       } else {
-        createMessage(data);
+        createMessage(data)
+          .catch((err) =>
+            NotificationManager.error(
+              err?.response?.data?.error ?? "Ошибка при отправке"
+            )
+          );
       }
 
       reset({ id: data.id ?? dialogId });
@@ -236,6 +249,23 @@ const Messages = ({ isMobileXL }) => {
       ? messages?.dialog?.from
       : messages?.dialog?.to;
 
+  const onBlacklist = useCallback(() => {
+    editBlackList({ userId: user.id })
+      .then((res) => {
+        handleCloseAdvice();
+        if (!res) {
+          NotificationManager.success("Пользователь добавлен в черный список");
+        }
+        else {
+          NotificationManager.success("Пользователь удален из черного списка");
+        }
+      })
+      .catch((err) => {
+        NotificationManager.error(
+          err?.response?.data?.error ?? "Ошибка при добавлении"
+        );
+      });
+  }, [user]);
   const onTask = useCallback(() => {
     createTask({ type: "report", userId: user.id })
       .then(() => {
@@ -371,22 +401,27 @@ const Messages = ({ isMobileXL }) => {
                       <button type="button" onClick={() => navigate(-1)} className='d-flex align-items-center d-xl-none return-icon ms-4 mb-2'>
                         <ReturnIcon />
                       </button>
-                      <div>
-                        <h5 className="fw-7 mb-0"><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
-                        <p className="fs-08 gray">
-                          {print ? (
-                            "Печатает сообщение..."
-                          ) : user.online?.status ? (
-                            <span className="text-success">Онлайн</span>
-                          ) : user.online?.end ? (
-                            "Был(-а) в сети " +
-                            moment(user.online?.end).fromNow()
-                          ) : (
-                            "Оффлайн"
-                          )}
-                        </p>
-                      </div>
+                      <div className="d-flex align-items-center justify-content-between w-100">
+                        <div>
+                          <h5 className="fw-7 mb-0"><Link to={`/trader/${user.id}`}>{user.nickname}</Link></h5>
+                          <p className="fs-08 gray">
+                            {print ? (
+                              "Печатает сообщение..."
+                            ) : user.online?.status ? (
+                              <span className="text-success">Онлайн</span>
+                            ) : user.online?.end ? (
+                              "Был(-а) в сети " +
+                              moment(user.online?.end).fromNow()
+                            ) : (
+                              "Оффлайн"
+                            )}
+                          </p>
+                        </div>
+                        <div className="ban">
+                          <button onClick={handleShowAdvice}><FiSlash /></button>
 
+                        </div>
+                      </div>
                     </div>
                   ))}
                 <Chat
@@ -404,7 +439,21 @@ const Messages = ({ isMobileXL }) => {
             )}
           </div>
         }
-
+        <Modal show={showAdvice} onHide={handleCloseAdvice} size={"md"} centered>
+          <Modal.Header closeButton>
+          </Modal.Header>
+          <Modal.Body>
+            <h6>Вы уверены что хотите добавить пользователя в черный список?</h6>
+            <div className="d-flex align-items-center justify-content-between">
+              <button className="btn-3 py-1 px-2 mt-4 ms-5" onClick={onBlacklist}>
+                Добавить
+              </button>
+              <button className="btn-1 py-1 px-2 mt-4 me-5" onClick={handleCloseAdvice}>
+                Отмена
+              </button>
+            </div>
+          </Modal.Body>
+        </Modal>
       </section >
     </>
   );

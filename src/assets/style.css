@@ -6683,9 +6683,18 @@ footer .nav-mobile ul li button.active svg path {
   border-radius: 4%;
 }
 .modal-content {
-  background-color: var(--white);
+  background: var(--label);
+  box-shadow: var(--shadow);
+  -webkit-backdrop-filter: blur(5px);
+          backdrop-filter: blur(5px);
   border: none;
   border-radius: 0.67em;
+}
+.modal-content .labeled-input textarea {
+  background: var(--label);
+}
+.modal-content .labeled-input label {
+  background: var(--label);
 }
 .modal-header {
   position: relative;
@@ -7757,4 +7766,9 @@ footer .nav-mobile ul li button.active svg path {
 .notOffer h4 {
   margin-top: 1em;
   margin-bottom: 1em;
+}
+
+.ban {
+  color: #ff5630;
+  font-size: 1.5em;
 }/*# sourceMappingURL=style.css.map */
