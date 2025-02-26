@@ -9,6 +9,7 @@ import { Col, Container, Row } from "react-bootstrap";
 import MenuChat from "../components/MenuChat";
 import { useSelector } from "react-redux";
 import MenuChatOpen from "../components/MenuChatOpen";
+import Cookie from "../components/Cookie";
 
 
 const AppLayout = () => {
@@ -47,6 +48,7 @@ const AppLayout = () => {
             </Col>
           </Row>
       }
+      <Cookie />
       {/* <Footer /> */}
     </>
   );

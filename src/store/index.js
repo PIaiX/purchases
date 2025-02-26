@@ -17,6 +17,7 @@ import favoriteSlice from "./reducers/favoriteSlice";
 import settingsSlice from "./reducers/settingsSlice";
 import notificationSlice from "./reducers/notificationSlice"
 import themeSlice from "./reducers/themeSlice"
+import cookieSlice from "./reducers/cookieSlice"
 import { homeQuery } from "./reducers/homeQuery";
 import rememberMeSlice from "./reducers/rememberMeSlice";
 
@@ -29,6 +30,7 @@ const rootReducer = combineReducers({
   notification: notificationSlice,
   theme: themeSlice,
   rememberMe: rememberMeSlice,
+  cookiePolice: cookieSlice,
   [homeQuery.reducerPath]: homeQuery.reducer,
 });
 

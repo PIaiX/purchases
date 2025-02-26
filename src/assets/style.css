@@ -1,5 +1,6 @@
 @charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,300;1,400;1,500;1,600;1,700;1,800&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap");
 :root {
   --h-height: 85px;
   --f-height: 80px;
@@ -6594,7 +6595,7 @@ footer {
     bottom: 0px;
     left: 0px;
     width: 100%;
-    z-index: 10000;
+    z-index: 2000;
   }
 }
 footer .dev-link {
@@ -7770,5 +7771,32 @@ footer .nav-mobile ul li button.active svg path {
 
 .ban {
   color: #ff5630;
+  font-size: 1.5em;
+}
+
+.cookie-policy {
+  display: flex;
+  background-color: #1d1c28;
+  bottom: 0;
+  color: #fff;
+  left: 0;
+  position: fixed;
+  right: 0;
+  z-index: 2001;
+  justify-content: space-between;
+  align-items: top;
+  padding: 0.3em 3em;
+  font-size: 14px;
+  font-family: "Source Sans 3", sans-serif;
+}
+.cookie-policy-message a {
+  margin-left: 0.5em;
+  color: #329dff;
+}
+.cookie-policy button {
+  height: -moz-fit-content;
+  height: fit-content;
+}
+.cookie-policy svg {
   font-size: 1.5em;
 }/*# sourceMappingURL=style.css.map */
