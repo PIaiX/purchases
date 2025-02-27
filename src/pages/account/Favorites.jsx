@@ -18,7 +18,7 @@ const Favorites = () => {
   return (
     <section className='sec-favorites px-3 px-xxxl-4'>
       <Container>
-        <NavBreadcrumbs title="Избранное" />
+        {/* <NavBreadcrumbs title="Избранное" /> */}
       </Container>
       <h1>Избранное</h1>
       {!favorites || !favorites.length > 0 &&

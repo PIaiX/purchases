@@ -27,6 +27,7 @@ import LotPage from "../pages/LotPage";
 import AuthRoute from "../layouts/AuthRoute";
 import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
 import ExternalLink from "../pages/ExternalLink";
+import Callback from "../pages/Callback";
 
 
 const router = createBrowserRouter(
@@ -58,6 +59,7 @@ const router = createBrowserRouter(
       <Route path="cookie" element={<Cookie />} />
       <Route path="feedback" element={<Feedback />} />
       <Route path="externalLink/:url" element={<ExternalLink />} />
+      <Route path="callback" element={<Callback />} />
       <Route path="*" element={<NotFound />} />
     </Route>
   )

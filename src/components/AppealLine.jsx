@@ -4,9 +4,9 @@ import { RxChevronRight } from "react-icons/rx";
 import { isTitle } from '../helpers/titles';
 import moment from 'moment';
 
-const AppealLine = ({ id, title, status, createdAt, comment, type, dialogId }) => {
+const AppealLine = ({ id, title, status, createdAt, comment, type, dialogId, messageCount }) => {
   return (
-    <div className="appeal-line">
+    <div className={`appeal-line${messageCount > 0 ? " bold" : ""}`}>
       <div className="subject">{isTitle(title)}</div>
       <div className="id"><span className='d-xl-none'>ID:</span>{id}</div>
       <div className="status">
@@ -19,11 +19,13 @@ const AppealLine = ({ id, title, status, createdAt, comment, type, dialogId }) =
         </time>
       </div>
       <div className="btns">
-        <Link to={id}>
-          <RxChevronRight className='fs-13 blue' />
-        </Link>
+        {status != "new" &&
+          <Link to={id} state={{ id, title, comment, dialogId, type }}>
+            <RxChevronRight className='fs-13 blue' />
+          </Link>
+        }
       </div>
-    </div>
+    </div >
   );
 };
 

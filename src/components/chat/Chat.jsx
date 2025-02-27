@@ -71,7 +71,7 @@ const Chat = memo(({
   }, [text, data]);
 
 
-  if (messages.loading) {
+  if (messages?.loading) {
     return <Loader />;
   }
   return (

@@ -134,49 +134,53 @@ const Callback = () => {
                 Нет обращений
               </h3>
             </div>
-          : <div className="row">
+          :
+
+          <div className="row">
             <div className="col-xxl-10">
               <div className="box">
-                <form action="">
-                  <div className="row g-4 g-md-5">
-                    <Col md={6}>
-                      <Select
-                        value={data.title}
-                        title="Выбрать тему"
-                        label="Тема"
-                        onClick={e => {
-                          reset({
-                            ...data,
-                            title: e.value,
-                            subTitle: null,
-                          })
-                        }}
-                        data={titles}
-                      />
-                    </Col>
-                    <Col md={6}>
-                      <Select
-                        value={data.subTitle}
-                        title="Выбрать подтему"
-                        label="Подтема"
-                        onClick={e => setValue('subTitle', e.value)}
-                        data={titles}
-                      />
-                    </Col>
-                    <div className="col-md-12">
-                      <Textarea
-                        className="mb-3"
-                        type={"text"}
-                        label={"Обращение"}
-                        placeholder={'Предоставьте как можно более подробную информацию, приложите необходимые скриншоты.'}
-                        defaultValue={data.comment}
-                        onChange={e => setValue("comment", e)}
-                      />
-                      <InputFileImg media={data?.file} setImage={(e) => setValue("file", Array.from(e)[0])} />
+                <div className="new-callback">
+                  <form action="">
+                    <div className="row g-4 g-md-5">
+                      <Col md={6}>
+                        <Select
+                          value={data.title}
+                          title="Выбрать тему"
+                          label="Тема"
+                          onClick={e => {
+                            reset({
+                              ...data,
+                              title: e.value,
+                              subTitle: null,
+                            })
+                          }}
+                          data={titles}
+                        />
+                      </Col>
+                      <Col md={6}>
+                        <Select
+                          value={data.subTitle}
+                          title="Выбрать подтему"
+                          label="Подтема"
+                          onClick={e => setValue('subTitle', e.value)}
+                          data={titles}
+                        />
+                      </Col>
+                      <div className="col-md-12">
+                        <Textarea
+                          className="mb-3"
+                          type={"text"}
+                          label={"Обращение"}
+                          placeholder={'Предоставьте как можно более подробную информацию, приложите необходимые скриншоты.'}
+                          defaultValue={data.comment}
+                          onChange={e => setValue("comment", e)}
+                        />
+                        <InputFileImg media={data?.file} setImage={(e) => setValue("file", Array.from(e)[0])} />
+                      </div>
                     </div>
-                  </div>
-                  <button onClick={handleSubmit(onTask)} type='submit' className='btn-1 mt-4 mt-md-5' disabled={data?.loading}>Отправить</button>
-                </form>
+                    <button onClick={handleSubmit(onTask)} type='submit' className='btn-1 mt-4 mt-md-5' disabled={data?.loading}>Отправить</button>
+                  </form>
+                </div>
               </div>
             </div>
           </div>

@@ -213,6 +213,11 @@ const Menu = ({ full, setFull }) => {
                   </NavLink>
                 </li>
                 <li>
+                  <NavLink to="/callback">
+                    <div>Обратная связь</div>
+                  </NavLink>
+                </li>
+                <li>
                   <NavLink to="/privacy">
                     <div>Политика конфиденциальности</div>
                   </NavLink>

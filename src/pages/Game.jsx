@@ -318,7 +318,7 @@ const Game = () => {
     <main>
       <Meta title={games.items?.category?.title ?? "Игра"} />
 
-      <NavBreadcrumbs title={games.items?.category?.title} />
+      {/* <NavBreadcrumbs title={games.items?.category?.title} /> */}
 
 
       <section className='page-game pb-2 pb-4 pb-md-5'>
