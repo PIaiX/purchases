@@ -28,6 +28,7 @@ import AuthRoute from "../layouts/AuthRoute";
 import ActivateEditEmail from "../pages/auth/ActivateEditEmail";
 import ExternalLink from "../pages/ExternalLink";
 import Callback from "../pages/Callback";
+import Docs from "../pages/Docs";
 
 
 const router = createBrowserRouter(
@@ -54,9 +55,10 @@ const router = createBrowserRouter(
       <Route path="activate" element={<Activate />} />
       <Route path="help" element={<FAQ />} />
       <Route path="help/:id" element={<QuestionPage />} />
-      <Route path="privacy" element={<PrivacyPolicy />} />
-      <Route path="rules" element={<Rules />} />
-      <Route path="cookie" element={<Cookie />} />
+      <Route path="docs" element={<Docs />} />
+      <Route path="docs/privacy" element={<PrivacyPolicy />} />
+      <Route path="docs/rules" element={<Rules />} />
+      <Route path="docs/cookie" element={<Cookie />} />
       <Route path="feedback" element={<Feedback />} />
       <Route path="externalLink/:url" element={<ExternalLink />} />
       <Route path="callback" element={<Callback />} />

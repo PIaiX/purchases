@@ -212,19 +212,16 @@ const Menu = ({ full, setFull }) => {
                     <div>Новости</div>
                   </NavLink>
                 </li>
+                {!isAuth &&
+                  <li>
+                    <NavLink to="/callback">
+                      <div>Обратная связь</div>
+                    </NavLink>
+                  </li>
+                }
                 <li>
-                  <NavLink to="/callback">
-                    <div>Обратная связь</div>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/privacy">
-                    <div>Политика конфиденциальности</div>
-                  </NavLink>
-                </li>
-                <li>
-                  <NavLink to="/cookie">
-                    <div>Политика cookie</div>
+                  <NavLink to="/docs">
+                    <div>Правовая информация</div>
                   </NavLink>
                 </li>
                 <li>

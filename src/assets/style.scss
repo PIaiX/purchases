@@ -3713,7 +3713,7 @@ header {
         backdrop-filter: blur(5px);
         border-radius: $radius;
         --pad: 15px 20px;
-        --serv: 220px;
+        --serv: 100px;
         --seller: 220px;
         --availability: 165px;
         --price: 140px;
@@ -3893,7 +3893,10 @@ header {
         @media (max-width: $bp-xl) {
             color: var(--blue);
             @include flex(row, flex-start, center, nowrap);
+            @include clamp(2.5, 1.2em, true);
         }
+
+        @include clamp(3, 1.3em, true);
     }
 
     .descr {
@@ -3901,7 +3904,7 @@ header {
         grid-row: span 1;
         padding: var(--pad);
         grid-area: descr;
-        @include clamp(3, 1.2em, true);
+        @include clamp(3, 1.3em, true);
 
         @media (max-width: $bp-xl) {
             @include clamp(2.5, 1.2em, true);

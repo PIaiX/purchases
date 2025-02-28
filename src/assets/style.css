@@ -3377,7 +3377,7 @@ header .profile-link img {
           backdrop-filter: blur(5px);
   border-radius: 0.67em;
   --pad: 15px 20px;
-  --serv: 220px;
+  --serv: 100px;
   --seller: 220px;
   --availability: 165px;
   --price: 140px;
@@ -3545,6 +3545,12 @@ header .profile-link img {
   grid-row: span 1;
   padding: var(--pad);
   grid-area: serv;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  line-height: 1.3em;
+  height: 3.9em;
 }
 @media (max-width: 1199.98px) {
   .offer-line .serv {
@@ -3554,6 +3560,11 @@ header .profile-link img {
     justify-content: flex-start;
     align-items: center;
     flex-wrap: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 2.5;
+    overflow: hidden;
+    line-height: 1.2em;
+    height: 3em;
   }
 }
 .offer-line .descr {
@@ -3565,8 +3576,8 @@ header .profile-link img {
   -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
-  line-height: 1.2em;
-  height: 3.6em;
+  line-height: 1.3em;
+  height: 3.9em;
 }
 @media (max-width: 1199.98px) {
   .offer-line .descr {
