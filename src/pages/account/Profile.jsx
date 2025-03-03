@@ -99,7 +99,7 @@ const Profile = () => {
     }
     authEditPhone(data)
       .then(() => {
-        NotificationManager.success("Код отправлен на указанный номер");
+        NotificationManager.success("Необходимо ввести 4 последние цифры входящего номера");
         navigate("phone", { state: { phone: data.phone } });
       })
       .catch(
