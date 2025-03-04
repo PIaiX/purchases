@@ -3,20 +3,18 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import bgImg from '../assets/imgs/bg/gradient.jpg';
+import ReturnLink from '../components/utils/ReturnLink';
 
 const Cookie = () => {
   return (
     <main className='account'>
-      <img src={bgImg} alt="bgImg" className='account-bg'/>
+      <img src={bgImg} alt="bgImg" className='account-bg' />
       <Container>
         <section className='mb-md-5'>
-          <Row className='justify-content-center'>
-            <Col xs={12} xl={11} xxl={10}>
-              <div className='topic'>
-                <h1 className='h2 mb-0'>Политика cookie</h1>
-              </div>
-            </Col>
-          </Row>
+          <div className='topic  d-flex align-items-baseline mb-5'>
+            <ReturnLink link={'/docs'} className="me-4" />
+            <h1 className='h2 mb-0'>Политика cookie</h1>
+          </div>
         </section>
       </Container>
     </main>

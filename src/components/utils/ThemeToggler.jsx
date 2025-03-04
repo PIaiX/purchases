@@ -17,7 +17,9 @@ function ThemeToggler() {
         defaultChecked={theme === 'dark'}
         onClick={toggleTheme}
       />
+      <div className="switcher-track"></div>
     </label>
+
   );
 }
 
