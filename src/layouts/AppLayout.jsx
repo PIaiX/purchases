@@ -29,7 +29,7 @@ const AppLayout = () => {
   return (
     <>
       <ScrollRestoration />
-      <Header />
+      <Header full={full} setFull={setFull} />
       <ScrollToTopButton maxi={maxi} mini={mini} />
       {maxi && <MenuChatOpen chatOpen={chatOpen} setChatOpen={setChatOpen} id={id} setId={setId} />}
       {

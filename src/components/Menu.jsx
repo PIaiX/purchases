@@ -238,7 +238,6 @@ const Menu = ({ full, setFull }) => {
             }
           </div>
         </div>
-        <div ref={cut} id="cut" onClick={() => setFull(!full)} className={(full) ? 'opened' : ''}><Arrow className="img" /> </div>
       </div>
     </nav >
   );

@@ -68,6 +68,7 @@
   --login-icon: #44F06A;
   --login-key: #000;
   --review-color: #C7DFF933;
+  --theme: #000;
   --letter: #fff;
   --search-game-border: #9DC4EF;
   --search-game-text: #9DC4EF;
@@ -147,6 +148,7 @@
   --shadowMobile: 0px 1px 0px 0px rgba(56, 67, 92, .75), 1px 1px 5px 0px rgba(48, 57, 79, 0.25);
   --subtract: url(imgs/SubtractDark.svg);
   --menu-substract: url(imgs/MenuSubtractDark.svg);
+  --theme: #47567B;
 }
 
 /* mixins */
@@ -1167,14 +1169,12 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
 
 .themes-switcher {
   position: relative;
-  width: 72px;
-  height: 32px;
-  background-color: #000;
+  width: 56px;
+  height: 30px;
+  background-color: var(--theme);
   border: 1px solid #1d92b2;
   border-radius: 20px;
   cursor: pointer;
-  margin-top: 5px;
-  margin-left: 10px;
   transition: all 0.3s ease;
 }
 .themes-switcher input {
@@ -1187,7 +1187,7 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   z-index: 3;
 }
 .themes-switcher input:checked ~ .switcher-track {
-  transform: translateX(34px) translateY(-50%);
+  transform: translateX(24px) translateY(-50%);
 }
 .themes-switcher::before, .themes-switcher::after {
   content: "";
@@ -1195,8 +1195,8 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  height: 20px;
-  width: 20px;
+  height: 15px;
+  width: 15px;
   background-size: contain;
   background-repeat: no-repeat;
   z-index: 1;
@@ -1214,9 +1214,9 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   position: absolute;
   left: 6px;
   top: 50%;
-  width: 24px;
-  height: 24px;
-  background-color: #1d92b2;
+  width: 20px;
+  height: 20px;
+  background-color: white;
   border-radius: 50%;
   transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   z-index: 2;
@@ -1225,10 +1225,10 @@ button[disabled]:not(.btn):not(.btn-6):not(.btn-success):not(.btn-5):not(.btn-4)
   margin: 0;
 }
 .themes-switcher:hover {
-  border-color: #2ab1d8;
+  border-color: #ecf4fc;
 }
 .themes-switcher:hover .switcher-track {
-  background-color: #2ab1d8;
+  background-color: #ecf4fc;
 }
 
 .min-250 {
@@ -1728,6 +1728,22 @@ header {
   header {
     display: none;
   }
+}
+header .menu {
+  margin-right: 2em;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1em;
+  border-radius: 50%;
+  cursor: pointer;
+}
+header .menu:hover, header .menu:active {
+  background-color: var(--extrapale-gray);
+}
+header .menu svg {
+  width: 24px;
+  height: 24px;
 }
 header input {
   background: var(--glass);
