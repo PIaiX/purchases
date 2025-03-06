@@ -1,9 +1,30 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { Link } from 'react-router-dom';
+import { getCerts } from '../services/cert';
+import Loader from '../components/utils/Loader';
 
 const Docs = () => {
+  const [certs, setCerts] = useState({
+    loading: true,
+    items: [],
+  });
+  useEffect(() => {
+    getCerts()
+      .then((res) => {
+        setCerts((prev) => ({
+          prev,
+          loading: false,
+          ...res,
+        }))
+      })
+      .catch(() => setCerts((prev) => ({ ...prev, loading: false })));
+  }, []);
+
+  if (certs.loading) {
+    return <Loader full />;
+  }
   return (
     <main className='account'>
       <Container>
@@ -12,20 +33,10 @@ const Docs = () => {
             <h1 className='h2 mb-0'>Правовая информация</h1>
           </div>
           <ul className='mt-3'>
-            <li>
-              <Link to={"privacy"}>
-                <p>
-                  Политика конфиденциальности
-                </p>
-              </Link>
-            </li>
-            <li>
-              <Link to={"cookie"}>
-                <p>
-                  Политика куки
-                </p>
-              </Link>
-            </li>
+            {certs.items.map(item =>
+              <li><Link to={item.link} target="_blank"><p>{item.title}</p></Link></li>
+            )}
+
             <li>
               <Link to={"rules"}>
                 <p>

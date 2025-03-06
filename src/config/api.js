@@ -133,6 +133,10 @@ const apiRoutes = {
   DOCUMENT: BASE_URL + "/document/one",
   DOCUMENT_CREATE: BASE_URL + "/document/create",
 
+  // Cert
+  CERTS: BASE_URL + "/cert",
+  CERT: BASE_URL + "/cert/one",
+
   // Statistic
   STATISTIC: BASE_URL + "/statistic",
 
