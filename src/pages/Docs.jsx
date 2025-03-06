@@ -36,14 +36,6 @@ const Docs = () => {
             {certs.items.map(item =>
               <li><Link to={item.link} target="_blank"><p>{item.title}</p></Link></li>
             )}
-
-            <li>
-              <Link to={"rules"}>
-                <p>
-                  Пользовательское соглашение
-                </p>
-              </Link>
-            </li>
           </ul>
         </section>
       </Container>

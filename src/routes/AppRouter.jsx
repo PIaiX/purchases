@@ -56,9 +56,10 @@ const router = createBrowserRouter(
       <Route path="activate" element={<Activate />} />
       <Route path="help" element={<FAQ />} />
       <Route path="help/:id" element={<QuestionPage />} />
+
       <Route path="docs" element={<Docs />} />
-      <Route path="docs/rules" element={<Rules />} />
       <Route path="docs/:documentId" element={<Document />} />
+
       <Route path="feedback" element={<Feedback />} />
       <Route path="externalLink/:url" element={<ExternalLink />} />
       <Route path="callback" element={<Callback />} />
