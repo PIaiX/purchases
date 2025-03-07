@@ -11,7 +11,7 @@ const Docs = () => {
     items: [],
   });
   useEffect(() => {
-    getCerts()
+    getCerts({ status: 2 })
       .then((res) => {
         setCerts((prev) => ({
           prev,

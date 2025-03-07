@@ -58,6 +58,7 @@ const router = createBrowserRouter(
       <Route path="help/:id" element={<QuestionPage />} />
 
       <Route path="docs" element={<Docs />} />
+      <Route path="docs/privacy" element={<PrivacyPolicy />} />
       <Route path="docs/:documentId" element={<Document />} />
 
       <Route path="feedback" element={<Feedback />} />

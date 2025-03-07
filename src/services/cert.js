@@ -1,8 +1,8 @@
 import { apiRoutes } from '../config/api'
 import { $api } from './index'
 
-const getCerts = async () => {
-    const response = await $api.get(apiRoutes.CERTS)
+const getCerts = async (data) => {
+    const response = await $api.get(apiRoutes.CERTS, { params: data })
     return response?.data
 }
 const getCert = async (data) => {
