@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 const customPrice = (value, currency = true) => {
   if (!value) {
-    return 0 + "₽";
+    return 0 + " ₽";
   }
   if (currency) {
     value = (
