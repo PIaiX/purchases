@@ -1416,7 +1416,6 @@ button {
     width: 56px; // Увеличена ширина для размещения всех элементов
     height: 30px;
     background-color: var(--theme);
-    border: 1px solid #1d92b2;
     border-radius: 20px;
     cursor: pointer;
     transition: all 0.3s ease;
@@ -1480,10 +1479,9 @@ button {
     }
 
     &:hover {
-        border-color: $extrapale-gray;
 
         .switcher-track {
-            background-color: $extrapale-gray;
+            background-color: $gray;
         }
     }
 }
@@ -2030,6 +2028,7 @@ header {
         border-radius: 50%;
         cursor: pointer;
 
+        &.fon,
         &:hover,
         &:active {
             background-color: var(--extrapale-gray);
@@ -2464,6 +2463,8 @@ header {
                 .alfabet {
                     width: fit-content;
                     display: inline-block;
+                    height: 100%;
+
 
                     ul {
                         display: flex;
@@ -2471,7 +2472,6 @@ header {
                         flex-wrap: wrap;
 
                         height: 100%;
-                        overflow: hidden;
                         list-style: none;
                         padding: 0;
                         max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);
@@ -2688,7 +2688,6 @@ header {
                         flex-wrap: wrap;
 
                         height: 100%;
-                        overflow: hidden;
                         list-style: none;
                         padding: 0;
                         max-height: calc(100vh - var(--h-height) - var(--f-height) - 1em);

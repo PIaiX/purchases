@@ -123,7 +123,10 @@ const Header = ({ full, setFull }) => {
       <header className="header" onClick={handleCloseSearch}>
         <div className="h-100 w-100 d-flex align-items-center justify-content-between pe-4 ps-4">
           <div className="d-flex align-items-center">
-            <div className="menu" onClick={() => setFull(!full)}>
+            <div
+              className={`menu${full ? "" : " fon"}`}
+              onClick={() => setFull(!full)}
+            >
               <LuAlignJustify />
             </div>
             <Link to="/">

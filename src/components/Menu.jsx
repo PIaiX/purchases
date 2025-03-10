@@ -21,7 +21,7 @@ const Menu = ({ full, setFull }) => {
   return (
     <nav className='menu-nav'>
       <div className={(full) ? 'wrap full' : 'wrap'}>
-        {isAuth ?
+        {isAuth &&
 
           <div className='menu-nav-top'>
             <div className={!full ? "user justify-content-center align-items-center" : "user"}>
@@ -65,28 +65,28 @@ const Menu = ({ full, setFull }) => {
             </div>
             }
           </div>
-          :
-          <div className='menu-nav-login'>
-            {full ?
-              <>
-                <h6>Добро пожаловать!</h6>
 
-                <NavLink to="/login" className="button btn-1 py-1 px-2">
-                  Войти
-                </NavLink>
+          // <div className='menu-nav-login'>
+          //   {full ?
+          //     <>
+          //       <h6>Добро пожаловать!</h6>
 
-                <NavLink to="/registration">
-                  <div>Еще нет аккаунта?</div>
-                </NavLink>
-              </>
-              :
-              <NavLink to="/login" className="icon">
-                <Key />
-              </NavLink>
-            }
+          //       <NavLink to="/login" className="button btn-1 py-1 px-2">
+          //         Войти
+          //       </NavLink>
+
+          //       <NavLink to="/registration">
+          //         <div>Еще нет аккаунта?</div>
+          //       </NavLink>
+          //     </>
+          //     :
+          //     <NavLink to="/login" className="icon">
+          //       <Key />
+          //     </NavLink>
+          //   }
 
 
-          </div>
+          // </div>
         }
 
         <div className={(full) ? 'scroll full' : 'scroll'}>
